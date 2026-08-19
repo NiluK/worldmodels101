@@ -42,6 +42,14 @@
   --rule-strong:#918a7c;
 
   /* the two signals — the thesis of the whole site */
+  /* terrain: decorative only, and deliberately NOT --actual, which carries
+     meaning (what actually happened) everywhere else on the site. Distant
+     ridges are hazier and greener; the nearest reads as earth. */
+  --terrain-1: #9ba58f;
+  --terrain-2: #85937b;
+  --terrain-3: #6e7a5c;
+  --terrain-4: #6b5d43;
+
   --gloss:      #716b62;
 
   --imagine:      #c23f0e;
@@ -71,6 +79,16 @@
     --ink-muted:    #9a9284;
     --ink-faint:    #89837b;
     --gloss:        #9a9284;
+  --terrain-1: #3f4a3a;
+  --terrain-2: #4e5c44;
+  --terrain-3: #61704f;
+  --terrain-4: #7f6d4a;
+
+    --terrain-1: #3f4a3a;
+    --terrain-2: #4e5c44;
+    --terrain-3: #61704f;
+    --terrain-4: #7f6d4a;
+
     --rule:         #2e2b26;
     --rule-strong:  #6c6862;
     --imagine:      #f2703a;
@@ -89,6 +107,10 @@
   --ink-muted:    #9a9284;
   --ink-faint:    #89837b;
   --gloss:        #9a9284;
+  --terrain-1: #3f4a3a;
+  --terrain-2: #4e5c44;
+  --terrain-3: #61704f;
+  --terrain-4: #7f6d4a;
   --rule:         #2e2b26;
   --rule-strong:  #6c6862;
   --imagine:      #f2703a;
@@ -106,6 +128,10 @@
   --color-ink-muted:    var(--ink-muted);
   --color-ink-faint:    var(--ink-faint);
   --color-gloss:        var(--gloss);
+  --color-terrain-1:    var(--terrain-1);
+  --color-terrain-2:    var(--terrain-2);
+  --color-terrain-3:    var(--terrain-3);
+  --color-terrain-4:    var(--terrain-4);
   --color-rule:         var(--rule);
   --color-rule-strong:  var(--rule-strong);
   --color-imagine:      var(--imagine);

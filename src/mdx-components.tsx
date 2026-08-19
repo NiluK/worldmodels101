@@ -9,6 +9,7 @@ import { AgentLoop } from "@/components/agent-loop";
 import { Lineage, SourceList } from "@/components/lineage";
 import { Quote, Gloss } from "@/components/quote";
 import { TransitionEquation } from "@/components/transition-equation";
+import { GeneratedLandscape } from "@/components/generated-landscape";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -27,6 +28,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Quote,
     Gloss,
     TransitionEquation,
+    GeneratedLandscape,
     ...components,
   };
 }
