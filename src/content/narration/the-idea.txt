@@ -1,0 +1,13 @@
+[strong New Zealand accent] This chapter is about the oldest of the five senses, and the one that gave the term its technical meaning.
+
+Start with some arithmetic. A professional tennis serve arrives in roughly half a second. Getting a signal from the retina to the visual cortex takes somewhere around sixty to a hundred milliseconds. Getting a large muscle group to actually move … another hundred and fifty. Add the swing, and the returner is over budget before they have decided anything at all.
+
+[curious] So they are not reacting to the ball. They can't be. They are reacting to a prediction of the ball, produced by something in the nervous system that took the toss, and the racket angle, and the first few frames of flight, and extrapolated.
+
+That machinery is a world model in the Controller sense. A learned simulator you can roll forward. Give it a state and an action, and it hands you the next state.
+
+[excited] Build one and three things fall out. Planning, because you can try an action inside the model before paying for it outside. Cheap learning, because reality is a slow and expensive teacher … and a model is a fast one. And counterfactuals, because you can ask what would have happened if you had done something else, which is a question the world itself flatly refuses to answer.
+
+There's a demo further down with two cars braking before a wall. One brakes at a fixed distance. The other brakes when it predicts it is about to crash. At low speed you genuinely cannot tell them apart … and THAT is the interesting part, not the warm-up.
+
+[sarcastic] Push the speed up, and only one of them is still doing its job.
