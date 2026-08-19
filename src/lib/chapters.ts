@@ -26,7 +26,7 @@ export const CHAPTERS: Chapter[] = [
     slug: "the-idea",
     title: "The Idea",
     blurb:
-      "The oldest of the five definitions, and the one closest to the term's early use in control. What a dynamics model actually is, what having one buys you, and why a better model has never removed the problem of deciding when to trust it.",
+      "The oldest thing the phrase has ever meant, and the one it was coined for. What a dynamics model actually is, what having one buys you, and why a better model has never removed the problem of deciding when to trust it.",
     demo: "Two cars and one wall, then a planner that gets worse the harder it searches.",
     minutes: 14,
     status: "ready",
@@ -117,7 +117,7 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
   },
   "the-idea": {
     title: "这个想法",
-    blurb: "五种定义中最古老的一种，也是最贴近这个词在控制领域早期用法的一种。动力学模型到底是什么，有了它能换来什么，以及为什么把模型做得更好，从来没能消除“什么时候该相信它”这个问题。",
+    blurb: "这个说法最古老的一层含义，也是这个词当初被造出来时指的东西。动力学模型到底是什么，有了它能换来什么，以及为什么把模型做得更好，从来没能消除“什么时候该相信它”这个问题。",
     demo: "两辆车和一堵墙，然后是一个搜索越卖力、结果越差的规划器。",
   },
   prediction: { title: "预测即学习", blurb: "猜下一个东西，检验，修正。", demo: "" },

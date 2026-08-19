@@ -29,9 +29,10 @@ depends on what has not happened yet.
 
 Take what you have. Run it forward. Move for what comes next.
 
-That is a dynamics model: the oldest of the five definitions, and the one the
-term was coined for. What one is, what having one buys you, and the way it
-fails that no amount of engineering has removed.
+That is a dynamics model. Of everything the phrase *world model* now gets used
+for, it is the oldest, and it is the one the term was coined for. What one is,
+what having one buys you, and the way it fails that no amount of engineering
+has removed.
 
 One thing to settle first, because it trips people who go on to the papers. The
 model does not act. It predicts what would happen. Something else reads those
@@ -43,8 +44,8 @@ split holds all the way through here.
 
 ## What the model actually holds
 
-You saw the shape in Figure 1.3. Where you are, what you do, what comes next. A
-dynamics model <Gloss>dynamics is just the study of how things change over
+The shape of it is not complicated. Where you are, what you do, what comes
+next. A dynamics model <Gloss>dynamics is just the study of how things change over
 time, so a dynamics model is a model of what happens next</Gloss> learns that,
 and usually learns what the step was worth as well.
 
@@ -71,9 +72,9 @@ let it read its own output, and you get a future nobody has seen. That is a
 **rollout** <Gloss>one imagined run forward: predict, feed the prediction back
 in, predict again</Gloss>, and its length is the horizon.
 
-That is the property the whole category is sorted by. Not how real it looks.
-Whether you can run it forward under actions nobody took, and go shopping among
-them.
+That is the property that does the work, and it is worth being blunt about what
+it is not. Not how real the thing looks. Whether you can run it forward under
+actions nobody took, and go shopping among them.
 
 The idea is older than the papers usually cited for it. Thrun, Möller and
 Linden were already chaining a learned world model to choose future actions in
@@ -200,8 +201,7 @@ together they walk you into the failure this whole field is organised around.
 
 Two things go wrong, and they are not the same thing.
 
-**Errors compound.** Figure 1.9 was built for this one. A model that is
-slightly wrong once is fine. A model that is slightly wrong and then reads its
+**Errors compound.** A model that is slightly wrong once is fine. A model that is slightly wrong and then reads its
 own answer back in is fine for a while and then is nowhere near. Nothing breaks
 at any step. A one-step model can be accurate enough to trust while a
 hundred-step fantasy stitched out of that same model is worthless. So there is
