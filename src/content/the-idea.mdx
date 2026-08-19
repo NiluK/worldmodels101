@@ -1,0 +1,202 @@
+A professional tennis serve leaves the racket at around 200 km/h and arrives
+about 500 milliseconds later. In that window the returner has to read the ball,
+choose a shot, move two or three metres, and swing.
+
+The problem is that none of those numbers work. Signal from retina to visual
+cortex takes something like 60&ndash;100 ms. Getting a large muscle group to
+actually move takes another 150 ms or so. By the time the returner *knows*
+where the ball is, it has already travelled several metres past there. Add the
+time to swing and you are over budget before you have decided anything.
+
+So the returner is not reacting to the ball. They cannot be. They are reacting
+to a **prediction** of the ball: a forecast produced by something in their
+nervous system that took the server's shoulder rotation, the toss, the
+racket angle, and the first few frames of flight, and extrapolated.
+
+<MarginNote>
+Cricket batters facing a 145 km/h delivery have roughly 400 ms and the same
+problem. Eye-tracking studies find that good batters make a predictive saccade
+to where the ball is *going* to bounce, ahead of it arriving, and that
+this is one of the things separating elite batters from merely good ones.
+</MarginNote>
+
+That forecasting machinery is the subject of this chapter.
+
+## A definition
+
+Everything from here to Chapter 6 uses *world model* in the Controller sense.
+So: a **world model** is a learned, internal simulator of an environment:
+something that, given the current state of the world and an action under
+consideration, returns what the world will look like next.
+
+Written down, it is a conditional distribution over next states:
+
+$$
+p_\theta(s_{t+1} \mid s_t, a_t)
+$$
+
+where $s_t$ is the state at time $t$, $a_t$ is the action taken, and $\theta$
+are learned parameters. Often you also want a reward model $r_\theta(s_t, a_t)$
+if you intend to do anything goal-directed with it.
+
+Each part of that definition hides a problem, and each problem turns into a
+chapter later.
+
+**It is learned.** A hand-written physics engine fits the functional form and
+nobody calls it a world model. The interesting case is when $p_\theta$ is
+fitted from observed experience, which means it can cover domains nobody has
+written equations for: cloth, crowds, other agents, the behaviour of a
+user interface.
+
+**It is generative in the sense that matters: it can be rolled out.** Apply it
+to its own output and you get $s_{t+2}$, then $s_{t+3}$. A single-step
+predictor you can iterate becomes a simulator you can search inside. This is
+where the power comes from and, as Chapter 5 shows, where it breaks down.
+
+**You almost never have $s_t$.** You have pixels, or audio, or a sensor
+reading. The true state is hidden, and recovering something usable from
+observations is a large part of the practical work. Chapter 4 is about that
+gap.
+
+## What a model buys you
+
+Suppose you have one. What is it for?
+
+**Planning.** With a simulator you can evaluate an action before committing to
+it. The canonical form is to search over action sequences and take the one your
+model says works out best:
+
+$$
+a^{*}_{t:t+H} = \arg\max_{a_{t:t+H}} \; \mathbb{E}\left[ \sum_{k=0}^{H} \gamma^{k} \, r_\theta(s_{t+k}, a_{t+k}) \right]
+$$
+
+You imagine $H$ steps of each candidate future, score them, and act on the
+winner. No trial and error in the real world, which matters enormously when
+trial and error means crashing a drone.
+
+**Sample efficiency.** Reality is a slow and expensive teacher. A model is a
+fast and cheap one, and once it exists you can generate as much synthetic
+experience as you have compute for. This is the main practical
+argument for model-based methods, and Chapter 6 is entirely about cashing it
+in.
+
+**Counterfactuals.** A model answers *what would have happened if I had done
+something else*, a question the world itself refuses to answer, because
+you only ever get to run the experiment once. Credit assignment, regret, and
+most of what we informally call reasoning depend on being able to ask it.
+
+## Two ways to cross a road
+
+Here is the difference, made small enough to watch.
+
+Two identical cars approach two identical walls. The first is a **reflex**: it
+brakes when the wall is closer than some fixed distance. Somebody tuned that
+distance once, it worked, and it shipped.
+
+The second carries a **model** of its own braking. Every tick it rolls that
+model forward (if I brake as hard as I can, starting now, where do I come to
+rest?) and it brakes the moment that imagined stopping point ends up
+inside the wall.
+
+<Figure
+  n="2.1"
+  caption={<>Both controllers at low speed, then higher. The vermilion line is the model car&rsquo;s imagined stopping point: not a measurement, a prediction, redrawn every frame. Drag the speed up and watch which controller notices.</>}
+>
+  <BrakingDemo />
+</Figure>
+
+At low approach speeds the two are indistinguishable, and this is the important
+part of the demonstration rather than a warm-up. Reflexes are cheap, fast, and
+correct across the whole regime they were tuned in. There is no reason to build
+anything more complicated, and evolution and engineering both spend most of
+their time here.
+
+Push the speed up and the reflex does not degrade gracefully. It fails at a
+threshold, completely, and it fails without any internal signal that something
+has changed. The fixed trigger distance encodes an assumption about
+speed that nothing in the controller knows it is making. The model car slows
+earlier, because $v^2/2a$ grew and it can see that it grew.
+
+<MarginNote>
+This is the real dividing line, and it is not &ldquo;model-based is better&rdquo;.
+A reflex is a *cached answer*. A model is the thing that lets you compute a new
+answer when the question changes. Caches are faster; you just have to know when
+yours has gone stale.
+</MarginNote>
+
+The model car is not smarter. It is doing something structurally different: it
+has a representation of its own dynamics that it can query with hypothetical
+inputs. That representation generalises to speeds nobody tuned it for, because
+the relationship it captured was the actual one.
+
+## The old idea
+
+None of this is new. It is one of the oldest ideas in the study of mind, and it
+keeps being rediscovered by fields that do not read each other.
+
+In 1943 the psychologist Kenneth Craik put it about as well as it has been put:
+
+> If the organism carries a &lsquo;small-scale model&rsquo; of external reality
+> and of its own possible actions within its head, it is able to try out
+> various alternatives, conclude which is the best of them, react to future
+> situations before they arise, utilise the knowledge of past events in dealing
+> with the present and the future, and in every way to react in a much fuller,
+> safer, and more competent manner to the emergencies which face it.
+
+Control theory got there independently and made it work. The Kalman filter
+(1960) maintains an estimate of hidden state by running a forward model of the
+system and correcting it against observations: predict, observe, correct, repeat. Apollo's navigation computer ran one, and so does most of the aerospace
+industry. The
+limitation is that you had to supply the dynamics yourself.
+
+The learning-based line runs through Schmidhuber's work around 1990 on
+recurrent networks that model their own environment and are then used for
+planning, and through Sutton's Dyna (1991), which interleaves learning from
+real experience with learning from experience the model made up. Ha and
+Schmidhuber's 2018 paper *World Models*, which is where most people first
+met the phrase, put a visual encoder, a recurrent dynamics model, and a
+tiny controller together and trained the controller almost entirely inside the
+model's hallucinations. That architecture, encoder plus dynamics plus policy,
+is still the skeleton of the field.
+
+What changed after 2018 was not the idea. It was that the components got good.
+Chapters 6 through 8 are the story of what happens when each piece of that
+skeleton gets scaled up: Dreamer for the dynamics, JEPA for the
+representation, and video generation models for the whole thing at once.
+
+## Where it gets hard
+
+If it were as easy as Figure 2.1 makes it look, this would be a much shorter
+document. Two problems recur, and the rest of the course is organised around
+them.
+
+**You do not get the state.** The braking demo handed the model an exact
+position and velocity. Real agents get a camera. Somewhere between the pixels
+and the prediction, something has to decide what about this scene is *state*
+(what will matter later) and throw away the rest. Get that wrong
+and the dynamics model is trying to forecast the colour of individual leaves.
+Chapters 3, 4 and 7.
+
+**The model is wrong, and rolling it out makes it wronger.** Every prediction
+carries error; feeding predictions back in as inputs compounds it. Fifty steps
+into an imagined future you are frequently somewhere the training data never
+went, being confidently wrong about it. Worse, if you optimise a policy against
+that model, the optimiser will hunt for exactly those regions, the places
+where the model promises rewards reality will not pay. Chapters 5, 6 and 9.
+
+Most of the modern literature is a response to one or both.
+Once you can see that, the papers get much easier to read.
+
+## In short
+
+- A world model is a learned simulator: state and action in, next state out.
+- Roll it forward and you can plan, learn cheaply, and ask counterfactuals.
+- Reflexes are not inferior. They are cached answers. Models earn their
+  cost precisely when conditions leave the range the cache was built for.
+- The idea is eighty years old. What is new is that the pieces finally work.
+- The two enemies are **representation** (what is state?) and **compounding
+  error** (the model is wrong and you keep using it anyway).
+
+Next: why *predict the next thing*, a training objective that sounds far too
+simple, turns out to be enough to pull the structure of an
+environment out of raw experience.
