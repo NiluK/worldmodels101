@@ -11,6 +11,9 @@ import { Quote, Gloss } from "@/components/quote";
 import { TransitionEquation } from "@/components/transition-equation";
 import { GeneratedLandscape } from "@/components/generated-landscape";
 import { ArchitectureTimeline } from "@/components/architecture-timeline";
+import { HorizonSlider } from "@/components/horizon-slider";
+import { RolloutEquation } from "@/components/rollout-equation";
+import { Quiz } from "@/components/quiz";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -29,6 +32,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     TransitionEquation,
     GeneratedLandscape,
     ArchitectureTimeline,
+    HorizonSlider,
+    RolloutEquation,
+    Quiz,
     ...components,
   };
 }

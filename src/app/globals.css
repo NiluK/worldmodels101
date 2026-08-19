@@ -50,6 +50,10 @@
   --terrain-3: #6e7a5c;
   --terrain-4: #6b5d43;
 
+  /* --imagine reads at only 3.95:1 on --imagine-soft, so text placed on that
+     tint uses this darker step instead. Dark mode already clears AA there. */
+  --imagine-on-soft: #b1390d;
+
   --gloss:      #716b62;
 
   --imagine:      #c23f0e;
@@ -78,6 +82,7 @@
     --ink:          #ede7da;
     --ink-muted:    #9a9284;
     --ink-faint:    #89837b;
+    --imagine-on-soft: #f2703a;
     --gloss:        #9a9284;
   --terrain-1: #3f4a3a;
   --terrain-2: #4e5c44;
@@ -106,6 +111,7 @@
   --ink:          #ede7da;
   --ink-muted:    #9a9284;
   --ink-faint:    #89837b;
+  --imagine-on-soft: #f2703a;
   --gloss:        #9a9284;
   --terrain-1: #3f4a3a;
   --terrain-2: #4e5c44;
@@ -128,6 +134,7 @@
   --color-ink-muted:    var(--ink-muted);
   --color-ink-faint:    var(--ink-faint);
   --color-gloss:        var(--gloss);
+  --color-imagine-on-soft: var(--imagine-on-soft);
   --color-terrain-1:    var(--terrain-1);
   --color-terrain-2:    var(--terrain-2);
   --color-terrain-3:    var(--terrain-3);
@@ -248,6 +255,11 @@ body::before {
 }
 
 /* margin notes ride the left rail on wide screens, inline on narrow */
+/* A note in the left rail must not push the main column apart. It is still a
+   grid item, so it would otherwise claim a row of its own and open a gap the
+   height of the note between the paragraphs either side of it. Zero height plus
+   visible overflow lets it render into the rail beside the following text
+   without occupying any vertical space of its own. */
 .track > .marginnote {
   grid-column: rail-start / main-start;
   font-family: var(--font-mono);
@@ -257,6 +269,14 @@ body::before {
   padding-right: 1.25rem;
   text-align: right;
   align-self: start;
+}
+
+@media (min-width: 1241px) {
+  .track > .marginnote {
+    height: 0;
+    margin: 0;
+    overflow: visible;
+  }
 }
 @media (max-width: 1240px) {
   .track > .marginnote {

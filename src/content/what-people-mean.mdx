@@ -279,16 +279,28 @@ options before choosing. A model that answers it is called action-conditioned
 <Gloss>it is told which action was taken, so it can answer what-if instead of
 only what-next</Gloss>, and that is what control needs.
 
-**How far can it roll forward?** Planning feeds predictions back into
-themselves:
+**How far can it roll forward?** One prediction is rarely enough. To plan, a
+model has to feed its own answer back in and predict again, and again, on top
+of what it just made up. The number of steps you ask for is called the
+**horizon**.
 
-$$
-p(s_{t+1} \mid s_t, a_t) \;\Longrightarrow\; p(s_{t+1:t+H} \mid s_t, a_{t:t+H-1})
-$$
+<Figure
+  n="1.8"
+  caption={<>The same model asked for a stretch of future instead of a single step. Two things grow and one does not, which is the whole difficulty in one line.</>}
+>
+  <RolloutEquation />
+</Figure>
 
-$H$ is the horizon: how many steps ahead you are asking about. Errors pile up
-along it, because each imagined state becomes the input to the next prediction.
+Errors pile up along that stretch. Nothing dramatic happens at any single step,
+which is what makes it hard to notice: the model is only ever slightly wrong.
 Get step one slightly wrong and step twenty can be somewhere else entirely.
+
+<Figure
+  n="1.9"
+  caption={<>Both dots start in the same place under the same rules, except one is running dynamics that are a few percent off. Drag to about 8 and they are still together. Keep going. Nothing breaks at any step; the gap is the accumulation.</>}
+>
+  <HorizonSlider />
+</Figure>
 
 Dreamer exists to learn behaviour across many imagined steps. DeepMind names
 long-horizon consistency as a central open problem for generated worlds. Same
@@ -296,24 +308,27 @@ enemy, opposite ends of the field.
 
 ## What to ask next time
 
-Given anything labelled a world model:
+Next time something is called a world model, six questions will place it.
 
-- **What is predicted?** Pixels, explicit structure, compact latent state,
-  embeddings, or nothing because the claim is about internals.
-- **Where is the state?** Observed, inferred from history, represented
-  geometrically, or asserted to exist inside activations.
-- **Can actions change it?** Prediction and prediction-under-intervention are
-  different.
-- **What survives leaving frame?** Explicit, learned, approximate, or outside
-  the contract.
-- **Does it keep more than one future?** Or collapse early to one.
-- **How many steps before it breaks?** A good one-step predictor can be useless
-  by step twenty.
-- **What would falsify it?** An implausible frame, inconsistent geometry, wrong
-  latent dynamics and an uninterpretable representation are four different
-  failures.
+- **What does it actually predict?** Pictures, geometry you could load into
+  another program, a short list of numbers standing for the situation, a
+  summary of the next frame, or nothing at all, because the claim is about what
+  someone found inside a network.
+- **What does it keep when you look away?** Structure it can hand you, or
+  consistency it learned to produce. From where you are standing those look the
+  same, so ask which one is being promised.
+- **Can your actions change the answer?** Predicting what happens next and
+  predicting what happens if *you* do something are different jobs. Only the
+  second is any use for deciding what to do.
+- **Does it keep more than one future?** Or does it pick one and sound certain
+  about it.
+- **How many steps before it drifts?** Something convincing at step one can be
+  useless by step twenty, and nothing will look broken along the way.
+- **What would show it was wrong?** An unconvincing picture, geometry that does
+  not line up, a plan that fails when you run it, and a representation nobody
+  can read are four different failures. Work out which one would count.
 
-Where a claim holds under only one definition, this course says which.
+Where a claim only holds under one of the five, this course says which.
 
 Now go back to the clip. It is a Renderer, and you can say why: it predicts
 observations, it holds the room because it learned to, and nothing in it
@@ -322,6 +337,15 @@ promises geometry underneath.
 The next one that goes past your timeline will be called a world model too. The
 useful question is not whether it is impressive. It is which of the five it is,
 and whether the person posting it could tell you.
+
+## Try it
+
+<Figure
+  n="1.10"
+  caption={<>Six systems, none of them named in this chapter. The last one is a trap, and it is the mistake worth making once here rather than in a meeting.</>}
+>
+  <Quiz />
+</Figure>
 
 ---
 
@@ -332,7 +356,7 @@ and only recently any good.
 ## Sources
 
 <Figure
-  n="1.8"
+  n="1.11"
   caption={<>Ordered for someone building on this rather than for historical completeness. First-party material preferred throughout.</>}
 >
   <SourceList />
