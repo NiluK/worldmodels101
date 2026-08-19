@@ -26,8 +26,8 @@ export const CHAPTERS: Chapter[] = [
     slug: "the-idea",
     title: "The Idea",
     blurb:
-      "The oldest thing the phrase has ever meant, and the one it was coined for. What a dynamics model actually is, what having one buys you, and why a better model has never removed the problem of deciding when to trust it.",
-    demo: "Two cars and one wall, then a planner that gets worse the harder it searches.",
+      "A model you can run forward lets you try an action before paying for it. The trouble is that a search good enough to find the best plan is also good enough to find the places the model is wrong.",
+    demo: "Half a second to return a serve, two cars and a wall, and a planner that gets worse the harder it searches.",
     minutes: 14,
     status: "ready",
   },
@@ -117,8 +117,8 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
   },
   "the-idea": {
     title: "这个想法",
-    blurb: "这个说法最古老的一层含义，也是这个词当初被造出来时指的东西。动力学模型到底是什么，有了它能换来什么，以及为什么把模型做得更好，从来没能消除“什么时候该相信它”这个问题。",
-    demo: "两辆车和一堵墙，然后是一个搜索越卖力、结果越差的规划器。",
+    blurb: "一个能往前推演的模型，让你在真的付出代价之前先把一个动作试一遍。麻烦在于：一个强到能找出最佳方案的搜索，也强到能找出模型出错的地方。",
+    demo: "半秒钟接一记发球，两辆车和一堵墙，还有一个搜索越卖力、结果越差的规划器。",
   },
   prediction: { title: "预测即学习", blurb: "猜下一个东西，检验，修正。", demo: "" },
   latents: { title: "潜在空间", blurb: "你没法预测像素，也不该去预测。", demo: "" },
