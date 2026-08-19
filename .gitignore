@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.gstack/
+
+# scratch voice A/B clips — regenerate with `pnpm narrate`
+/public/audio/compare/
