@@ -63,6 +63,7 @@ export function SearchSpill() {
               href={r.href}
               target="_blank"
               rel="noopener noreferrer"
+              data-spill-row
               className="flex items-start gap-4 px-5 py-4 transition-colors hover:bg-paper"
             >
               <DefinitionGlyph definition={r.definition} size={32} className="mt-0.5 shrink-0" />
@@ -77,7 +78,7 @@ export function SearchSpill() {
                 </span>
               </span>
 
-              <span className="hidden shrink-0 pt-0.5 text-right sm:block">
+              <span data-spill-meta className="hidden shrink-0 pt-0.5 text-right sm:block">
                 <span className="label !text-[0.6rem]">Turns out to be</span>
                 <span className="mt-1 block font-mono text-[0.72rem] text-ink-muted transition-colors group-hover:text-imagine">
                   {r.turns}

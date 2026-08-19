@@ -509,13 +509,37 @@ body::before {
   .prose h2 { margin-top: 2.2em; }
   p { orphans: 3; widows: 3; }
 
-  /* a printed link is useless without its destination */
+  /* A printed link is useless without its destination, but only in running
+     prose. Components lay their rows out in flex columns, and an inlined URL
+     there squeezes the text column until it wraps one word per line. */
   .prose :is(p, li) a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-family: var(--font-mono);
     font-size: 0.72em;
     color: var(--ink-muted);
     word-break: break-all;
+  }
+  /* Citations and the bibliography still need their destinations; they are in
+     block flow, so an inlined URL wraps normally instead of crushing a column. */
+  .prose figure :is([data-spill-row], [data-cite]) a[href^="http"]::after,
+  .prose figure a[href^="http"]::after {
+    content: " " attr(href);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    line-height: 1.4;
+    color: var(--ink-faint);
+    word-break: break-all;
+  }
+
+  /* The search list is three columns on screen and has no room for them on
+     paper. Targeted, because blanket-flattening every flex and grid inside a
+     figure destroys the map and the diagrams. */
+  [data-spill-row] { display: block !important; }
+  [data-spill-meta] {
+    display: block !important;
+    margin-top: 0.4rem;
+    text-align: left !important;
   }
 
   /* Scroll-reveal animations are a hazard in print: anything the reader never
