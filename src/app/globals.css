@@ -1,26 +1,402 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+/* ==========================================================================
+   World Models 101 — design system
+
+   Contrast contract (WCAG 2.1 AA), verified against --paper in both themes:
+     --ink, --ink-muted, --ink-faint, --imagine, --actual  >= 4.5:1  (text)
+     --rule-strong                                          >= 3.0:1  (form
+       borders, slider tracks, focus rings — anything a user operates)
+     --rule is decorative separation only; never rely on it to convey meaning.
+
+   Light and dark are NOT symmetric. On a dark ground, dimmer text recedes
+   hard; on a light ground, dark-grey against near-black is a much weaker
+   signal at the same L* distance. Light mode therefore needs a LARGER gap
+   than dark to look equally separated, which is why --gloss is its own token
+   rather than reusing --ink-muted.
+
+   Second constraint, learned the hard way: contrast alone is not the goal.
+   Muted text must also stay perceptually SEPARATE from body ink, or the
+   hierarchy collapses and a gloss reads as body copy. Target ~31 L* between
+   --ink and --ink-muted in both themes. Raising --ink-muted past that gap
+   makes the page technically more compliant and visibly worse.
+   Changing any of these means re-checking both the ratios and the gap.
+   Aesthetic: scientific field notebook. Warm paper, hairline rules, tick
+   marks, high-contrast editorial serif.
+   Central motif: VERMILION = what the model imagines.
+                  SLATE     = what actually happened.
+   ========================================================================== */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* ground */
+  --paper:        #f5f2ea;
+  --paper-raised: #fbf9f4;
+  --paper-sunk:   #ece7db;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ink */
+  --ink:        #191714;
+  --ink-muted:  #6b655b;
+  --ink-faint:  #716b62;
+  --rule:       #ddd6c8;
+  --rule-strong:#918a7c;
+
+  /* the two signals — the thesis of the whole site */
+  --gloss:      #716b62;
+
+  --imagine:      #c23f0e;
+  --imagine-soft: #f0dccf;
+  --actual:       #2a4e6e;
+  --actual-soft:  #d2dee8;
+
+  --grain-opacity: 0.035;
+
+  /* type */
+  --font-display: var(--font-instrument), Georgia, serif;
+  --font-body:    var(--font-newsreader), Georgia, serif;
+  --font-mono:    var(--font-plex-mono), ui-monospace, monospace;
+
+  /* measure + rails: the Distill-style three-track grid */
+  --measure: 40rem;
+  --rail: 13rem;
+  --gutter: 2.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --paper:        #131210;
+    --paper-raised: #1b1a17;
+    --paper-sunk:   #0d0c0b;
+    --ink:          #ede7da;
+    --ink-muted:    #9a9284;
+    --ink-faint:    #89837b;
+    --gloss:        #9a9284;
+    --rule:         #2e2b26;
+    --rule-strong:  #6c6862;
+    --imagine:      #f2703a;
+    --imagine-soft: #3a2318;
+    --actual:       #6fa3ce;
+    --actual-soft:  #182631;
+    --grain-opacity: 0.05;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper:        #131210;
+  --paper-raised: #1b1a17;
+  --paper-sunk:   #0d0c0b;
+  --ink:          #ede7da;
+  --ink-muted:    #9a9284;
+  --ink-faint:    #89837b;
+  --gloss:        #9a9284;
+  --rule:         #2e2b26;
+  --rule-strong:  #6c6862;
+  --imagine:      #f2703a;
+  --imagine-soft: #3a2318;
+  --actual:       #6fa3ce;
+  --actual-soft:  #182631;
+  --grain-opacity: 0.05;
+}
+
+@theme inline {
+  --color-paper:        var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunk:   var(--paper-sunk);
+  --color-ink:          var(--ink);
+  --color-ink-muted:    var(--ink-muted);
+  --color-ink-faint:    var(--ink-faint);
+  --color-gloss:        var(--gloss);
+  --color-rule:         var(--rule);
+  --color-rule-strong:  var(--rule-strong);
+  --color-imagine:      var(--imagine);
+  --color-imagine-soft: var(--imagine-soft);
+  --color-actual:       var(--actual);
+  --color-actual-soft:  var(--actual-soft);
+
+  --font-display: var(--font-display);
+  --font-body:    var(--font-body);
+  --font-mono:    var(--font-mono);
+}
+
+/* ---------- base ---------- */
+
+* { border-color: var(--rule); }
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  font-variant-numeric: oldstyle-num;
+  text-rendering: optimizeLegibility;
+}
+
+/* paper grain — sits above the ground, below everything else */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Visible focus for every interactive element (WCAG 2.4.7). :where() keeps
+   specificity at zero so a component can still style its own focus state. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--imagine);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+::selection {
+  background: var(--imagine);
+  color: var(--paper);
+}
+
+/* ---------- type primitives ---------- */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--ink-muted);
+}
+
+.tnum { font-variant-numeric: lining-nums tabular-nums; }
+
+/* ---------- the three-track reading grid ---------- */
+
+.track {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [rail-start] minmax(0, var(--rail))
+    [main-start] minmax(0, var(--measure))
+    [main-end] minmax(0, var(--rail))
+    [rail-end] minmax(var(--gutter), 1fr)
+    [full-end];
+  column-gap: 2rem;
+}
+.track > * { grid-column: main; }
+.track > .wide { grid-column: rail; }
+.track > .bleed { grid-column: full; }
+
+/* Below the breakpoint the rails cannot be paid for: collapse to one column
+   and let margin notes fall inline. */
+@media (max-width: 1240px) {
+  :root { --gutter: 1.5rem; }
+  .track {
+    grid-template-columns:
+      [full-start] minmax(var(--gutter), 1fr)
+      [rail-start main-start] minmax(0, var(--measure))
+      [main-end rail-end] minmax(var(--gutter), 1fr)
+      [full-end];
+    column-gap: 0;
+  }
+}
+
+/* margin notes ride the left rail on wide screens, inline on narrow */
+.track > .marginnote {
+  grid-column: rail-start / main-start;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  padding-right: 1.25rem;
+  text-align: right;
+  align-self: start;
+}
+@media (max-width: 1240px) {
+  .track > .marginnote {
+    grid-column: main;
+    text-align: left;
+    border-left: 2px solid var(--imagine);
+    padding: 0.15rem 0 0.15rem 1rem;
+    margin: 0.5rem 0 1.5rem;
+  }
+}
+
+/* ---------- prose ---------- */
+
+.prose > * + * { margin-top: 1.35em; }
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-top: 3.5em;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  position: relative;
+}
+.prose h2::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 0;
+  width: 3.5rem; height: 3px;
+  background: var(--imagine);
+}
+.prose h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.005em;
+  margin-top: 2.4em;
+}
+.prose p { hanging-punctuation: first last; }
+/* Link styling applies to running prose only. Interactive components dropped
+   into the flow (figures, maps, video, result lists) style their own links —
+   otherwise a component wrapped in one big anchor gets underlined end to end. */
+.prose :is(p, li, blockquote, td, th, h2, h3) a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--imagine);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.18em;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+.prose :is(p, li, blockquote, td, th, h2, h3) a:hover {
+  background: var(--imagine);
+  color: var(--paper);
+  text-decoration-color: transparent;
+}
+/* Components dropped into the reading flow bring their own typography. Without
+   this they inherit prose list markers, bullets and link underlines — a row
+   wrapped in one anchor ends up underlined end to end. */
+.prose figure a,
+.prose figure a:hover {
+  color: inherit;
+  background: none;
+  text-decoration: none;
+}
+.prose figure :is(ul, ol) {
+  list-style: none;
+  padding-left: 0;
+}
+.prose figure li::before { content: none; }
+.prose figure li + li { margin-top: 0; }
+
+.prose strong { font-weight: 650; }
+.prose em { font-style: italic; }
+.prose ul, .prose ol { padding-left: 1.4rem; }
+.prose ul { list-style: none; }
+.prose ul > li { position: relative; }
+.prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1.1rem; top: 0.72em;
+  width: 5px; height: 5px;
+  background: var(--imagine);
+}
+.prose ol { list-style: decimal; }
+.prose ol > li::marker { font-family: var(--font-mono); font-size: 0.8em; color: var(--ink-muted); }
+.prose li + li { margin-top: 0.5em; }
+
+.prose blockquote {
+  border-left: 2px solid var(--actual);
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.84em;
+  background: var(--paper-sunk);
+  padding: 0.12em 0.35em;
+  border: 1px solid var(--rule);
+}
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+}
+.prose pre code { background: none; border: none; padding: 0; font-size: inherit; }
+
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.prose th, .prose td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--rule); }
+.prose th { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
+
+.prose .katex { font-size: 1.02em; }
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.6rem 0;
+}
+
+/* section anchors */
+.prose h2, .prose h3 { scroll-margin-top: 5rem; }
+
+/* ---------- semantic signal marks ---------- */
+
+.imagine { color: var(--imagine); }
+.actual  { color: var(--actual); }
+
+.key {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.key::before {
+  content: "";
+  width: 0.7rem; height: 0.7rem;
+  background: currentColor;
+  transform: translateY(0.02rem);
+}
+
+/* ---------- rules & ticks ---------- */
+
+.ticks {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--rule) 0 1px,
+    transparent 1px 0.5rem
+  );
+  height: 0.4rem;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(0.75rem); }
+  to   { opacity: 1; transform: none; }
+}
+.rise { animation: rise 700ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@keyframes draw {
+  from { stroke-dashoffset: var(--len, 1000); }
+  to   { stroke-dashoffset: 0; }
 }
