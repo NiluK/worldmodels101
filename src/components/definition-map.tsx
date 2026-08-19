@@ -4,19 +4,19 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import Link from "next/link";
 import { useState } from "react";
-import { SENSES } from "@/lib/senses";
+import { SENSES } from "@/lib/definitions";
 import { VideoFigure, NoVideo } from "./video-figure";
-import { SenseGlyph } from "./sense-glyph";
+import { DefinitionGlyph } from "./definition-glyph";
 
 /**
  * The disambiguator.
  *
- * Four of the five senses are systems you can run, ordered by how abstract the
+ * Four of the five definitions are systems you can run, ordered by how abstract the
  * thing they predict is. The fifth is a claim about what is inside a network,
  * so it sits off the axis rather than at one end of it — the point being that
  * it is not a competing answer to the same question.
  */
-export function SenseMap() {
+export function DefinitionMap() {
   const still = useReducedMotion();
   const [open, setOpen] = useState<string | null>(null);
   const runnable = SENSES.filter((s) => s.id !== "implicit");
@@ -52,7 +52,7 @@ export function SenseMap() {
                     on ? "bg-imagine" : "bg-rule-strong group-hover:bg-actual"
                   }`}
                 />
-                <SenseGlyph sense={s.id} size={34} className="mt-1" />
+                <DefinitionGlyph definition={s.id} size={34} className="mt-1" />
                 <span className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">
                   Predicts {s.predicts}
                 </span>
@@ -90,7 +90,7 @@ export function SenseMap() {
                 : "border-rule bg-paper-raised hover:bg-paper"
             }`}
           >
-            <SenseGlyph sense={implicit.id} size={34} />
+            <DefinitionGlyph definition={implicit.id} size={34} />
             <span
               className={`display text-[1.45rem] leading-none transition-colors ${
                 open === implicit.id ? "text-imagine" : ""

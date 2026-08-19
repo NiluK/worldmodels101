@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 /**
- * The object underneath all five senses.
+ * The object underneath all five definitions.
  *
  * World → observation → belief → imagined futures → action → changed world.
  * Each sense is a different grab on the same loop, which is the whole argument
@@ -152,7 +152,7 @@ export function AgentLoop() {
       </div>
 
       <p className="mt-3 min-h-[2.6em] text-[0.95rem] leading-relaxed text-ink-muted">
-        {claim ? claim.note : "Every sense is a specialist on one arc of this loop. Hover any of them."}
+        {claim ? claim.note : "Every definition is a specialist on one arc of this loop. Hover any of them."}
       </p>
     </div>
   );

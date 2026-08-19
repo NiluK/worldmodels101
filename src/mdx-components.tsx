@@ -1,10 +1,10 @@
 import type { MDXComponents } from "mdx/types";
 import { Figure, MarginNote } from "@/components/figure";
 import { BrakingDemo } from "@/components/braking-demo";
-import { SenseMap } from "@/components/sense-map";
+import { DefinitionMap } from "@/components/definition-map";
 import { VideoFigure, VideoPair, NoVideo } from "@/components/video-figure";
 import { SearchSpill } from "@/components/search-spill";
-import { SenseGlyph } from "@/components/sense-glyph";
+import { DefinitionGlyph } from "@/components/definition-glyph";
 import { AgentLoop } from "@/components/agent-loop";
 import { Lineage, SourceList } from "@/components/lineage";
 import { Quote, Gloss } from "@/components/quote";
@@ -14,12 +14,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Figure,
     MarginNote,
     BrakingDemo,
-    SenseMap,
+    DefinitionMap,
     VideoFigure,
     VideoPair,
     NoVideo,
     SearchSpill,
-    SenseGlyph,
+    DefinitionGlyph,
     AgentLoop,
     Lineage,
     SourceList,

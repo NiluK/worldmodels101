@@ -22,7 +22,13 @@ export type Sense = {
 };
 
 /**
- * The five things people mean by "world model", ordered by how abstract the
+ * The five things people mean by "world model".
+ *
+ * Called definitions rather than senses throughout. "Sense" is the correct
+ * linguistic term for a distinct meaning of a word, but this chapter is about
+ * observation and perception, so "the five senses" reads as a pun nobody
+ * wrote. Not "components" either: these do not assemble into one system, and
+ * the encoder/dynamics/controller trio in Chapter 2 already owns that word., ordered by how abstract the
  * predicted object is: pixels, then geometry, then compact state, then
  * embeddings. The fifth is not a system you run at all, which is why it sits
  * off the axis.
@@ -99,7 +105,7 @@ export const SENSES: Sense[] = [
     gloss:
       "A claim about structure found inside a network trained for something else. There is no world-model interface to call; the assertion is about what a probe can recover from activations.",
     test:
-      "Is the claim about what a system does, or about what is inside it? Only this sense is about the inside.",
+      "Is the claim about what a system does, or about what is inside it? Only this definition is about the inside.",
     systems: ["Othello-GPT", "“does GPT have a world model?”"],
     camp: "Mechanistic interpretability",
     chapter: 9,

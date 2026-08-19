@@ -1,8 +1,8 @@
-import { SenseGlyph } from "./sense-glyph";
+import { DefinitionGlyph } from "./definition-glyph";
 
 /**
  * What you actually get when you search the phrase, laid out as the thing it
- * describes. Each row is one of the five senses, so the reader meets the
+ * describes. Each row is one of the five definitions, so the reader meets the
  * taxonomy as a list of real artefacts they can go and open before it is ever
  * presented as a taxonomy.
  */
@@ -65,7 +65,7 @@ export function SearchSpill() {
               rel="noopener noreferrer"
               className="flex items-start gap-4 px-5 py-4 transition-colors hover:bg-paper"
             >
-              <SenseGlyph sense={r.sense} size={32} className="mt-0.5 shrink-0" />
+              <DefinitionGlyph definition={r.sense} size={32} className="mt-0.5 shrink-0" />
 
               <span className="min-w-0 flex-1">
                 <span className="block text-[1rem] leading-snug">{r.what}</span>

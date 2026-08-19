@@ -1,16 +1,16 @@
 /**
- * One mark per sense, drawn in the site's hairline language. The vermilion
+ * One mark per definition, drawn in the site's hairline language. The vermilion
  * element in each is always the thing being *predicted*, so the glyphs read as
  * a set: raster cells, mesh vertex, next state, masked embedding, probe.
  *
  * Reused wherever the taxonomy appears, so the reader learns five shapes once.
  */
-export function SenseGlyph({
-  sense,
+export function DefinitionGlyph({
+  definition,
   size = 34,
   className = "",
 }: {
-  sense: string;
+  definition: string;
   size?: number;
   className?: string;
 }) {
@@ -26,7 +26,7 @@ export function SenseGlyph({
   const ink = "var(--ink-muted)";
   const hot = "var(--imagine)";
 
-  switch (sense) {
+  switch (definition) {
     // pixels — a raster, with the next cells still being written
     case "renderer":
       return (

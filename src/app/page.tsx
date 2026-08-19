@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PredictionHero } from "@/components/prediction-hero";
 import { CHAPTERS, TOTAL_MINUTES } from "@/lib/chapters";
 import { Subscribe } from "@/components/subscribe";
-import { SenseMap } from "@/components/sense-map";
+import { DefinitionMap } from "@/components/definition-map";
 
 function runtime(mins: number) {
   const h = Math.floor(mins / 60);
@@ -69,7 +69,7 @@ export default function Home() {
           </p>
         </div>
         <div className="mt-8">
-          <SenseMap />
+          <DefinitionMap />
         </div>
       </section>
 

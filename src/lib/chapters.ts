@@ -17,7 +17,7 @@ export const CHAPTERS: Chapter[] = [
     title: "What People Mean",
     blurb:
       "The phrase now covers at least five different things, and the people using it rarely say which. A field guide to telling them apart before you read another paper about them.",
-    demo: "The map: five senses of the term, and the question that tells them apart.",
+    demo: "The map: five definitions of the term, and the question that tells them apart.",
     minutes: 13,
     status: "ready",
   },
@@ -26,7 +26,7 @@ export const CHAPTERS: Chapter[] = [
     slug: "the-idea",
     title: "The Idea",
     blurb:
-      "The oldest of the five senses, and the one that gave the term its technical meaning: a learned simulator you can roll forward and plan against.",
+      "The oldest of the five definitions, and the one that gave the term its technical meaning: a learned simulator you can roll forward and plan against.",
     demo: "Two cars, one corner: a reflex controller and a predictive one, side by side.",
     minutes: 12,
     status: "ready",
