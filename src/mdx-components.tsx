@@ -16,6 +16,7 @@ import { RolloutEquation } from "@/components/rollout-equation";
 import { Quiz } from "@/components/quiz";
 import { Planner } from "@/components/planner";
 import { Exploitation } from "@/components/exploitation";
+import { ServeBudget } from "@/components/serve-budget";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -39,6 +40,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Quiz,
     Planner,
     Exploitation,
+    ServeBudget,
     ...components,
   };
 }

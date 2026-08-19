@@ -1,18 +1,31 @@
-You are running a fast break. The ball is in your hands, one defender is back,
-and a teammate is filling the far lane at a dead sprint.
+Tennis points start with a serve. One player throws the ball up and hits it as
+hard as they can. The other stands about twenty-four metres away on the far
+side of the net, and has to get a racket on it before it goes past. At
+professional level the ball leaves at something like 190 kilometres an hour, so
+there is roughly half a second between the two of them.
 
-Pass to where they are and the ball arrives behind them. That pass takes around
-half a second to get across, and in half a second a sprinting player covers ten
-feet or more. So you have to throw it at a patch of floor nobody is standing on,
-and trust that by the time the ball turns up, somebody will be.
+Half a second is not enough. Noticing something and beginning to move takes
+most of a quarter of a second before any part of you has gone anywhere, and
+then a whole body has to cover ground and swing.
 
-The player on the end of it is doing the same thing from the other side. They
-are not watching the ball and adjusting. They committed to the lane before it
-left your hands.
+So the good ones are not watching the ball. Work on professional play puts the
+earliest a movement could possibly be a response to the ball at somewhere
+around 140 to 160 milliseconds after the racket hits it. In one study of expert
+returners, the sideways movement starts at about 177 milliseconds, right on
+that edge. Whatever they are doing was mostly settled before contact. They read
+the ball toss, the shoulder and the angle of the racket face, and they move for
+a spot the ball has not reached.
 
-That does not prove there is a physics engine in a point guard's head. It
+That does not prove there is a physics engine in a tennis player's head. It
 proves something smaller and more useful. Past a certain speed, acting well
 depends on what has not happened yet.
+
+<Figure
+  n="2.1"
+  caption={<>Where the half second goes. Drag the serve up and the arrival line walks left into the returner's timeline. Somewhere around a hundred and forty-five the reactive plan stops fitting inside it, and the only version that still lands is the one that committed off the toss. The two returner budgets are illustrative; the 177 milliseconds is measured.</>}
+>
+  <ServeBudget />
+</Figure>
 
 Take what you have. Run it forward. Move for what comes next.
 
@@ -78,7 +91,7 @@ stop if it braked now.
 At the speed the first was tuned for, they do the same thing.
 
 <Figure
-  n="2.1"
+  n="2.2"
   caption={<>Below about forty the two are indistinguishable, and that is the important half of the demonstration. Drag the speed up and watch which one notices. What is being compared is one fixed rule against one thing that recomputes, not model-free against model-based in general.</>}
 >
   <BrakingDemo />
@@ -134,8 +147,8 @@ while driving, in its own compressed description of the scene, starting from
 raw pixels.
 
 <Figure
-  n="2.2"
-  caption={<>The planner writes down runs of actions, plays each one through the same model, and keeps the best. Faint lines are the rejects. Raise the budget and the plan improves, but only for as long as the model ranks the candidates honestly. Figure 2.3 is what happens when it stops.</>}
+  n="2.3"
+  caption={<>The planner writes down runs of actions, plays each one through the same model, and keeps the best. Faint lines are the rejects. Raise the budget and the plan improves, but only for as long as the model ranks the candidates honestly. Figure 2.4 is what happens when it stops.</>}
 >
   <Planner />
 </Figure>
@@ -204,7 +217,7 @@ near it. A weak search never finds it. A thorough one does, because the best
 route in the whole learned world runs straight through it.
 
 <Figure
-  n="2.3"
+  n="2.4"
   caption={<>The model believes there is a gap in the wall. There is not. Leave the effort low and the planner never finds it, takes the long way round, and gets there. Then turn the effort up. This is a failure the setup makes visible, not a law that more search always hurts.</>}
 >
   <Exploitation />
@@ -293,7 +306,7 @@ thing do when it does not know.
 ## Try it
 
 <Figure
-  n="2.4"
+  n="2.5"
   caption={<>Eight questions on the distinction that matters here. Not whether the agent looks clever, but where it works out its consequences, and when that working-out is allowed to run ahead of the evidence.</>}
 >
   <Quiz chapter={2} />
@@ -312,7 +325,7 @@ structure of a world out of raw experience.
 ## Sources
 
 <Figure
-  n="2.5"
+  n="2.6"
   caption={<>Ordered for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={2} />

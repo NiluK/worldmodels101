@@ -117,6 +117,48 @@ export function BrakingDemo() {
 
     const px = (f: number) => 26 + f * (W - 52);
 
+    /** side view, nose to the right: body, cabin, two wheels, brake light. */
+    function drawCar(cx: number, y: number, body: string, braking: boolean) {
+      const c = ctx!;
+      // wheels first so the body sits over them
+      c.fillStyle = palette.ink;
+      for (const wx of [cx - 8, cx + 8]) {
+        c.beginPath();
+        c.arc(wx, y + 7, 4, 0, Math.PI * 2);
+        c.fill();
+      }
+      // body
+      c.fillStyle = body;
+      c.beginPath();
+      c.moveTo(cx - 17, y + 6);
+      c.lineTo(cx - 17, y - 1);
+      c.lineTo(cx - 10, y - 2);
+      c.lineTo(cx - 5, y - 9);   // windscreen pillar, rear
+      c.lineTo(cx + 5, y - 9);
+      c.lineTo(cx + 11, y - 2);  // bonnet
+      c.lineTo(cx + 17, y - 1);
+      c.lineTo(cx + 17, y + 6);
+      c.closePath();
+      c.fill();
+      // cabin glass, knocked back from the body colour
+      c.save();
+      c.globalAlpha = 0.34;
+      c.fillStyle = palette.paper;
+      c.beginPath();
+      c.moveTo(cx - 4.5, y - 7.5);
+      c.lineTo(cx + 4, y - 7.5);
+      c.lineTo(cx + 8, y - 2.5);
+      c.lineTo(cx - 8, y - 2.5);
+      c.closePath();
+      c.fill();
+      c.restore();
+      // brake light at the back
+      if (braking) {
+        c.fillStyle = palette.imagine;
+        c.fillRect(cx - 18, y - 1, 3, 5);
+      }
+    }
+
     function drawLane(i: number, car: Car, label: string, isModel: boolean) {
       const y = lane(i);
       const wallX = px(WALL);
@@ -172,14 +214,8 @@ export function BrakingDemo() {
         ctx!.stroke();
       }
 
-      // car
-      const cx = px(Math.min(car.x, WALL));
-      ctx!.fillStyle = car.crashed ? palette.imagine : palette.actual;
-      ctx!.fillRect(cx - 15, y - 9, 30, 18);
-      if (car.braking) {
-        ctx!.fillStyle = palette.imagine;
-        ctx!.fillRect(cx - 15, y - 9, 5, 18);
-      }
+      // car, drawn side-on and facing the wall so the figure reads as a scene
+      drawCar(px(Math.min(car.x, WALL)), y, car.crashed ? palette.imagine : palette.actual, car.braking);
 
       // labels
       ctx!.fillStyle = palette.muted;
