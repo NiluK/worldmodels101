@@ -164,40 +164,47 @@ system.
 
 You have already run it.
 
-The switch in Figure 1.1 was labelled *hold the world*, and flipping it decided
-whether the marker was still standing there when you turned back. Off, the
-landscape rearranged itself behind you. On, it waited.
+Figure 1.1 has a switch marked *hold the world*. Turn it off, walk away from
+the marker, come back: it has moved. Turn it on and the marker is exactly where
+you left it.
+
+That suggests an easy way to tell these systems apart.
 
 Turn around. Walk away. Turn back. Is it the same room?
 
-It sorts your five tabs in about a minute, and it is wrong.
+It ought to work. Something that really holds a world inside it should keep the
+furniture where you left it. Something that is only drawing pictures should not
+be able to.
 
-Train a generator on enough video and it can learn to keep producing a room
-that stays consistent. Nothing is storing the room. Nothing is pinned to a
-coordinate. Staying consistent with what came before is simply a pattern in the
-training data, like every other pattern, and a model good enough at prediction
-will reproduce it.
+It does not work, and the reason is worth a minute.
 
-So persistence stops being evidence that something is held underneath. It
-becomes one more thing a large enough model can imitate, which means the
-question can no longer tell you which kind of system you are looking at.
+There are two ways to pass this test. You can store the room somewhere and look
+it up when the viewer turns back, which is what my switch does. Or you can get
+very, very good at drawing a room that matches the one you drew a moment ago.
+
+From the outside, those are identical. The furniture is still there either way,
+and nothing you can see from where you are standing tells you which just
+happened.
+
+A large model trained on a lot of video learns the second way. Nobody gave it a
+room to keep. It got good at continuing what it had already started, and
+continuing consistently is part of that.
 
 <MarginNote>
-DeepMind reports exactly this of Genie 3: environments holding together across
-multi-minute interactions, and detail recalled when you return to it. Treat it
-as reported rather than independently checked. Access is limited, and the
-consistency figures are the lab's own.
+DeepMind reports this of Genie 3: scenes holding together over several minutes,
+and details coming back when you return to them. Take it as their report rather
+than something anyone outside the lab can check.
 </MarginNote>
 
-That is the part a toy cannot show you. In Figure 1.1 persistence is a switch,
-because I wrote a switch. In a real renderer it is a behaviour that emerged
-from training, and it holds right up until it does not.
+So the question cannot sort them. Ask it anyway, because it points at something
+more useful than the answer it gives.
 
-So the question fails as a sorting rule. Keep it anyway, because it was asking
-something better than the job it was hired for.
+When you turn away from the chair, the chair does not stop existing. It stops
+being *visible*. Those are two different things, and nearly everything difficult
+about this subject lives in the gap between them.
 
-When the room leaves your field of view, it leaves your observation. It does
-not leave the world.
+What is actually there is called the **state**. The part of it you can see right
+now is called the **observation**.
 
 <Quote
   who="World Labs"
@@ -210,13 +217,14 @@ not leave the world.
   partial view of that reality.
 </Quote>
 
-The gap between state and observation has a name: partial observability
-<Gloss>you only ever see part of what is going on, so you have to work out the
-rest</Gloss>. The rest of this course lives inside it. The true state might include the chair
-behind you, the velocity of a ball already rolling, whether a cupboard is open.
-Your camera holds only what is visible now.
+You never get the state. You get observations, and you have to work backwards
+from them. The chair behind you, a ball still rolling somewhere out of shot,
+whether the cupboard is open: all real, none of it visible. Working out the
+rest from the part you can see is called **partial observability**, and
+Chapters 2 through 6 are largely about coping with it.
 
-The idea is older than any of the systems above.
+None of this is new. A Cambridge psychologist described the fix in 1943, long
+before there was anything to build it out of.
 
 <Quote
   who="Kenneth Craik"
@@ -229,6 +237,10 @@ The idea is older than any of the systems above.
   situations before they arise&hellip; and in every way to react in a much
   fuller, safer, and more competent manner to the emergencies which face it.
 </Quote>
+
+Carry a small model of the world in your head, and you can test an action
+before you take it. That is the whole idea, and every definition on the map is
+a different bet on what the model should contain.
 
 ## The loop
 
