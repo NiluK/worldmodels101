@@ -12,20 +12,20 @@ import { useState } from "react";
  */
 
 const NODES = [
-  { id: "world", x: 18, label: "World", sub: "hidden state sₜ" },
-  { id: "obs", x: 196, label: "Observation", sub: "oₜ" },
-  { id: "belief", x: 374, label: "Belief", sub: "internal state bₜ" },
-  { id: "imag", x: 552, label: "Imagination", sub: "possible futures" },
-  { id: "act", x: 730, label: "Action", sub: "aₜ" },
+  { id: "world", x: 8, label: "World", sub: "hidden state sₜ" },
+  { id: "obs", x: 199, label: "Observation", sub: "oₜ" },
+  { id: "belief", x: 390, label: "Belief", sub: "internal state bₜ" },
+  { id: "imag", x: 581, label: "Imagination", sub: "possible futures" },
+  { id: "act", x: 772, label: "Action", sub: "aₜ" },
 ];
-const W = 160;
+const W = 128;
 const H = 62;
 const Y = 74;
 
 const ARROWS = [
   { from: 0, to: 1, label: "observe" },
-  { from: 1, to: 2, label: "infer + remember" },
-  { from: 2, to: 3, label: "model dynamics" },
+  { from: 1, to: 2, label: "infer" },
+  { from: 2, to: 3, label: "predict" },
   { from: 3, to: 4, label: "choose" },
 ];
 
@@ -58,7 +58,7 @@ export function AgentLoop() {
 
   return (
     <div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto px-5 pt-6 md:px-8">
         <svg viewBox="0 0 908 216" className="block w-full min-w-[640px]" role="img"
           aria-label="The agent–environment loop: world, observation, belief, imagination, action, and back to the world.">
           <defs>
@@ -95,14 +95,14 @@ export function AgentLoop() {
 
           {/* the return: the action changes the world, and round again */}
           <path
-            d={`M ${NODES[4].x + W / 2} ${Y + H} L ${NODES[4].x + W / 2} 178 L ${NODES[0].x + W / 2} 178 L ${NODES[0].x + W / 2} ${Y + H + 4}`}
+            d={`M ${NODES[4].x + W / 2} ${Y + H} L ${NODES[4].x + W / 2} 186 L ${NODES[0].x + W / 2} 186 L ${NODES[0].x + W / 2} ${Y + H + 4}`}
             fill="none"
             stroke={claim && lit(4) && lit(0) ? "var(--imagine)" : "var(--ink-muted)"}
             strokeWidth="1.2"
             strokeDasharray="4 4"
             markerEnd="url(#ah)"
           />
-          <text x={454} y={172} textAnchor="middle" className="font-mono" fontSize="10"
+          <text x={NODES[0].x + W / 2 + (NODES[4].x + W / 2 - NODES[0].x - W / 2) / 2} y={176} textAnchor="middle" className="font-mono" fontSize="10"
             letterSpacing="1" fill="var(--ink-faint)">
             intervene · the world is now different
           </text>
@@ -131,7 +131,7 @@ export function AgentLoop() {
         </svg>
       </div>
 
-      <div className="mt-5 flex flex-wrap gap-2 border-t border-rule pt-4">
+      <div className="mt-6 flex flex-wrap gap-2 border-t border-rule px-5 pt-4 md:px-8">
         {Object.keys(CLAIMS).map((id) => (
           <button
             key={id}
@@ -151,7 +151,7 @@ export function AgentLoop() {
         ))}
       </div>
 
-      <p className="mt-3 min-h-[2.6em] text-[0.95rem] leading-relaxed text-ink-muted">
+      <p className="mt-3 min-h-[2.6em] px-5 pb-5 text-[0.95rem] leading-relaxed text-ink-muted md:px-8">
         {claim ? claim.note : "Every definition is a specialist on one arc of this loop. Hover any of them."}
       </p>
     </div>
