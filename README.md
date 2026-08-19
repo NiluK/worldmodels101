@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# World Models 101
 
-## Getting Started
+A free, interactive primer on world models, at [worldmodels101.com](https://worldmodels101.com).
 
-First, run the development server:
+The phrase now describes at least five different classes of system, and the
+people using it rarely specify which. The site exists to sort that out first and
+teach the machinery second.
+
+| Definition | Predicts | Examples |
+|---|---|---|
+| Renderer | Pixels | Genie 3, Sora, GameNGen |
+| Simulator | Geometry and physics | Marble, NVIDIA Cosmos* |
+| Controller | Compact state | Dreamer, PlaNet, Ha & Schmidhuber |
+| Representation | Embeddings | V-JEPA 2, I-JEPA |
+| Implicit Model | Nothing; it is found, not run | Othello-GPT |
+
+\* Cosmos straddles Renderer and Simulator, which is why it is in the chapter at
+all.
+
+## Status
+
+Chapter 1 is written and interactive. Chapter 2 exists in draft. Chapters 3
+through 9 are titles, blurbs and a named demo each. Nothing is paywalled and
+nothing will be.
+
+## Running it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Narration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Chapter audio is generated at build time rather than per request, so no API key
+reaches a browser and each chapter is a static asset.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm narrate --voices   # list the voices on the account
+pnpm narrate            # generate anything whose script changed
+pnpm narrate --force    # regenerate everything
+```
 
-## Learn More
+Needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`. A content-hashed manifest
+means editing one script re-synthesises only that chapter. The on-page player is
+currently hidden behind `SHOW_NARRATION` in `src/lib/flags.ts`; the audio still
+builds and deploys.
 
-To learn more about Next.js, take a look at the following resources:
+## House rules
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Three constraints are worth knowing before changing anything.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Colour carries meaning.** Vermilion is what a model imagined; slate is what
+actually happened. It holds across the logo, every figure and every demo, so
+neither is available for decoration. Terrain in the landscape demo has its own
+palette for exactly this reason.
 
-## Deploy on Vercel
+**Contrast is a contract, and it is not only a ratio.** Every text token clears
+WCAG AA on every surface it actually appears on, and the rules are documented at
+the top of `src/app/globals.css`. Muted text must also stay perceptually
+separate from body ink, or the hierarchy collapses and a gloss reads as body
+copy. Raising a token's contrast past that gap makes the page technically more
+compliant and visibly worse. Tinted backgrounds break tokens that pass fine on
+paper, which is why `--imagine-on-soft` exists.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Never dim text to signal state.** Fading below full opacity drops text under
+AA even at 0.7. Signal the active thing by adding emphasis instead.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Sources
+
+Every video is either from the lab that built the system or from the researcher
+who authored the work, and every id is checked against YouTube's oEmbed endpoint
+for channel and title before it ships. Claims that cannot be independently
+verified are attributed as reported rather than stated as fact.
+
+Corrections are welcome and will be credited.
