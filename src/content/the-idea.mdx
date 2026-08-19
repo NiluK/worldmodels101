@@ -18,24 +18,28 @@ Chapter 1 called that the Dynamics Model, and said it was the definition the
 term was coined for. This chapter is what one actually is, what having one buys
 you, and the way it fails that no amount of engineering has removed.
 
-One thing to settle first, because it trips people who go on to the papers.
-Chapter 1 warned that Ha and Schmidhuber's controller is a separate module from
-their world model, and that split holds all the way through here. The model
-predicts consequences. Something else reads those predictions and picks.
+One thing to settle first, because it trips people who go on to the papers. The
+model does not act. It predicts what would happen. Something else reads those
+predictions and picks, and that something else has its own name: the **policy**
+<Gloss>the part that actually chooses the action, whether it does that by
+thinking hard or by pure reflex</Gloss>. Chapter 1 warned that Ha and
+Schmidhuber's controller is a separate module from their world model. Same
+split, and it holds all the way through here.
 
 ## What the model actually holds
 
 You saw the shape in Figure 1.3. Where you are, what you do, what comes next. A
-dynamics model learns that function, and usually learns what the step was worth
-as well.
+dynamics model <Gloss>dynamics is just the study of how things change over
+time, so a dynamics model is a model of what happens next</Gloss> learns that,
+and usually learns what the step was worth as well.
 
 The part worth slowing down on is what *where you are* is allowed to mean. It
-does not have to be a position and a velocity. PlaNet infers it from images and
-never names any of it. MuZero goes further and does not reconstruct the
-environment at all: its model produces only what its search will consume, which
-is reward, value and a policy. TD-MPC2 runs without a decoder <Gloss>the half
-of a network that would turn the compressed state back into a picture</Gloss>
-at all.
+does not have to be a position and a speed. PlaNet works it out from images and
+never names any of it. MuZero goes further and never rebuilds the scene at all.
+Its model produces three numbers-ish things and no picture: how good this is,
+how good it will get, and what to try. TD-MPC2 drops the picture entirely and
+runs with no decoder <Gloss>the half of a network that would turn the
+compressed description back into something you could look at</Gloss>.
 
 So the model does not have to look like the world. It has to keep enough of
 what the world *does*.
@@ -48,12 +52,13 @@ perfectly good model of a chess position.
 
 One prediction is not the useful part either. The useful part is that you can
 feed the answer back into the front. Hand it a run of actions nobody has taken,
-let it read its own output, and you get a future nobody has seen. Chapter 1
-called the length of that stretch the horizon.
+let it read its own output, and you get a future nobody has seen. That is a
+**rollout** <Gloss>one imagined run forward: predict, feed the prediction back
+in, predict again</Gloss>, and Chapter 1 called its length the horizon.
 
-That is the property to carry, and it is the same one Chapter 1 used to sort
-the category. Not how real it looks. Whether you can roll it forward under
-actions nobody took, and search over them.
+That is the property to carry, and it is the same one Chapter 1 sorted the
+category by. Not how real it looks. Whether you can run it forward under
+actions nobody took, and go shopping among them.
 
 The idea is older than the papers usually cited for it. Thrun, Möller and
 Linden were already chaining a learned world model to choose future actions in
@@ -77,16 +82,18 @@ At the speed the first was tuned for, they do the same thing.
   <BrakingDemo />
 </Figure>
 
-Be careful what that picture is comparing. A real model-free policy is not a
-fixed rule. It can be a large recurrent network with memory, it can change what
-it does based on what it sees, and it can be far cleverer than anything on
-screen. Model-free does not mean reflex.
+Be careful what that picture is comparing. A real policy with no model behind
+it is not a fixed rule. It can be a big network that remembers what it has
+already seen <Gloss>a recurrent network: it hands something forward from each
+step to the next, so it has a memory of a sort</Gloss>. It changes what it does
+based on what it sees. It can be far cleverer than anything on screen. No model
+does not mean no brains.
 
-The difference that survives is about when the work got done. A policy has
-already spent its training turning experience into answers: *situation,
-therefore action*. A model keeps a different object: *situation, plus an action
-you are considering, therefore a consequence*. The first is a cache. The second
-lets you compute a fresh answer once you know the actual question.
+The difference that lasts is about *when the thinking happened*. A policy did
+its thinking during training, and what it kept is a set of answers: in this
+situation, do that. A model kept something else: in this situation, if you did
+that, here is what you would get. The first is a cache. The second lets you
+work out a fresh answer once you know the actual question.
 
 <MarginNote>
 A reflex is a *cached answer*. A model is what lets you compute a new one when
@@ -98,66 +105,69 @@ Caches are usually right, which is why so much of biology and so much of
 engineering is made of them. The interesting part starts when the question
 moves outside the range the answer was prepared for.
 
-Arrive faster and the trigger still fires at the same distance. That rule
-contains an assumption about how long stopping takes, and nothing inside it
-knows it is assuming anything. The model car moves its decision because its
-stopping point moved and it can see that it moved.
+Arrive faster and the trigger still fires at the same distance. That rule holds
+an assumption about how long stopping takes, and nothing inside it knows it is
+assuming anything. The model car moves its decision because its stopping point
+moved and it can see that it moved.
 
-None of which is free. The model costs computation, has to be learned, and can
-be wrong. So real systems sit along a range rather than on one side of a line.
-Dyna mixes real experience with experience the model made up. Dreamer learns a
-policy from imagination. MuZero pairs a learned model with search.
+None of which is free. The model costs computing time, has to be learned, and
+can be wrong. So real systems sit along a range rather than on one side of a
+line. Dyna mixes real experience with experience the model made up. Dreamer
+learns a policy inside its own imagination. MuZero pairs a learned model with
+search.
 
 The question is not whether to carry a model. It is which answers to settle in
 advance, and which to leave until you know what you are actually facing.
 
 ## What it buys you
 
-Three things, and they are one thing in three costumes. You can compute over
+Three things, and underneath they are the same thing. You get to work on
 futures that have not happened.
 
 **You can try an action before paying for it.** Put the goal behind an
-obstacle. A planner writes down a run of actions, plays it through the model,
-scores the imagined result, throws it away and writes another. PlaNet does this
-online, in latent space, straight from pixels.
+obstacle. A **planner** <Gloss>the part that tries actions out before
+committing to one</Gloss> writes down a run of actions, plays it through the
+model, scores how that turned out, throws it away and writes another. PlaNet does this
+while driving, in its own compressed description of the scene, starting from
+raw pixels.
 
 <Figure
   n="2.2"
-  caption={<>The planner samples action sequences, plays each one through the same model, and keeps the best. Faint lines are the rejects. Raise the budget and the plan improves, but only for as long as the model ranks the candidates honestly. Figure 2.3 is what happens when it stops.</>}
+  caption={<>The planner writes down runs of actions, plays each one through the same model, and keeps the best. Faint lines are the rejects. Raise the budget and the plan improves, but only for as long as the model ranks the candidates honestly. Figure 2.3 is what happens when it stops.</>}
 >
   <Planner />
 </Figure>
 
-With one candidate it is guessing. With two hundred it is searching. Nothing in
-the world changed in between. The improvement is bought entirely with thinking
-done between seeing and acting, and a model is the thing that makes that trade
-available.
+With one candidate it is guessing. With two hundred it is shopping. Nothing in
+the world changed in between. All of that came out of thinking, in the gap
+between seeing and moving, and a model is what makes that trade available at
+all.
 
-MuZero shows how far it goes. It was never trained to redraw an Atari frame or
+MuZero shows how far it goes. It was never trained to redraw a game frame or
 lay out a chessboard, and it was never given the rules of chess, Go or shogi.
-It learned only the quantities its search needed, and it played all of them
-well. A model does not have to reproduce everything that will happen. It has to
-keep what the decisions in front of you turn on.
+It learned only the handful of quantities its search actually reads, and it
+played all of them well. A model does not have to reproduce everything that
+will happen. It has to keep whatever the decision in front of you turns on.
 
-**You can practise where mistakes are cheap.** Sutton's Dyna already ran this
-split in 1990: learn a model from real experience, then generate more
-experience out of the model and learn from that too. Dreamer put it at the
-centre. Learn compact dynamics, imagine long trajectories through them, and
-train the behaviour on the imagined ones, so that by the time it has to act there
-is nothing left to search. DreamerV3 ran that same recipe across
-more than 150 tasks without retuning it per task.
+**You can practise where mistakes are cheap.** Sutton's Dyna already split it
+this way in 1990. Learn a model from real experience, then have the model make
+up more experience, and learn from that too. Dreamer put the trick at the
+centre. Imagine long runs, learn the behaviour from the imagined ones, and by
+the time it has to act there is nothing left to work out. Its third version ran
+that recipe across more than 150 tasks, retuned for none of them.
 
 The tempting version of this is *reality is expensive, imagination is free*,
-and it is wrong in a way worth fixing. Imagination costs compute, sometimes an
-enormous amount of it. What it saves is contact with the world: robot wear,
-lab time, supervision, resets, the crash you do not get to undo.
+and it is wrong in a way worth fixing. Imagining costs computing time, sometimes
+an enormous amount of it. What it saves is contact with the world: worn-out
+robots, lab hours, someone supervising, the crash you do not get to undo.
 
-Reality charges you in data. A model lets you pay part of the bill in compute.
+Reality charges you in experience. A model lets you pay part of the bill in
+computing time instead.
 
 **You can ask what if.** What if I brake now, what if I turn instead, what if I
 push it from the other side. Comparing those without running them is the whole
-reason action conditioning matters. It moves the question from *what probably
-happens next* to *what happens if I do this*.
+reason it matters that the model is told which action you mean. It moves the
+question from *what probably happens next* to *what happens if I do this*.
 
 Be exact about what you get. The answer is true inside the model: given what it
 has learned, this is what braking earlier would have done. It is not a report
@@ -170,8 +180,8 @@ alternatives get to exist.
 ## Where it goes wrong
 
 Everything so far argues for more of it. Better model, more candidates, longer
-rollouts, pick the winner. Every step is reasonable and the destination is the
-characteristic failure of the whole field.
+runs, pick the winner. Every one of those is reasonable on its own, and
+together they walk you into the failure this whole field is organised around.
 
 Two things go wrong, and they are not the same thing.
 
@@ -179,17 +189,17 @@ Two things go wrong, and they are not the same thing.
 slightly wrong once is fine. A model that is slightly wrong and then reads its
 own answer back in is fine for a while and then is nowhere near. Nothing breaks
 at any step. A one-step model can be accurate enough to trust while a
-hundred-step fantasy stitched out of that same model is worthless. The people
-who benchmark these things call the trade the planning horizon dilemma, and it
-is why the fix in the next section is as blunt as it is.
+hundred-step fantasy stitched out of that same model is worthless. So there is
+a limit on how far ahead it is worth looking, and the fix in the last section
+is as blunt as it is because of that.
 
-**Optimisation goes looking for the errors.** This one is stranger, and it is
-the reason the chapter exists.
+**Search goes hunting for the errors.** This one is stranger, and it is the
+reason the chapter exists.
 
 Say the learned map is wrong in exactly one place: it thinks there is a gap in
-a wall that is actually solid. Sample plans at random and you will almost never
-go near it. A weak planner never finds it. A strong planner searches properly,
-and the best route in the whole learned world runs straight through it.
+a wall that is actually solid. Try plans at random and you will almost never go
+near it. A weak search never finds it. A thorough one does, because the best
+route in the whole learned world runs straight through it.
 
 <Figure
   n="2.3"
@@ -199,23 +209,25 @@ and the best route in the whole learned world runs straight through it.
 </Figure>
 
 Read that one twice, because it runs backwards through most engineering
-instinct. The weaker optimiser produced a plan that worked. The stronger one
+instinct. The weaker search produced a plan that worked. The stronger one
 produced a plan that scored better and hit a wall. It was not fighting you. It
 did exactly what you asked, which was to find the plan the model likes most.
 
-The field calls this **model exploitation**. As the planner gets better at
-beating the model, it drifts toward the places the model was never taught, and
-those are where its errors live. Offline systems have it worst, because they
-cannot go and collect the experience that would correct them.
+The field calls this **model exploitation**. The better the planner gets at
+beating the model, the more it drifts toward the places the model was never
+taught, and those are exactly where its mistakes are. Systems that learn from a
+fixed pile of recorded experience <Gloss>called offline: no way to go back out
+and collect the thing you turned out to need</Gloss> have it worst, because
+they cannot go and get the experience that would correct them.
 
-So a model can have a tiny average error and still be a dangerous thing to plan
-inside. Average error asks how it does on the data you measured. Control asks
-what happens once something starts hunting, on purpose, for the highest score
-it can find. Those are not the same test.
+So a model can be wrong by almost nothing on average and still be a dangerous
+thing to plan inside. Average error asks how it does on the cases you measured.
+Control asks what happens once something starts hunting, on purpose, for the
+highest score it can find. Those are not the same test.
 
 The best plan in the model and the best plan in the world are only the same
-plan if the model is good *where the search goes looking*. That clause is the
-whole discipline.
+plan if the model is good *where the search goes looking*. Everything in the
+next section is an attempt to make that last part true.
 
 <Quote
   who="Sutton"
@@ -236,62 +248,64 @@ can answer it.
 
 Nobody fixed this once and moved on. What the field has instead is a set of
 ways to limit how far imagination is trusted, and they are all the same
-instruction wearing different clothes.
+instruction in different clothes.
 
-**Ask more than one model.** PETS trains an ensemble <Gloss>several models on
-the same data, differing only by how they were initialised and what order they
-saw things in</Gloss> and carries their disagreement through the plan. Where
-they diverge, the plan is somewhere nothing supports.
+**Ask more than one model.** Train several instead of one <Gloss>an ensemble:
+same data, different starting points, so they end up disagreeing about anything
+the data never settled</Gloss> and carry their disagreement through the plan.
+Where they disagree, the plan has wandered somewhere nothing supports.
 
-Disagreement is evidence, not proof. Models trained on the same gaps can share
-the same blind spot and agree confidently about nothing. Work on calibration
-found that neural confidence is often simply miscalibrated, and that fixing the
-confidence improved the planning.
+Disagreement is a hint, not a verdict. Models trained on the same gaps can
+share a blind spot and agree, confidently, about nothing at all. And a model's
+own confidence is not much better: when one says it is 70 percent sure, it is
+right about 70 percent of the time only if somebody went and checked. Somebody
+did, found it was often out, and found that correcting it made the planning
+better.
 
-**Do not dream far.** MBPO's answer is almost rude in its simplicity: start
-your imagined rollouts from states the world really produced, and keep them
-short. You lose the free infinity of simulation. You gain a limit on how long
-an error has to grow before real data interrupts it.
+**Do not dream far.** One answer is almost rude in its simplicity: start every
+imagined run from somewhere the world really produced, and keep it short. You
+lose the free infinity of simulation. You gain a limit on how long an error has
+to grow before real data interrupts it.
 
-Model-predictive control does the same thing on the clock. Plan a little, act a
-little, look again, plan again. Replanning cannot remove a bias the model
-carries everywhere, but it does keep handing the world chances to say where
-things actually are.
+Planning on a short clock does the same job. Plan a little, act a little, look
+again, plan again <Gloss>the standard name for this is model-predictive
+control, and it is most of robotics</Gloss>. Replanning cannot remove a
+mistake the model makes everywhere, but it does keep handing the world chances
+to say where things actually are.
 
-**Charge for uncertainty.** MOPO subtracts a penalty from predicted reward
-wherever the model is unsure. An unfamiliar shortcut then has to be good enough
-to cover the cost of nobody knowing what is down there.
+**Charge for not knowing.** Take the score the model hands back and dock it
+wherever the model is unsure. An unfamiliar-looking shortcut then has to be
+good enough to cover the cost of nobody knowing what is down there.
 
 Underneath all three: *do not let the planner collect full marks for going
 somewhere the model has not earned the right to be confident about.*
 
-None of it makes the problem go away. DreamerV3 holds up across an unusually
-wide spread of tasks and TD-MPC2 scales to a single agent covering a hundred of
-them, and both are careful ways of using a model that is wrong rather than
-proof of one that is right.
+None of it makes the problem go away. The best of these systems now hold up
+across a startling range of tasks. But they are careful ways of using a model
+that is wrong. They are not proof of one that is right.
 
 The question was never how to make the model accurate. It is: accurate where,
-for which actions, how far out, against which optimiser, and what should the
+for which actions, how far out, against how hard a search, and what should the
 thing do when it does not know.
 
 ## Try it
 
 <Figure
   n="2.4"
-  caption={<>Eight questions on the distinction that matters here. Not whether the agent looks clever, but where it computes its consequences, and when that computation is allowed to run ahead of the evidence.</>}
+  caption={<>Eight questions on the distinction that matters here. Not whether the agent looks clever, but where it works out its consequences, and when that working-out is allowed to run ahead of the evidence.</>}
 >
   <Quiz chapter={2} />
 </Figure>
 
 ---
 
-All of this quietly assumed you already had a state to roll forward. A
-position, a velocity, some short list of numbers holding whatever the future
-turns on. Nobody hands you one. You get pixels.
+All of this quietly assumed you already had a state to run forward. A position,
+a speed, some short list of numbers holding whatever the future turns on.
+Nobody hands you one. You get pixels.
 
-Thanks for reading. Chapter 3 is about why *predict the next thing*, an
-objective that sounds far too simple to work, turns out to be enough to pull
-the structure of a world out of raw experience.
+Thanks for reading. Chapter 3 is about why *predict the next thing*, a goal
+that sounds far too simple to work, turns out to be enough to pull the
+structure of a world out of raw experience.
 
 ## Sources
 
