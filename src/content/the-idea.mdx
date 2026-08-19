@@ -57,6 +57,13 @@ how good it will get, and what to try. The newest of them drop the picture
 entirely and run with no decoder <Gloss>the half of a network that would turn the
 compressed description back into something you could look at</Gloss>.
 
+<Figure
+  n="2.2"
+  caption={<>The object the whole chapter is about. Hover any symbol, or any phrase under it. The hat is the part that matters: it says <em>estimated</em>, and every failure in the second half of this chapter is that hat coming due.</>}
+>
+  <LearnedDynamics />
+</Figure>
+
 So the model does not have to look like the world. It has to keep enough of
 what the world *does*.
 
@@ -92,7 +99,7 @@ stop if it braked now.
 At the speed the first was tuned for, they do the same thing.
 
 <Figure
-  n="2.2"
+  n="2.3"
   caption={<>Below about forty the two are indistinguishable, and that is the important half of the demonstration. Drag the speed up and watch which one notices. What is being compared is one fixed rule against one thing that recomputes, not model-free against model-based in general.</>}
 >
   <BrakingDemo />
@@ -148,8 +155,8 @@ while driving, in its own compressed description of the scene, starting from
 raw pixels.
 
 <Figure
-  n="2.3"
-  caption={<>The planner writes down runs of actions, plays each one through the same model, and keeps the best. Faint lines are the rejects. Raise the budget and the plan improves, but only for as long as the model ranks the candidates honestly. Figure 2.4 is what happens when it stops.</>}
+  n="2.4"
+  caption={<>The planner writes down runs of actions, plays each one through the same model, and keeps the best. Faint lines are the rejects. Raise the budget and the plan improves, but only for as long as the model ranks the candidates honestly. Figure 2.6 is what happens when it stops.</>}
 >
   <Planner />
 </Figure>
@@ -208,6 +215,13 @@ hundred-step fantasy stitched out of that same model is worthless. So there is
 a limit on how far ahead it is worth looking, and the fix in the last section
 is as blunt as it is because of that.
 
+<Figure
+  n="2.5"
+  caption={<>Two per cent added per step, which is a good model. The first box is given by the world and every box after it is the model reading its own last answer, so the error does not add, it multiplies. Nothing breaks at any step.</>}
+>
+  <CompoundingRollout />
+</Figure>
+
 **Search goes hunting for the errors.** This one is stranger, and it is the
 reason the chapter exists.
 
@@ -217,7 +231,7 @@ near it. A weak search never finds it. A thorough one does, because the best
 route in the whole learned world runs straight through it.
 
 <Figure
-  n="2.4"
+  n="2.6"
   caption={<>The model believes there is a gap in the wall. There is not. Leave the effort low and the planner never finds it, takes the long way round, and gets there. Then turn the effort up. This is a failure the setup makes visible, not a law that more search always hurts.</>}
 >
   <Exploitation />
@@ -243,6 +257,13 @@ highest score it can find. Those are not the same test.
 The best plan in the model and the best plan in the world are only the same
 plan if the model is good *where the search goes looking*. Everything in the
 next section is an attempt to make that last part true.
+
+<Figure
+  n="2.7"
+  caption={<>Two ways of scoring the same actions. They agree nearly everywhere, which is what a low average error looks like. Drag across to the spike and read both numbers: the model's favourite action scores 0.97 in imagination and 0.20 in the world.</>}
+>
+  <ArgmaxMismatch />
+</Figure>
 
 <Quote
   who="Sutton"
@@ -306,7 +327,7 @@ thing do when it does not know.
 ## Try it
 
 <Figure
-  n="2.5"
+  n="2.8"
   caption={<>Eight questions on the distinction that matters here. Not whether the agent looks clever, but where it works out its consequences, and when that working-out is allowed to run ahead of the evidence.</>}
 >
   <Quiz chapter={2} />
@@ -325,7 +346,7 @@ structure of a world out of raw experience.
 ## Sources
 
 <Figure
-  n="2.6"
+  n="2.9"
   caption={<>Ordered for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={2} />

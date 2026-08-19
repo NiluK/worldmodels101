@@ -209,8 +209,8 @@ export function ServeBudget() {
                       fontSize="9" fill="var(--actual)">{t("serve.short")}</text>
                   </>
                 )}
-                <circle cx={bx} cy={by} r={4.5} fill="var(--imagine)" stroke="var(--paper)"
-                  strokeWidth="1.5" />
+                <circle cx={bx} cy={by} r={4.5} fill="var(--ball)" stroke="var(--ink)"
+                  strokeWidth="1.2" />
               </>
             );
           })()}

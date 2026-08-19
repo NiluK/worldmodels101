@@ -33,6 +33,13 @@
   --paper:        #f5f2ea;
   --paper-raised: #fbf9f4;
   --paper-sunk:   #ece7db;
+  /* A tennis ball is a real object, so it must not wear --imagine, which in
+     this palette means "the model made this up". It is the one hue outside the
+     vermilion/slate pair. It sits on --paper-sunk in both themes, where hue
+     alone would not separate it, so it is always drawn with an --ink stroke:
+     the outline carries the 3:1 boundary contrast, the fill carries the
+     recognition. */
+  --ball:         #cfc41c;
 
   /* ink */
   --ink:        #191714;
@@ -79,6 +86,7 @@
     --paper:        #131210;
     --paper-raised: #1b1a17;
     --paper-sunk:   #0d0c0b;
+    --ball:         #e4dd3a;
     --ink:          #ede7da;
     --ink-muted:    #9a9284;
     --ink-faint:    #89837b;
@@ -108,6 +116,7 @@
   --paper:        #131210;
   --paper-raised: #1b1a17;
   --paper-sunk:   #0d0c0b;
+  --ball:         #e4dd3a;
   --ink:          #ede7da;
   --ink-muted:    #9a9284;
   --ink-faint:    #89837b;

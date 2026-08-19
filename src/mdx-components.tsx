@@ -17,6 +17,9 @@ import { Quiz } from "@/components/quiz";
 import { Planner } from "@/components/planner";
 import { Exploitation } from "@/components/exploitation";
 import { ServeBudget } from "@/components/serve-budget";
+import { LearnedDynamics } from "@/components/learned-dynamics";
+import { CompoundingRollout } from "@/components/compounding-rollout";
+import { ArgmaxMismatch } from "@/components/argmax-mismatch";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -41,6 +44,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Planner,
     Exploitation,
     ServeBudget,
+    LearnedDynamics,
+    CompoundingRollout,
+    ArgmaxMismatch,
     ...components,
   };
 }
