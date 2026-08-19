@@ -3,6 +3,23 @@ import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+
+  /**
+   * One canonical host. Both www and the apex resolve to this project and both
+   * answered 200, which is the same page served on two hostnames: link equity
+   * splits and search engines have to guess which is real. The apex is the
+   * brand, so www redirects to it.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.worldmodels101.com" }],
+        destination: "https://worldmodels101.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 /**
