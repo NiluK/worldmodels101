@@ -29,17 +29,17 @@ depends on what has not happened yet.
 
 Take what you have. Run it forward. Move for what comes next.
 
-Chapter 1 called that the Dynamics Model, and said it was the definition the
-term was coined for. This chapter is what one actually is, what having one buys
-you, and the way it fails that no amount of engineering has removed.
+That is a dynamics model: the oldest of the five definitions, and the one the
+term was coined for. What one is, what having one buys you, and the way it
+fails that no amount of engineering has removed.
 
 One thing to settle first, because it trips people who go on to the papers. The
 model does not act. It predicts what would happen. Something else reads those
 predictions and picks, and that something else has its own name: the **policy**
 <Gloss>the part that actually chooses the action, whether it does that by
-thinking hard or by pure reflex</Gloss>. Chapter 1 warned that Ha and
-Schmidhuber's controller is a separate module from their world model. Same
-split, and it holds all the way through here.
+thinking hard or by pure reflex</Gloss>. Ha and Schmidhuber's own system names
+its third module the controller, and that module is not the world model. The
+split holds all the way through here.
 
 ## What the model actually holds
 
@@ -69,11 +69,11 @@ One prediction is not the useful part either. The useful part is that you can
 feed the answer back into the front. Hand it a run of actions nobody has taken,
 let it read its own output, and you get a future nobody has seen. That is a
 **rollout** <Gloss>one imagined run forward: predict, feed the prediction back
-in, predict again</Gloss>, and Chapter 1 called its length the horizon.
+in, predict again</Gloss>, and its length is the horizon.
 
-That is the property to carry, and it is the same one Chapter 1 sorted the
-category by. Not how real it looks. Whether you can run it forward under
-actions nobody took, and go shopping among them.
+That is the property the whole category is sorted by. Not how real it looks.
+Whether you can run it forward under actions nobody took, and go shopping among
+them.
 
 The idea is older than the papers usually cited for it. Thrun, Möller and
 Linden were already chaining a learned world model to choose future actions in
@@ -200,7 +200,7 @@ together they walk you into the failure this whole field is organised around.
 
 Two things go wrong, and they are not the same thing.
 
-**Errors compound.** Chapter 1 built Figure 1.9 for this one. A model that is
+**Errors compound.** Figure 1.9 was built for this one. A model that is
 slightly wrong once is fine. A model that is slightly wrong and then reads its
 own answer back in is fine for a while and then is nowhere near. Nothing breaks
 at any step. A one-step model can be accurate enough to trust while a
