@@ -84,7 +84,7 @@ export const DEFINITIONS: Definition[] = [
     name: "The Dynamics Model",
     predicts: "Compact state",
     gloss:
-      "A compact model of next state and reward under actions, learned so that something else can search inside it. The classical model-based definition, and the one the term was coined for.",
+      "A compact model of the next state under actions, often alongside reward, learned so that something else can search inside it. The classical model-based definition, and the one the term was coined for.",
     test:
       "Can you roll it forward under actions nobody has taken yet, and search over them? That is the job this one exists to do.",
     systems: ["Dreamer", "PlaNet", "Ha & Schmidhuber"],
@@ -180,7 +180,7 @@ export const DEFINITIONS_ZH: Record<string, LocalisedDefinition> = {
     name: "动力学模型",
     predicts: "紧凑状态",
     gloss:
-      "一个关于「在某个动作下，下一个状态和回报是什么」的紧凑模型，学它就是为了让别的东西能在里面做搜索。这是经典的基于模型的定义，也是这个词最初被造出来时指的东西。",
+      "一个关于「在某个动作下，下一个状态是什么」的紧凑模型，通常还会一并预测回报，学它就是为了让别的东西能在里面做搜索。这是经典的基于模型的定义，也是这个词最初被造出来时指的东西。",
     test:
       "你能在还没执行过的动作下把它往前推演，并在这些动作上做搜索吗？这正是它存在的意义。",
     camp:
