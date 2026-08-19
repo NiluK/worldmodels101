@@ -30,8 +30,6 @@ const SOURCES_CH2 = [
   { t: "Benchmarking Model-Based Reinforcement Learning", a: "Wang et al., 2019", u: "https://arxiv.org/abs/1907.02057", n: "Where model-based methods actually win and lose, and where the planning horizon dilemma gets named and measured." },
   { t: "Calibrated Model-Based Deep Reinforcement Learning", a: "Malik et al., 2019", u: "https://arxiv.org/abs/1906.08312", n: "The warning underneath every uncertainty method: the uncertainty estimate can itself be wrong, and calibrating it changes planning results." },
   { t: "MOPO: Model-based Offline Policy Optimization", a: "Yu et al., 2020", u: "https://arxiv.org/abs/2005.13239", n: "Pessimism made explicit. Penalise predicted reward by model uncertainty, so an unfamiliar shortcut has to pay for being unfamiliar." },
-  { t: "Quantifying the nature of anticipation in professional tennis", a: "Triolet et al., 2013", u: "https://doi.org/10.1080/02640414.2012.759658", n: "Match analysis placing the reactive-to-anticipatory boundary around 140 to 160 ms after contact. Paywalled." },
-  { t: "The spatiotemporal control of expert tennis players when returning first serves", a: "Navia et al., 2021", u: "https://doi.org/10.1080/02640414.2021.1976484", n: "Where the 177 ms figure in the opening comes from, measured rather than estimated. Paywalled." },
 ];
 
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
