@@ -26,9 +26,9 @@ export const CHAPTERS: Chapter[] = [
     slug: "the-idea",
     title: "The Idea",
     blurb:
-      "The oldest of the five definitions, and the one that gave the term its technical meaning: a learned simulator you can roll forward and plan against.",
+      "The oldest of the five definitions, and the one the term was coined for. What a learned simulator is, what having one buys you, and the way it fails that no amount of engineering has removed.",
     demo: "Two cars, one corner: a reflex controller and a predictive one, side by side.",
-    minutes: 12,
+    minutes: 11,
     status: "ready",
   },
   {

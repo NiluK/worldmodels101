@@ -147,10 +147,11 @@ const QUESTIONS_EN: Q[] = [
   },
 ];
 
-function QuizInteractive() {
+function QuizInteractive({ chapter }: { chapter: number }) {
   const locale = useLocale();
   const t = useT();
-  const QUESTIONS = locale === "zh" ? QUESTIONS_ZH : QUESTIONS_EN;
+  const QUESTIONS =
+    chapter === 2 ? QUESTIONS_CH2 : locale === "zh" ? QUESTIONS_ZH : QUESTIONS_EN;
   const still = useReducedMotion();
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<string | number | null>(null);
@@ -346,10 +347,11 @@ function QuizInteractive() {
  * whole set is laid out with its answers, which is what a reader can actually
  * use away from the screen.
  */
-function QuizPrinted() {
+function QuizPrinted({ chapter }: { chapter: number }) {
   const locale = useLocale();
   const t = useT();
-  const QUESTIONS = locale === "zh" ? QUESTIONS_ZH : QUESTIONS_EN;
+  const QUESTIONS =
+    chapter === 2 ? QUESTIONS_CH2 : locale === "zh" ? QUESTIONS_ZH : QUESTIONS_EN;
   return (
     <ol className="px-5 py-6 md:px-8">
       {QUESTIONS.map((q, n) => {
@@ -516,14 +518,116 @@ const QUESTIONS_ZH: Q[] = [
   },
 ];
 
-export function Quiz() {
+
+/** Chapter 2: the Dynamics Model in depth. All concept questions; classifying
+    is Chapter 1's job and repeating it here would test the wrong thing. */
+const QUESTIONS_CH2: Q[] = [
+  {
+    kind: "choice",
+    stem: "Below about forty on the braking demo, the reflex car and the model car behave identically. What does that tell you?",
+    options: [
+      "The model is not working yet",
+      "A reflex is correct across the range it was tuned in",
+      "The model is too slow to matter at low speed",
+      "The demo is not sensitive enough",
+    ],
+    answer: 1,
+    why: "A reflex is a cached answer, and inside its range the cache is right. That is why reflexes are everywhere and why most of the time you should not reach for a model at all.",
+  },
+  {
+    kind: "choice",
+    stem: "The reflex car fails past its tuned range. What is the worst part of how it fails?",
+    options: [
+      "It fails gradually, so nobody notices",
+      "It fails suddenly, with no internal signal that anything changed",
+      "It fails only at very high speed",
+      "It brakes too early instead of too late",
+    ],
+    answer: 1,
+    why: "The fixed trigger distance encodes an assumption about speed, and nothing in the controller knows it is making one. The model car slows earlier because its stopping distance grew and it can see that it grew.",
+  },
+  {
+    kind: "choice",
+    stem: "Chapter 1 said this category is defined by searchability rather than fidelity. What does that rule out?",
+    options: [
+      "A model that is fast but approximate",
+      "A photorealistic model you cannot roll forward under hypothetical actions",
+      "A model that works only in simulation",
+      "A model trained on a small dataset",
+    ],
+    answer: 1,
+    why: "Looking right is not the job. If you cannot ask it what happens under an action nobody has taken, you cannot search over actions, and searching over actions is the whole reason to carry it.",
+  },
+  {
+    kind: "choice",
+    stem: "In the planner, going from one sampled action sequence to two hundred produces a much better plan. What changed?",
+    options: [
+      "The model got more accurate",
+      "The world became easier",
+      "Only the amount of thinking done before acting",
+      "The goal moved closer",
+    ],
+    answer: 2,
+    why: "Nothing about the world or the model changed between those two states. A model is what converts extra computation into a better action, which is a trade almost nothing else in control gives you.",
+  },
+  {
+    kind: "choice",
+    stem: "Which of these is NOT something having a model buys you?",
+    options: [
+      "Trying an action before paying for it",
+      "Practising where mistakes are free",
+      "Asking what would have happened if you had acted differently",
+      "A guarantee that the plan will work in the real world",
+    ],
+    answer: 3,
+    why: "The first three are the same capability wearing different clothes: asking questions about situations that have not happened. The fourth is exactly what a model cannot give you, and the rest of the chapter is about why.",
+  },
+  {
+    kind: "choice",
+    stem: "In the exploitation demo, raising the search effort makes the real outcome worse. Why?",
+    options: [
+      "The optimiser is buggy",
+      "More samples add noise to the plan",
+      "A better search finds where the model is most optimistic, which is often where it is most wrong",
+      "The model degrades as it is queried more",
+    ],
+    answer: 2,
+    why: "The optimiser is not fighting you; it is doing exactly what you asked. You told it to find the plan the model scores highest, and the model scores highest in the places it never saw during training.",
+  },
+  {
+    kind: "choice",
+    stem: "A learned model is wrong in a way that is worse than being noisy. What is the difference that matters?",
+    options: [
+      "Its errors are larger than noise",
+      "Its errors are structured, concentrated where it saw least during training",
+      "Its errors grow over time while noise does not",
+      "Noise can be averaged out and model error cannot",
+    ],
+    answer: 1,
+    why: "Random error would be tolerable, because a random search would meet it at random. Structured error is dangerous precisely because a directed search seeks out the optimistic regions, and those are the same regions.",
+  },
+  {
+    kind: "choice",
+    stem: "Ensembles, uncertainty penalties, pessimism, short rollouts and trust regions are all versions of one instruction. Which?",
+    options: [
+      "Make the model more accurate",
+      "Collect more real data before planning",
+      "Do not let the planner go where the model has not earned confidence",
+      "Prefer model-free methods when in doubt",
+    ],
+    answer: 2,
+    why: "All of them constrain where the plan is allowed to look rather than trying to make the model globally right, which nobody knows how to do. Chapter 8 comes back to this as the field's central unfinished business.",
+  },
+];
+
+export function Quiz({ chapter = 1 }: { chapter?: number }) {
   return (
     <>
       <div className="screen-only">
-        <QuizInteractive />
+        <QuizInteractive chapter={chapter} />
       </div>
       <div className="print-only">
-        <QuizPrinted />
+        <QuizPrinted chapter={chapter} />
       </div>
     </>
   );

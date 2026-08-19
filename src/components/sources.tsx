@@ -1,4 +1,4 @@
-const SOURCES = [
+const SOURCES_CH1 = [
   { t: "A Functional Taxonomy of World Models", a: "World Labs, 2026", u: "https://www.worldlabs.ai/blog/taxonomy-of-world-models", n: "First-party renderer/simulator/planner split, derived from the agent loop." },
   { t: "A New Approach to Linear Filtering and Prediction Problems", a: "Kalman, 1960", u: "https://doi.org/10.1115/1.3662552", n: "The hidden-state ancestor. Paywalled." },
   { t: "Recurrent world models for planning and curiosity", a: "Schmidhuber, 1990", u: "https://people.idsia.ch/~juergen/world-models-planning-curiosity-fki-1990.html", n: "A recurrent model predicting the consequences of a controller's actions." },
@@ -15,10 +15,21 @@ const SOURCES = [
   { t: "Othello-GPT has a linear emergent world representation", a: "Nanda et al., 2023", u: "https://arxiv.org/abs/2309.00941", n: "The follow-up that sharpened the finding." },
 ];
 
-export function SourceList() {
+const SOURCES_CH2 = [
+  { t: "Dyna: an Integrated Architecture for Learning, Planning and Reacting", a: "Sutton, 1991", u: "https://mlanthology.org/icml/1990/sutton1990icml-integrated/", n: "Planning defined as computation over a learned model, and the loop that interleaves it with real experience." },
+  { t: "World Models", a: "Ha & Schmidhuber, 2018", u: "https://arxiv.org/abs/1803.10122", n: "Encoder, dynamics, controller, with the policy trained almost entirely inside the model's rollouts." },
+  { t: "Learning Latent Dynamics for Planning from Pixels (PlaNet)", a: "Hafner et al., 2018", u: "https://arxiv.org/abs/1811.04551", n: "Planning by search over action sequences in a learned latent space, which is Figure 2.2 in its real form." },
+  { t: "Dream to Control (Dreamer)", a: "Hafner et al., 2019", u: "https://arxiv.org/abs/1912.01603", n: "Behaviour learned from long imagined rollouts rather than single-step lookahead." },
+  { t: "When to Trust Your Model: Model-Based Policy Optimization", a: "Janner et al., 2019", u: "https://arxiv.org/abs/1906.08253", n: "Short rollouts as a direct answer to exploitation: the model is trusted only as far as it has earned." },
+  { t: "Benchmarking Model-Based Reinforcement Learning", a: "Wang et al., 2019", u: "https://arxiv.org/abs/1907.02057", n: "Where model-based methods actually win and lose, including how often the planner exploits the model." },
+  { t: "MOPO: Model-based Offline Policy Optimization", a: "Yu et al., 2020", u: "https://arxiv.org/abs/2005.13239", n: "Pessimism made explicit: penalise reward by model uncertainty so the planner stops being rewarded for going somewhere unknown." },
+];
+
+export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
+  const rows = chapter === 2 ? SOURCES_CH2 : SOURCES_CH1;
   return (
     <ol className="border-t border-ink">
-      {SOURCES.map((s) => (
+      {rows.map((s) => (
         <li key={s.u} className="border-b border-rule">
           <a href={s.u} target="_blank" rel="noopener noreferrer"
             className="group flex flex-col gap-1.5 px-5 py-5 transition-colors hover:bg-paper-raised md:px-6">
@@ -33,4 +44,8 @@ export function SourceList() {
       ))}
     </ol>
   );
+}
+
+export function SourceList({ chapter = 1 }: { chapter?: number }) {
+  return <SourceListFor chapter={chapter} />;
 }

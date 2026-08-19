@@ -14,6 +14,8 @@ import { ArchitectureTimeline } from "@/components/architecture-timeline";
 import { HorizonSlider } from "@/components/horizon-slider";
 import { RolloutEquation } from "@/components/rollout-equation";
 import { Quiz } from "@/components/quiz";
+import { Planner } from "@/components/planner";
+import { Exploitation } from "@/components/exploitation";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -35,6 +37,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     HorizonSlider,
     RolloutEquation,
     Quiz,
+    Planner,
+    Exploitation,
     ...components,
   };
 }
