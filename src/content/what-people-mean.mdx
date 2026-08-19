@@ -162,16 +162,28 @@ system.
 
 ## The test
 
-There is one question people reach for first.
+You have already run it.
+
+The switch in Figure 1.1 was labelled *hold the world*, and flipping it decided
+whether the marker was still standing there when you turned back. Off, the
+landscape rearranged itself behind you. On, it waited.
 
 Turn around. Walk away. Turn back. Is it the same room?
 
-It sorts the five tabs in about a minute. It is also wrong.
+It sorts your five tabs in about a minute, and it is wrong.
 
-DeepMind reports Genie 3 recalling previously seen detail across multi-minute
-interactions. A renderer can hold a room with no geometry to hold it in.
+DeepMind reports Genie 3 holding environments together across multi-minute
+interactions, and recalling detail you saw earlier when you return to it. No
+geometry is doing that. Nothing was pinned to a coordinate. The model learned
+to keep producing a room that stays consistent, which is a different mechanism
+arriving at the same result.
 
-Keep it anyway. It was asking a better question than the one it was hired for.
+That is the part a toy cannot show you. In Figure 1.1 persistence is a switch,
+because I wrote a switch. In a real renderer it is a behaviour that emerged
+from training, and it holds right up until it does not.
+
+So the question fails as a sorting rule. Keep it anyway, because it was asking
+something better than the job it was hired for.
 
 When the room leaves your field of view, it leaves your observation. It does
 not leave the world.
@@ -225,9 +237,18 @@ arrives.
 
 Three questions follow directly, and each gets a chapter.
 
-**Where is the state?** Throw a ball around a corner and a single coordinate is
-a weak answer. PlaNet deliberately combines deterministic and stochastic latent
-components because uncertainty is not model failure; unearned certainty is.
+**How sure should it be?** Throw a ball behind a wall and ask where it is now.
+A single exact position is the wrong shape of answer, because you genuinely
+cannot know. It might have bounced off something, or stopped against a kerb, or
+still be rolling. A model that hands back one confident coordinate has quietly
+thrown away the fact that it was guessing.
+
+PlaNet carries two things at once instead. A deterministic part
+<Gloss>computed the same way every time, so it always follows from the last
+state</Gloss> holds whatever reliably follows from what came before. A
+stochastic part <Gloss>sampled rather than computed, so the same input can
+produce several different futures</Gloss> holds whatever could still go either
+way. Being unsure is not the failure. Being sure without grounds is.
 
 **Do actions change the prediction?** *What happens next* and *what happens if I
 push this* are different questions. Only the second one lets you compare
