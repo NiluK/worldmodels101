@@ -15,33 +15,25 @@ import { useT } from "./locale-provider";
 
 type Id = "one" | "many" | "now" | "plan";
 
-const PARTS: Record<Id, { tone: string; phrase: string; note: string }> = {
-  one: {
-    tone: "var(--imagine)",
-    phrase: "the next state",
-    note: "One step. This is the model from Figure 1.3, unchanged.",
-  },
-  many: {
-    tone: "var(--imagine)",
-    phrase: "every state from here to H",
-    note: "Not one prediction but a whole stretch of them, each one built on the last. The model has to eat its own output to get here, which is where the error compounds.",
-  },
-  now: {
-    tone: "var(--actual)",
-    phrase: "the same single state you are in",
-    note: "This does not grow. However far ahead you ask, you are still standing in exactly one place with exactly one observation of it.",
-  },
-  plan: {
-    tone: "var(--ink)",
-    phrase: "a whole plan",
-    note: "No longer one action but a sequence of them, which is what makes this a plan rather than a guess. Searching over these sequences is what planning is.",
-  },
+const TONE: Record<Id, string> = {
+  one: "var(--imagine)",
+  many: "var(--imagine)",
+  now: "var(--actual)",
+  plan: "var(--ink)",
+};
+
+/** dictionary keys differ from ids where "now" would collide with the equation above */
+const KEY: Record<Id, string> = { one: "roll.one", many: "roll.many", now: "roll.nowP", plan: "roll.plan" };
+const NOTE: Record<Id, string> = {
+  one: "roll.one.note", many: "roll.many.note", now: "roll.now.note", plan: "roll.plan.note",
 };
 
 function Sym({
-  id, enter, hot, setHot, children,
+  id, enter, hot, setHot, label, children,
 }: {
   id: Id;
+  /** the readable name, so the control is not announced as an internal id */
+  label: string;
   enter: Record<string, unknown>;
   hot: Id | null;
   setHot: (v: Id | null) => void;
@@ -55,15 +47,15 @@ function Sym({
       onFocus={() => setHot(id)}
       onBlur={() => setHot(null)}
       onClick={() => setHot(hot === id ? null : id)}
-      aria-label={PARTS[id].phrase}
+      aria-label={label}
       className="relative cursor-pointer bg-transparent"
-      style={{ color: PARTS[id].tone }}
+      style={{ color: TONE[id] }}
     >
       {children}
       <motion.span
         aria-hidden
         className="absolute -bottom-1.5 left-0 right-0 h-[2px]"
-        style={{ background: PARTS[id].tone }}
+        style={{ background: TONE[id] }}
         initial={false}
         animate={{ scaleX: hot === id ? 1 : 0 }}
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
@@ -104,7 +96,7 @@ export function RolloutEquation() {
         style={{ fontFamily: "var(--font-body)", fontStyle: "italic" }}
       >
         {punct(0, "p(")}
-        <Sym id="one" enter={enter(1)} hot={hot} setHot={setHot}>
+        <Sym id="one" enter={enter(1)} hot={hot} setHot={setHot} label={t(KEY["one"])}>
           s<Sub>t+1</Sub>
         </Sym>
         {punct(1, <span className="mx-2 not-italic">&#8739;</span>)}
@@ -116,15 +108,15 @@ export function RolloutEquation() {
         </motion.span>
 
         {punct(3, "p(")}
-        <Sym id="many" enter={enter(3)} hot={hot} setHot={setHot}>
+        <Sym id="many" enter={enter(3)} hot={hot} setHot={setHot} label={t(KEY["many"])}>
           s<Sub>t+1:t+H</Sub>
         </Sym>
         {punct(4, <span className="mx-2 not-italic">&#8739;</span>)}
-        <Sym id="now" enter={enter(4)} hot={hot} setHot={setHot}>
+        <Sym id="now" enter={enter(4)} hot={hot} setHot={setHot} label={t(KEY["now"])}>
           s<Sub>t</Sub>
         </Sym>
         {punct(4, <span className="mr-2">,</span>)}
-        <Sym id="plan" enter={enter(5)} hot={hot} setHot={setHot}>
+        <Sym id="plan" enter={enter(5)} hot={hot} setHot={setHot} label={t(KEY["plan"])}>
           a<Sub>t:t+H&minus;1</Sub>
         </Sym>
         {punct(5, ")")}
@@ -134,7 +126,7 @@ export function RolloutEquation() {
         {...enter(6)}
         className="mx-auto mt-10 max-w-[54ch] text-center text-[1.05rem] leading-relaxed text-ink-muted"
       >
-        Ask for{" "}
+        {t("roll.askFor")}{" "}
         {(["one", "many"] as Id[]).map((id, i) => (
           <span key={id}>
             <button
@@ -145,17 +137,17 @@ export function RolloutEquation() {
               onClick={() => setHot(hot === id ? null : id)}
               className="cursor-pointer underline underline-offset-4 transition-all duration-200"
               style={{
-                color: PARTS[id].tone,
+                color: TONE[id],
                 textDecorationStyle: hot === id ? "solid" : "dotted",
                 textDecorationThickness: hot === id ? "2px" : "1px",
               }}
             >
-              {PARTS[id].phrase}
+              {t(KEY[id])}
             </button>
-            {i === 0 ? " instead of " : ", "}
+            {i === 0 ? t("roll.insteadOf") : "，"}
           </span>
         ))}
-        and you still only get{" "}
+        {t("roll.stillGet")}{" "}
         {(["now", "plan"] as Id[]).map((id, i) => (
           <span key={id}>
             <button
@@ -166,14 +158,14 @@ export function RolloutEquation() {
               onClick={() => setHot(hot === id ? null : id)}
               className="cursor-pointer underline underline-offset-4 transition-all duration-200"
               style={{
-                color: PARTS[id].tone,
+                color: TONE[id],
                 textDecorationStyle: hot === id ? "solid" : "dotted",
                 textDecorationThickness: hot === id ? "2px" : "1px",
               }}
             >
-              {PARTS[id].phrase}
+              {t(KEY[id])}
             </button>
-            {i === 0 ? " and " : "."}
+            {i === 0 ? t("eq.and") : "。"}
           </span>
         ))}
       </motion.p>
@@ -187,7 +179,7 @@ export function RolloutEquation() {
           className="text-center text-[0.95rem] leading-relaxed text-ink-muted"
         >
           {hot ? (
-            PARTS[hot].note
+            t(NOTE[hot])
           ) : (
             <span className="text-ink-faint">
               {t("roll.hint")}

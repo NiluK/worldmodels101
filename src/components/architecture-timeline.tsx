@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { useT, useLocale } from "./locale-provider";
 
 /**
  * One architecture, assembled across sixty years.
@@ -14,14 +15,14 @@ import { useState } from "react";
 
 type NodeId = "obs" | "enc" | "lat" | "dyn" | "dec" | "pred" | "ctl";
 
-const NODES: Record<NodeId, { x: number; y: number; w: number; label: string }> = {
-  obs:  { x: 8,   y: 40,  w: 128, label: "Observation" },
-  enc:  { x: 158, y: 40,  w: 118, label: "Encoder" },
-  lat:  { x: 298, y: 40,  w: 118, label: "Latent" },
-  dyn:  { x: 438, y: 40,  w: 128, label: "Dynamics" },
-  dec:  { x: 588, y: 40,  w: 118, label: "Decoder" },
-  pred: { x: 728, y: 40,  w: 138, label: "Prediction" },
-  ctl:  { x: 438, y: 168, w: 128, label: "Controller" },
+const NODES: Record<NodeId, { x: number; y: number; w: number; key: string }> = {
+  obs:  { x: 8,   y: 40,  w: 128, key: "arch.observation" },
+  enc:  { x: 158, y: 40,  w: 118, key: "arch.encoder" },
+  lat:  { x: 298, y: 40,  w: 118, key: "arch.latent" },
+  dyn:  { x: 438, y: 40,  w: 128, key: "arch.dynamics" },
+  dec:  { x: 588, y: 40,  w: 118, key: "arch.decoder" },
+  pred: { x: 728, y: 40,  w: 138, key: "arch.prediction" },
+  ctl:  { x: 438, y: 168, w: 128, key: "arch.controller" },
 };
 
 const FLOW: [NodeId, NodeId][] = [
@@ -38,18 +39,65 @@ type Era = {
   note: string;
 };
 
+const ERAS_EN_NOTES = [
+  "Recover a hidden state from noisy measurements by running a forward model and correcting it against what you observe. The dynamics are supplied, not learned, and nothing here asks what happens if I act.",
+  "One network models the world, another chooses actions, and the first predicts what the second's choices will do. Dyna adds the other half: plan inside the learned model, not only in the world.",
+  "An encoder squeezes each frame to a short list of numbers, a recurrent dynamics model predicts where those numbers go next, and a small controller is trained almost entirely inside the model's own rollouts.",
+  "The dynamics move fully into latent space and are learned straight from pixels. Planning happens there too, and Dreamer trains behaviour across long imagined trajectories rather than single steps.",
+  "The prediction target moves off the pixels. Predict a summary of the next frame instead of the frame, and the decoder stops being necessary, which is exactly why the forecast can be thrown away and the features kept.",
+  "The decoder becomes the product. Scale it far enough and the output is no longer a predicted frame but an environment you can steer. That is where the word arrived at its newest and loudest meaning.",
+];
+
+/** Era copy per locale. Labels are dictionary keys so the diagram stays in step. */
+const ERA_TEXT: Record<string, Record<string, { who: string; note: string }>> = {
+  en: {
+    "1960": { who: "Kalman", note: ERAS_EN_NOTES[0] },
+    "1990": { who: "Schmidhuber · Sutton", note: ERAS_EN_NOTES[1] },
+    "2018": { who: "Ha & Schmidhuber", note: ERAS_EN_NOTES[2] },
+    "2018–19": { who: "PlaNet · Dreamer", note: ERAS_EN_NOTES[3] },
+    "2023–25": { who: "I-JEPA · V-JEPA 2", note: ERAS_EN_NOTES[4] },
+    "2024–26": { who: "Genie · Cosmos · Marble", note: ERAS_EN_NOTES[5] },
+  },
+  zh: {
+    "1960": {
+      who: "卡尔曼",
+      note: "通过运行一个前向模型、并用观测到的结果去修正它，从带噪声的测量里恢复出隐藏状态。动力学是给定的，不是学出来的，而且这里没有任何东西会问「如果我采取行动会怎样」。",
+    },
+    "1990": {
+      who: "Schmidhuber · Sutton",
+      note: "一个网络给世界建模，另一个选择动作，而前者预测后者的选择会带来什么。Dyna 补上了另一半：不只在世界里规划，也在学出来的模型里规划。",
+    },
+    "2018": {
+      who: "Ha 与 Schmidhuber",
+      note: "一个编码器把每一帧压成一小串数字，一个循环动力学模型预测这串数字接下来往哪走，还有一个几乎完全在模型自己的推演里训练出来的小控制器。",
+    },
+    "2018–19": {
+      who: "PlaNet · Dreamer",
+      note: "动力学彻底搬进潜在空间，并且直接从像素里学出来。规划也发生在那里，而 Dreamer 是跨越长长一段想象出来的轨迹去训练行为，而不是只看一步。",
+    },
+    "2023–25": {
+      who: "I-JEPA · V-JEPA 2",
+      note: "预测目标从像素上移开。预测的是下一帧的摘要而不是这一帧本身，于是解码器不再必要，而这正是预测可以被丢掉、特征却留下来的原因。",
+    },
+    "2024–26": {
+      who: "Genie · Cosmos · Marble",
+      note: "解码器变成了产品本身。把它放大到足够程度，输出就不再是一帧预测，而是一个你可以操控、可以走进去的环境，这个词也就抵达了它最新、也最喧闹的含义。",
+    },
+  },
+};
+
 const ERAS: Era[] = [
   {
     when: "1960", who: "Kalman",
     on: ["obs", "lat", "dyn", "dec", "pred"],
-    labels: { lat: "State estimate", dyn: "Dynamics (given)" },
+    labels: { lat: "arch.stateEstimate", dyn: "arch.dynamicsGiven" },
     focus: ["lat"],
     note: "Recover a hidden state from noisy measurements by running a forward model and correcting it against what you observe. The dynamics are supplied, not learned, and nothing here asks what happens if I act.",
   },
   {
     when: "1990", who: "Schmidhuber · Sutton",
     on: ["obs", "lat", "dyn", "dec", "pred", "ctl"],
-    labels: { dyn: "Dynamics (learned)" },
+    labels: { dyn: "arch.dynamicsLearned" },
     focus: ["ctl", "dyn"],
     note: "One network models the world, another chooses actions, and the first predicts what the second's choices will do. Dyna adds the other half: plan inside the learned model, not only in the world.",
   },
@@ -62,21 +110,21 @@ const ERAS: Era[] = [
   {
     when: "2018–19", who: "PlaNet · Dreamer",
     on: ["obs", "enc", "lat", "dyn", "dec", "pred", "ctl"],
-    labels: { dyn: "Latent dynamics", pred: "Imagined rollout" },
+    labels: { dyn: "arch.latentDynamics", pred: "arch.imaginedRollout" },
     focus: ["dyn", "pred"],
     note: "The dynamics move fully into latent space and are learned straight from pixels. Planning happens there too, and Dreamer trains behaviour across long imagined trajectories rather than single steps.",
   },
   {
     when: "2023–25", who: "I-JEPA · V-JEPA 2",
     on: ["obs", "enc", "lat", "dyn", "pred", "ctl"],
-    labels: { pred: "Predicted embedding" },
+    labels: { pred: "arch.predEmbedding" },
     focus: ["dec", "pred"],
     note: "The prediction target moves off the pixels. Predict a summary of the next frame instead of the frame, and the decoder stops being necessary, which is exactly why the forecast can be thrown away and the features kept.",
   },
   {
     when: "2024–26", who: "Genie · Cosmos · Marble",
     on: ["obs", "enc", "lat", "dyn", "dec", "pred"],
-    labels: { dec: "Decoder", pred: "A world you can enter" },
+    labels: { dec: "arch.decoder", pred: "arch.aWorld" },
     focus: ["dec", "pred"],
     note: "The decoder becomes the product. Scale it far enough and the output is no longer a predicted frame but an environment you can steer. That is where the word arrived at its newest and loudest meaning.",
   },
@@ -85,7 +133,10 @@ const ERAS: Era[] = [
 export function ArchitectureTimeline() {
   const still = useReducedMotion();
   const [i, setI] = useState(0);
+  const t = useT();
+  const locale = useLocale();
   const era = ERAS[i];
+  const eraText = ERA_TEXT[locale]?.[era.when] ?? ERA_TEXT.en[era.when];
   const on = (id: NodeId) => era.on.includes(id);
   const hot = (id: NodeId) => era.focus.includes(id);
 
@@ -129,7 +180,7 @@ export function ArchitectureTimeline() {
           <text x={NODES.ctl.x + NODES.ctl.w / 2 + 8} y={NODES.dyn.y + 88}
             className="font-mono" fontSize="10" letterSpacing="1"
             fill={on("ctl") ? "var(--imagine)" : "var(--ink-faint)"}>
-            action
+            {t("arch.action")}
           </text>
 
           {(Object.keys(NODES) as NodeId[]).map((id) => {
@@ -150,7 +201,7 @@ export function ArchitectureTimeline() {
                 <text x={n.x + n.w / 2} y={n.y + 31} textAnchor="middle"
                   fontFamily="var(--font-body)" fontSize="14.5"
                   fill={live ? "var(--ink)" : "var(--ink-faint)"}>
-                  {era.labels?.[id] ?? n.label}
+                  {era.labels?.[id] ? t(era.labels[id]!) : t(n.key)}
                 </text>
               </g>
             );
@@ -171,7 +222,7 @@ export function ArchitectureTimeline() {
           >
             <span className={`label tnum block ${idx === i ? "!text-imagine" : ""}`}>{e.when}</span>
             <span className={`mt-1 block font-mono text-[0.7rem] leading-snug ${idx === i ? "text-ink" : "text-ink-muted"}`}>
-              {e.who}
+              {(ERA_TEXT[locale] ?? ERA_TEXT.en)[e.when]?.who ?? e.who}
             </span>
           </button>
         ))}
@@ -185,7 +236,7 @@ export function ArchitectureTimeline() {
           transition={{ duration: 0.22 }}
           className="max-w-[62ch] text-[0.98rem] leading-relaxed text-ink-muted"
         >
-          {era.note}
+          {eraText?.note ?? era.note}
         </motion.p>
       </div>
     </div>

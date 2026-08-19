@@ -16,29 +16,19 @@ import { useT } from "./locale-provider";
 
 type Id = "next" | "now" | "act";
 
-const PARTS: Record<Id, { tone: string; phrase: string; note: string }> = {
-  next: {
-    tone: "var(--imagine)",
-    phrase: "what happens next",
-    note: "The state one step into the future. This is the only part you do not know, and the only part the model produces.",
-  },
-  now: {
-    tone: "var(--actual)",
-    phrase: "where you are now",
-    note: "The current state. Given, not predicted.",
-  },
-  act: {
-    tone: "var(--ink)",
-    phrase: "what you do",
-    note: "The action you take. Change this and the prediction changes, which is what makes the model useful for choosing.",
-  },
+const TONE: Record<Id, string> = {
+  next: "var(--imagine)",
+  now: "var(--actual)",
+  act: "var(--ink)",
 };
 
 /** Hoisted so the buttons are not remounted on every parent render. */
 function Sym({
-  id, enter, hot, setHot, children,
+  id, enter, hot, setHot, label, children,
 }: {
   id: Id;
+  /** the readable name, so the control is not announced as an internal id */
+  label: string;
   enter: Record<string, unknown>;
   hot: Id | null;
   setHot: (v: Id | null) => void;
@@ -52,15 +42,15 @@ function Sym({
       onFocus={() => setHot(id)}
       onBlur={() => setHot(null)}
       onClick={() => setHot(hot === id ? null : id)}
-      aria-label={PARTS[id].phrase}
+      aria-label={label}
       className="relative cursor-pointer bg-transparent"
-      style={{ color: PARTS[id].tone }}
+      style={{ color: TONE[id] }}
     >
       {children}
       <motion.span
         aria-hidden
         className="absolute -bottom-1.5 left-0 right-0 h-[2px]"
-        style={{ background: PARTS[id].tone }}
+        style={{ background: TONE[id] }}
         initial={false}
         animate={{ scaleX: hot === id ? 1 : 0 }}
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
@@ -105,7 +95,7 @@ export function TransitionEquation() {
       >
         {punct(0, "p")}
         {punct(0, "(")}
-        <Sym id="next" enter={enter(1)} hot={hot} setHot={setHot}>
+        <Sym id="next" enter={enter(1)} hot={hot} setHot={setHot} label={t("eq.next")}>
           s<sub className="text-[0.55em] not-italic">t+1</sub>
         </Sym>
         {punct(2, (
@@ -117,11 +107,11 @@ export function TransitionEquation() {
             &#8739;
           </span>
         ))}
-        <Sym id="now" enter={enter(3)} hot={hot} setHot={setHot}>
+        <Sym id="now" enter={enter(3)} hot={hot} setHot={setHot} label={t("eq.now")}>
           s<sub className="text-[0.55em] not-italic">t</sub>
         </Sym>
         {punct(3, <span className="mr-2">,</span>)}
-        <Sym id="act" enter={enter(4)} hot={hot} setHot={setHot}>
+        <Sym id="act" enter={enter(4)} hot={hot} setHot={setHot} label={t("eq.act")}>
           a<sub className="text-[0.55em] not-italic">t</sub>
         </Sym>
         {punct(4, ")")}
@@ -132,7 +122,7 @@ export function TransitionEquation() {
         {...enter(5)}
         className="mx-auto mt-10 max-w-[46ch] text-center text-[1.05rem] leading-relaxed text-ink-muted"
       >
-        the chance of{" "}
+        {t("eq.reading")}{" "}
         {(["next", "now", "act"] as Id[]).map((id, i) => (
           <span key={id}>
             <button
@@ -143,14 +133,14 @@ export function TransitionEquation() {
               onClick={() => setHot(hot === id ? null : id)}
               className="cursor-pointer underline underline-offset-4 transition-all duration-200"
               style={{
-                color: PARTS[id].tone,
+                color: TONE[id],
                 textDecorationStyle: hot === id ? "solid" : "dotted",
                 textDecorationThickness: hot === id ? "2px" : "1px",
               }}
             >
-              {PARTS[id].phrase}
+              {t(`eq.${id}`)}
             </button>
-            {i === 0 ? ", given " : i === 1 ? " and " : ""}
+            {i === 0 ? t("eq.given") : i === 1 ? t("eq.and") : ""}
           </span>
         ))}
       </motion.p>
@@ -165,7 +155,7 @@ export function TransitionEquation() {
           className="text-center text-[0.95rem] leading-relaxed text-ink-muted"
         >
           {hot ? (
-            PARTS[hot].note
+            t(`eq.${hot}.note`)
           ) : (
             <span className="text-ink-faint">
               {t("eq.hoverHint")}

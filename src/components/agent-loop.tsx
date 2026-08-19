@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useT } from "./locale-provider";
+import { definitionText } from "@/lib/definitions";
+import { useT, useLocale } from "./locale-provider";
 
 /**
  * The object underneath all five definitions.
@@ -12,22 +13,22 @@ import { useT } from "./locale-provider";
  * Hover a sense to see which span of the loop it owns.
  */
 
-const NODES = [
-  { id: "world", x: 8, label: "World", sub: "hidden state sₜ" },
-  { id: "obs", x: 199, label: "Observation", sub: "oₜ" },
-  { id: "belief", x: 390, label: "Belief", sub: "internal state bₜ" },
-  { id: "imag", x: 581, label: "Imagination", sub: "possible futures" },
-  { id: "act", x: 772, label: "Action", sub: "aₜ" },
+const NODES: { id: string; x: number; key: string; sub?: string; subKey?: string }[] = [
+  { id: "world", x: 8, key: "loop.world", subKey: "loop.world.sub" },
+  { id: "obs", x: 199, key: "loop.observation", sub: "oₜ" },
+  { id: "belief", x: 390, key: "loop.belief", subKey: "loop.belief.sub" },
+  { id: "imag", x: 581, key: "loop.imagination", subKey: "loop.imagination.sub" },
+  { id: "act", x: 772, key: "loop.action", sub: "aₜ" },
 ];
 const W = 128;
 const H = 62;
 const Y = 74;
 
 const ARROWS = [
-  { from: 0, to: 1, label: "observe" },
-  { from: 1, to: 2, label: "infer" },
-  { from: 2, to: 3, label: "predict" },
-  { from: 3, to: 4, label: "choose" },
+  { from: 0, to: 1, key: "loop.observe" },
+  { from: 1, to: 2, key: "loop.infer" },
+  { from: 2, to: 3, key: "loop.predict" },
+  { from: 3, to: 4, key: "loop.choose" },
 ];
 
 /** Which arc of the loop each definition is specialised on. */
@@ -39,16 +40,9 @@ const CLAIMS: Record<string, { span: [number, number]; note: string }> = {
   implicit: { span: [2, 2], note: "Asks whether a belief state formed without being asked for." },
 };
 
-const NAMES: Record<string, string> = {
-  renderer: "Renderer",
-  simulator: "Simulator",
-  dynamics: "Dynamics Model",
-  representation: "Representation",
-  implicit: "Implicit Model",
-};
-
 export function AgentLoop() {
   const t = useT();
+  const locale = useLocale();
   const [hot, setHot] = useState<string | null>(null);
   const claim = hot ? CLAIMS[hot] : null;
 
@@ -77,7 +71,7 @@ export function AgentLoop() {
             const x2 = NODES[a.to].x;
             const on = claim ? lit(a.from) && lit(a.to) : false;
             return (
-              <g key={a.label}>
+              <g key={t(a.key)}>
                 <line
                   x1={x1 + 6} y1={Y + H / 2} x2={x2 - 8} y2={Y + H / 2}
                   stroke={on ? "var(--imagine)" : "var(--ink-muted)"}
@@ -89,7 +83,7 @@ export function AgentLoop() {
                   className="font-mono" fontSize="10" letterSpacing="1"
                   fill={on ? "var(--imagine)" : "var(--ink-faint)"}
                 >
-                  {a.label}
+                  {t(a.key)}
                 </text>
               </g>
             );
@@ -121,11 +115,11 @@ export function AgentLoop() {
                 />
                 <text x={n.x + W / 2} y={Y + 26} textAnchor="middle"
                   fontFamily="var(--font-display)" fontSize="19" fill="var(--ink)">
-                  {n.label}
+                  {t(n.key)}
                 </text>
                 <text x={n.x + W / 2} y={Y + 46} textAnchor="middle"
                   className="font-mono" fontSize="10.5" fill="var(--ink-muted)">
-                  {n.sub}
+                  {n.subKey ? t(n.subKey) : n.sub}
                 </text>
               </g>
             );
@@ -148,7 +142,7 @@ export function AgentLoop() {
                 : "border-rule-strong text-ink-muted hover:border-ink hover:text-ink"
             }`}
           >
-            {NAMES[id]}
+            {definitionText(locale, id).name}
           </button>
         ))}
       </div>
