@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "narrate": "node --env-file-if-exists=.env.local scripts/narrate.mjs"
+    "narrate": "node --env-file-if-exists=.env.local scripts/narrate.mjs",
+    "pdf": "node scripts/make-pdf.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

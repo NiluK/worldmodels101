@@ -26,6 +26,7 @@ export function ReadingProgress() {
 
   return (
     <div
+      data-print-hide
       className="fixed left-0 top-14 z-40 h-[2px] w-full bg-transparent"
       aria-hidden="true"
     >

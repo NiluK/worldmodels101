@@ -159,7 +159,7 @@ export function ArchitectureTimeline() {
       </div>
 
       {/* the scrubber */}
-      <div className="mt-2 flex flex-wrap gap-px border-t border-rule bg-rule px-0">
+      <div data-print-hide className="mt-2 flex flex-wrap gap-px border-t border-rule bg-rule px-0">
         {ERAS.map((e, idx) => (
           <button
             key={e.when}

@@ -3,7 +3,7 @@ import { SignalMark } from "./signal-mark";
 
 export function SiteFooter() {
   return (
-    <footer className="relative z-10 mt-32 border-t border-rule">
+    <footer data-print-hide className="relative z-10 mt-32 border-t border-rule">
       <div className="ticks" />
       <div className="mx-auto flex max-w-[84rem] flex-col gap-6 px-6 py-12 md:flex-row md:items-end md:justify-between md:px-10">
         <div className="flex items-start gap-3">

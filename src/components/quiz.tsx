@@ -146,7 +146,7 @@ const QUESTIONS: Q[] = [
   },
 ];
 
-export function Quiz() {
+function QuizInteractive() {
   const still = useReducedMotion();
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<string | number | null>(null);
@@ -333,5 +333,66 @@ export function Quiz() {
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+
+/**
+ * The printed form. Buttons and a running score mean nothing on paper, so the
+ * whole set is laid out with its answers, which is what a reader can actually
+ * use away from the screen.
+ */
+function QuizPrinted() {
+  return (
+    <ol className="px-5 py-6 md:px-8">
+      {QUESTIONS.map((q, n) => {
+        const answer =
+          q.kind === "classify"
+            ? (DEFINITIONS.find((d) => d.id === q.answer)?.name ?? q.answer)
+            : `${String.fromCharCode(97 + q.answer)}. ${q.options[q.answer]}`;
+        return (
+          <li key={q.stem} className="mb-7 last:mb-0">
+            <p className="text-[1rem] leading-relaxed">
+              <span className="label mr-2 !text-[0.62rem]">{n + 1}</span>
+              {q.stem}
+            </p>
+
+            {q.kind === "choice" ? (
+              <ul className="mt-2 ml-6 list-none">
+                {q.options.map((opt, i) => (
+                  <li key={opt} className="text-[0.92rem] leading-snug text-ink-muted">
+                    <span className="font-mono text-[0.75rem]">
+                      {String.fromCharCode(97 + i)}.
+                    </span>{" "}
+                    {opt}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-2 ml-6 font-mono text-[0.75rem] text-ink-muted">
+                {DEFINITIONS.map((d) => d.name).join(" · ")}
+              </p>
+            )}
+
+            <p className="mt-2 ml-6 border-l-2 border-actual pl-3 text-[0.9rem] leading-relaxed text-ink-muted">
+              <span className="label !text-actual">Answer</span> {answer}. {q.why}
+            </p>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+export function Quiz() {
+  return (
+    <>
+      <div className="screen-only">
+        <QuizInteractive />
+      </div>
+      <div className="print-only">
+        <QuizPrinted />
+      </div>
+    </>
   );
 }

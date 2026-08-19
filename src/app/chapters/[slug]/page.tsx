@@ -38,6 +38,12 @@ export default async function ChapterPage(props: PageProps<"/chapters/[slug]">) 
   const hasAudio =
     SHOW_NARRATION &&
     existsSync(path.join(process.cwd(), "public", "audio", `${slug}.mp3`));
+
+  // offered only where one has actually been generated
+  const pdf = `/pdf/world-models-101-chapter-${chapter.n}.pdf`;
+  const hasPdf = existsSync(
+    path.join(process.cwd(), "public", "pdf", `world-models-101-chapter-${chapter.n}.pdf`),
+  );
   const next = CHAPTERS.find((c) => c.n === chapter.n + 1);
   const prev = CHAPTERS.find((c) => c.n === chapter.n - 1);
 
@@ -48,7 +54,7 @@ export default async function ChapterPage(props: PageProps<"/chapters/[slug]">) 
       {/* chapter plate */}
       <header className="track pt-16 pb-12 md:pt-24">
         <div>
-          <Link href="/#chapters" className="label hover:text-ink transition-colors">
+          <Link href="/#chapters" data-print-hide className="label hover:text-ink transition-colors">
             &larr; Contents
           </Link>
 
@@ -60,8 +66,17 @@ export default async function ChapterPage(props: PageProps<"/chapters/[slug]">) 
               <h1 className="display text-[clamp(2.4rem,7vw,4.6rem)] leading-[0.92]">
                 {chapter.title}
               </h1>
-              <p className="label mt-5">
-                {chapter.minutes} min read &middot; interactive
+              <p className="label mt-5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span>{chapter.minutes} min read &middot; interactive</span>
+                {hasPdf && (
+                  <a
+                    href={pdf}
+                    data-print-hide
+                    className="!text-imagine underline decoration-imagine/40 underline-offset-4 transition-colors hover:decoration-imagine"
+                  >
+                    PDF
+                  </a>
+                )}
               </p>
             </div>
           </div>
@@ -83,7 +98,7 @@ export default async function ChapterPage(props: PageProps<"/chapters/[slug]">) 
       </div>
 
       {/* chapter foot */}
-      <nav className="track border-t border-ink pt-8">
+      <nav data-print-hide className="track border-t border-ink pt-8">
         <div className="flex flex-col gap-8 pb-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             {prev ? (

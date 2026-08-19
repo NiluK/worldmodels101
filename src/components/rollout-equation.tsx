@@ -176,7 +176,7 @@ export function RolloutEquation() {
         ))}
       </motion.p>
 
-      <div className="mx-auto mt-6 min-h-[4.5em] max-w-[52ch] sm:min-h-[3.2em]">
+      <div data-print-hide className="mx-auto mt-6 min-h-[4.5em] max-w-[52ch] sm:min-h-[3.2em]">
         <motion.p
           key={hot ?? "idle"}
           initial={still ? false : { opacity: 0, y: 6 }}

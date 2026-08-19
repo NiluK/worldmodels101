@@ -278,7 +278,7 @@ export function GeneratedLandscape() {
         role="img"
         aria-label="A generated landscape you can walk through with the arrow keys or WASD. Ridgelines are computed from your heading each frame rather than stored."
       />
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-rule px-5 py-4">
+      <div data-print-hide className="flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-rule px-5 py-4">
         <div className="flex items-center gap-2">
           <Pad k="left" glyph="←" label="Turn left" press={press} />
           <Pad k="fwd" glyph="↑" label="Walk forward" press={press} />

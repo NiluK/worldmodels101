@@ -131,7 +131,7 @@ export function AgentLoop() {
         </svg>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-2 border-t border-rule px-5 pt-4 md:px-8">
+      <div data-print-hide className="mt-6 flex flex-wrap gap-2 border-t border-rule px-5 pt-4 md:px-8">
         {Object.keys(CLAIMS).map((id) => (
           <button
             key={id}
@@ -151,7 +151,7 @@ export function AgentLoop() {
         ))}
       </div>
 
-      <p className="mt-3 min-h-[2.6em] px-5 pb-5 text-[0.95rem] leading-relaxed text-ink-muted md:px-8">
+      <p data-print-hide className="mt-3 min-h-[2.6em] px-5 pb-5 text-[0.95rem] leading-relaxed text-ink-muted md:px-8">
         {claim ? claim.note : "Every definition is a specialist on one arc of this loop. Hover any of them."}
       </p>
     </div>

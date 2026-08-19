@@ -446,3 +446,97 @@ body::before {
   from { stroke-dashoffset: var(--len, 1000); }
   to   { stroke-dashoffset: 0; }
 }
+
+
+/* ==========================================================================
+   Print
+   Interactive controls carry no meaning on paper, so they are removed rather
+   than frozen mid-state. Figures keep their fills, links surface their URLs,
+   and the palette is forced light regardless of the reader's theme.
+   ========================================================================== */
+
+@media print {
+  :root,
+  :root[data-theme="dark"] {
+    --paper:        #ffffff;
+    --paper-raised: #fbf9f4;
+    --paper-sunk:   #f2efe7;
+    --ink:          #111110;
+    --ink-muted:    #4a463f;
+    --ink-faint:    #6a655c;
+    --rule:         #d8d2c4;
+    --rule-strong:  #8d8779;
+    --imagine:      #a8330a;
+    --imagine-soft: #f6e7dd;
+    --actual:       #22415d;
+    --actual-soft:  #e0e9f0;
+    --gloss:        #5c574e;
+    --imagine-on-soft: #8f2c08;
+    --grain-opacity: 0;
+  }
+
+  html, body { background: #fff; }
+  body::before { display: none; }
+
+  /* Chrome that means nothing on paper. Targeted by attribute, not by tag:
+     the chapter's own title plate is a <header> too, and hiding every header
+     silently drops the title from the printed page. */
+  [data-print-hide] { display: none !important; }
+
+  /* the reading grid collapses: no rails to place notes in */
+  .track {
+    display: block;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .track > .marginnote {
+    display: block;
+    height: auto;
+    margin: 1rem 0;
+    padding: 0.6rem 0 0.6rem 0.9rem;
+    border-left: 2px solid var(--imagine);
+    text-align: left;
+    page-break-inside: avoid;
+  }
+
+  /* the header plate is its own grid child on screen; in block flow it needs
+     its own separation from the prose that follows */
+  article > header { margin-bottom: 2.2rem; }
+
+  figure, .prose blockquote, table { page-break-inside: avoid; }
+  .prose h2, .prose h3 { page-break-after: avoid; }
+  .prose h2 { margin-top: 2.2em; }
+  p { orphans: 3; widows: 3; }
+
+  /* a printed link is useless without its destination */
+  .prose :is(p, li) a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-family: var(--font-mono);
+    font-size: 0.72em;
+    color: var(--ink-muted);
+    word-break: break-all;
+  }
+
+  /* Scroll-reveal animations are a hazard in print: anything the reader never
+     scrolled past is still at opacity 0 when the page is rendered, so it prints
+     blank. Motion writes these inline, hence the attribute selector. */
+  [style*="opacity"],
+  [style*="transform"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* prose list markers leak into component lists once they print */
+  .print-only ul > li::before,
+  .print-only ol > li::before { content: none !important; }
+  .print-only ul, .print-only ol { list-style: none; padding-left: 0; }
+
+  /* print-only content, hidden on screen */
+  .screen-only { display: none !important; }
+}
+
+.print-only { display: none; }
+@media print {
+  .print-only { display: block; }
+}

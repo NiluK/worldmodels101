@@ -89,7 +89,7 @@ export function DefinitionMap() {
       </div>
 
       {/* detail */}
-      <div className="mt-6 border-t border-rule bg-paper px-5 py-6 md:px-8">
+      <div data-print-hide className="mt-6 border-t border-rule bg-paper px-5 py-6 md:px-8">
         <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={active?.id ?? "empty"}

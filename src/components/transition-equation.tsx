@@ -154,7 +154,7 @@ export function TransitionEquation() {
       </motion.p>
 
       {/* the gloss for whichever part is lit */}
-      <div className="mx-auto mt-6 min-h-[4.5em] max-w-[46ch] sm:min-h-[3.2em]">
+      <div data-print-hide className="mx-auto mt-6 min-h-[4.5em] max-w-[46ch] sm:min-h-[3.2em]">
         <motion.p
           key={hot ?? "idle"}
           initial={still ? false : { opacity: 0, y: 6 }}

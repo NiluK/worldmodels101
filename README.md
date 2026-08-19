@@ -46,6 +46,22 @@ means editing one script re-synthesises only that chapter. The on-page player is
 currently hidden behind `SHOW_NARRATION` in `src/lib/flags.ts`; the audio still
 builds and deploys.
 
+## PDF
+
+Each chapter can be printed to a publication-quality PDF. Print styling lives in
+`globals.css` under `@media print`: interactive controls are removed rather than
+frozen mid-state, the quiz swaps to a static form with an answer key, and
+scroll-reveal opacity is forced back to 1 so nothing the reader never scrolled
+past prints blank.
+
+```bash
+pnpm dev              # in another shell
+pnpm pdf what-people-mean 1
+```
+
+Output lands in `public/pdf/` and the chapter page links it automatically once
+the file exists.
+
 ## House rules
 
 Three constraints are worth knowing before changing anything.
