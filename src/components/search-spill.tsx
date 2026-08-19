@@ -8,35 +8,35 @@ import { DefinitionGlyph } from "./definition-glyph";
  */
 const RESULTS = [
   {
-    sense: "renderer",
+    definition: "renderer",
     what: "A DeepMind demo where somebody walks through a generated landscape with the arrow keys.",
     href: "https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/",
     cite: "Genie 3 · Google DeepMind",
     turns: "Renderer",
   },
   {
-    sense: "representation",
+    definition: "representation",
     what: "A Meta paper about predicting video embeddings that never shows you a video.",
     href: "https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/",
     cite: "V-JEPA 2 · Meta AI",
     turns: "Representation",
   },
   {
-    sense: "simulator",
+    definition: "simulator",
     what: "A 3-D environment you can load straight into Blender.",
     href: "https://www.worldlabs.ai/blog/marble-world-model",
     cite: "Marble · World Labs",
     turns: "Simulator",
   },
   {
-    sense: "controller",
+    definition: "controller",
     what: "A reinforcement learning result from 2018 about a car in a racing game.",
     href: "https://worldmodels.github.io/",
     cite: "World Models · Ha & Schmidhuber",
     turns: "Controller",
   },
   {
-    sense: "implicit",
+    definition: "implicit",
     what: "An argument, conducted mostly at volume, about whether a language model that has never seen a chessboard has one inside it anyway.",
     href: "https://arxiv.org/abs/2210.13382",
     cite: "Emergent World Representations · Li et al.",
@@ -58,14 +58,14 @@ export function SearchSpill() {
 
       <ol>
         {RESULTS.map((r) => (
-          <li key={r.sense} className="group border-b border-rule last:border-b-0">
+          <li key={r.definition} className="group border-b border-rule last:border-b-0">
             <a
               href={r.href}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-start gap-4 px-5 py-4 transition-colors hover:bg-paper"
             >
-              <DefinitionGlyph definition={r.sense} size={32} className="mt-0.5 shrink-0" />
+              <DefinitionGlyph definition={r.definition} size={32} className="mt-0.5 shrink-0" />
 
               <span className="min-w-0 flex-1">
                 <span className="block text-[1rem] leading-snug">{r.what}</span>

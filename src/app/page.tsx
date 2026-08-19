@@ -105,7 +105,7 @@ export default function Home() {
               So: nine chapters, built around things you can poke at. No
               prerequisites past comfort with a gradient and a bit of linear
               algebra. Chapter 1 is the field guide; everything after it is the
-              machinery, with the sense being used stated wherever it matters.
+              machinery, with the definition in use stated wherever it matters.
             </p>
           </div>
         </div>

@@ -12,13 +12,22 @@ export type Definition = {
   camp: string;
   chapter: number;
   /**
-   * First-party footage only — official lab channels, verified via oEmbed.
-   * Null where the sense genuinely has nothing to show, which is itself the
-   * most useful thing about it.
+   * Sourced either from the lab that built the system or from the researcher
+   * who authored the work, speaking. Every id is checked against YouTube's
+   * oEmbed endpoint for channel and title before it ships; commentary
+   * reuploads are rejected.
    */
-  video:
-    | { id: string; title: string; source: string }
-    | { none: string };
+  video: {
+    id: string;
+    title: string;
+    source: string;
+    /**
+     * A demo's thumbnail IS the content, so use it. A lecture's thumbnail is
+     * whatever slide the frame grab landed on, which is arbitrary at best and
+     * actively misleading at worst, so talks get a designed card instead.
+     */
+    kind: "demo" | "talk";
+  };
 };
 
 /**
@@ -49,6 +58,7 @@ export const DEFINITIONS: Definition[] = [
       id: "PDKhUknuQDg",
       title: "Genie 3: Creating dynamic worlds that you can navigate in real-time",
       source: "Google DeepMind",
+      kind: "demo",
     },
   },
   {
@@ -66,6 +76,7 @@ export const DEFINITIONS: Definition[] = [
       id: "UslQB4LUueI",
       title: "Introducing Marble by World Labs",
       source: "World Labs",
+      kind: "demo",
     },
   },
   {
@@ -73,14 +84,17 @@ export const DEFINITIONS: Definition[] = [
     name: "The Controller",
     predicts: "Compact state",
     gloss:
-      "A compact model of next state and reward under actions, used to plan or to train a policy inside its own imagination. The classical model-based sense.",
+      "A compact model of next state and reward under actions, used to plan or to train a policy inside its own imagination. The classical model-based definition.",
     test:
       "Can you roll it forward under actions nobody has taken yet, and search over them? That is the job this one exists to do.",
     systems: ["Dreamer", "PlaNet", "Ha & Schmidhuber"],
     camp: "Reinforcement learning and control theory",
     chapter: 2,
     video: {
-      none: "The Controller's output is a compact state vector, not a picture. What there is to see is the plan it produces, which is what the demo in Chapter 2 shows directly.",
+      id: "oDlBtTcX0g0",
+      title: "Dreamer 4: diamonds from offline experience",
+      source: "Danijar Hafner",
+      kind: "demo",
     },
   },
   {
@@ -90,12 +104,15 @@ export const DEFINITIONS: Definition[] = [
     gloss:
       "Prediction of embeddings rather than observations, where the forecast is often training scaffolding and the learned features are the product.",
     test:
-      "Is the prediction discarded once training ends? If the artefact you keep is a representation, this is the sense being used.",
+      "Is the prediction discarded once training ends? If the artefact you keep is a representation, this is the definition being used.",
     systems: ["V-JEPA 2", "I-JEPA"],
     camp: "Self-supervised representation learning",
     chapter: 7,
     video: {
-      none: "V-JEPA 2 predicts representations and then throws the prediction away. There is no frame to render, and the absence is the whole argument: pixel-level detail was the thing it deliberately refused to spend capacity on.",
+      id: "yUmDRxV0krg",
+      title: "Self-Supervised Learning, JEPA, World Models, and the future of AI",
+      source: "Yann LeCun · Harvard CMSA",
+      kind: "talk",
     },
   },
   {
@@ -110,7 +127,10 @@ export const DEFINITIONS: Definition[] = [
     camp: "Mechanistic interpretability",
     chapter: 9,
     video: {
-      none: "There is no system running here to film. The evidence is a probe reading a board position out of a network's activations: a plot, not a demo.",
+      id: "n6Dcl6Uf73s",
+      title: "A Whirlwind Tour of Mechanistic Interpretability",
+      source: "Neel Nanda · metauni",
+      kind: "talk",
     },
   },
 ];

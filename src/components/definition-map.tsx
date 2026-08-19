@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useState } from "react";
 import { DEFINITIONS } from "@/lib/definitions";
-import { VideoFigure, NoVideo } from "./video-figure";
+import { VideoFigure } from "./video-figure";
 import { DefinitionGlyph } from "./definition-glyph";
 
 /**
@@ -101,15 +101,12 @@ export function DefinitionMap() {
         {active ? (
           <div className="grid gap-8 lg:grid-cols-[minmax(0,27rem)_minmax(0,1fr)]">
             <div className="border border-rule bg-paper-raised">
-              {"id" in active.video ? (
-                <VideoFigure
-                  id={active.video.id}
-                  title={active.video.title}
-                  source={active.video.source}
-                />
-              ) : (
-                <NoVideo reason={active.video.none} />
-              )}
+              <VideoFigure
+                id={active.video.id}
+                title={active.video.title}
+                source={active.video.source}
+                kind={active.video.kind}
+              />
             </div>
 
             <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_13rem]">

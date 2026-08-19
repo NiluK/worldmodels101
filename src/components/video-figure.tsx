@@ -15,14 +15,19 @@ export function VideoFigure({
   title,
   source,
   poster = "maxresdefault",
+  kind = "demo",
 }: {
   id: string;
   title: string;
-  /** The channel the video actually comes from. Always first-party here. */
+  /** The channel or speaker the video actually comes from. */
   source: string;
   poster?: "maxresdefault" | "hqdefault";
+  kind?: "demo" | "talk";
 }) {
   const [live, setLive] = useState(false);
+  // Not every video has a maxres thumbnail. When it is missing YouTube serves a
+  // 120x90 placeholder rather than a 404, so fall back to hqdefault on error.
+  const [quality, setQuality] = useState(poster);
 
   return (
     <div className="group">
@@ -41,15 +46,38 @@ export function VideoFigure({
             className="absolute inset-0 h-full w-full cursor-pointer"
             aria-label={`Play: ${title}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {kind === "talk" ? (
+              // A designed card, because a lecture's frame grab says nothing
+              <span className="absolute inset-0 flex flex-col justify-center gap-2 bg-paper-sunk px-6 py-5 text-left">
+                <span className="label !text-[0.6rem]">Talk</span>
+                {/* the speaker, not the title: the caption already carries the title */}
+                <span className="display text-[clamp(1.5rem,3.4vw,2.2rem)] leading-tight text-ink">
+                  {source.split("·")[0].trim()}
+                </span>
+              </span>
+            ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
-              src={`https://i.ytimg.com/vi/${id}/${poster}.jpg`}
+              src={`https://i.ytimg.com/vi/${id}/${quality}.jpg`}
               alt=""
               loading="lazy"
+              onError={() => setQuality("hqdefault")}
+              onLoad={(e) => {
+                if (e.currentTarget.naturalWidth <= 120) setQuality("hqdefault");
+              }}
               className="absolute inset-0 h-full w-full object-cover opacity-90 transition-opacity duration-300 group-hover:opacity-100"
             />
-            <span className="absolute inset-0 bg-ink/10 transition-colors group-hover:bg-ink/0" />
-            <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center border-2 border-paper bg-imagine transition-transform duration-200 group-hover:scale-110">
+            )}
+            {kind === "demo" && (
+              <span className="absolute inset-0 bg-ink/10 transition-colors group-hover:bg-ink/0" />
+            )}
+            <span
+              className={`absolute flex h-16 w-16 items-center justify-center border-2 border-paper bg-imagine transition-transform duration-200 group-hover:scale-110 ${
+                kind === "talk"
+                  ? "bottom-5 right-5"
+                  : "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              }`}
+            >
               <svg viewBox="0 0 18 22" className="ml-1 h-[22px] w-[18px]" aria-hidden="true">
                 <polygon points="0,0 18,11 0,22" fill="var(--paper)" />
               </svg>
@@ -62,22 +90,6 @@ export function VideoFigure({
         <span className="label !text-imagine">{source}</span>
         <span className="text-[0.9rem] leading-snug text-ink-muted">{title}</span>
       </div>
-    </div>
-  );
-}
-
-/**
- * Used where a sense genuinely has nothing to show. Two of the five predict
- * things that are never rendered, and saying so is more honest than filling
- * the slot with someone's commentary reupload.
- */
-export function NoVideo({ reason }: { reason: string }) {
-  return (
-    <div className="flex aspect-video w-full flex-col items-start justify-center gap-3 border-b border-dashed border-rule-strong bg-paper-sunk px-6">
-      <span className="label">Nothing to watch</span>
-      <p className="max-w-[38ch] text-[0.95rem] leading-relaxed text-ink-muted">
-        {reason}
-      </p>
     </div>
   );
 }

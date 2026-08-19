@@ -29,7 +29,7 @@ const ARROWS = [
   { from: 3, to: 4, label: "choose" },
 ];
 
-/** Which arc of the loop each sense is specialised on. */
+/** Which arc of the loop each definition is specialised on. */
 const CLAIMS: Record<string, { span: [number, number]; note: string }> = {
   renderer: { span: [2, 1], note: "Turns latent history back into observations." },
   simulator: { span: [0, 0], note: "Represents the world side explicitly enough to query." },
