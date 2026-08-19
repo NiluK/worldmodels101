@@ -28,7 +28,7 @@ export const CHAPTERS: Chapter[] = [
     blurb:
       "The oldest of the five definitions, and the one closest to the term's early use in control. What a dynamics model actually is, what having one buys you, and why a better model has never removed the problem of deciding when to trust it.",
     demo: "Two cars and one wall, then a planner that gets worse the harder it searches.",
-    minutes: 15,
+    minutes: 13,
     status: "ready",
   },
   {
