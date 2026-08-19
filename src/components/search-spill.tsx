@@ -29,11 +29,11 @@ const RESULTS = [
     turns: "Simulator",
   },
   {
-    definition: "controller",
+    definition: "dynamics",
     what: "A reinforcement learning result from 2018 about a car in a racing game.",
     href: "https://worldmodels.github.io/",
     cite: "World Models · Ha & Schmidhuber",
-    turns: "Controller",
+    turns: "Dynamics Model",
   },
   {
     definition: "implicit",

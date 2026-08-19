@@ -33,7 +33,7 @@ const ARROWS = [
 const CLAIMS: Record<string, { span: [number, number]; note: string }> = {
   renderer: { span: [2, 1], note: "Turns latent history back into observations." },
   simulator: { span: [0, 0], note: "Represents the world side explicitly enough to query." },
-  controller: { span: [2, 4], note: "Compresses the loop into state you can roll forward." },
+  dynamics: { span: [2, 4], note: "Compresses the loop into a state you can roll forward and search." },
   representation: { span: [1, 2], note: "Asks what latent space makes prediction useful." },
   implicit: { span: [2, 2], note: "Asks whether a belief state formed without being asked for." },
 };
@@ -41,7 +41,7 @@ const CLAIMS: Record<string, { span: [number, number]; note: string }> = {
 const NAMES: Record<string, string> = {
   renderer: "Renderer",
   simulator: "Simulator",
-  controller: "Controller",
+  dynamics: "Dynamics Model",
   representation: "Representation",
   implicit: "Implicit Model",
 };

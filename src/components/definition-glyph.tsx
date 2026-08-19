@@ -59,7 +59,7 @@ export function DefinitionGlyph({
       );
 
     // compact state — s_t, an action, and the next state
-    case "controller":
+    case "dynamics":
       return (
         <svg {...common}>
           <circle cx="7" cy="22" r="3.2" stroke={ink} strokeWidth="1.6" />

@@ -109,10 +109,16 @@ November 2025 and general availability in February 2026. NVIDIA open-sourced Cos
 generates physically-aware video specifically as robot and autonomous-vehicle
 training data.
 
-Cosmos is the useful boundary case. NVIDIA describes Cosmos Predict as
-generative video, while Omniverse supplies the explicit 3-D simulation. File
-the whole platform under "simulator" and you hide the distinction worth
-learning.
+Cosmos is the case that keeps the map honest, so it is worth slowing down for.
+NVIDIA describes Cosmos Predict as generative video, while Omniverse supplies
+the explicit 3-D simulation. File the whole platform under "simulator" and you
+hide the distinction worth learning.
+
+The wider lesson is that a platform is not a category. One product can expose a
+pixel predictor, a 3-D simulator and an action-conditioned model at the same
+time, and asking which of the five it *is* will get you nowhere. Ask which one
+you are being sold, and which interface you are about to build against. The
+categories describe contracts, and a large enough system signs more than one.
 
 <Figure
   n="1.6"
@@ -134,11 +140,18 @@ learning.
   />
 </Figure>
 
-**The Controller** predicts compact state and reward under actions. PlaNet
+**The Dynamics Model** predicts compact state and reward under actions. PlaNet
 plans online in latent space; Dreamer learns behaviour from trajectories
-imagined through those dynamics. What matters here is not how real it looks. It is whether you can search inside
-it. Try a hundred possible action sequences, score them, and keep the best
-one.
+imagined through those dynamics. What matters here is not how real it looks. It
+is whether you can search inside it. Try a hundred possible action sequences,
+score them, and keep the best one.
+
+A warning about the name, because it trips people who go on to the papers. Ha
+and Schmidhuber's system has three modules, and they call the third one the
+controller: the small policy that picks actions. The world model is the module
+beside it, the one the controller plans inside. So this category is the model,
+not the controller, and naming it "the Controller" would name it after the one
+piece that is explicitly not a world model.
 
 **The Representation** predicts embeddings <Gloss>a list of numbers standing in
 for an image or a clip, arranged so similar things sit close together</Gloss>
@@ -149,6 +162,12 @@ model-predictive control <Gloss>plan a few steps, execute one,
 re-plan</Gloss>. Meta reports it driving a Franka arm in a lab it never saw
 during training, and planning around 30&times; faster than Cosmos. Treat that
 number as a comparison between different contracts rather than a ranking.
+
+Notice where that second stage lands. Action-conditioned, rolled forward,
+searched over: that is the Dynamics Model's contract, reached from the other
+direction. Which is what the categories are for. They describe what a system
+was trained to predict, not a permanent identity, and mature systems migrate.
+V-JEPA 2 begins as a Representation and grows a Dynamics Model on top of it.
 
 **The Implicit Model** is a different kind of claim. Othello-GPT was trained
 only to predict legal Othello moves and never shown a board. Li et al. (2022)
@@ -327,7 +346,7 @@ Where a claim only holds under one of the five, this course says which.
 
 ---
 
-Thanks for reading. Chapter 2 deals with the Controller in full: what a learned
+Thanks for reading. Chapter 2 deals with the Dynamics Model in full: what a learned
 simulator is, what having one buys you, and why the idea is eighty years old
 and only recently any good.
 

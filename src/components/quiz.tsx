@@ -99,7 +99,7 @@ const QUESTIONS: Q[] = [
   {
     kind: "classify",
     stem: "Given the current sensor reading and a motor command you are considering, it returns the sensor reading you would get next. A search loop calls it a few thousand times a second.",
-    answer: "controller",
+    answer: "dynamics",
     why: "Small, fast, and useful only because you can roll it forward under actions nobody has taken yet. Fidelity is beside the point; searchability is the whole point.",
   },
   {
@@ -130,7 +130,7 @@ const QUESTIONS: Q[] = [
     kind: "classify",
     stem: "A lab generates photorealistic video of motorway driving to train a self-driving stack. It is marketed for robotics.",
     answer: "renderer",
-    why: "The trap. Being aimed at robots suggests a Simulator, but the output is still video, with no geometry anyone can collide against. What it is for does not decide the category; what it outputs does.",
+    why: "The trap. Being aimed at robots suggests a Simulator, but the output is still video, with no geometry anyone can collide against. What a system is for is a weaker clue than what it hands you. Not a complete answer either: a large platform can ship several interfaces, so the real question is which one you are about to build against.",
   },
   {
     kind: "choice",

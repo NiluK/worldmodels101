@@ -80,15 +80,15 @@ export const DEFINITIONS: Definition[] = [
     },
   },
   {
-    id: "controller",
-    name: "The Controller",
+    id: "dynamics",
+    name: "The Dynamics Model",
     predicts: "Compact state",
     gloss:
-      "A compact model of next state and reward under actions, used to plan or to train a policy inside its own imagination. The classical model-based definition.",
+      "A compact model of next state and reward under actions, learned so that something else can search inside it. The classical model-based definition, and the one the term was coined for.",
     test:
       "Can you roll it forward under actions nobody has taken yet, and search over them? That is the job this one exists to do.",
     systems: ["Dreamer", "PlaNet", "Ha & Schmidhuber"],
-    camp: "Reinforcement learning and control theory",
+    camp: "Reinforcement learning and control theory. Named for what it models, not for the policy that uses it: in Ha and Schmidhuber\u2019s architecture the controller is a separate module from the model.",
     chapter: 2,
     video: {
       id: "oDlBtTcX0g0",
