@@ -8,6 +8,7 @@ import { DefinitionGlyph } from "@/components/definition-glyph";
 import { AgentLoop } from "@/components/agent-loop";
 import { Lineage, SourceList } from "@/components/lineage";
 import { Quote, Gloss } from "@/components/quote";
+import { TransitionEquation } from "@/components/transition-equation";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -25,6 +26,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     SourceList,
     Quote,
     Gloss,
+    TransitionEquation,
     ...components,
   };
 }
