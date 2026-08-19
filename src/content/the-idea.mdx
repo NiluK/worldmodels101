@@ -1,115 +1,323 @@
-A professional tennis serve arrives in about half a second.
+A professional tennis return is already under way before there is time for the
+comfortable version of see ball, decide, move.
 
-Getting a signal from your retina to your visual cortex takes somewhere around
-sixty to a hundred milliseconds. Getting a large muscle group to actually move
-takes another hundred and fifty. Add the swing and the returner is over budget
-before they have decided anything at all.
+Studies of professional play put the boundary between purely reactive behaviour
+and anticipation at roughly 140 to 160 milliseconds after the racket hits the
+ball. In one experiment with expert returners, sideways movement began around
+177 milliseconds after contact. World-class players start organising the return
+around the moment of contact itself, reading the server's body and the first
+part of the flight. They are not waiting for the finished trajectory and then
+responding to it.
 
-So they are not reacting to the ball. They cannot be. They are reacting to a
-prediction of it, produced by something that took the toss, the racket angle
-and the first few frames of flight, and ran them forward.
+That does not prove there is a little physics engine in a tennis player's head.
+It makes a narrower point. In a world moving fast enough, useful action depends
+on consequences that have not happened yet.
 
-That is the Dynamics Model, the definition Chapter 1 said the term was coined
-for. This chapter is about what it is, what having one buys you, and the way it
-fails that no amount of engineering has removed.
+Take what you know now. Run it forward. Move for what comes next.
+
+That is the computational idea behind the learned dynamics model, and this
+chapter is about what one actually is, what having one buys you, and why making
+the model better has never removed the problem of deciding when to trust it.
+
+Chapter 1 filed this tradition under *the Controller*, because the model is
+built to support control. Strictly, the two are different objects. The model
+predicts consequences. A planner, a policy or a controller uses those
+predictions to choose an action. That separation was explicit in the earliest
+neural work and it is still explicit in World Models, PlaNet and Dreamer.
+
+## The model that predicts consequences
+
+Suppose an agent has some internal description of where it is, $z_t$, and is
+considering an action, $a_t$. A dynamics model learns something like
+
+$$
+\hat p(z_{t+1},\; r_t \mid z_t,\, a_t)
+$$
+
+which reads: given what I currently believe about the world, and an action I
+might take, what state and what reward should I expect next?
+
+<MarginNote>
+*Latent* means learned and internal. Nobody labels those numbers "position" or
+"velocity". The network arrives at whatever coordinates make the next
+prediction easy, and they are often unreadable to us.
+</MarginNote>
+
+The $z$ does not have to be a list of physical quantities. In PlaNet it is a
+latent state inferred from images. In MuZero the learned model never
+reconstructs the environment at all; it produces the reward, value and policy
+information the search needs and nothing else. TD-MPC2 optimises trajectories
+inside a latent model with no decoder attached. The model does not have to look
+like the world. It has to preserve enough of the world's consequences to choose
+well.
+
+One prediction on its own is not much use. What makes it a planning tool is
+that you can feed it its own output:
+
+$$
+z_t,\, a_t \;\rightarrow\; \hat z_{t+1} \;\rightarrow\; \hat z_{t+2} \;\rightarrow\; \hat z_{t+3} \;\rightarrow\; \cdots
+$$
+
+Hand it a sequence of actions nobody has taken, run its predictions back into
+itself, and you get an imagined trajectory.
+
+That is the property to carry forward from Chapter 1. Not visual fidelity, and
+not even online search by itself. Action-conditioned rolloutability.
+
+PlaNet uses those rollouts at decision time, searching over candidate action
+sequences in latent space. MuZero applies its learned model repeatedly inside a
+tree search. Dreamer takes a different route: it uses imagined trajectories
+mainly to train an actor and a critic, after which the actor can act without
+running an expensive search from scratch every time.
+
+So a world model is not defined by whether you can see a planner spinning at
+runtime. It is defined here by whether the learned dynamics can answer one
+question: *what happens if I do this?*
+
+The lineage is older than the deep learning version. In 1990 Thrun, Möller and
+Linden described a learned world model built through interaction and then
+chained together to optimise future actions. Sutton's Dyna, from the same
+period, alternated learning from the real environment with planning on a model
+that was still being learned. Schmidhuber's early model-building controllers
+separated a controller from a world model trained to predict the consequences
+of that controller's actions.
+
+Ha and Schmidhuber made the modern version memorable in 2018: compress
+observations, learn latent dynamics, then train a very small controller on
+those dynamics, including experiments where the controller learned entirely
+inside the model's generated environment before being moved back to the real
+one.
+
+The idea survived because it gives you a new place to compute. Not only in the
+world. Before it.
 
 ## Cached answers
 
 Two identical cars approach two identical walls.
 
-The first brakes when the wall is closer than some fixed distance. Somebody
-tuned that distance once, it worked, and it shipped. The second carries a model
-of its own braking, rolls it forward every tick, and brakes the moment its
-imagined stopping point ends up inside the wall.
+The first has one rule: brake when the wall is closer than $d$. Somebody chose
+$d$, tested it at the expected speeds, and shipped it. The second estimates its
+speed, predicts its own motion, and asks on every tick: if I brake now, where do
+I stop?
+
+At the speed the first rule was tuned for, they do the same thing.
 
 <Figure
   n="2.1"
-  caption={<>At the default speed the two are indistinguishable, and that is the important half of the demonstration. Drag the speed up and watch which one notices.</>}
+  caption={<>At the default speed the two are indistinguishable, and that is the important half of the demonstration. Drag the speed up and watch which one notices. The comparison is one fixed rule against one system that recomputes stopping distance; it is not a claim that every model-free policy is a simple reflex.</>}
 >
   <BrakingDemo />
 </Figure>
 
-Below about forty they behave identically. That is not a warm-up, it is the
-point. A reflex is cheap, fast, and correct across the whole range it was tuned
-in, which is why evolution and engineering both spend most of their time
-building them.
+That last qualification matters more than it looks.
 
-Push past the tuned range and the reflex does not degrade gracefully. It fails
-at a threshold, completely, and it fails with no internal signal that anything
-has changed. The fixed trigger distance encodes an assumption about speed, and
-nothing in the controller knows it is making one.
+A modern model-free policy can be a large recurrent network. It can carry
+memory, adapt to what it sees, and represent a very complicated mapping from
+situations to actions. Model-free does not mean stupid, rigid or reactive. The
+fixed trigger here is a deliberately simple stand-in, not a fair portrait of the
+whole family.
 
-The model car slows earlier because its stopping distance grew and it can see
-that it grew.
+The distinction that survives is about *where the computation happened*. A
+policy has already spent training compute turning experience into answers:
+
+$$
+\text{situation} \;\rightarrow\; \text{action}
+$$
+
+A dynamics model keeps a different reusable object:
+
+$$
+\text{situation} + \text{possible action} \;\rightarrow\; \text{possible consequence}
+$$
+
+The first is closer to a cache. The second lets part of the decision be
+recomputed once the exact problem is known.
 
 <MarginNote>
-This is the real dividing line, and it is not that model-based is better. A
-reflex is a *cached answer*. A model is the thing that lets you compute a new
-answer when the question changes. Caches are faster. You just have to know when
-yours has gone stale.
+So keep the line, with the caveat attached. A reflex is a *cached answer*. A
+model lets you compute a new answer when the question changes. Caches are
+faster. You just have to know when yours has gone stale.
 </MarginNote>
+
+Caches are fast, and they are often exactly what you want. The interesting case
+begins when the question moves outside the range the answer was prepared for.
+
+Raise the first car's speed and the trigger still fires at the same distance.
+That rule contains an assumption about braking distance without containing any
+machinery for revising it, and nothing in the controller knows it is making
+one. The model car changes its decision because its predicted stopping point
+moved and it can see that it moved.
+
+Adaptability is not free. The model costs computation, has to be learned, and
+can be wrong. Real systems therefore sit on a spectrum rather than either side
+of a line: Dyna mixes real and model-generated experience, Dreamer learns an
+actor from imagination, MuZero pairs a learned model with search, TD-MPC2
+combines latent dynamics, value learning and model-predictive control.
+
+The question is not *model or no model*. It is: which answers should be
+compiled in advance, and which are worth recomputing now?
 
 ## What it buys you
 
-Three things, and they are all the same thing wearing different clothes: you
-can ask questions about situations that have not happened.
+Three things, and they are all versions of one capability. You can compute over
+futures that have not happened yet.
 
-**You can try an action before paying for it.** Chapter 1 defined this category
-by whether you can search inside it. Here is what that means in practice.
+### You can try an action before paying for it
+
+Suppose the goal sits on the far side of an obstacle. A planner proposes a
+sequence of actions, rolls it through the learned dynamics, scores the imagined
+trajectory, throws it away and tries another. PlaNet made this practical
+straight from pixels. PETS paired probabilistic learned dynamics with sampled
+candidate trajectories. TD-MPC2 continues the same idea with local trajectory
+optimisation inside a learned implicit model.
 
 <Figure
   n="2.2"
-  caption={<>The planner samples action sequences, rolls each one through its model, scores them, and keeps the best. Faint lines are the ones it rejected. Drag the count up and the plan improves, which is the entire argument for carrying a model.</>}
+  caption={<>The planner samples action sequences, rolls each one through the same model, and keeps the highest-scoring result. Faint lines are the ones it rejected. Raising the budget helps because it evaluates more alternatives, but only while the model ranks those alternatives usefully. Figure 2.3 is about what happens when that stops being true.</>}
 >
   <Planner />
 </Figure>
 
-With one sample it is guessing. With two hundred it reliably finds the way
-round. Nothing about the world changed between those two states; the only thing
-that changed is how much thinking happened before acting, and a model is what
-converts thinking into a better action.
+With one candidate the planner is close to guessing. With hundreds it can
+search. Nothing in the outside world changed while it did so; the extra
+performance came from computation between observation and action.
 
-**You can practise where mistakes are free.** Reality is a slow and expensive
-teacher. Every trial costs wall-clock time, and some trials cost a drone. A
-model runs faster than real time and breaks nothing, so once you have one you
-can generate as much experience as you have compute for. This is the largest
-practical argument for model-based methods and the subject of Chapter 6.
+MuZero shows how far that principle goes. Its model is not trained to
+reconstruct future Atari frames or reproduce a chessboard. It learns an
+iterable representation holding what the tree search needs, and it reached
+strong results on Atari, Go, chess and shogi without being given the rules of
+any of them.
 
-**You can ask what would have happened.** Given a model, *what if I had braked
-earlier* is answerable. Without one it is not, because the world only ever runs
-the experiment once. Credit assignment, regret, and most of what we informally
-call reasoning depend on being able to ask it.
+Which corrects a tempting mistake. A useful dynamics model does not need to
+reproduce everything that will happen. It needs to preserve what matters for
+the decisions you intend to make.
 
-## Where it breaks
+### You can practise where mistakes are cheap
 
-Everything above assumed the model is right. It is not, and the way it is wrong
-is worse than being noisy.
+Dyna already used this split: learn a model from real interaction, then
+generate extra imagined transitions and learn from those too. Later Dyna work
+calls it imaginary experience outright.
 
-A learned model is wrong in specific, structured places: the parts of the world
-it saw least during training. That would be tolerable if you sampled plans at
-random. But you do not. You search for the plan the model scores highest, and a
-search that is good at its job will find exactly the places where the model is
-most optimistic, which are disproportionately the places where it is most
-wrong.
+Ha and Schmidhuber pushed the idea into learned neural environments. Dreamer
+put it at the centre of the algorithm: learn compact latent dynamics, imagine
+trajectories through them, train an actor and critic on those imagined futures.
+DreamerV3, published in Nature in 2025, ran one configuration of that algorithm
+across more than 150 tasks.
 
-The optimiser is not fighting you. It is doing precisely what you asked.
+The tempting sentence here is *reality is expensive, imagination is free*. It is
+memorable and wrong in one important way. Imagination costs compute, sometimes
+a great deal of it.
+
+What a model saves is environment interaction: robot wear, experiment time,
+human supervision, resets, safety risk, or simply the number of real
+transitions you have to collect. PETS was built around exactly that
+sample-efficiency argument, and DreamerV3 reports strong data efficiency while
+being open about the compute it trades away for it.
+
+So the better line is this. Reality charges you for data, and a model lets you
+pay part of the bill in compute instead.
+
+### You can ask what if
+
+What if I brake now? What if I turn left instead? What if I push the object
+from the other side?
+
+A dynamics model can compare those without running all of them, which is
+exactly why action conditioning matters. It changes the question from *what is
+likely to happen next* into *what does my model predict if I do this*.
+
+Be precise about what that gives you. A learned model answers a model-relative
+hypothetical: under what I have learned, what would happen if I braked earlier?
+That is not the same as knowing what the physical world would truly have done.
+An unseen patch of oil, a gust of wind or any other hidden variable can make
+the answer wrong.
+
+The world only runs the action you actually take. The model is where the
+alternatives get to exist.
+
+And that leads straight to the problem.
+
+## Where imagination goes wrong
+
+Everything above reads as an argument for more planning. Learn a better model.
+Try more possibilities. Roll further ahead. Pick the best one.
+
+Each step sounds sensible on its own. Together they produce the characteristic
+failure of model-based control. There are two errors here, and it helps not to
+collapse them into one.
+
+### Errors compound
+
+A learned model is never exactly right. Over a single step a small error may
+stay small. But planning requires each prediction to become the input to the
+next:
+
+$$
+z_t \;\rightarrow\; \hat z_{t+1} \;\rightarrow\; \hat z_{t+2} \;\rightarrow\; \cdots \;\rightarrow\; \hat z_{t+H}
+$$
+
+The model is now conditioning mostly on states it generated itself rather than
+states the real environment produced.
+
+Janner and colleagues made that trade-off the centre of Model-Based Policy
+Optimization: longer rollouts give you more synthetic experience but expose the
+policy to more accumulated model bias, which argues for short rollouts branched
+off real data. A broad 2019 benchmark of model-based methods found the same
+thing and named it the planning horizon dilemma.
+
+So a one-step model can be accurate enough to be useful while a hundred-step
+fantasy built by applying that same model over and over is hopeless. There need
+not be one spectacular mistake. Only small ones with descendants.
+
+### Optimisation finds the mistakes
+
+Compounding error is bad. Optimisation makes it stranger.
+
+Say the learned map holds one small error: it believes there is a gap in a wall
+where the real wall is solid. Most random action sequences never go near that
+gap, and a weak planner may never find it. A strong planner searches much more
+thoroughly, and eventually it finds the best route in the entire learned world.
+
+Straight through the wall.
 
 <Figure
   n="2.3"
-  caption={<>The model believes there is a gap in the wall. There is not. Start with the search effort low and the planner never finds it, so it takes the long way round and succeeds. Turn the effort up.</>}
+  caption={<>The model believes there is a gap in the wall. There is not. At low search effort the planner never finds it, takes the honest way round, and succeeds. Turn the effort up. This is a failure mode the setup makes visible, not a theorem that more search always makes real performance worse.</>}
 >
   <Exploitation />
 </Figure>
 
-Read that figure twice, because it inverts something most engineering intuition
-takes for granted. A weak optimiser produced a plan that worked. A strong one
-produced a plan that was perfect in imagination and hit a wall. More search
-made the outcome worse, and it did so by getting better at its stated job.
+Read that twice. A weaker optimiser produced an action that worked. A stronger
+one produced an action that is better according to the model and worse in
+reality. The optimiser is not fighting you. It is doing precisely what you
+asked.
 
-This has a name, model exploitation, and it is why so much of the field's
-machinery exists. Ensembles, uncertainty penalties, pessimism, short rollouts
-and trust regions are all versions of one instruction: *do not let the planner
-go where the model has not earned the right to be confident.*
+The field calls this **model exploitation**. As a planner or policy improves
+against the learned model, it drifts towards actions and states where the model
+has little supporting data and larger errors. MBPO analyses that tension
+directly. Offline work such as MOPO makes it even more visible, because there
+the agent cannot go and collect real experience to correct itself.
+
+This is the part that breaks ordinary engineering intuition. Optimisation
+usually means taking the objective more seriously. But when the objective is
+scored through an imperfect stand-in for reality, taking the stand-in more
+seriously is a way of finding its flaws. The planner does not merely suffer
+model error. It searches for it, by accident.
+
+Which is why a model with a tiny average prediction error can still be a
+dangerous planning model. Average accuracy asks how well the model predicts the
+distribution you measured it on. Control asks what happens once an optimiser
+starts deliberately hunting for unusual, high-scoring actions. Those are
+different tests.
+
+The whole failure fits on one line:
+
+$$
+\underset{a}{\operatorname{argmax}}\, \text{predicted outcome} \;\neq\; \underset{a}{\operatorname{argmax}}\, \text{real outcome}
+$$
+
+unless the model is good enough *where the optimiser chooses to go*. That last
+clause is the field.
 
 <Quote
   who="Sutton"
@@ -121,36 +329,97 @@ go where the model has not earned the right to be confident.*
   a policy for interacting with the modelled world.
 </Quote>
 
-Which is exact, and contains the whole difficulty in the phrase *the modelled
+Which is exact, and carries the whole difficulty in the phrase *the modelled
 world*. The policy you get is good for the world in the model. Whether that is
 the world you are standing in is a separate question, and nothing inside the
 model can answer it.
 
+## How the field contains the error
+
+Nobody solved model exploitation once and moved on. Model-based reinforcement
+learning instead accumulated ways of restricting where, and how far, imagination
+is trusted.
+
+**Ask several models.** PETS uses an ensemble of probabilistic dynamics models
+and carries their uncertainty through candidate trajectories. Disagreement
+between them is evidence that a proposed plan has wandered into territory
+nothing much supports.
+
+But disagreement is evidence, not an oracle. Several models trained on the same
+biased data can agree and still be wrong. Work on calibrated model-based
+reinforcement learning showed that neural predictive uncertainty is itself often
+inaccurate, and that calibrating it improved planning, precisely because raw
+confidence should not be taken at face value.
+
+**Do not dream too far.** MBPO's answer is almost aggressively simple: start
+imagined rollouts from real states, and keep them short. You give up some of the
+attractive infinity of simulation. In return you keep anchoring imagination near
+states the real environment actually produced, which limits how long an error
+has to compound before reality gets a say.
+
+Model-predictive control applies a related idea at decision time. Plan a
+little, act a little, look again, re-plan. PlaNet re-plans in latent space as
+new observations arrive; TD-MPC2 optimises locally rather than committing to one
+enormous imagined future. Re-planning cannot remove systematic bias, but it
+gives the real world repeated chances to correct where the model thinks things
+are.
+
+**Penalise suspicious futures.** MOPO makes pessimism explicit for the offline
+case. It learns dynamics, estimates uncertainty, and subtracts a penalty from
+predicted reward wherever that uncertainty is high. An unfamiliar shortcut then
+has to be not merely good in imagination, but good enough to pay the cost of
+not knowing what is there.
+
+The implementations differ. The instruction underneath them does not: *do not
+let the planner take full credit for going somewhere the model has not earned
+the right to be confident about.*
+
+None of it makes the problem disappear. DreamerV3 shows that learned world
+models now hold up across an unusually wide set of control tasks, and
+TD-MPC2 shows that implicit latent models scale to large multi-task continuous
+control. Those are real advances. Neither turns learned dynamics into ground
+truth. Both are careful ways of using a model without needing it to reproduce
+the world.
+
+The problem was never *how do I make the model accurate*. It is: accurate
+where, for which actions, over what horizon, under which optimiser, and what
+should the agent do when it does not know?
+
 ## What to carry into Chapter 3
 
-- A reflex is a cached answer. A model recomputes when the question changes,
-  and earns its cost only outside the range the cache was built for.
-- The defining property is searchability, not fidelity. If you cannot roll it
-  forward under actions nobody has taken, it is not doing this job.
-- A model buys you three things that are one thing: trying actions before
-  paying for them, practising where mistakes are free, and asking what would
-  have happened.
-- A better optimiser can produce a worse outcome, because it finds the places
-  your model is confidently wrong. That is the shape of the problem, not a bug
-  in your implementation.
+- A dynamics model and a controller are not the same object. The model predicts
+  the consequences of actions; a planner or policy uses those predictions.
+  Chapter 1 grouped this lineage under control for functional reasons, not
+  architectural ones.
+- A cached answer is an analogy, not a definition of model-free learning. Fixed
+  reflexes make the trade-off easy to see, but modern policies can be very rich.
+  What a model adds is the ability to recompute consequences for candidate
+  actions after the current problem is known.
+- The defining capability is action-conditioned rolloutability, not
+  photorealism. PlaNet plans in a compact stochastic latent state, MuZero plans
+  with an abstract model of reward, policy and value, TD-MPC2 uses no decoder at
+  all. None of them needs a film of the future in order to control it.
+- Optimisation changes the error distribution. A planner does not sample the
+  model innocently; it hunts for whatever the model says is best, which can
+  drive it straight at the model's weakest regions. Ensembles, calibrated
+  uncertainty, short rollouts and pessimism are all ways of controlling that
+  trust.
 
-Everything here assumed you already had a state to predict from. You do not.
-You have pixels.
+Everything here quietly assumed the model already had a useful state to roll
+forward. A position. A velocity. A compact vector holding whatever the future
+depends on.
 
-Thanks for reading. Chapter 3 is about why *predict the next thing*, an
-objective that sounds far too simple to work, turns out to be enough to pull
-the structure of a world out of raw experience.
+In the real problem nobody hands you one. You get pixels.
+
+Thanks for reading. Chapter 3 is about why an objective that sounds almost
+insultingly simple, *predict what comes next*, can force a model to invent the
+hidden state it needs.
 
 ## Try it
 
 <Figure
   n="2.4"
-  caption={<>Eight questions on this chapter. The last two are the ones worth getting wrong here rather than in a review.</>}
+  caption={<>Eight questions on the distinction that matters. Not <em>does the agent look clever</em>, but where does it compute consequences, and when is that computation allowed to outrun the evidence.</>}
 >
   <Quiz chapter={2} />
 </Figure>

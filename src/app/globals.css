@@ -448,6 +448,12 @@ body::before {
   overflow-y: hidden;
   padding: 0.6rem 0;
 }
+/* A display equation that outgrows the column can still scroll inside itself,
+   but a reader should almost never have to. Shrink it on narrow screens so the
+   scrollbar is a fallback rather than the normal reading experience. */
+@media (max-width: 560px) {
+  .prose .katex-display > .katex { font-size: 0.8em; }
+}
 
 /* section anchors */
 .prose h2, .prose h3 { scroll-margin-top: 5rem; }

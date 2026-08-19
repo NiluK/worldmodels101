@@ -191,11 +191,17 @@ function QuizInteractive({ chapter }: { chapter: number }) {
           {score}<span className="text-ink-faint">/{QUESTIONS.length}</span>
         </p>
         <p className="mx-auto mt-6 max-w-[46ch] text-[1rem] leading-relaxed text-ink-muted">
-          {score === QUESTIONS.length
-            ? "Including the trap. What a system is aimed at does not decide the category; what it outputs does."
-            : score >= QUESTIONS.length - 3
-              ? "Enough to read a paper with. The ones people miss are the trap, and the fact that staying consistent proves nothing on its own."
-              : "Worth another pass. Two questions settle most cases: what does it actually output, and what are you given to start from."}
+          {chapter === 2
+            ? score === QUESTIONS.length
+              ? "Including the two about trust. A model earns its keep by predicting consequences, and loses it the moment an optimiser is allowed to outrun the evidence."
+              : score >= QUESTIONS.length - 3
+                ? "Enough to read a paper with. The ones people miss are the ensemble and the counterfactual, which are both questions about how far a model's authority reaches."
+                : "Worth another pass. Two questions settle most cases: can you roll it forward under actions nobody took, and where is it allowed to be wrong."
+            : score === QUESTIONS.length
+              ? "Including the trap. What a system is aimed at does not decide the category; what it outputs does."
+              : score >= QUESTIONS.length - 3
+                ? "Enough to read a paper with. The ones people miss are the trap, and the fact that staying consistent proves nothing on its own."
+                : "Worth another pass. Two questions settle most cases: what does it actually output, and what are you given to start from."}
         </p>
         <button
           onClick={restart}
@@ -524,99 +530,99 @@ const QUESTIONS_ZH: Q[] = [
 const QUESTIONS_CH2: Q[] = [
   {
     kind: "choice",
-    stem: "Below about forty on the braking demo, the reflex car and the model car behave identically. What does that tell you?",
+    stem: "Below the tuned speed in the braking demo, the fixed-trigger car and the model car behave identically. What does that establish?",
     options: [
-      "The model is not working yet",
-      "A reflex is correct across the range it was tuned in",
-      "The model is too slow to matter at low speed",
-      "The demo is not sensitive enough",
+      "The dynamics model is not doing anything",
+      "A cached rule can be entirely sufficient inside the conditions it was prepared for",
+      "Model-based control only matters at high speed",
+      "Model-free systems cannot use velocity",
     ],
     answer: 1,
-    why: "A reflex is a cached answer, and inside its range the cache is right. That is why reflexes are everywhere and why most of the time you should not reach for a model at all.",
+    why: "The point is not that the model wins everywhere. Inside the range where a cached answer is still correct, recomputing it buys you nothing except the cost of recomputing it.",
   },
   {
     kind: "choice",
-    stem: "The reflex car fails past its tuned range. What is the worst part of how it fails?",
+    stem: "A recurrent policy maps observations and memory straight to actions, but holds no learned transition function you can roll forward under actions it has not taken. Is it model-based?",
     options: [
-      "It fails gradually, so nobody notices",
-      "It fails suddenly, with no internal signal that anything changed",
-      "It fails only at very high speed",
-      "It brakes too early instead of too late",
-    ],
-    answer: 1,
-    why: "The fixed trigger distance encodes an assumption about speed, and nothing in the controller knows it is making one. The model car slows earlier because its stopping distance grew and it can see that it grew.",
-  },
-  {
-    kind: "choice",
-    stem: "Chapter 1 said this category is defined by searchability rather than fidelity. What does that rule out?",
-    options: [
-      "A model that is fast but approximate",
-      "A photorealistic model you cannot roll forward under hypothetical actions",
-      "A model that works only in simulation",
-      "A model trained on a small dataset",
-    ],
-    answer: 1,
-    why: "Looking right is not the job. If you cannot ask it what happens under an action nobody has taken, you cannot search over actions, and searching over actions is the whole reason to carry it.",
-  },
-  {
-    kind: "choice",
-    stem: "In the planner, going from one sampled action sequence to two hundred produces a much better plan. What changed?",
-    options: [
-      "The model got more accurate",
-      "The world became easier",
-      "Only the amount of thinking done before acting",
-      "The goal moved closer",
+      "Yes, because it has memory",
+      "Yes, because every large network contains a model",
+      "No",
+      "Only if its policy is stochastic",
     ],
     answer: 2,
-    why: "Nothing about the world or the model changed between those two states. A model is what converts extra computation into a better action, which is a trade almost nothing else in control gives you.",
+    why: "Memory and complexity do not by themselves make a callable dynamics model. The missing contract is the ability to predict consequences under hypothetical actions.",
   },
   {
     kind: "choice",
-    stem: "Which of these is NOT something having a model buys you?",
+    stem: "A system encodes a camera frame into 512 numbers, rolls those numbers forward under 500 candidate action sequences, and picks the best. It never decodes a future image. Does it qualify?",
     options: [
-      "Trying an action before paying for it",
-      "Practising where mistakes are free",
-      "Asking what would have happened if you had acted differently",
-      "A guarantee that the plan will work in the real world",
-    ],
-    answer: 3,
-    why: "The first three are the same capability wearing different clothes: asking questions about situations that have not happened. The fourth is exactly what a model cannot give you, and the rest of the chapter is about why.",
-  },
-  {
-    kind: "choice",
-    stem: "In the exploitation demo, raising the search effort makes the real outcome worse. Why?",
-    options: [
-      "The optimiser is buggy",
-      "More samples add noise to the plan",
-      "A better search finds where the model is most optimistic, which is often where it is most wrong",
-      "The model degrades as it is queried more",
-    ],
-    answer: 2,
-    why: "The optimiser is not fighting you; it is doing exactly what you asked. You told it to find the plan the model scores highest, and the model scores highest in the places it never saw during training.",
-  },
-  {
-    kind: "choice",
-    stem: "A learned model is wrong in a way that is worse than being noisy. What is the difference that matters?",
-    options: [
-      "Its errors are larger than noise",
-      "Its errors are structured, concentrated where it saw least during training",
-      "Its errors grow over time while noise does not",
-      "Noise can be averaged out and model error cannot",
+      "No, because a world model has to predict pixels",
+      "Yes, because its learned state can be rolled forward under actions",
+      "Only if the 512 numbers correspond to named physical quantities",
+      "Only if the predictions are deterministic",
     ],
     answer: 1,
-    why: "Random error would be tolerable, because a random search would meet it at random. Structured error is dangerous precisely because a directed search seeks out the optimistic regions, and those are the same regions.",
+    why: "PlaNet, MuZero and TD-MPC2 are the counterexamples to the idea that a useful world model has to reproduce the future visually. Decision-relevant latent dynamics are enough.",
   },
   {
     kind: "choice",
-    stem: "Ensembles, uncertainty penalties, pessimism, short rollouts and trust regions are all versions of one instruction. Which?",
+    stem: "Dreamer trains an actor on trajectories generated by its world model, then the actor picks an action directly. No large search runs at that instant. Has the world model stopped counting?",
     options: [
-      "Make the model more accurate",
-      "Collect more real data before planning",
-      "Do not let the planner go where the model has not earned confidence",
-      "Prefer model-free methods when in doubt",
+      "Yes, because planning has to happen at inference time",
+      "No, the dynamics still generated action-conditioned imagined experience",
+      "Yes, unless the actor reconstructs the pixels",
+      "It depends only on the size of the actor",
+    ],
+    answer: 1,
+    why: "Online search is one use of an iterable dynamics model, not the definition of one. Dreamer spends the model earlier, during training, rather than at the moment of acting.",
+  },
+  {
+    kind: "choice",
+    stem: "In the exploitation figure the planner gets worse after you raise its search budget. What happened?",
+    options: [
+      "The optimiser became less accurate",
+      "The world became harder",
+      "Better optimisation found a model error that weaker search had missed",
+      "Long plans are always worse than short plans",
     ],
     answer: 2,
-    why: "All of them constrain where the plan is allowed to look rather than trying to make the model globally right, which nobody knows how to do. Chapter 8 comes back to this as the field's central unfinished business.",
+    why: "The optimiser got better at maximising the score the model hands it. The mistake was assuming that score stayed faithful to reality everywhere the search could reach.",
+  },
+  {
+    kind: "choice",
+    stem: "Why can short model rollouts help?",
+    options: [
+      "Neural networks cannot make more than a few predictions",
+      "They limit how long model error and distribution shift can accumulate before real data returns",
+      "Short horizons make the model exact",
+      "They eliminate uncertainty",
+    ],
+    answer: 1,
+    why: "This is the motivation behind MBPO's short rollouts branched from real states. Use the model enough to gain synthetic experience, not so far that accumulated bias swamps it.",
+  },
+  {
+    kind: "choice",
+    stem: "Five models in an ensemble all agree a shortcut is safe. What has that proved?",
+    options: [
+      "The shortcut is safe",
+      "The probability of failure is zero",
+      "Only that these five agree; a shared blind spot is still possible",
+      "That more models were unnecessary",
+    ],
+    answer: 2,
+    why: "Disagreement is a useful uncertainty signal, which is what PETS exploits. But learned uncertainty can itself be miscalibrated, and models trained on the same biased data can be confidently wrong together.",
+  },
+  {
+    kind: "choice",
+    stem: "Your model says: if you had braked one second earlier, you would have stopped before the wall. What exactly do you have?",
+    options: [
+      "Proof of what the physical world would truly have done",
+      "A model-relative prediction under a hypothetical action",
+      "A recording of the alternative history",
+      "A causal conclusion independent of hidden variables",
+    ],
+    answer: 1,
+    why: "This is the useful sense of what if in model-based control. It lets you compare actions before taking them, and its authority reaches exactly as far as the learned model does.",
   },
 ];
 

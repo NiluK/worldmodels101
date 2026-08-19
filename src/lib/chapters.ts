@@ -26,9 +26,9 @@ export const CHAPTERS: Chapter[] = [
     slug: "the-idea",
     title: "The Idea",
     blurb:
-      "The oldest of the five definitions, and the one the term was coined for. What a learned simulator is, what having one buys you, and the way it fails that no amount of engineering has removed.",
-    demo: "Two cars, one corner: a reflex controller and a predictive one, side by side.",
-    minutes: 11,
+      "The oldest of the five definitions, and the one closest to the term's early use in control. What a dynamics model actually is, what having one buys you, and why a better model has never removed the problem of deciding when to trust it.",
+    demo: "Two cars and one wall, then a planner that gets worse the harder it searches.",
+    minutes: 15,
     status: "ready",
   },
   {
@@ -117,8 +117,8 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
   },
   "the-idea": {
     title: "这个想法",
-    blurb: "五种定义中最古老的一种，也是让这个词有了技术含义的那一种：一个你可以往前推演、并在上面做规划的、学出来的模拟器。",
-    demo: "两辆车，一个弯道：一个反射式控制器和一个预测式控制器并排跑。",
+    blurb: "五种定义中最古老的一种，也是最贴近这个词在控制领域早期用法的一种。动力学模型到底是什么，有了它能换来什么，以及为什么把模型做得更好，从来没能消除“什么时候该相信它”这个问题。",
+    demo: "两辆车和一堵墙，然后是一个搜索越卖力、结果越差的规划器。",
   },
   prediction: { title: "预测即学习", blurb: "猜下一个东西，检验，修正。", demo: "" },
   latents: { title: "潜在空间", blurb: "你没法预测像素，也不该去预测。", demo: "" },
