@@ -33,6 +33,41 @@ const PARTS: Record<Id, { tone: string; phrase: string; note: string }> = {
   },
 };
 
+/** Hoisted so the buttons are not remounted on every parent render. */
+function Sym({
+  id, enter, hot, setHot, children,
+}: {
+  id: Id;
+  enter: Record<string, unknown>;
+  hot: Id | null;
+  setHot: (v: Id | null) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.button
+      {...enter}
+      onPointerEnter={() => setHot(id)}
+      onPointerLeave={() => setHot(null)}
+      onFocus={() => setHot(id)}
+      onBlur={() => setHot(null)}
+      onClick={() => setHot(hot === id ? null : id)}
+      aria-label={PARTS[id].phrase}
+      className="relative cursor-pointer bg-transparent"
+      style={{ color: PARTS[id].tone }}
+    >
+      {children}
+      <motion.span
+        aria-hidden
+        className="absolute -bottom-1.5 left-0 right-0 h-[2px]"
+        style={{ background: PARTS[id].tone }}
+        initial={false}
+        animate={{ scaleX: hot === id ? 1 : 0 }}
+        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+      />
+    </motion.button>
+  );
+}
+
 export function TransitionEquation() {
   const still = useReducedMotion();
   const [hot, setHot] = useState<Id | null>(null);
@@ -53,30 +88,6 @@ export function TransitionEquation() {
    * ADDING emphasis rather than by degrading everything else.
    */
 
-  const Sym = ({ id, i, children }: { id: Id; i: number; children: React.ReactNode }) => (
-    <motion.button
-      {...enter(i)}
-      onPointerEnter={() => setHot(id)}
-      onPointerLeave={() => setHot(null)}
-      onFocus={() => setHot(id)}
-      onBlur={() => setHot(null)}
-      onClick={() => setHot(hot === id ? null : id)}
-      aria-label={PARTS[id].phrase}
-      className="relative cursor-pointer bg-transparent transition-opacity duration-200"
-      style={{ color: PARTS[id].tone }}
-    >
-      {children}
-      <motion.span
-        aria-hidden
-        className="absolute -bottom-1.5 left-0 right-0 h-[2px]"
-        style={{ background: PARTS[id].tone }}
-        initial={false}
-        animate={{ scaleX: hot === id ? 1 : 0 }}
-        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-      />
-    </motion.button>
-  );
-
   const punct = (i: number, children: React.ReactNode) => (
     <motion.span {...enter(i)} className="text-ink-muted">
       {children}
@@ -92,7 +103,7 @@ export function TransitionEquation() {
       >
         {punct(0, "p")}
         {punct(0, "(")}
-        <Sym id="next" i={1}>
+        <Sym id="next" enter={enter(1)} hot={hot} setHot={setHot}>
           s<sub className="text-[0.55em] not-italic">t+1</sub>
         </Sym>
         {punct(2, (
@@ -104,11 +115,11 @@ export function TransitionEquation() {
             &#8739;
           </span>
         ))}
-        <Sym id="now" i={3}>
+        <Sym id="now" enter={enter(3)} hot={hot} setHot={setHot}>
           s<sub className="text-[0.55em] not-italic">t</sub>
         </Sym>
         {punct(3, <span className="mr-2">,</span>)}
-        <Sym id="act" i={4}>
+        <Sym id="act" enter={enter(4)} hot={hot} setHot={setHot}>
           a<sub className="text-[0.55em] not-italic">t</sub>
         </Sym>
         {punct(4, ")")}

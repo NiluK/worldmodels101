@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import Link from "next/link";
 import { useState } from "react";
-import { SENSES } from "@/lib/definitions";
+import { DEFINITIONS } from "@/lib/definitions";
 import { VideoFigure, NoVideo } from "./video-figure";
 import { DefinitionGlyph } from "./definition-glyph";
 
@@ -19,89 +19,72 @@ import { DefinitionGlyph } from "./definition-glyph";
 export function DefinitionMap() {
   const still = useReducedMotion();
   const [open, setOpen] = useState<string | null>(null);
-  const runnable = SENSES.filter((s) => s.id !== "implicit");
-  const implicit = SENSES.find((s) => s.id === "implicit")!;
-  const active = SENSES.find((s) => s.id === open) ?? null;
+  const active = DEFINITIONS.find((s) => s.id === open) ?? null;
 
   return (
     <div className="border border-ink bg-paper-raised">
       <div className="ticks" />
 
       <div className="px-5 pt-6 md:px-8">
-        <p className="label">
-          Systems you can run, ordered by what they predict
-        </p>
+        <p className="label">Ordered by what they predict</p>
       </div>
 
-      {/* the axis */}
-      <div className="relative mt-6 px-5 md:px-8">
-        <div className="grid grid-cols-2 gap-px bg-rule md:grid-cols-4">
-          {runnable.map((s) => {
-            const on = open === s.id;
+      {/*
+        All five sit in one row. The fifth is still off the axis, but that is
+        carried by a dashed edge and its own tag rather than by exiling it to a
+        second block, which left a hole beside it and read as a layout fault.
+      */}
+      <div className="mt-5 px-5 md:px-8">
+        <div className="grid grid-cols-1 gap-px bg-rule sm:grid-cols-2 lg:grid-cols-5">
+          {DEFINITIONS.map((d) => {
+            const on = open === d.id;
+            const off = d.id === "implicit";
             return (
               <button
-                key={s.id}
-                onClick={() => setOpen(on ? null : s.id)}
+                key={d.id}
+                onClick={() => setOpen(on ? null : d.id)}
                 aria-expanded={on}
                 className={`group relative flex flex-col gap-2 p-4 text-left transition-colors ${
                   on ? "bg-paper" : "bg-paper-raised hover:bg-paper"
-                }`}
+                } ${off ? "lg:border-l lg:border-dashed lg:border-rule-strong lg:pl-5" : ""}`}
               >
                 <span
                   className={`h-2 w-full transition-colors ${
-                    on ? "bg-imagine" : "bg-rule-strong group-hover:bg-actual"
+                    off
+                      ? "border-t-2 border-dashed border-rule-strong bg-transparent"
+                      : on
+                        ? "bg-imagine"
+                        : "bg-rule-strong group-hover:bg-actual"
                   }`}
                 />
-                <DefinitionGlyph definition={s.id} size={34} className="mt-1" />
+                <DefinitionGlyph definition={d.id} size={34} className="mt-1" />
                 <span className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">
-                  Predicts {s.predicts}
+                  {off ? "Off the axis" : `Predicts ${d.predicts}`}
                 </span>
                 <span
                   className={`display text-[1.45rem] leading-none transition-colors ${
                     on ? "text-imagine" : ""
                   }`}
                 >
-                  {s.name}
+                  {d.name}
                 </span>
                 <span className="mt-1 font-mono text-[0.7rem] leading-relaxed text-ink-muted">
-                  {s.systems.join(" · ")}
+                  {d.systems.join(" · ")}
                 </span>
               </button>
             );
           })}
         </div>
 
-        <p className="label mt-3 !text-[0.6rem]">
-          More concrete &nbsp;&larr;&nbsp;&nbsp; what gets predicted
-          &nbsp;&nbsp;&rarr;&nbsp; more abstract
-        </p>
-      </div>
-
-      {/* the one that is not on the axis at all */}
-      <div className="mt-8 px-5 md:px-8">
-        <div className="border-t border-dashed border-rule-strong pt-5">
-          <p className="label">Not a system you run</p>
-          <button
-            onClick={() => setOpen(open === implicit.id ? null : implicit.id)}
-            aria-expanded={open === implicit.id}
-            className={`group mt-3 flex w-full flex-col gap-2 border p-4 text-left transition-colors md:w-1/2 ${
-              open === implicit.id
-                ? "border-imagine bg-paper"
-                : "border-rule bg-paper-raised hover:bg-paper"
-            }`}
-          >
-            <DefinitionGlyph definition={implicit.id} size={34} />
-            <span
-              className={`display text-[1.45rem] leading-none transition-colors ${
-                open === implicit.id ? "text-imagine" : ""
-              }`}
-            >
-              {implicit.name}
-            </span>
-            <span className="font-mono text-[0.7rem] leading-relaxed text-ink-muted">
-              {implicit.systems.join(" · ")}
-            </span>
-          </button>
+        {/* the axis label spans only the four that are on it */}
+        <div className="mt-3 grid grid-cols-1 lg:grid-cols-5">
+          <p className="label !text-[0.6rem] lg:col-span-4">
+            More concrete &nbsp;&larr;&nbsp;&nbsp; what gets predicted
+            &nbsp;&nbsp;&rarr;&nbsp; more abstract
+          </p>
+          <p className="label !text-[0.6rem] !text-ink-faint max-lg:mt-1 lg:pl-5">
+            Not a system you run
+          </p>
         </div>
       </div>
 

@@ -12,8 +12,9 @@ export function ThemeToggle() {
     const initial =
       stored ??
       (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    setMode(initial);
+    // defer the state write so the effect does not cascade a second render
     document.documentElement.dataset.theme = initial;
+    queueMicrotask(() => setMode(initial));
   }, []);
 
   function flip() {

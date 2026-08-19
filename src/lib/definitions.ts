@@ -1,4 +1,4 @@
-export type Sense = {
+export type Definition = {
   id: string;
   name: string;
   /** What the thing actually predicts. Orders the map, left to right. */
@@ -24,7 +24,7 @@ export type Sense = {
 /**
  * The five things people mean by "world model".
  *
- * Called definitions rather than senses throughout. "Sense" is the correct
+ * Called definitions rather than senses throughout. "Definition" is the correct
  * linguistic term for a distinct meaning of a word, but this chapter is about
  * observation and perception, so "the five senses" reads as a pun nobody
  * wrote. Not "components" either: these do not assemble into one system, and
@@ -33,7 +33,7 @@ export type Sense = {
  * embeddings. The fifth is not a system you run at all, which is why it sits
  * off the axis.
  */
-export const SENSES: Sense[] = [
+export const DEFINITIONS: Definition[] = [
   {
     id: "renderer",
     name: "The Renderer",
@@ -115,4 +115,4 @@ export const SENSES: Sense[] = [
   },
 ];
 
-export const getSense = (id: string) => SENSES.find((s) => s.id === id);
+export const getDefinition = (id: string) => DEFINITIONS.find((s) => s.id === id);

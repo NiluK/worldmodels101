@@ -65,12 +65,36 @@ function ridge(x: number) {
   return v;
 }
 
+/** Hoisted: a component declared inside render is remounted on every render. */
+function Pad({
+  k, glyph, label, press,
+}: {
+  k: string;
+  glyph: string;
+  label: string;
+  press: (action: string, down: boolean) => void;
+}) {
+  return (
+    <button
+      onPointerDown={() => press(k, true)}
+      onPointerUp={() => press(k, false)}
+      onPointerLeave={() => press(k, false)}
+      aria-label={label}
+      className="flex h-10 w-10 items-center justify-center border border-rule-strong bg-paper text-ink transition-colors hover:border-ink active:bg-imagine active:text-paper"
+    >
+      {glyph}
+    </button>
+  );
+}
+
 export function GeneratedLandscape() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [persist, setPersist] = useState(false);
   const [moved, setMoved] = useState(false);
   const persistRef = useRef(persist);
-  persistRef.current = persist;
+  useEffect(() => {
+    persistRef.current = persist;
+  }, [persist]);
   const keysRef = useRef<Record<string, boolean>>({});
   const movedRef = useRef(false);
 
@@ -245,18 +269,6 @@ export function GeneratedLandscape() {
     };
   }, [press]);
 
-  const Pad = ({ k, glyph, label }: { k: string; glyph: string; label: string }) => (
-    <button
-      onPointerDown={() => press(k, true)}
-      onPointerUp={() => press(k, false)}
-      onPointerLeave={() => press(k, false)}
-      aria-label={label}
-      className="flex h-10 w-10 items-center justify-center border border-rule-strong bg-paper text-ink transition-colors hover:border-ink active:bg-imagine active:text-paper"
-    >
-      {glyph}
-    </button>
-  );
-
   return (
     <div>
       <canvas
@@ -268,10 +280,10 @@ export function GeneratedLandscape() {
       />
       <div className="flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-rule px-5 py-4">
         <div className="flex items-center gap-2">
-          <Pad k="left" glyph="←" label="Turn left" />
-          <Pad k="fwd" glyph="↑" label="Walk forward" />
-          <Pad k="back" glyph="↓" label="Walk back" />
-          <Pad k="right" glyph="→" label="Turn right" />
+          <Pad k="left" glyph="←" label="Turn left" press={press} />
+          <Pad k="fwd" glyph="↑" label="Walk forward" press={press} />
+          <Pad k="back" glyph="↓" label="Walk back" press={press} />
+          <Pad k="right" glyph="→" label="Turn right" press={press} />
         </div>
         <p className="label !normal-case !tracking-normal !text-[0.8rem]">
           {moved

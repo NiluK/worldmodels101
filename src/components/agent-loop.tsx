@@ -70,7 +70,7 @@ export function AgentLoop() {
             </marker>
           </defs>
 
-          {ARROWS.map((a, i) => {
+          {ARROWS.map((a) => {
             const x1 = NODES[a.from].x + W;
             const x2 = NODES[a.to].x;
             const on = claim ? lit(a.from) && lit(a.to) : false;
