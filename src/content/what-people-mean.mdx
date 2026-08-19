@@ -93,11 +93,11 @@ modern work crosses between them routinely.
 </Figure>
 
 **The Renderer** predicts observations, usually pixels. GameNGen generates DOOM
-frames conditioned on previous frames and inputs. Genie 3 generates interactive
-video at 720p and 24 frames per second, stays coherent for several minutes, and
-accepts natural-language interventions mid-session: change the weather, add a
-flock of birds. Persistence exists, but it is learned through generation
-rather than guaranteed by stored geometry.
+frames conditioned on previous frames and inputs. Genie 3 is reported to generate
+interactive video at 720p and 24 frames per second, to stay coherent for
+several minutes, and to take natural-language interventions mid-session: change
+the weather, add a flock of birds. Persistence exists, but it is learned
+through generation rather than guaranteed by stored geometry.
 
 **The Simulator** predicts queryable structure. Marble takes text, an image or
 a rough 3-D layout and returns two representations at once. Gaussian splats
@@ -116,7 +116,7 @@ learning.
 
 <Figure
   n="1.6"
-  caption={<>Not pass/fail. Genie 3 maintains consistency it learned; Marble hands you geometry another program can load. The difference is what each promises.</>}
+  caption={<>Not pass/fail. Marble hands you geometry another program can open, which you can check for yourself; Genie 3's coherence is reported by the lab that built it and cannot be. The difference is what each promises, and how much of it you can verify.</>}
 >
   <VideoPair
     left={{
@@ -172,11 +172,22 @@ Turn around. Walk away. Turn back. Is it the same room?
 
 It sorts your five tabs in about a minute, and it is wrong.
 
-DeepMind reports Genie 3 holding environments together across multi-minute
-interactions, and recalling detail you saw earlier when you return to it. No
-geometry is doing that. Nothing was pinned to a coordinate. The model learned
-to keep producing a room that stays consistent, which is a different mechanism
-arriving at the same result.
+Train a generator on enough video and it can learn to keep producing a room
+that stays consistent. Nothing is storing the room. Nothing is pinned to a
+coordinate. Staying consistent with what came before is simply a pattern in the
+training data, like every other pattern, and a model good enough at prediction
+will reproduce it.
+
+So persistence stops being evidence that something is held underneath. It
+becomes one more thing a large enough model can imitate, which means the
+question can no longer tell you which kind of system you are looking at.
+
+<MarginNote>
+DeepMind reports exactly this of Genie 3: environments holding together across
+multi-minute interactions, and detail recalled when you return to it. Treat it
+as reported rather than independently checked. Access is limited, and the
+consistency figures are the lab's own.
+</MarginNote>
 
 That is the part a toy cannot show you. In Figure 1.1 persistence is a switch,
 because I wrote a switch. In a real renderer it is a behaviour that emerged
