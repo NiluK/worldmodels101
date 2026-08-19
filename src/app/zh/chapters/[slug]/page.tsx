@@ -4,25 +4,25 @@ import { chapterText } from "@/lib/chapters";
 import { translatedSlugs } from "@/content/registry";
 
 export function generateStaticParams() {
-  return translatedSlugs("en").map((slug) => ({ slug }));
+  return translatedSlugs("zh").map((slug) => ({ slug }));
 }
 
-export async function generateMetadata(props: PageProps<"/chapters/[slug]">): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<"/zh/chapters/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
-  const c = chapterText("en", slug);
+  const c = chapterText("zh", slug);
   if (!c) return {};
   return {
     title: c.title,
     description: c.blurb,
     alternates: {
-      canonical: `/chapters/${slug}`,
+      canonical: `/zh/chapters/${slug}`,
       languages: { en: `/chapters/${slug}`, "zh-Hans": `/zh/chapters/${slug}` },
     },
     openGraph: { title: `${c.title} · World Models 101`, description: c.blurb },
   };
 }
 
-export default async function Page(props: PageProps<"/chapters/[slug]">) {
+export default async function Page(props: PageProps<"/zh/chapters/[slug]">) {
   const { slug } = await props.params;
-  return <ChapterView locale="en" slug={slug} />;
+  return <ChapterView locale="zh" slug={slug} />;
 }

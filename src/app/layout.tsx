@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Newsreader, IBM_Plex_Mono } from "next/font/google";
+import { Instrument_Serif, Newsreader, IBM_Plex_Mono, Noto_Serif_SC, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { headers } from "next/headers";
+import { LocaleProvider } from "@/components/locale-provider";
+import { localeFromPath, LOCALE_META } from "@/lib/i18n";
 
 const instrument = Instrument_Serif({
   variable: "--font-instrument",
@@ -16,6 +19,22 @@ const newsreader = Newsreader({
   variable: "--font-newsreader",
   subsets: ["latin"],
   style: ["normal", "italic"],
+  display: "swap",
+});
+
+/* Instrument Serif and Newsreader carry no CJK glyphs, so Chinese needs its own
+   pair rather than a fallback that silently swaps mid-sentence. */
+const notoSerifSC = Noto_Serif_SC({
+  variable: "--font-noto-serif-sc",
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  display: "swap",
+});
+
+const notoSansSC = Noto_Sans_SC({
+  variable: "--font-noto-sans-sc",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -46,17 +65,22 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: "World Models 101", description },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const pathname = (await headers()).get("x-pathname") ?? "/";
+  const locale = localeFromPath(pathname);
   return (
     <html
-      lang="en"
-      className={`${instrument.variable} ${newsreader.variable} ${plexMono.variable} h-full`}
+      lang={LOCALE_META[locale].htmlLang}
+      data-locale={locale}
+      className={`${instrument.variable} ${newsreader.variable} ${plexMono.variable} ${notoSerifSC.variable} ${notoSansSC.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="relative min-h-full flex flex-col">
-        <SiteHeader />
-        <main className="relative z-10 flex-1">{children}</main>
-        <SiteFooter />
+        <LocaleProvider locale={locale}>
+          <SiteHeader />
+          <main className="relative z-10 flex-1">{children}</main>
+          <SiteFooter />
+        </LocaleProvider>
       </body>
     </html>
   );

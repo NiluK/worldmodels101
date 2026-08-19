@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useT } from "./locale-provider";
 
 type State = "idle" | "sending" | "done" | "error";
 
 export function Subscribe() {
   const [state, setState] = useState<State>("idle");
+  const t = useT();
   const [message, setMessage] = useState("");
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
@@ -39,13 +41,9 @@ export function Subscribe() {
         <div className="grid gap-x-16 gap-y-8 p-8 md:grid-cols-[minmax(0,34rem)_minmax(0,26rem)] md:p-12">
           <div>
             <h2 className="display text-[clamp(1.9rem,4vw,2.9rem)] leading-none">
-              A note when the next chapter lands
+              {t("sub.title")}
             </h2>
-            <p className="mt-5 max-w-[46ch] text-ink-muted">
-              One email per chapter, which works out to roughly one a month. No
-              newsletter, no digest, no &ldquo;5 AI tools you need in 2026&rdquo;.
-              Unsubscribe link in every send, and the list is never shared.
-            </p>
+            <p className="mt-5 max-w-[46ch] text-ink-muted">{t("sub.body")}</p>
           </div>
 
           <div className="self-center">
@@ -54,7 +52,7 @@ export function Subscribe() {
             ) : (
               <form onSubmit={submit} className="flex flex-col gap-3">
                 <label htmlFor="email" className="label">
-                  Email address
+                  {t("sub.email")}
                 </label>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <input
@@ -72,7 +70,7 @@ export function Subscribe() {
                     className="border border-ink bg-ink px-6 py-3 text-paper transition-colors hover:border-imagine hover:bg-imagine disabled:opacity-50"
                   >
                     <span className="label !text-paper">
-                      {state === "sending" ? "Sending" : "Subscribe"}
+                      {state === "sending" ? t("sub.sending") : t("sub.subscribe")}
                     </span>
                   </button>
                 </div>

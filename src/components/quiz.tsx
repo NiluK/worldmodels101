@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
-import { DEFINITIONS } from "@/lib/definitions";
+import { DEFINITIONS, definitionText } from "@/lib/definitions";
+import { useLocale, useT } from "./locale-provider";
 import { DefinitionGlyph } from "./definition-glyph";
 
 /**
@@ -23,7 +24,7 @@ type Q = Classify | Choice;
  * map transfers to systems the chapter never named; the rest test the ideas the
  * figures were built to teach, which classification alone would miss.
  */
-const QUESTIONS: Q[] = [
+const QUESTIONS_EN: Q[] = [
   {
     kind: "classify",
     stem: "It takes one photo of a kitchen and returns a mesh you can import into a game engine, with collision volumes on the worktops.",
@@ -147,6 +148,9 @@ const QUESTIONS: Q[] = [
 ];
 
 function QuizInteractive() {
+  const locale = useLocale();
+  const t = useT();
+  const QUESTIONS = locale === "zh" ? QUESTIONS_ZH : QUESTIONS_EN;
   const still = useReducedMotion();
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<string | number | null>(null);
@@ -181,7 +185,7 @@ function QuizInteractive() {
   if (done) {
     return (
       <div className="px-5 py-12 text-center md:px-8">
-        <p className="label">You scored</p>
+        <p className="label">{t("quiz.scored")}</p>
         <p className="display mt-3 text-[clamp(3rem,9vw,5rem)] leading-none tnum">
           {score}<span className="text-ink-faint">/{QUESTIONS.length}</span>
         </p>
@@ -196,7 +200,7 @@ function QuizInteractive() {
           onClick={restart}
           className="mt-8 border border-ink bg-ink px-5 py-2.5 text-paper transition-colors hover:border-imagine hover:bg-imagine"
         >
-          <span className="label !text-paper">Again</span>
+          <span className="label !text-paper">{t("quiz.again")}</span>
         </button>
       </div>
     );
@@ -206,7 +210,7 @@ function QuizInteractive() {
     <div>
       <div className="flex items-center gap-4 border-b border-rule px-5 py-3 md:px-8">
         <span className="label tnum">
-          {i + 1} / {QUESTIONS.length}
+          {t("quiz.of", { i: i + 1, n: QUESTIONS.length })}
         </span>
         <span aria-hidden className="flex flex-1 gap-1">
           {QUESTIONS.map((_, n) => (
@@ -216,13 +220,13 @@ function QuizInteractive() {
             />
           ))}
         </span>
-        <span className="label tnum">Score {score}</span>
+        <span className="label tnum">{t("quiz.score", { n: score })}</span>
       </div>
 
       <div className="px-5 py-7 md:px-8">
         <p className="max-w-[58ch] text-[1.12rem] leading-relaxed text-ink">{q.stem}</p>
         <p className="label mt-5">
-          {q.kind === "classify" ? "Which definition is it?" : "Pick one"}
+          {q.kind === "classify" ? t("quiz.which") : t("quiz.pick")}
         </p>
 
         {q.kind === "classify" ? (
@@ -247,14 +251,14 @@ function QuizInteractive() {
                 >
                   <DefinitionGlyph definition={d.id} size={26} className="shrink-0" />
                   <span className="min-w-0">
-                    <span className="block text-[0.98rem] leading-tight">{d.name}</span>
+                    <span className="block text-[0.98rem] leading-tight">{definitionText(locale, d.id).name}</span>
                     {mark && (
                       <span
                         className={`label mt-1 block !text-[0.58rem] ${
                           mark === "correct" ? "!text-actual" : "!text-imagine-on-soft"
                         }`}
                       >
-                        {mark === "correct" ? "✓ correct" : "✗ your answer"}
+                        {mark === "correct" ? t("quiz.correct") : t("quiz.yours")}
                       </span>
                     )}
                   </span>
@@ -295,7 +299,7 @@ function QuizInteractive() {
                         mark === "correct" ? "!text-actual" : "!text-imagine-on-soft"
                       }`}
                     >
-                      {mark === "correct" ? "✓ correct" : "✗ yours"}
+                      {mark === "correct" ? t("quiz.correct") : t("quiz.yoursShort")}
                     </span>
                   )}
                 </button>
@@ -315,7 +319,7 @@ function QuizInteractive() {
               style={{ borderColor: right ? "var(--actual)" : "var(--imagine)" }}
             >
               <p className="label" style={{ color: right ? "var(--actual)" : "var(--imagine)" }}>
-                {right ? "Right" : "Not quite"}
+                {right ? t("quiz.right") : t("quiz.wrong")}
               </p>
               <p className="mt-2 max-w-[58ch] text-[0.98rem] leading-relaxed text-ink-muted">
                 {q.why}
@@ -325,7 +329,7 @@ function QuizInteractive() {
                 className="mt-5 border border-ink bg-ink px-5 py-2 text-paper transition-colors hover:border-imagine hover:bg-imagine"
               >
                 <span className="label !text-paper">
-                  {i + 1 >= QUESTIONS.length ? "See score" : "Next"}
+                  {i + 1 >= QUESTIONS.length ? t("quiz.seeScore") : t("quiz.next")}
                 </span>
               </button>
             </motion.div>
@@ -343,12 +347,15 @@ function QuizInteractive() {
  * use away from the screen.
  */
 function QuizPrinted() {
+  const locale = useLocale();
+  const t = useT();
+  const QUESTIONS = locale === "zh" ? QUESTIONS_ZH : QUESTIONS_EN;
   return (
     <ol className="px-5 py-6 md:px-8">
       {QUESTIONS.map((q, n) => {
         const answer =
           q.kind === "classify"
-            ? (DEFINITIONS.find((d) => d.id === q.answer)?.name ?? q.answer)
+            ? definitionText(locale, q.answer).name
             : `${String.fromCharCode(97 + q.answer)}. ${q.options[q.answer]}`;
         return (
           <li key={q.stem} className="mb-7 last:mb-0">
@@ -370,12 +377,12 @@ function QuizPrinted() {
               </ul>
             ) : (
               <p className="mt-2 ml-6 font-mono text-[0.75rem] text-ink-muted">
-                {DEFINITIONS.map((d) => d.name).join(" · ")}
+                {DEFINITIONS.map((d) => definitionText(locale, d.id).name).join(" · ")}
               </p>
             )}
 
             <p className="mt-2 ml-6 border-l-2 border-actual pl-3 text-[0.9rem] leading-relaxed text-ink-muted">
-              <span className="label !text-actual">Answer</span> {answer}. {q.why}
+              <span className="label !text-actual">{t("quiz.answer")}</span> {answer}. {q.why}
             </p>
           </li>
         );
@@ -383,6 +390,131 @@ function QuizPrinted() {
     </ol>
   );
 }
+
+
+/** Same thirteen items in Simplified Chinese, in the same order. */
+const QUESTIONS_ZH: Q[] = [
+  {
+    kind: "classify",
+    stem: "它接收一张厨房的照片，输出一个可以导入游戏引擎的网格，台面上还带有碰撞体。",
+    answer: "simulator",
+    why: "别的程序可以打开它并对它做计算。碰撞体就是关键线索：它们存在是为了让物理引擎去碰撞，而不是为了给你看。",
+  },
+  {
+    kind: "choice",
+    stem: "你正在看一个房间的摄像头画面。摄像头背后有一把椅子。这把椅子在哪里？",
+    options: [
+      "不在状态里，因为没有任何东西看得见它",
+      "在状态里，但不在观测里",
+      "在观测里，但不在状态里",
+      "两者都不在，直到摄像头转过去",
+    ],
+    answer: 1,
+    why: "转过身并不会让家具消失。椅子是实际存在的东西的一部分，只是不属于你此刻能看到的部分。这门课里所有困难的问题都住在这道缝隙里。",
+  },
+  {
+    kind: "classify",
+    stem: "你按住一个键，它就一帧一帧地生成一座从未存在过的城市的视频，并根据你转向的方向作出反应。",
+    answer: "renderer",
+    why: "它的输出就是画面。开车过程中画面也许一直保持一致，但底下没有任何东西必须如此，也没有一座城市可以交给别人。",
+  },
+  {
+    kind: "choice",
+    stem: "你转过身再转回来，某个系统让房间保持了原样。这证明了什么？",
+    options: [
+      "它把房间存了下来",
+      "它没有把房间存下来",
+      "单凭这一点什么也证明不了",
+      "它一定是仿真器",
+    ],
+    answer: 2,
+    why: "通过这个测试有两条路，而从外面看它们一模一样。你可以把房间保存下来，也可以把它重画得非常准。结果相同，所以结果本身没法告诉你是哪一条。",
+  },
+  {
+    kind: "classify",
+    stem: "它只被训练来预测国际象棋对局中的下一步棋。研究者后来用探针检查，发现它在内部记录了棋子的位置。",
+    answer: "implicit",
+    why: "这里没有人造出一个下棋模型，也没有人能运行一个。这个断言讲的是在为别的任务训练出来的网络内部发现了什么结构，和其他几种断言在性质上就不同。",
+  },
+  {
+    kind: "choice",
+    stem: "一个模型每一步都稍微错一点。你把它自己的输出重新喂回去二十次。误差会怎样？",
+    options: [
+      "基本保持不变",
+      "大约翻一倍",
+      "会增长，而且不均匀，最后可能到完全不同的地方",
+      "步数够多以后会互相抵消",
+    ],
+    answer: 2,
+    why: "每一个想象出来的状态都会成为下一次预测的输入，于是错误被叠在错误上面。任何单独一步都没有出什么大事，而这正是它难以察觉的原因。",
+  },
+  {
+    kind: "classify",
+    stem: "它遮住视频的一部分，学着预测被遮住那部分的一个摘要。训练完成后，预测被丢掉，剩下的部分被装到一个机器人上。",
+    answer: "representation",
+    why: "那个预测只是脚手架。训练结束后留下来的，是它学会的描述事物的方式，那才是产物。",
+  },
+  {
+    kind: "choice",
+    stem: "从预测一步变成预测 H 步，什么东西没有变大？",
+    options: [
+      "你要问的那一段未来",
+      "你必须提供的动作数量",
+      "你出发时手里已有的东西",
+      "可能出错的方式的数量",
+    ],
+    answer: 2,
+    why: "无论你问多远，你仍然只站在一个地方，只有关于它的一次观测。问题变大了，证据没有。",
+  },
+  {
+    kind: "classify",
+    stem: "给定当前的传感器读数和你正在考虑的一个电机指令，它返回你接下来会得到的传感器读数。一个搜索循环每秒调用它几千次。",
+    answer: "dynamics",
+    why: "小、快，而且它有用只是因为你能在还没执行过的动作下把它往前推演。逼真与否无关紧要；能不能在里面搜索才是全部意义。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么卡尔曼滤波器算作前身，而不算五种定义中的一种？",
+    options: [
+      "它太老了",
+      "它的动力学是给定的，不是学出来的",
+      "它估计状态，但从来不会被问「如果我采取行动会怎样」",
+      "它只适用于线性系统",
+    ],
+    answer: 2,
+    why: "它把一半的工作做得极漂亮：从带噪声的测量里推出隐藏状态。它从来不做的是回答「如果……会怎样」，而以动作为条件正是让其余几种模型可以用来做选择的关键。",
+  },
+  {
+    kind: "choice",
+    stem: "历史上有一个阶段是拿掉了一个部件，而不是加上一个。是哪一个，为什么？",
+    options: [
+      "编码器，因为像素不再重要了",
+      "解码器，因为预测目标从像素上移开了",
+      "控制器，因为规划被放弃了",
+      "动力学，因为它变成隐式的了",
+    ],
+    answer: 1,
+    why: "JEPA 预测的是下一帧的摘要而不是这一帧本身，所以不再需要什么东西把预测变回像素。这也正是预测可以被丢掉、特征却留下来的原因。",
+  },
+  {
+    kind: "classify",
+    stem: "某个实验室生成高速公路驾驶的逼真视频，用来训练自动驾驶系统。它的宣传定位是机器人方向。",
+    answer: "renderer",
+    why: "这是陷阱。面向机器人听起来像仿真器，但它的输出仍然是视频，没有任何人可以撞上去的几何结构。一个系统是给谁用的，比它交给你什么要弱得多的线索。也不是完整答案：一个大平台可以同时提供好几个接口，所以真正的问题是你即将对着哪一个接口开发。",
+  },
+  {
+    kind: "choice",
+    stem: "某个实验室称他们的系统能保持数分钟的一致性。你自己没法运行它。这条信息应该怎么记？",
+    options: [
+      "当作事实，毕竟是他们造的",
+      "当作对方的报告，而不是已经核实过的结论",
+      "在被证明之前当作假的",
+      "与分类无关，可以忽略",
+    ],
+    answer: 1,
+    why: "这不是为了怀疑而怀疑。有些说法你可以自己打开验证，比如一个能加载的网格；有些你只能接收。分清哪些是哪些，是读这个领域的一部分。",
+  },
+];
 
 export function Quiz() {
   return (

@@ -3,12 +3,17 @@ import { PredictionHero } from "@/components/prediction-hero";
 import { CHAPTERS, TOTAL_MINUTES } from "@/lib/chapters";
 import { Subscribe } from "@/components/subscribe";
 import { DefinitionMap } from "@/components/definition-map";
+import type { Metadata } from "next";
 
 function runtime(mins: number) {
   const h = Math.floor(mins / 60);
   const m = mins % 60;
   return h ? `${h}h ${m}m` : `${m}m`;
 }
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/", languages: { en: "/", "zh-Hans": "/zh" } },
+};
 
 export default function Home() {
   return (

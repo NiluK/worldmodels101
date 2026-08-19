@@ -4,7 +4,9 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import Link from "next/link";
 import { useState } from "react";
-import { DEFINITIONS } from "@/lib/definitions";
+import { DEFINITIONS, definitionText } from "@/lib/definitions";
+import { useLocale, useT } from "./locale-provider";
+import { localePath } from "@/lib/i18n";
 import { VideoFigure } from "./video-figure";
 import { DefinitionGlyph } from "./definition-glyph";
 
@@ -18,6 +20,8 @@ import { DefinitionGlyph } from "./definition-glyph";
  */
 export function DefinitionMap() {
   const still = useReducedMotion();
+  const locale = useLocale();
+  const t = useT();
   const [open, setOpen] = useState<string | null>(null);
   const active = DEFINITIONS.find((s) => s.id === open) ?? null;
 
@@ -26,7 +30,7 @@ export function DefinitionMap() {
       <div className="ticks" />
 
       <div className="px-5 pt-6 md:px-8">
-        <p className="label">Ordered by what they predict</p>
+        <p className="label">{t("map.ordered")}</p>
       </div>
 
       {/*
@@ -59,14 +63,14 @@ export function DefinitionMap() {
                 />
                 <DefinitionGlyph definition={d.id} size={34} className="mt-1" />
                 <span className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink-muted">
-                  {off ? "Off the axis" : `Predicts ${d.predicts}`}
+                  {off ? t("map.offAxis") : t("map.predicts", { x: definitionText(locale, d.id).predicts })}
                 </span>
                 <span
                   className={`display text-[1.45rem] leading-none transition-colors ${
                     on ? "text-imagine" : ""
                   }`}
                 >
-                  {d.name}
+                  {definitionText(locale, d.id).name}
                 </span>
                 <span className="mt-1 font-mono text-[0.7rem] leading-relaxed text-ink-muted">
                   {d.systems.join(" · ")}
@@ -79,11 +83,11 @@ export function DefinitionMap() {
         {/* the axis label spans only the four that are on it */}
         <div className="mt-3 grid grid-cols-1 lg:grid-cols-5">
           <p className="label !text-[0.6rem] lg:col-span-4">
-            More concrete &nbsp;&larr;&nbsp;&nbsp; what gets predicted
-            &nbsp;&nbsp;&rarr;&nbsp; more abstract
+            {t("map.moreConcrete")} &nbsp;&larr;&nbsp;&nbsp; {t("map.whatGetsPredicted")}
+            &nbsp;&nbsp;&rarr;&nbsp; {t("map.moreAbstract")}
           </p>
           <p className="label !text-[0.6rem] !text-ink-faint max-lg:mt-1 lg:pl-5">
-            Not a system you run
+            {t("map.notASystem")}
           </p>
         </div>
       </div>
@@ -111,26 +115,26 @@ export function DefinitionMap() {
 
             <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_13rem]">
             <div>
-              <p className="text-[1.05rem] leading-relaxed">{active.gloss}</p>
+              <p className="text-[1.05rem] leading-relaxed">{definitionText(locale, active.id).gloss}</p>
               <p className="mt-4 border-l-2 border-actual pl-4 text-[0.95rem] leading-relaxed text-ink-muted">
-                <span className="label !text-actual">How to tell</span>
+                <span className="label !text-actual">{t("map.howToTell")}</span>
                 <br />
-                {active.test}
+                {definitionText(locale, active.id).test}
               </p>
             </div>
             <dl className="space-y-4 self-start border-l border-rule pl-6 max-md:border-l-0 max-md:pl-0">
               <div>
-                <dt className="label">Who talks this way</dt>
-                <dd className="mt-1 text-[0.92rem]">{active.camp}</dd>
+                <dt className="label">{t("map.whoTalks")}</dt>
+                <dd className="mt-1 text-[0.92rem]">{definitionText(locale, active.id).camp}</dd>
               </div>
               <div>
-                <dt className="label">Covered in</dt>
+                <dt className="label">{t("map.coveredIn")}</dt>
                 <dd className="mt-1 text-[0.92rem]">
                   <Link
-                    href="/#chapters"
+                    href={localePath(locale, "/#chapters")}
                     className="underline decoration-imagine decoration-2 underline-offset-4 hover:bg-imagine hover:text-paper"
                   >
-                    Chapter {String(active.chapter).padStart(2, "0")}
+                    {t("map.chapterN", { n: String(active.chapter).padStart(2, "0") })}
                   </Link>
                 </dd>
               </div>
@@ -139,9 +143,7 @@ export function DefinitionMap() {
           </div>
         ) : (
           <p className="text-ink-muted">
-            Five things the phrase is used to mean. Four of them are systems you
-            can run; the fifth is a claim about what is inside one. Pick any of
-            them.
+{t("map.idle")}
           </p>
         )}
         </motion.div>

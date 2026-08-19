@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useT } from "./locale-provider";
 
 /**
  * A toy Renderer.
@@ -88,6 +89,7 @@ function Pad({
 }
 
 export function GeneratedLandscape() {
+  const t = useT();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [persist, setPersist] = useState(false);
   const [moved, setMoved] = useState(false);
@@ -280,18 +282,18 @@ export function GeneratedLandscape() {
       />
       <div data-print-hide className="flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-rule px-5 py-4">
         <div className="flex items-center gap-2">
-          <Pad k="left" glyph="←" label="Turn left" press={press} />
-          <Pad k="fwd" glyph="↑" label="Walk forward" press={press} />
-          <Pad k="back" glyph="↓" label="Walk back" press={press} />
-          <Pad k="right" glyph="→" label="Turn right" press={press} />
+          <Pad k="left" glyph="←" label={t("land.left")} press={press} />
+          <Pad k="fwd" glyph="↑" label={t("land.fwd")} press={press} />
+          <Pad k="back" glyph="↓" label={t("land.back")} press={press} />
+          <Pad k="right" glyph="→" label={t("land.right")} press={press} />
         </div>
         <p className="label !normal-case !tracking-normal !text-[0.8rem]">
           {moved
-            ? "Turn right around, then come back. Is the marker where you left it?"
-            : "Click the picture, then use the arrow keys or WASD."}
+            ? t("land.turn")
+            : t("land.hint")}
         </p>
         <label className="ml-auto flex cursor-pointer items-center gap-3">
-          <span className="label">Hold the world</span>
+          <span className="label">{t("land.hold")}</span>
           <button
             role="switch"
             aria-checked={persist}

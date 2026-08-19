@@ -1,4 +1,7 @@
+"use client";
+
 import { DefinitionGlyph } from "./definition-glyph";
+import { useT } from "./locale-provider";
 
 /**
  * What you actually get when you search the phrase, laid out as the thing it
@@ -45,6 +48,7 @@ const RESULTS = [
 ];
 
 export function SearchSpill() {
+  const t = useT();
   return (
     <div className="border border-rule bg-paper-raised">
       <div className="flex items-center gap-3 border-b border-rule px-5 py-3">
@@ -52,8 +56,8 @@ export function SearchSpill() {
           <circle cx="6.5" cy="6.5" r="4.75" stroke="var(--ink-muted)" strokeWidth="1.6" />
           <path d="M10 10 L14.5 14.5" stroke="var(--ink-muted)" strokeWidth="1.6" strokeLinecap="square" />
         </svg>
-        <span className="font-mono text-[0.8rem] text-ink">&ldquo;world model&rdquo;</span>
-        <span className="label ml-auto">5 incompatible answers</span>
+        <span className="font-mono text-[0.8rem] text-ink">{t("spill.query")}</span>
+        <span className="label ml-auto">{t("spill.count")}</span>
       </div>
 
       <ol>
@@ -79,7 +83,7 @@ export function SearchSpill() {
               </span>
 
               <span data-spill-meta className="hidden shrink-0 pt-0.5 text-right sm:block">
-                <span className="label !text-[0.6rem]">Turns out to be</span>
+                <span className="label !text-[0.6rem]">{t("spill.turnsOut")}</span>
                 <span className="mt-1 block font-mono text-[0.72rem] text-ink-muted transition-colors group-hover:text-imagine">
                   {r.turns}
                 </span>

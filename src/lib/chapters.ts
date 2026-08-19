@@ -106,3 +106,33 @@ export const CHAPTERS: Chapter[] = [
 export const READY = CHAPTERS.filter((c) => c.status === "ready");
 export const getChapter = (slug: string) => CHAPTERS.find((c) => c.slug === slug);
 export const TOTAL_MINUTES = CHAPTERS.reduce((a, c) => a + c.minutes, 0);
+
+
+/** Chapter titles and blurbs in Simplified Chinese. */
+export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: string }> = {
+  "what-people-mean": {
+    title: "人们说的是什么",
+    blurb: "这个词如今至少涵盖五种不同的东西，而使用它的人很少说清是哪一种。在你读下一篇相关论文之前，先用这份指南把它们分开。",
+    demo: "地图：这个词的五种定义，以及能把它们分开的那个问题。",
+  },
+  "the-idea": {
+    title: "这个想法",
+    blurb: "五种定义中最古老的一种，也是让这个词有了技术含义的那一种：一个你可以往前推演、并在上面做规划的、学出来的模拟器。",
+    demo: "两辆车，一个弯道：一个反射式控制器和一个预测式控制器并排跑。",
+  },
+  prediction: { title: "预测即学习", blurb: "猜下一个东西，检验，修正。", demo: "" },
+  latents: { title: "潜在空间", blurb: "你没法预测像素，也不该去预测。", demo: "" },
+  dynamics: { title: "动力学", blurb: "转移模型，以及最终吞掉它们的累积误差。", demo: "" },
+  dreaming: { title: "在梦里学习", blurb: "有了模拟器，你就可以在里面练习。", demo: "" },
+  jepa: { title: "反对生成的理由", blurb: "在表征空间里预测，而不是在像素空间里。", demo: "" },
+  "video-worlds": { title: "视频作为世界模拟器", blurb: "当生成式视频被推到可控为止。", demo: "" },
+  "whats-broken": { title: "哪些地方还不行", blurb: "长时程漂移、物体恒存性、反事实，以及评测问题。", demo: "" },
+};
+
+export function chapterText(locale: string, slug: string) {
+  const base = CHAPTERS.find((c) => c.slug === slug)!;
+  if (locale === "zh" && CHAPTERS_ZH[slug]) {
+    return { ...base, ...CHAPTERS_ZH[slug] };
+  }
+  return base;
+}

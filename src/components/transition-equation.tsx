@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { useT } from "./locale-provider";
 
 /**
  * The transition function, animated and colour-coded to the site's thesis:
@@ -71,6 +72,7 @@ function Sym({
 export function TransitionEquation() {
   const still = useReducedMotion();
   const [hot, setHot] = useState<Id | null>(null);
+  const t = useT();
 
   const enter = (i: number) =>
     still
@@ -166,7 +168,7 @@ export function TransitionEquation() {
             PARTS[hot].note
           ) : (
             <span className="text-ink-faint">
-              Hover any part of the equation, or any phrase beneath it.
+              {t("eq.hoverHint")}
             </span>
           )}
         </motion.p>

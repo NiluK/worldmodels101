@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useT } from "./locale-provider";
 
 /**
  * Compounding error, made draggable.
@@ -44,6 +45,7 @@ const path = (pts: [number, number][]) =>
 
 export function HorizonSlider() {
   const [h, setH] = useState(1);
+  const t = useT();
   const actual = useMemo(() => roll(TRUE), []);
   const imagined = useMemo(() => roll(MODEL), []);
 
@@ -100,7 +102,7 @@ export function HorizonSlider() {
         <svg viewBox={`0 0 ${W} 74`} className="block w-full min-w-[560px]" aria-hidden="true">
           <line x1="30" y1="62" x2={W - 30} y2="62" stroke="var(--rule-strong)" strokeWidth="1" />
           <text x="30" y="14" className="font-mono" fontSize="10" letterSpacing="1" fill="var(--ink-faint)">
-            gap, every step
+            {t("hz.gapEvery")}
           </text>
           <path
             d={gaps
@@ -120,7 +122,7 @@ export function HorizonSlider() {
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
         <label className="flex min-w-[18rem] flex-1 items-center gap-3">
-          <span className="label whitespace-nowrap">Horizon H</span>
+          <span className="label whitespace-nowrap">{t("hz.horizon")}</span>
           <input
             type="range"
             min={1}
@@ -134,20 +136,20 @@ export function HorizonSlider() {
 
         <p className="label !normal-case !tracking-normal !text-[0.8rem]">
           {worst < 0.4
-            ? "Indistinguishable so far."
+            ? t("hz.v0")
             : worst < 1.5
-              ? "Drifting apart."
+              ? t("hz.v1")
               : worst < 3.5
-                ? "Visibly different futures."
-                : "One bounced a step late, and they never recovered."}
+                ? t("hz.v2")
+                : t("hz.v3")}
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-3">
         {[
-          ["Steps predicted", String(h)],
-          ["Gap right now", `${gapSteps.toFixed(1)} step-widths`],
-          ["Worst gap so far", `${worst.toFixed(1)} step-widths`],
+          [t("hz.steps"), String(h)],
+          [t("hz.gapNow"), t("hz.units", { n: gapSteps.toFixed(1) })],
+          [t("hz.worst"), t("hz.units", { n: worst.toFixed(1) })],
         ].map(([k, v]) => (
           <div key={k} className="bg-paper px-5 py-3 md:px-8">
             <p className="label">{k}</p>

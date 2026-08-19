@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useT } from "./locale-provider";
 
 /**
  * The object underneath all five definitions.
@@ -47,6 +48,7 @@ const NAMES: Record<string, string> = {
 };
 
 export function AgentLoop() {
+  const t = useT();
   const [hot, setHot] = useState<string | null>(null);
   const claim = hot ? CLAIMS[hot] : null;
 
@@ -104,7 +106,7 @@ export function AgentLoop() {
           />
           <text x={NODES[0].x + W / 2 + (NODES[4].x + W / 2 - NODES[0].x - W / 2) / 2} y={176} textAnchor="middle" className="font-mono" fontSize="10"
             letterSpacing="1" fill="var(--ink-faint)">
-            intervene · the world is now different
+            {t("loop.intervene")}
           </text>
 
           {NODES.map((n, i) => {
@@ -152,7 +154,7 @@ export function AgentLoop() {
       </div>
 
       <p data-print-hide className="mt-3 min-h-[2.6em] px-5 pb-5 text-[0.95rem] leading-relaxed text-ink-muted md:px-8">
-        {claim ? claim.note : "Every definition is a specialist on one arc of this loop. Hover any of them."}
+        {claim ? claim.note : t("loop.idle")}
       </p>
     </div>
   );

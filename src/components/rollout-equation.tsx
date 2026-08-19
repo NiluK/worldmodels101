@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { useT } from "./locale-provider";
 
 /**
  * The one-step model expanded into a rollout, animated in the same language as
@@ -78,6 +79,7 @@ const Sub = ({ children }: { children: React.ReactNode }) => (
 export function RolloutEquation() {
   const still = useReducedMotion();
   const [hot, setHot] = useState<Id | null>(null);
+  const t = useT();
 
   const enter = (i: number) =>
     still
@@ -188,7 +190,7 @@ export function RolloutEquation() {
             PARTS[hot].note
           ) : (
             <span className="text-ink-faint">
-              Only two things changed. Hover either side to see which.
+              {t("roll.hint")}
             </span>
           )}
         </motion.p>
