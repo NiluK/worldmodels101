@@ -1,3 +1,6 @@
+"use client";
+
+import { useLocale } from "./locale-provider";
 const SOURCES_CH1 = [
   { t: "A Functional Taxonomy of World Models", a: "World Labs, 2026", u: "https://www.worldlabs.ai/blog/taxonomy-of-world-models", n: "First-party renderer/simulator/planner split, derived from the agent loop." },
   { t: "A New Approach to Linear Filtering and Prediction Problems", a: "Kalman, 1960", u: "https://doi.org/10.1115/1.3662552", n: "The hidden-state ancestor. Paywalled." },
@@ -34,7 +37,42 @@ const SOURCES_CH2 = [
   { t: "The spatiotemporal control of expert tennis players when returning first serves", a: "Navia et al., 2021", u: "https://doi.org/10.1080/02640414.2021.1976484", n: "Where the 177 ms figure in the opening comes from, measured rather than estimated. Paywalled." },
 ];
 
+/**
+ * The notes, in Chinese. Titles and author lines stay in the original: they are
+ * what you type into a search box, and translating them would make the source
+ * harder to find rather than easier.
+ */
+const NOTES_ZH: Record<string, string> = {
+  "https://www.worldlabs.ai/blog/taxonomy-of-world-models": "第一方给出的渲染器／仿真器／规划器三分法，是从智能体循环推出来的。",
+  "https://doi.org/10.1115/1.3662552": "隐藏状态这条线的祖先。需付费。",
+  "https://people.idsia.ch/~juergen/world-models-planning-curiosity-fki-1990.html": "把控制器和世界模型当作两个分开的对象，也就是这一章开头讲的那个区分。",
+  "https://arxiv.org/abs/1803.10122": "编码器、潜在动力学、紧凑控制器，还包括把策略完全放在模型生成的环境里训练、再搬回真实环境的实验。",
+  "https://arxiv.org/abs/1811.04551": "从图像里学出随机潜在动力学，然后在决策时对它做搜索。图 2.4 的真实版本。",
+  "https://arxiv.org/abs/1912.01603": "在想象出来的潜在轨迹上训练 actor 和 critic，于是动手的那一刻不必再跑昂贵的搜索。",
+  "https://www.nature.com/articles/s41586-025-08744-2": "同一个算法、同一套超参数，跑了 150 多个任务。这是想象这一支目前最强的证据。",
+  "https://arxiv.org/abs/1911.08265": "最清楚的一个证明：规划并不需要重建观测。模型只学搜索会消费的那些量。",
+  "https://arxiv.org/abs/2310.16828": "没有解码器的潜在动力学，配上局部轨迹优化，扩展到覆盖 104 个控制任务的单个多任务智能体。",
+  "https://arxiv.org/abs/1805.12114": "集成加轨迹采样：把不确定性做进规划里，而不是当作事后补丁的标准做法。",
+  "https://mlanthology.org/icml/1990/sutton1990icml-integrated/": "把规划定义成在学出来的模型上做计算，以及那个把它和真实经验交织起来的循环。",
+  "https://papers.nips.cc/paper_files/paper/1990/hash/9be40cee5b0eee1462c82c6964087ff9-Abstract.html": "通过交互学出一个世界模型，再把它串起来优化未来的动作，比这个标签流行起来早了二十八年。",
+  "https://arxiv.org/abs/1906.08253": "从真实状态出发的短推演，直接回应累积误差和模型利用。标题就是这一章的问题。",
+  "https://arxiv.org/abs/1907.02057": "基于模型的方法到底在哪里赢、在哪里输，以及「往前看多远」这个两难在哪里被命名和度量。",
+  "https://arxiv.org/abs/1906.08312": "每一种不确定性方法底下的那句警告：不确定性估计本身可能就是错的，而校正它会改变规划的结果。",
+  "https://arxiv.org/abs/2005.13239": "把悲观写进目标：按模型的不确定性给预测回报打折，于是面生的捷径必须为「面生」付出代价。",
+  "https://arxiv.org/abs/2301.08243": "预测被遮住区域的表征，而不是像素。",
+  "https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/": "先做无动作预训练，再做动作条件下的控制。",
+  "https://arxiv.org/abs/2402.15391": "可以用动作操控的生成环境。",
+  "https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/": "报告称能在多分钟的交互里回想起先前见过的细节。",
+  "https://www.worldlabs.ai/blog/marble-world-model": "高斯泼溅加碰撞网格：一次显式的结构导出。",
+  "https://www.nvidia.com/en-us/ai/cosmos/": "一个边界案例：预测式视频世界与显式仿真并置。",
+  "https://arxiv.org/abs/2210.13382": "在 Othello-GPT 内部找到棋盘状态，并且能对它做因果干预。",
+  "https://arxiv.org/abs/2309.00941": "把这个发现进一步锐化的后续工作。",
+  "https://doi.org/10.1080/02640414.2012.759658": "比赛分析，把「最早可能是对球做出的反应」定在击球后大约 140 到 160 毫秒。需付费。",
+  "https://doi.org/10.1080/02640414.2021.1976484": "开头那个 177 毫秒的出处，是测出来的，不是估出来的。需付费。",
+};
+
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
+  const locale = useLocale();
   const rows = chapter === 2 ? SOURCES_CH2 : SOURCES_CH1;
   return (
     <ol className="border-t border-ink">
@@ -47,7 +85,9 @@ export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
               <span className="label !text-[0.62rem]">{s.a}</span>
               <span aria-hidden className="text-[0.7rem] text-ink-faint">&#8599;</span>
             </span>
-            <span className="text-[0.88rem] leading-relaxed text-ink-muted">{s.n}</span>
+            <span className="text-[0.88rem] leading-relaxed text-ink-muted">
+              {(locale === "zh" && NOTES_ZH[s.u]) || s.n}
+            </span>
           </a>
         </li>
       ))}

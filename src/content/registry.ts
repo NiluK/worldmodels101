@@ -9,6 +9,7 @@ const EN: Record<string, () => Promise<{ default: ComponentType }>> = {
 
 const ZH: Record<string, () => Promise<{ default: ComponentType }>> = {
   "what-people-mean": () => import("./zh/what-people-mean.mdx"),
+  "the-idea": () => import("./zh/the-idea.mdx"),
 };
 
 export const CONTENT = EN;

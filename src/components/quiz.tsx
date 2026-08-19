@@ -151,7 +151,13 @@ function QuizInteractive({ chapter }: { chapter: number }) {
   const locale = useLocale();
   const t = useT();
   const QUESTIONS =
-    chapter === 2 ? QUESTIONS_CH2 : locale === "zh" ? QUESTIONS_ZH : QUESTIONS_EN;
+    chapter === 2
+      ? locale === "zh"
+        ? QUESTIONS_CH2_ZH
+        : QUESTIONS_CH2
+      : locale === "zh"
+        ? QUESTIONS_ZH
+        : QUESTIONS_EN;
   const still = useReducedMotion();
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<string | number | null>(null);
@@ -191,17 +197,11 @@ function QuizInteractive({ chapter }: { chapter: number }) {
           {score}<span className="text-ink-faint">/{QUESTIONS.length}</span>
         </p>
         <p className="mx-auto mt-6 max-w-[46ch] text-[1rem] leading-relaxed text-ink-muted">
-          {chapter === 2
-            ? score === QUESTIONS.length
-              ? "Including the two about trust. A model earns its keep by predicting consequences, and loses it the moment an optimiser is allowed to outrun the evidence."
-              : score >= QUESTIONS.length - 3
-                ? "Enough to read a paper with. The ones people miss are the ensemble and the counterfactual, which are both questions about how far a model's authority reaches."
-                : "Worth another pass. Two questions settle most cases: can you roll it forward under actions nobody took, and where is it allowed to be wrong."
-            : score === QUESTIONS.length
-              ? "Including the trap. What a system is aimed at does not decide the category; what it outputs does."
-              : score >= QUESTIONS.length - 3
-                ? "Enough to read a paper with. The ones people miss are the trap, and the fact that staying consistent proves nothing on its own."
-                : "Worth another pass. Two questions settle most cases: what does it actually output, and what are you given to start from."}
+          {t(
+            `quiz.verdict.${chapter === 2 ? "ch2" : "ch1"}.${
+              score === QUESTIONS.length ? "all" : score >= QUESTIONS.length - 3 ? "most" : "few"
+            }`,
+          )}
         </p>
         <button
           onClick={restart}
@@ -357,7 +357,13 @@ function QuizPrinted({ chapter }: { chapter: number }) {
   const locale = useLocale();
   const t = useT();
   const QUESTIONS =
-    chapter === 2 ? QUESTIONS_CH2 : locale === "zh" ? QUESTIONS_ZH : QUESTIONS_EN;
+    chapter === 2
+      ? locale === "zh"
+        ? QUESTIONS_CH2_ZH
+        : QUESTIONS_CH2
+      : locale === "zh"
+        ? QUESTIONS_ZH
+        : QUESTIONS_EN;
   return (
     <ol className="px-5 py-6 md:px-8">
       {QUESTIONS.map((q, n) => {
@@ -623,6 +629,104 @@ const QUESTIONS_CH2: Q[] = [
     ],
     answer: 1,
     why: "This is the useful sense of what if in model-based control. It lets you compare actions before taking them, and its authority reaches exactly as far as the learned model does.",
+  },
+];
+const QUESTIONS_CH2_ZH: Q[] = [
+  {
+    kind: "choice",
+    stem: "在刹车演示里，速度低于调校值时，固定触发的那辆车和带模型的那辆车行为完全一样。这说明了什么？",
+    options: [
+      "动力学模型什么也没干",
+      "在一条缓存规则当初被准备好的条件范围内，它完全够用",
+      "基于模型的控制只在高速时才有意义",
+      "无模型的系统用不了速度信息",
+    ],
+    answer: 1,
+    why: "重点不是模型到处都赢。在缓存下来的答案仍然正确的那个范围里，重算一遍除了重算的开销之外什么也换不来。",
+  },
+  {
+    kind: "choice",
+    stem: "一个循环策略把观测和记忆直接映射成动作，但它内部没有一个可以在「没执行过的动作」下往前推的转移函数。它是基于模型的吗？",
+    options: [
+      "是，因为它有记忆",
+      "是，因为任何大网络内部都含着一个模型",
+      "不是",
+      "只有当它的策略是随机的时候才算",
+    ],
+    answer: 2,
+    why: "记忆和复杂度本身并不构成一个可以调用的动力学模型。缺的那份契约，是在假设性动作下预测后果的能力。",
+  },
+  {
+    kind: "choice",
+    stem: "某个系统把一帧摄像头画面编码成 512 个数，在这些数上把 500 条候选动作序列各推一遍，然后挑出最好的。它从不解码出未来的图像。它算数吗？",
+    options: [
+      "不算，因为世界模型必须预测像素",
+      "算，因为它学出来的状态可以在动作条件下往前推演",
+      "只有当这 512 个数对应到有名字的物理量时才算",
+      "只有当预测是确定性的时候才算",
+    ],
+    answer: 1,
+    why: "PlaNet、MuZero 和 TD-MPC2 正是「有用的世界模型必须在视觉上复现未来」这个想法的反例。与决策相关的潜在动力学就够了。",
+  },
+  {
+    kind: "choice",
+    stem: "Dreamer 用它的世界模型生成的轨迹训练一个 actor，然后由 actor 直接选动作。那一刻并没有大规模搜索在跑。世界模型就不算数了吗？",
+    options: [
+      "不算了，因为规划必须发生在推理时",
+      "还算，因为动力学仍然生成了动作条件下的想象经验",
+      "不算了，除非 actor 把像素重建出来",
+      "这只取决于 actor 有多大",
+    ],
+    answer: 1,
+    why: "在线搜索只是一个可推演动力学模型的用法之一，而不是它的定义。Dreamer 把模型的开销花在更早的训练阶段，而不是动手的那一刻。",
+  },
+  {
+    kind: "choice",
+    stem: "在模型利用那幅图里，把搜索预算调高之后规划器反而变差了。发生了什么？",
+    options: [
+      "优化器变得不准了",
+      "世界变难了",
+      "更好的优化找到了弱搜索错过的那个模型错误",
+      "长方案总是比短方案差",
+    ],
+    answer: 2,
+    why: "优化器只是更擅长把模型给出的分数拉高了。错的是那个假设：这个分数在搜索能够到的每一个地方，都还忠实于现实。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么短的模型推演会有帮助？",
+    options: [
+      "神经网络做不了几步以上的预测",
+      "它限制了模型误差和分布偏移在真实数据回来之前能累积多久",
+      "短视野让模型变精确",
+      "它消除了不确定性",
+    ],
+    answer: 1,
+    why: "这正是 MBPO 那种「从真实状态出发的短推演」的动机：用模型用到足以拿到合成经验，但别用到让累积偏差压倒一切。",
+  },
+  {
+    kind: "choice",
+    stem: "集成里的五个模型都认为某条捷径是安全的。这证明了什么？",
+    options: [
+      "这条捷径是安全的",
+      "失败的概率为零",
+      "只证明了这五个意见一致；共享的盲点仍然可能存在",
+      "证明了不需要更多模型",
+    ],
+    answer: 2,
+    why: "分歧是有用的不确定性信号，PETS 用的就是它。但学出来的不确定性本身可能没校准好，在同样有偏的数据上训练出来的模型也可能一起自信地出错。",
+  },
+  {
+    kind: "choice",
+    stem: "你的动力学模型说：如果你早一秒刹车，你会在撞墙之前停住。你手里拿到的到底是什么？",
+    options: [
+      "物理世界真正会怎么做的证明",
+      "在一个假设性动作下、相对于模型而言的预测",
+      "那条平行历史的录像",
+      "一个与隐藏变量无关的因果结论",
+    ],
+    answer: 1,
+    why: "这就是基于模型的控制里「如果」有用的那层意思。它让你在动手之前比较不同动作，而它的权威只延伸到那个学出来的模型所及之处。",
   },
 ];
 
