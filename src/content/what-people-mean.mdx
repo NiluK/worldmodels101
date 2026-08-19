@@ -182,29 +182,34 @@ system.
 
 ## The test
 
-You have already run it.
-
-Figure 1.1 has a switch marked *hold the world*. Turn it off, walk away from
-the marker, come back: it has moved. Turn it on and the marker is exactly where
-you left it.
-
-That suggests an easy way to tell these systems apart.
+Here is a test that ought to sort all five out, and it takes about four
+seconds.
 
 Turn around. Walk away. Turn back. Is it the same room?
 
-It ought to work. Something that really holds a world inside it should keep the
-furniture where you left it. Something that is only drawing pictures should not
-be able to.
+Something that really holds a world inside it will keep the furniture where you
+left it. Something that is only drawing pictures cannot. One question, five
+systems, done.
 
-It does not work, and the reason is worth a minute.
+It does not work. The reason it does not work is the most useful thing in this
+chapter.
 
-There are two ways to pass this test. You can store the room somewhere and look
-it up when the viewer turns back, which is what my switch does. Or you can get
-very, very good at drawing a room that matches the one you drew a moment ago.
+Go back to Figure 1.1 and leave the switch alone. Walk away from the marker and
+come back: it has drifted, because nothing behind the picture is holding it
+there. Now turn *hold the world* on and do it again. The marker is exactly
+where you left it, because now there is a stored coordinate being read back.
 
-From the outside, those are identical. The furniture is still there either way,
-and nothing you can see from where you are standing tells you which just
-happened.
+Two different mechanisms, and a switch is the only reason you can tell which
+one you are looking at. Take the switch away and the room looks the same either
+way.
+
+That is the whole problem, and it is not about my demo. There are two ways to
+pass this test. You can store the room and look it up when the viewer turns
+back. Or you can get very, very good at drawing a room that matches the one you
+drew a moment ago.
+
+From outside, those are identical. The furniture is still there, and nothing
+visible from where you are standing tells you which one just happened.
 
 A large model trained on a lot of video learns the second way. Nobody gave it a
 room to keep. It got good at continuing what it had already started, and
@@ -220,8 +225,8 @@ So the question cannot sort them. Ask it anyway, because it points at something
 more useful than the answer it gives.
 
 When you turn away from the chair, the chair does not stop existing. It stops
-being *visible*. Those are two different things, and nearly everything difficult
-about this subject lives in the gap between them.
+being *visible*. Those are two different things, and nearly everything
+difficult about this subject lives in the gap between them.
 
 What is actually there is called the **state**. The part of it you can see right
 now is called the **observation**.
