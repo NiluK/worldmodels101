@@ -112,9 +112,9 @@ step to the next, so it has a memory of a sort</Gloss>. It changes what it does
 based on what it sees. It can be far cleverer than anything on screen. No model
 does not mean no brains.
 
-The difference that lasts is about *when the thinking happened*. A policy did
-its thinking during training, and what it kept is a set of answers: in this
-situation, do that. A model kept something else: in this situation, if you did
+The difference that lasts is about *when the thinking happened*. A policy
+settled much of the answer during training, and what it kept is close to a set
+of answers: in this situation, do that. A model kept something else: in this situation, if you did
 that, here is what you would get. The first is a cache. The second lets you
 work out a fresh answer once you know the actual question.
 
@@ -217,7 +217,7 @@ is as blunt as it is because of that.
 
 <Figure
   n="2.5"
-  caption={<>Two per cent added per step, which is a good model. The first box is given by the world and every box after it is the model reading its own last answer, so the error does not add, it multiplies. Nothing breaks at any step.</>}
+  caption={<>Two things happen at every step. The model adds two per cent of its own error, and whatever was already wrong gets stretched by the dynamics it is pushed through. Pull the amplification down to 1.00 and the second one switches off: the error just adds, and the bars go straight. Leave it above 1 and they bend. Both numbers are illustrative; the shape is not.</>}
 >
   <CompoundingRollout />
 </Figure>
