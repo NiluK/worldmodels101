@@ -67,8 +67,8 @@ export function Planner() {
 
   return (
     <div>
-      <div className="overflow-x-auto px-5 pt-6 md:px-8">
-        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full min-w-[560px]" role="img"
+      <div className="px-4 pt-6 md:px-8">
+        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img"
           aria-label={t("plan.aria", { n })}>
           <defs>
             <pattern id="pgrid" width="30" height="30" patternUnits="userSpaceOnUse">

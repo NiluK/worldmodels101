@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { useCompact } from "./use-compact";
 import { useT, useLocale } from "./locale-provider";
 
 /**
@@ -132,6 +133,8 @@ const ERAS: Era[] = [
 
 export function ArchitectureTimeline() {
   const still = useReducedMotion();
+  const { ref, compact } = useCompact(620);
+  const k = compact ? 1.65 : 1;
   const [i, setI] = useState(0);
   const t = useT();
   const locale = useLocale();
@@ -142,8 +145,8 @@ export function ArchitectureTimeline() {
 
   return (
     <div>
-      <div className="overflow-x-auto px-5 pt-6 md:px-8">
-        <svg viewBox="0 0 880 250" className="block w-full min-w-[620px]" role="img"
+      <div ref={ref} className="px-4 pt-6 md:px-8">
+        <svg viewBox="0 0 880 250" className="block w-full" role="img"
           aria-label={`Architecture as of ${era.when}: ${era.note}`}>
           <defs>
             <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
@@ -178,7 +181,7 @@ export function ArchitectureTimeline() {
             fill="none"
           />
           <text x={NODES.ctl.x + NODES.ctl.w / 2 + 8} y={NODES.dyn.y + 88}
-            className="font-mono" fontSize="10" letterSpacing="1"
+            className="font-mono" fontSize={10 * k} letterSpacing="1"
             fill={on("ctl") ? "var(--imagine)" : "var(--ink-faint)"}>
             {t("arch.action")}
           </text>
@@ -199,7 +202,7 @@ export function ArchitectureTimeline() {
                   transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                 />
                 <text x={n.x + n.w / 2} y={n.y + 31} textAnchor="middle"
-                  fontFamily="var(--font-body)" fontSize="14.5"
+                  fontFamily="var(--font-body)" fontSize={14.5 * k}
                   fill={live ? "var(--ink)" : "var(--ink-faint)"}>
                   {era.labels?.[id] ? t(era.labels[id]!) : t(n.key)}
                 </text>

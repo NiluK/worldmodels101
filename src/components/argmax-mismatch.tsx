@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { useT } from "./locale-provider";
+import { useCompact } from "./use-compact";
 
 /**
  * The chapter's punchline, as a formula and as a shape.
@@ -49,6 +50,8 @@ export function ArgmaxMismatch() {
   const aModel = useMemo(() => argmaxOf(model), []);
   const aReal = useMemo(() => argmaxOf(real), []);
   const [a, setA] = useState(aModel);
+  const { ref, compact } = useCompact();
+  const fs = compact ? 17 : 10;
 
   const enter = (i: number) =>
     still
@@ -90,8 +93,8 @@ export function ArgmaxMismatch() {
         </motion.p>
       </div>
 
-      <div className="overflow-x-auto px-5 pt-8 md:px-8">
-        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full min-w-[560px]" role="img"
+      <div ref={ref} className="px-4 pt-8 md:px-8">
+        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img"
           aria-label={t("am.aria")}>
           <line x1={PAD.l} y1={PY(0)} x2={W - PAD.r} y2={PY(0)} stroke="var(--rule)" strokeWidth="1" />
 
@@ -110,8 +113,7 @@ export function ArgmaxMismatch() {
                 strokeWidth="1" strokeDasharray="2 4" opacity={0.7} />
               <circle cx={PX(m.at)} cy={PY(m.f(m.at))} r={5.5} fill={m.tone}
                 stroke="var(--paper)" strokeWidth="2" />
-              <text x={PX(m.at)} y={PY(m.f(m.at)) - 13} textAnchor="middle" className="font-mono"
-                fontSize="10" fill={m.tone}>
+              <text x={PX(m.at)} y={PY(m.f(m.at)) - 13} textAnchor="middle" className="font-mono" fontSize={fs} fill={m.tone}>
                 {t(m.key)}
               </text>
             </g>
@@ -122,7 +124,7 @@ export function ArgmaxMismatch() {
           <circle cx={PX(a)} cy={PY(model(a))} r={4} fill="var(--imagine)" />
           <circle cx={PX(a)} cy={PY(real(a))} r={4} fill="var(--actual)" />
 
-          <text x={PAD.l} y={H - 14} className="font-mono" fontSize="10" fill="var(--ink-faint)">
+          <text x={PAD.l} y={H - 14} className="font-mono" fontSize={fs} fill="var(--ink-faint)">
             {t("am.axis")}
           </text>
         </svg>

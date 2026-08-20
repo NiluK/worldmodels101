@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useCompact } from "./use-compact";
 import { definitionText } from "@/lib/definitions";
 import { useT, useLocale } from "./locale-provider";
 
@@ -42,6 +43,8 @@ const CLAIMS: Record<string, { span: [number, number]; note: string }> = {
 
 export function AgentLoop() {
   const t = useT();
+  const { ref, compact } = useCompact(640);
+  const k = compact ? 1.65 : 1;
   const locale = useLocale();
   const [hot, setHot] = useState<string | null>(null);
   const claim = hot ? CLAIMS[hot] : null;
@@ -54,8 +57,8 @@ export function AgentLoop() {
 
   return (
     <div>
-      <div className="overflow-x-auto px-5 pt-6 md:px-8">
-        <svg viewBox="0 0 908 216" className="block w-full min-w-[640px]" role="img"
+      <div ref={ref} className="px-4 pt-6 md:px-8">
+        <svg viewBox="0 0 908 216" className="block w-full" role="img"
           aria-label="The agent–environment loop: world, observation, belief, imagination, action, and back to the world.">
           <defs>
             <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
@@ -80,7 +83,7 @@ export function AgentLoop() {
                 />
                 <text
                   x={(x1 + x2) / 2} y={Y - 14} textAnchor="middle"
-                  className="font-mono" fontSize="10" letterSpacing="1"
+                  className="font-mono" fontSize={10 * k} letterSpacing="1"
                   fill={on ? "var(--imagine)" : "var(--ink-faint)"}
                 >
                   {t(a.key)}
@@ -98,7 +101,7 @@ export function AgentLoop() {
             strokeDasharray="4 4"
             markerEnd="url(#ah)"
           />
-          <text x={NODES[0].x + W / 2 + (NODES[4].x + W / 2 - NODES[0].x - W / 2) / 2} y={176} textAnchor="middle" className="font-mono" fontSize="10"
+          <text x={NODES[0].x + W / 2 + (NODES[4].x + W / 2 - NODES[0].x - W / 2) / 2} y={176} textAnchor="middle" className="font-mono" fontSize={10 * k}
             letterSpacing="1" fill="var(--ink-faint)">
             {t("loop.intervene")}
           </text>
@@ -114,11 +117,11 @@ export function AgentLoop() {
                   strokeWidth={on ? 2 : 1.2}
                 />
                 <text x={n.x + W / 2} y={Y + 26} textAnchor="middle"
-                  fontFamily="var(--font-display)" fontSize="19" fill="var(--ink)">
+                  fontFamily="var(--font-display)" fontSize={19 * k} fill="var(--ink)">
                   {t(n.key)}
                 </text>
                 <text x={n.x + W / 2} y={Y + 46} textAnchor="middle"
-                  className="font-mono" fontSize="10.5" fill="var(--ink-muted)">
+                  className="font-mono" fontSize={10.5 * k} fill="var(--ink-muted)">
                   {n.subKey ? t(n.subKey) : n.sub}
                 </text>
               </g>

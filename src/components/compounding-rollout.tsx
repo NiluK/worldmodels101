@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { useT } from "./locale-provider";
+import { useCompact } from "./use-compact";
 
 /**
  * The model eating its own output.
@@ -45,6 +46,8 @@ const errAt = (k: number, gain: number) =>
 export function CompoundingRollout() {
   const t = useT();
   const still = useReducedMotion();
+  const { ref, compact } = useCompact(600);
+  const fs = compact ? 17 : 10;
   const [h, setH] = useState(6);
   const [gain, setGain] = useState(1.22);
 
@@ -57,8 +60,8 @@ export function CompoundingRollout() {
 
   return (
     <div>
-      <div className="overflow-x-auto px-5 pt-6 md:px-8">
-        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full min-w-[600px]" role="img"
+      <div ref={ref} className="px-4 pt-6 md:px-8">
+        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img"
           aria-label={t("comp.aria", { h: String(h), pct: String(Math.round(err)), gain: gain.toFixed(2) })}>
           <line x1={PAD_L} y1={BASE + 0.5} x2={W - PAD_R} y2={BASE + 0.5}
             stroke="var(--rule)" strokeWidth="1" />
@@ -88,17 +91,17 @@ export function CompoundingRollout() {
             );
           })}
 
-          <text x={cx(0)} y={TOP - 12} textAnchor="middle" className="font-mono" fontSize="10"
+          <text x={cx(0)} y={TOP - 12} textAnchor="middle" className="font-mono" fontSize={fs}
             fill="var(--actual)">
             {t("comp.given")}
           </text>
           {h >= 3 && (
             <text x={cx(h) + bw / 2} y={TOP - 12} textAnchor="end" className="font-mono"
-              fontSize="10" fill="var(--imagine)">
+              fontSize={fs} fill="var(--imagine)">
               {t("comp.imagined")}
             </text>
           )}
-          <text x={PAD_L} y={BASE + 20} className="font-mono" fontSize="10" fill="var(--ink-faint)">
+          <text x={PAD_L} y={BASE + 20} className="font-mono" fontSize={fs} fill="var(--ink-faint)">
             {t("comp.errorAxis")}
           </text>
         </svg>

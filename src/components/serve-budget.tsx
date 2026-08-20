@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { useT } from "./locale-provider";
+import { useCompact } from "./use-compact";
 
 /**
  * Where the half second goes.
@@ -26,8 +27,10 @@ const H = 436;
 const SCENE_H = 186;   // court view sits above the budget
 const T0 = -220; // ms, before contact
 const T1 = 1120;
-const PAD_L = 150;
 const PAD_R = 26;
+/** Wide leaves room for row labels down the left; narrow puts them over the bars. */
+const PAD_WIDE = 150;
+const PAD_NARROW = 30;
 
 /** baseline to baseline on a full-size court */
 const COURT_M = 23.77;
@@ -49,14 +52,16 @@ const EARLY = [
 const REACT_END = 670;
 const EARLY_END = 497;
 
-const x = (ms: number) => PAD_L + ((ms - T0) / (T1 - T0)) * (W - PAD_L - PAD_R);
+const xAt = (ms: number, padL: number, w: number) =>
+  padL + ((ms - T0) / (T1 - T0)) * (w - padL - PAD_R);
 
 /* ---------- the court, seen from above ---------- */
-const CT = { x0: 44, x1: 856, y0: 26, y1: 158 };
-const SERVER_X = CT.x0 + 28;
-const RETURN_X = CT.x1 - 34;
-const EARLY_X = RETURN_X - 42;      // the two returners stand side by side
-const NET_X = (CT.x0 + CT.x1) / 2;
+const court = (w: number) => {
+  const x0 = 44;
+  const x1 = w - 44;
+  return { x0, x1, y0: 26, y1: 158, mid: (x0 + x1) / 2 };
+};
+const CT = { y0: 26, y1: 158 };
 const MID_Y = (CT.y0 + CT.y1) / 2;
 const START_Y = CT.y1 - 20;         // both start here, so the comparison is fair
 const TARGET_Y = CT.y0 + 22;        // and the serve goes here
@@ -93,29 +98,39 @@ type Seg = { from: number; to: number; key: string };
 
 /** Hoisted so the rows are not remounted on every frame of the playhead. */
 function Row({
-  y, label, segs, end, late, tone, head, t,
+  y, label, segs, end, late, tone, head, t, padL, fs, compact, w,
 }: {
   y: number; label: string; segs: Seg[]; end: number; late: number; tone: string;
   head: number | null; t: (k: string, v?: Record<string, string>) => string;
+  padL: number; fs: number; compact: boolean; w: number;
 }) {
+  const x = (ms: number) => xAt(ms, padL, w);
+  const bar = compact ? 26 : 20;
   return (
     <g>
-      <text x={PAD_L - 14} y={y + 13} textAnchor="end" className="font-mono" fontSize="11"
-        fill="var(--ink-muted)" style={{ letterSpacing: "0.08em" }}>
-        {label.toUpperCase()}
-      </text>
+      {compact ? (
+        <text x={padL} y={y - 9} className="font-mono" fontSize={fs}
+          fill="var(--ink-muted)" style={{ letterSpacing: "0.08em" }}>
+          {label.toUpperCase()}
+        </text>
+      ) : (
+        <text x={padL - 14} y={y + 13} textAnchor="end" className="font-mono" fontSize="11"
+          fill="var(--ink-muted)" style={{ letterSpacing: "0.08em" }}>
+          {label.toUpperCase()}
+        </text>
+      )}
       {segs.map((s, i) => (
         <g key={s.key + s.from}>
-          <rect x={x(s.from)} y={y} width={Math.max(2, x(s.to) - x(s.from))} height={20}
+          <rect x={x(s.from)} y={y} width={Math.max(2, x(s.to) - x(s.from))} height={bar}
             fill={tone} opacity={head !== null && head < s.to ? 0.26 : 0.82} />
-          <text x={x(s.from) + 5} y={y + (i % 2 ? 45 : 34)} className="font-mono" fontSize="9.5"
-            fill="var(--ink-faint)">
-            {t(s.key)}
+          <text x={x(s.from) + 5} y={y + bar + (i % 2 ? fs * 2.1 : fs * 1.1)} className="font-mono"
+            fontSize={fs * 0.95} fill="var(--ink-faint)">
+            {t(compact ? `${s.key}.short` : s.key)}
           </text>
         </g>
       ))}
-      <text x={x(end) + 8} y={y + 14} className="font-mono" fontSize="10"
-        fill={late <= 0 ? "var(--ink-muted)" : tone}>
+      <text x={compact ? padL : x(end) + 8} y={compact ? y + bar + fs * 3.2 : y + 14}
+        className="font-mono" fontSize={fs} fill={late <= 0 ? "var(--ink-muted)" : tone}>
         {late <= 0 ? t("serve.inTime") : t("serve.late", { n: String(late) })}
       </text>
     </g>
@@ -125,6 +140,22 @@ function Row({
 export function ServeBudget() {
   const t = useT();
   const still = useReducedMotion();
+  const { ref, compact } = useCompact();
+  const padL = compact ? PAD_NARROW : PAD_WIDE;
+  // A narrower box in a narrow column means a bigger scale factor, which is the
+  // only thing that actually makes the type legible on a phone.
+  const w = compact ? 560 : W;
+  const ct = court(w);
+  const SERVER_X = ct.x0 + 28;
+  const RETURN_X = ct.x1 - 34;
+  const EARLY_X = RETURN_X - (compact ? 34 : 42);
+  const NET_X = ct.mid;
+  const x = (ms: number) => xAt(ms, padL, w);
+  const fs = compact ? 15 : 10;
+  // Narrow stacks label, bar, two caption lines and the verdict, so each row
+  // needs roughly double the height and the axis has to move down with them.
+  const rowGap = compact ? 118 : 62;
+  const boxH = compact ? 552 : H;
   const [kmh, setKmh] = useState(190);
   const [head, setHead] = useState<number | null>(null);
   const raf = useRef<number | null>(null);
@@ -166,26 +197,26 @@ export function ServeBudget() {
 
   return (
     <div>
-      <div className="overflow-x-auto px-5 pt-6 md:px-8">
-        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full min-w-[560px]" role="img"
+      <div ref={ref} className="px-4 pt-6 md:px-8">
+        <svg viewBox={`0 0 ${w} ${boxH}`} className="block w-full" role="img"
           aria-label={t("serve.aria", { kmh: String(kmh), ms: String(Math.round(arrive)) })}>
           {/* ---------- court ---------- */}
-          <rect x={CT.x0} y={CT.y0} width={CT.x1 - CT.x0} height={CT.y1 - CT.y0}
+          <rect x={ct.x0} y={ct.y0} width={ct.x1 - ct.x0} height={ct.y1 - ct.y0}
             fill="var(--paper-sunk)" stroke="var(--rule-strong)" strokeWidth="1" />
-          <line x1={CT.x0} y1={MID_Y} x2={CT.x1} y2={MID_Y} stroke="var(--rule)" strokeWidth="1" />
+          <line x1={ct.x0} y1={MID_Y} x2={ct.x1} y2={MID_Y} stroke="var(--rule)" strokeWidth="1" />
           <line x1={NET_X} y1={CT.y0 - 8} x2={NET_X} y2={CT.y1 + 8} stroke="var(--ink-faint)"
             strokeWidth="2" />
-          <text x={NET_X} y={CT.y0 - 12} textAnchor="middle" className="font-mono" fontSize="9"
+          <text x={NET_X} y={CT.y0 - 12} textAnchor="middle" className="font-mono" fontSize={fs * 0.9}
             fill="var(--ink-faint)">{t("serve.net")}</text>
 
           {/* server, mid-strike */}
           <circle cx={SERVER_X} cy={MID_Y} r={5} fill="var(--ink)" />
           <Racket cx={SERVER_X + 13} cy={MID_Y - 9} rot={40} tone="var(--ink)" />
-          <text x={CT.x0} y={CT.y0 - 12} className="font-mono" fontSize="9"
+          <text x={ct.x0} y={CT.y0 - 12} className="font-mono" fontSize={fs * 0.9}
             fill="var(--ink-faint)">{t("serve.server")}</text>
 
           {/* where the serve is going */}
-          <line x1={NET_X} y1={TARGET_Y} x2={CT.x1} y2={TARGET_Y} stroke="var(--rule-strong)"
+          <line x1={NET_X} y1={TARGET_Y} x2={ct.x1} y2={TARGET_Y} stroke="var(--rule-strong)"
             strokeWidth="1" strokeDasharray="3 4" opacity={0.6} />
 
           <Returner onset={350} span={320} now={shown} tone="var(--actual)" cx={RETURN_X} />
@@ -216,44 +247,45 @@ export function ServeBudget() {
           })()}
 
           {/* contact, at time zero */}
-          <line x1={x(0)} y1={SCENE_H + 18} x2={x(0)} y2={H - 34} stroke="var(--rule-strong)" strokeWidth="1" />
-          <text x={x(0) + 6} y={SCENE_H + 28} className="font-mono" fontSize="9.5" fill="var(--ink-faint)">
+          <line x1={x(0)} y1={SCENE_H + 18} x2={x(0)} y2={boxH - 34} stroke="var(--rule-strong)" strokeWidth="1" />
+          <text x={x(0) + 6} y={SCENE_H + 28} className="font-mono" fontSize={fs * 0.9} fill="var(--ink-faint)">
             {t("serve.contact")}
           </text>
 
           {/* the ball */}
           <rect x={x(0)} y={SCENE_H + 52} width={Math.max(2, x(arrive) - x(0))} height={20}
             fill="var(--actual)" opacity={0.26} />
-          <text x={PAD_L - 14} y={SCENE_H + 65} textAnchor="end" className="font-mono" fontSize="11"
+          <text x={compact ? padL : padL - 14} y={SCENE_H + (compact ? 44 : 65)}
+            textAnchor={compact ? "start" : "end"} className="font-mono" fontSize={compact ? fs : 11}
             fill="var(--ink-muted)" style={{ letterSpacing: "0.08em" }}>
             {t("serve.ball").toUpperCase()}
           </text>
-          <line x1={x(arrive)} y1={SCENE_H + 18} x2={x(arrive)} y2={H - 34} stroke="var(--ink)" strokeWidth="1.5" />
-          <text x={x(arrive) + 7} y={SCENE_H + 28} className="font-mono" fontSize="10" fill="var(--ink)">
+          <line x1={x(arrive)} y1={SCENE_H + 18} x2={x(arrive)} y2={boxH - 34} stroke="var(--ink)" strokeWidth="1.5" />
+          <text x={x(arrive) + 7} y={SCENE_H + 28} className="font-mono" fontSize={fs} fill="var(--ink)">
             {t("serve.arrives")}
           </text>
-          <text x={x(arrive) - 7} y={SCENE_H + 65} textAnchor="end" className="font-mono tnum" fontSize="9.5"
+          <text x={x(arrive) - 7} y={SCENE_H + 65} textAnchor="end" className="font-mono tnum" fontSize={fs * 0.9}
             fill="var(--ink-muted)">
             {Math.round(arrive)} ms
           </text>
 
-          <Row y={SCENE_H + 104} label={t("serve.react")} segs={REACT} end={REACT_END} late={reactLate}
+          <Row y={SCENE_H + 104} padL={padL} fs={fs} compact={compact} w={w} label={t("serve.react")} segs={REACT} end={REACT_END} late={reactLate}
             tone="var(--actual)" head={head} t={t} />
-          <Row y={SCENE_H + 166} label={t("serve.early")} segs={EARLY} end={EARLY_END} late={earlyLate}
+          <Row y={SCENE_H + 104 + rowGap} padL={padL} fs={fs} compact={compact} w={w} label={t("serve.early")} segs={EARLY} end={EARLY_END} late={earlyLate}
             tone="var(--imagine)" head={head} t={t} />
 
           {/* playhead */}
           {head !== null && (
-            <line x1={x(head)} y1={SCENE_H + 18} x2={x(head)} y2={H - 34} stroke="var(--imagine)"
+            <line x1={x(head)} y1={SCENE_H + 18} x2={x(head)} y2={boxH - 34} stroke="var(--imagine)"
               strokeWidth="1.5" opacity={0.65} />
           )}
 
           {/* axis */}
-          <line x1={PAD_L} y1={H - 26} x2={W - PAD_R} y2={H - 26} stroke="var(--rule)" strokeWidth="1" />
+          <line x1={padL} y1={boxH - 26} x2={w - PAD_R} y2={boxH - 26} stroke="var(--rule)" strokeWidth="1" />
           {[0, 250, 500, 750, 1000].map((ms) => (
             <g key={ms}>
-              <line x1={x(ms)} y1={H - 26} x2={x(ms)} y2={H - 21} stroke="var(--rule-strong)" strokeWidth="1" />
-              <text x={x(ms)} y={H - 8} textAnchor="middle" className="font-mono tnum" fontSize="9.5"
+              <line x1={x(ms)} y1={boxH - 26} x2={x(ms)} y2={boxH - 21} stroke="var(--rule-strong)" strokeWidth="1" />
+              <text x={x(ms)} y={boxH - 8} textAnchor="middle" className="font-mono tnum" fontSize={fs * 0.9}
                 fill="var(--ink-faint)">
                 {ms}
               </text>

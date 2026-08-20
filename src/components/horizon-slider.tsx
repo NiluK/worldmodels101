@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useCompact } from "./use-compact";
 import { useT } from "./locale-provider";
 
 /**
@@ -46,6 +47,8 @@ const path = (pts: [number, number][]) =>
 export function HorizonSlider() {
   const [h, setH] = useState(1);
   const t = useT();
+  const { ref, compact } = useCompact(560);
+  const k = compact ? 1.65 : 1;
   const actual = useMemo(() => roll(TRUE), []);
   const imagined = useMemo(() => roll(MODEL), []);
 
@@ -69,8 +72,8 @@ export function HorizonSlider() {
 
   return (
     <div>
-      <div className="overflow-x-auto px-5 pt-6 md:px-8">
-        <svg viewBox={`0 0 ${W} ${H_PX}`} className="block w-full min-w-[560px]" role="img"
+      <div ref={ref} className="px-4 pt-6 md:px-8">
+        <svg viewBox={`0 0 ${W} ${H_PX}`} className="block w-full" role="img"
           aria-label={`Two trajectories from one starting state. After ${h} steps the model is ${gapSteps.toFixed(1)} step-widths away from the truth.`}>
           <defs>
             <pattern id="hgrid" width="30" height="30" patternUnits="userSpaceOnUse">
@@ -98,10 +101,10 @@ export function HorizonSlider() {
       </div>
 
       {/* how the gap actually behaves: growing, but not smoothly */}
-      <div className="overflow-x-auto px-5 md:px-8">
-        <svg viewBox={`0 0 ${W} 74`} className="block w-full min-w-[560px]" aria-hidden="true">
+      <div ref={ref} className="px-4 md:px-8">
+        <svg viewBox={`0 0 ${W} 74`} className="block w-full" aria-hidden="true">
           <line x1="30" y1="62" x2={W - 30} y2="62" stroke="var(--rule-strong)" strokeWidth="1" />
-          <text x="30" y="14" className="font-mono" fontSize="10" letterSpacing="1" fill="var(--ink-faint)">
+          <text x="30" y="14" className="font-mono" fontSize={10 * k} letterSpacing="1" fill="var(--ink-faint)">
             {t("hz.gapEvery")}
           </text>
           <path
