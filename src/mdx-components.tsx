@@ -5,6 +5,7 @@ import { DefinitionMap } from "@/components/definition-map";
 import { VideoFigure, VideoPair } from "@/components/video-figure";
 import { SearchSpill } from "@/components/search-spill";
 import { DefinitionGlyph } from "@/components/definition-glyph";
+import { OutputGallery } from "@/components/output-gallery";
 import { AgentLoop } from "@/components/agent-loop";
 import { SourceList } from "@/components/sources";
 import { Quote, Gloss } from "@/components/quote";
@@ -31,6 +32,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     VideoPair,
     SearchSpill,
     DefinitionGlyph,
+    OutputGallery,
     AgentLoop,
     SourceList,
     Quote,

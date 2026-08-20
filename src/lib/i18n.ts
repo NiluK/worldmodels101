@@ -71,6 +71,11 @@ const en: Dict = {
 
   "map.ordered": "Ordered by what they predict",
   "map.predicts": "Predicts {x}",
+  "gallery.renderer": "A frame, then the next frame. What comes out is something to look at, and the room persists only because it kept drawing it consistently.",
+  "gallery.simulator": "Geometry another program can open. Surfaces to render, and collider meshes underneath for a physics engine to bump into.",
+  "gallery.dynamics": "A short vector, and the next one under an action you are considering. Nobody names the numbers. It only has to be rollable forward.",
+  "gallery.representation": "The summary of the missing piece, predicted as a point in embedding space and then thrown away. It never redraws the pixels.",
+  "gallery.implicit": "Not an output at all. A probe finds board state inside a network nobody handed a board to, which is a claim about what arose, not a thing you can run.",
   "map.offAxis": "Off the axis",
   "map.notASystem": "Not a system you run",
   "map.moreConcrete": "More concrete",
@@ -319,6 +324,11 @@ const zh: Dict = {
 
   "map.ordered": "按预测对象排序",
   "map.predicts": "预测{x}",
+  "gallery.renderer": "一帧，然后是下一帧。产出的是给你看的东西；房间之所以还在，只是因为它一直画得前后一致。",
+  "gallery.simulator": "别的程序能打开的几何结构。有用来渲染的表面，下面还有给物理引擎去碰撞的碰撞网格。",
+  "gallery.dynamics": "一个短向量，以及在你正考虑的动作下的下一个向量。没有人给这些数字起名字，它只需要能往前推。",
+  "gallery.implicit": "根本不是一种输出。探针在一个从没被给过棋盘的网络里找到了棋盘状态，这是关于「里面长出了什么」的论断，而不是一个你能运行的东西。",
+  "gallery.representation": "缺失部分的摘要，被预测成嵌入空间里的一个点，然后就丢掉了。它从不重画像素。",
   "map.offAxis": "不在这条轴上",
   "map.notASystem": "它不是一个可运行的系统",
   "map.moreConcrete": "更具体",
