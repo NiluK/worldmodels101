@@ -2,6 +2,8 @@ import Link from "next/link";
 import { PredictionHero } from "@/components/prediction-hero";
 import { CHAPTERS, TOTAL_MINUTES } from "@/lib/chapters";
 import { Subscribe } from "@/components/subscribe";
+import { StarCta } from "@/components/star-cta";
+import { getStars } from "@/lib/github";
 import { DefinitionMap } from "@/components/definition-map";
 import type { Metadata } from "next";
 
@@ -15,7 +17,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/", languages: { en: "/", "zh-Hans": "/zh" } },
 };
 
-export default function Home() {
+export default async function Home() {
+  const stars = await getStars();
   return (
     <>
       {/* ── hero ─────────────────────────────────────────────────────── */}
@@ -213,6 +216,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <StarCta locale="en" stars={stars} />
 
       <Subscribe />
     </>

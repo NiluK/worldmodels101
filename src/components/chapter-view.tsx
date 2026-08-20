@@ -8,6 +8,8 @@ import { SHOW_NARRATION } from "@/lib/flags";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { localePath, translate, type Locale } from "@/lib/i18n";
+import { StarCta } from "@/components/star-cta";
+import { getStars } from "@/lib/github";
 
 export async function ChapterView({ locale, slug }: { locale: Locale; slug: string }) {
   const t = (k: string, v?: Record<string, string | number>) => translate(locale, k, v);
@@ -17,6 +19,7 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
   const chapter = chapterText(locale, slug);
 
   const { default: Body } = await load();
+  const stars = await getStars();
 
   // Narration is optional: the player only appears once `pnpm narrate` has
   // produced an MP3 for this chapter.
@@ -87,7 +90,11 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
       </div>
 
       {/* chapter foot */}
-      <nav data-print-hide className="track border-t border-ink pt-8">
+      <div data-print-hide className="track border-t border-ink pt-8">
+        <StarCta locale={locale} stars={stars} compact />
+      </div>
+
+      <nav data-print-hide className="track mt-10 border-t border-rule pt-8">
         <div className="flex flex-col gap-8 pb-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             {prev ? (

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { SignalMark } from "./signal-mark";
 import { useT } from "./locale-provider";
+import { REPO_URL } from "@/lib/github";
 
 export function SiteFooter() {
   const t = useT();
@@ -21,7 +22,9 @@ export function SiteFooter() {
             {t("foot.about")}
           </Link>
           <a
-            href="https://github.com"
+            href={REPO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="label hover:text-ink transition-colors"
           >
             {t("foot.source")}

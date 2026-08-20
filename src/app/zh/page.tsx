@@ -2,6 +2,8 @@ import Link from "next/link";
 import { PredictionHero } from "@/components/prediction-hero";
 import { CHAPTERS, TOTAL_MINUTES, chapterText } from "@/lib/chapters";
 import { Subscribe } from "@/components/subscribe";
+import { StarCta } from "@/components/star-cta";
+import { getStars } from "@/lib/github";
 import { DefinitionMap } from "@/components/definition-map";
 import { translate, localePath } from "@/lib/i18n";
 import type { Metadata } from "next";
@@ -21,7 +23,8 @@ function runtime(mins: number) {
   return h ? `${h} 小时 ${m} 分钟` : `${m} 分钟`;
 }
 
-export default function HomeZh() {
+export default async function HomeZh() {
+  const stars = await getStars();
   return (
     <>
       <section className="mx-auto max-w-[84rem] px-6 pb-10 pt-16 md:px-10 md:pt-24">
@@ -134,6 +137,8 @@ export default function HomeZh() {
           })}
         </ol>
       </section>
+
+      <StarCta locale="zh" stars={stars} />
 
       <Subscribe />
     </>
