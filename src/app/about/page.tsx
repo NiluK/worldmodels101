@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CHAPTERS } from "@/lib/chapters";
+import { REPO_URL } from "@/lib/github";
 
 export const metadata: Metadata = {
   title: "About",
@@ -73,8 +74,11 @@ export default function About() {
           Technical writing on a moving field is wrong at a steady rate. If you
           find an error (a misattributed idea, a broken derivation, a
           demo that lies about what the underlying method does) the
-          correction is genuinely welcome and will be credited. Open an issue,
-          or write to the address below.
+          correction is genuinely welcome and will be credited.{" "}
+          <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer">
+            Open an issue
+          </a>{" "}
+          and it gets read.
         </p>
 
         <h2>Where the ideas come from</h2>

@@ -273,12 +273,7 @@ const en: Dict = {
 
   "video.nothing": "Nothing to watch",
   "video.talk": "Talk",
-  "sub.title": "A note when the next chapter lands",
-  "sub.body":
-    "One email per chapter, which works out to roughly one a month. No newsletter, no digest. Unsubscribe link in every send, and the list is never shared.",
-  "sub.email": "Email address",
-  "sub.subscribe": "Subscribe",
-  "sub.sending": "Sending",
+
   "foot.body":
     "A free primer on world models. Free to read, free to share, free to steal for your own course. Attribution appreciated.",
   "byline.by": "By",
@@ -526,12 +521,7 @@ const zh: Dict = {
 
   "video.nothing": "没有可看的画面",
   "video.talk": "讲座",
-  "sub.title": "新章节上线时通知我",
-  "sub.body":
-    "每章一封邮件，大约一个月一封。没有周报，没有摘要。每封都带退订链接，名单绝不外传。",
-  "sub.email": "邮箱地址",
-  "sub.subscribe": "订阅",
-  "sub.sending": "发送中",
+
   "foot.body":
     "一份关于世界模型的免费入门读物。免费阅读，欢迎转发，也欢迎直接拿去用在你自己的课程里。注明出处即可。",
   "byline.by": "作者",
