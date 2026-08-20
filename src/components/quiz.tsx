@@ -151,13 +151,15 @@ function QuizInteractive({ chapter }: { chapter: number }) {
   const locale = useLocale();
   const t = useT();
   const QUESTIONS =
-    chapter === 2
-      ? locale === "zh"
-        ? QUESTIONS_CH2_ZH
-        : QUESTIONS_CH2
-      : locale === "zh"
-        ? QUESTIONS_ZH
-        : QUESTIONS_EN;
+    chapter === 3
+      ? QUESTIONS_CH3
+      : chapter === 2
+        ? locale === "zh"
+          ? QUESTIONS_CH2_ZH
+          : QUESTIONS_CH2
+        : locale === "zh"
+          ? QUESTIONS_ZH
+          : QUESTIONS_EN;
   const still = useReducedMotion();
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<string | number | null>(null);
@@ -198,7 +200,7 @@ function QuizInteractive({ chapter }: { chapter: number }) {
         </p>
         <p className="mx-auto mt-6 max-w-[46ch] text-[1rem] leading-relaxed text-ink-muted">
           {t(
-            `quiz.verdict.${chapter === 2 ? "ch2" : "ch1"}.${
+            `quiz.verdict.${chapter === 3 ? "ch3" : chapter === 2 ? "ch2" : "ch1"}.${
               score === QUESTIONS.length ? "all" : score >= QUESTIONS.length - 3 ? "most" : "few"
             }`,
           )}
@@ -357,13 +359,15 @@ function QuizPrinted({ chapter }: { chapter: number }) {
   const locale = useLocale();
   const t = useT();
   const QUESTIONS =
-    chapter === 2
-      ? locale === "zh"
-        ? QUESTIONS_CH2_ZH
-        : QUESTIONS_CH2
-      : locale === "zh"
-        ? QUESTIONS_ZH
-        : QUESTIONS_EN;
+    chapter === 3
+      ? QUESTIONS_CH3
+      : chapter === 2
+        ? locale === "zh"
+          ? QUESTIONS_CH2_ZH
+          : QUESTIONS_CH2
+        : locale === "zh"
+          ? QUESTIONS_ZH
+          : QUESTIONS_EN;
   return (
     <ol className="px-5 py-6 md:px-8">
       {QUESTIONS.map((q, n) => {
@@ -533,6 +537,105 @@ const QUESTIONS_ZH: Q[] = [
 
 /** Chapter 2: the Dynamics Model in depth. All concept questions; classifying
     is Chapter 1's job and repeating it here would test the wrong thing. */
+const QUESTIONS_CH3: Q[] = [
+  {
+    kind: "choice",
+    stem: "One photograph of a ball in flight. What can you not work out from it?",
+    options: [
+      "Where the ball is",
+      "How big the ball is",
+      "Which way it is going and how fast",
+      "What colour it is",
+    ],
+    answer: 2,
+    why: "Direction and speed are not in any single frame. They exist in the relationship between frames, which is exactly the kind of thing a predictor has to build for itself.",
+  },
+  {
+    kind: "choice",
+    stem: "Why is next-thing prediction so much cheaper to train on than labelled data?",
+    options: [
+      "The models are smaller",
+      "The answer is already in the recording, so nobody has to write labels",
+      "It needs less computing time",
+      "It converges in fewer steps",
+    ],
+    answer: 1,
+    why: "Every moment is the answer to the moment before. That turns any recording of anything into a training set, and removes the step where a person has to annotate a million examples.",
+  },
+  {
+    kind: "choice",
+    stem: "Elman's network was trained only to predict the next word, and its internal states sorted themselves into nouns, verbs, animate and inanimate. Why?",
+    options: [
+      "Those categories were in the training labels",
+      "The architecture had one unit per category",
+      "A word's category is what its next word depends on, so the categories were the cheapest way to be less wrong",
+      "It memorised the corpus",
+    ],
+    answer: 2,
+    why: "Nothing supplied the categories. Prediction rewards whatever makes the next thing less surprising, and grammatical category happens to be exactly that.",
+  },
+  {
+    kind: "choice",
+    stem: "A probe finds board state inside a network trained only on legal Othello moves. What turns that from a curiosity into a finding?",
+    options: [
+      "The probe is very accurate",
+      "The network was large",
+      "Changing that internal board changes the moves the network then makes",
+      "The board can be drawn as a picture",
+    ],
+    answer: 2,
+    why: "Accuracy alone could be a coincidence in the numbers. Intervening on the representation and watching behaviour follow is what shows the network is actually using it.",
+  },
+  {
+    kind: "choice",
+    stem: "Under a good predictor, a symbol you were confident about and got right costs almost nothing to send. Why?",
+    options: [
+      "It can be left out of the message",
+      "The cost of a symbol is set by the probability you gave it",
+      "Common symbols are stored in a table",
+      "The receiver guesses it and does not need the message",
+    ],
+    answer: 1,
+    why: "Shannon made the price exact. High probability means a short code, which is why a better predictor is literally a better compressor.",
+  },
+  {
+    kind: "choice",
+    stem: "What does the compression view say about memorising the training data?",
+    options: [
+      "It is the best available strategy",
+      "It is the expensive option: a lookup table of everything is enormous and useless on anything new",
+      "It compresses better than any rule",
+      "It is what all learning does",
+    ],
+    answer: 1,
+    why: "The short message comes from finding the rule that generated the data and keeping that instead. Memorising is what compression penalises.",
+  },
+  {
+    kind: "choice",
+    stem: "Same loop, different target: predict the next pixel, or the next word, or the next compact state. What does that choice change?",
+    options: [
+      "Nothing, the loop is what matters",
+      "Only how long training takes",
+      "What the system ends up good at, and what its capacity gets spent on",
+      "Whether the method counts as self-supervised",
+    ],
+    answer: 2,
+    why: "Predict every pixel and most of the capacity goes to leaves, because that is where most of the pixels are. Picking the target is the design decision that matters most.",
+  },
+  {
+    kind: "choice",
+    stem: "A model has very low error predicting the next frame of a recording. What does that alone not tell you?",
+    options: [
+      "That it saw the recording",
+      "What it would predict if you acted differently, and how it behaves outside what it recorded",
+      "That its error was measured correctly",
+      "That the recording was long enough",
+    ],
+    answer: 1,
+    why: "Being unsurprised by what you happened to record is a weaker claim than it sounds, and saying what comes next is not the same as saying what would come next under a different action.",
+  },
+];
+
 const QUESTIONS_CH2: Q[] = [
   {
     kind: "choice",

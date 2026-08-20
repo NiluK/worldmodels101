@@ -22,8 +22,14 @@ export function DefinitionMap() {
   const still = useReducedMotion();
   const locale = useLocale();
   const t = useT();
-  const [open, setOpen] = useState<string | null>(null);
-  const active = DEFINITIONS.find((s) => s.id === open) ?? null;
+  // One card is always open, starting on the first. An empty initial state left
+  // the reader looking at five headings with no picture, and nothing telling
+  // them the cards did anything.
+  const [open, setOpen] = useState(DEFINITIONS[0].id);
+  const idx = DEFINITIONS.findIndex((d) => d.id === open);
+  const active = DEFINITIONS[idx];
+  const step = (by: number) =>
+    setOpen(DEFINITIONS[(idx + by + DEFINITIONS.length) % DEFINITIONS.length].id);
 
   return (
     <div className="border border-ink bg-paper-raised">
@@ -46,7 +52,7 @@ export function DefinitionMap() {
             return (
               <button
                 key={d.id}
-                onClick={() => setOpen(on ? null : d.id)}
+                onClick={() => setOpen(d.id)}
                 aria-expanded={on}
                 className={`group relative flex flex-col gap-2 p-4 text-left transition-colors ${
                   on ? "bg-paper" : "bg-paper-raised hover:bg-paper"
@@ -93,7 +99,19 @@ export function DefinitionMap() {
       </div>
 
       {/* detail */}
-      <div data-print-hide className="mt-6 border-t border-rule bg-paper px-5 py-6 md:px-8">
+      <div data-print-hide className="mt-6 flex items-center justify-between gap-4 border-t border-rule bg-paper px-5 pt-4 md:px-8">
+        <button onClick={() => step(-1)} className="label flex items-center gap-2 transition-colors hover:text-imagine">
+          <span aria-hidden>&larr;</span> {t("map.prev")}
+        </button>
+        <p className="label !text-ink-faint">
+          {t("map.counter", { n: idx + 1, total: DEFINITIONS.length })}
+        </p>
+        <button onClick={() => step(1)} className="label flex items-center gap-2 transition-colors hover:text-imagine">
+          {t("map.next")} <span aria-hidden>&rarr;</span>
+        </button>
+      </div>
+
+      <div data-print-hide className="bg-paper px-5 pb-6 pt-5 md:px-8">
         <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={active?.id ?? "empty"}
@@ -141,11 +159,7 @@ export function DefinitionMap() {
             </dl>
             </div>
           </div>
-        ) : (
-          <p className="text-ink-muted">
-{t("map.idle")}
-          </p>
-        )}
+        ) : null}
         </motion.div>
         </AnimatePresence>
       </div>

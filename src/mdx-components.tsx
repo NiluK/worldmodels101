@@ -6,6 +6,9 @@ import { VideoFigure, VideoPair } from "@/components/video-figure";
 import { SearchSpill } from "@/components/search-spill";
 import { DefinitionGlyph } from "@/components/definition-glyph";
 import { OutputGallery } from "@/components/output-gallery";
+import { FramesToState } from "@/components/frames-to-state";
+import { PredictionCompression } from "@/components/prediction-compression";
+import { GuessCheckAdjust } from "@/components/guess-check-adjust";
 import { AgentLoop } from "@/components/agent-loop";
 import { SourceList } from "@/components/sources";
 import { Quote, Gloss } from "@/components/quote";
@@ -33,6 +36,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     SearchSpill,
     DefinitionGlyph,
     OutputGallery,
+    FramesToState,
+    PredictionCompression,
+    GuessCheckAdjust,
     AgentLoop,
     SourceList,
     Quote,

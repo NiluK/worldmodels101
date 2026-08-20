@@ -36,10 +36,10 @@ export const CHAPTERS: Chapter[] = [
     slug: "prediction",
     title: "Prediction as Learning",
     blurb:
-      "Guess the next thing, check, adjust. Why that loop is enough to extract structure from raw experience, and why compression and prediction turn out to be the same problem.",
-    demo: "Train a next-state predictor live and watch its loss surface find the physics.",
-    minutes: 14,
-    status: "drafting",
+      "Ask something to predict what comes next and it has no choice but to build whatever the next moment depends on. The same loop, read a second way, turns out to be compression.",
+    demo: "One frame, then two: watch the futures still open collapse as evidence arrives.",
+    minutes: 12,
+    status: "ready",
   },
   {
     n: 4,

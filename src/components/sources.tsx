@@ -71,9 +71,21 @@ const NOTES_ZH: Record<string, string> = {
   "https://doi.org/10.1080/02640414.2021.1976484": "开头那个 177 毫秒的出处，是测出来的，不是估出来的。需付费。",
 };
 
+const SOURCES_CH3 = [
+  { t: "A Mathematical Theory of Communication", a: "Shannon, 1948", u: "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf", n: "Where the price of a symbol becomes the probability you gave it. Everything about prediction and compression being one job starts here." },
+  { t: "Prediction and Entropy of Printed English", a: "Shannon, 1951", u: "https://doi.org/10.1002/j.1538-7305.1951.tb01366.x", n: "Shannon sat people down and had them guess English one letter at a time. The bottom row of Figure 3.3 is roughly what he measured." },
+  { t: "Finding Structure in Time", a: "Elman, 1990", u: "https://doi.org/10.1207/s15516709cog1402_1", n: "Train a small network to predict the next word, then look inside: nouns, verbs, animate and inanimate, none of it asked for." },
+  { t: "Emergent World Representations", a: "Li et al., 2022", u: "https://arxiv.org/abs/2210.13382", n: "A network given nothing but legal Othello moves, with the board found inside it and causally manipulated." },
+  { t: "Othello-GPT has a linear emergent world representation", a: "Nanda et al., 2023", u: "https://arxiv.org/abs/2309.00941", n: "The follow-up that sharpened what the probe was actually reading." },
+  { t: "Language Models are Unsupervised Multitask Learners", a: "Radford et al., 2019", u: "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf", n: "Next-word prediction, scaled, turning into capabilities nobody trained for. The strongest evidence that the target choice is the design decision." },
+  { t: "The Hutter Prize", a: "Hutter, ongoing", u: "http://prize.hutter1.net/", n: "A cash prize for compressing a snapshot of Wikipedia, run on the argument that you cannot squeeze text further without modelling what it means." },
+  { t: "Representation Learning: A Review and New Perspectives", a: "Bengio, Courville & Vincent, 2013", u: "https://arxiv.org/abs/1206.5538", n: "The survey that laid out what a good learned representation is for, written before prediction had finished winning the argument." },
+  { t: "Formal theory of creativity, fun, and intrinsic motivation", a: "Schmidhuber, 2010", u: "https://people.idsia.ch/~juergen/creativity.html", n: "Compression progress as a drive in its own right: not just a way to measure a model, but a reason to go and look at something." },
+];
+
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
   const locale = useLocale();
-  const rows = chapter === 2 ? SOURCES_CH2 : SOURCES_CH1;
+  const rows = chapter === 3 ? SOURCES_CH3 : chapter === 2 ? SOURCES_CH2 : SOURCES_CH1;
   return (
     <ol className="border-t border-ink">
       {rows.map((s) => (

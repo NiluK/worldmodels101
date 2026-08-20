@@ -1,0 +1,202 @@
+Here is a photograph of a ball in mid-air. Where is it a moment later?
+
+You cannot say. Up, down, sideways, or barely moving at all: the picture looks
+the same in every case. Everything you would need to answer is missing from it.
+
+Now take two photographs, a fraction of a second apart. The answer arrives
+before you have finished asking the question.
+
+What changed is not the amount of detail. Both pictures were equally sharp.
+What changed is that two frames hold something one frame cannot: a direction
+and a speed. Nobody drew those on the image. They are not in either picture.
+They exist only in the relationship between them, and you pulled them out
+without being told to.
+
+<Figure
+  n="3.1"
+  caption={<>The fan is every future still consistent with what has been seen. One frame rules out nothing. A second fixes the heading and the speed. A third settles whether the path is bending. Each extra frame is not more detail, it is one more thing you can work out that was never in any single picture.</>}
+>
+  <FramesToState />
+</Figure>
+
+That is the trick this chapter is about. Ask something to predict what comes
+next, and it has no choice but to build the things the next moment depends on.
+Not because you asked for them. Because it cannot be right without them.
+
+## Guess, check, adjust
+
+The loop is as small as it sounds.
+
+Look at what you have. Say what you think is coming. Wait. Compare what
+arrived to what you said. Change yourself a little in the direction that would
+have been less wrong. Do it again.
+
+What makes it powerful is not the cleverness of any step. It is that the right
+answer is already there. Nobody has to label anything, because the thing you
+are trying to predict is the very next piece of the recording, and the
+recording already contains it.
+
+<MarginNote>
+This is what *self-supervised* means. Supervised, in the sense that the model
+is told exactly how wrong it was. But told by the data itself, rather than by a
+person with a spreadsheet.
+</MarginNote>
+
+That sounds like a small administrative convenience. It is the whole reason
+this approach ate the field. Labelling is the expensive part of machine
+learning: somebody has to look at a million images and write down what is in
+them. Prediction skips it. Any recording of anything is already a training set,
+because every moment in it is the answer to the moment before.
+
+<Figure
+  n="3.2"
+  caption={<>A predictor guessing the next number from the previous two, corrected a little after every guess. It starts at zero and knows nothing. Watch the dashed line climb onto the solid one, then look at what it learned: two numbers that nobody supplied, arrived at only by being wrong and adjusting.</>}
+>
+  <GuessCheckAdjust />
+</Figure>
+
+Nothing in that demonstration was told the rule. It was told, two hundred and
+twenty times, by how much it had just missed. Each time it nudged its own two
+numbers <Gloss>the *weights*: the adjustable numbers inside a model, and the
+only thing that learning ever changes</Gloss> a little way towards being right.
+That was enough.
+
+## What guessing forces you to build
+
+Here is where it stops being a party trick.
+
+To predict well, you have to carry whatever the next moment depends on. If the
+sequence is a ball, that is position and velocity. If the sequence is language,
+it is a great deal more, and none of it was ever asked for directly.
+
+In 1990 Jeffrey Elman trained a small network on one job: read a word, predict
+the next word. Then he went looking inside it. The internal states had sorted
+themselves into groups, and the groups were nouns and verbs, animate and
+inanimate, things that can eat and things that can be eaten. Nobody had given
+it a single category. It arrived at them because a word's category is what its
+next word depends on.
+
+The modern version of that result is more startling. Take a network trained
+only to predict legal moves in Othello <Gloss>a board game where you flip your
+opponent's pieces by trapping them between two of yours</Gloss>, never shown a
+board, never told the rules. Probe its activations <Gloss>train a small separate classifier to read
+one specific fact out of a network's internal numbers</Gloss> and you find the
+state of the board in there. Then change that internal board and watch the moves
+it goes on to make change with it. That is what makes it a finding rather than
+a curiosity. The board is not sitting in the numbers by accident. It is what
+the network is using.
+
+The rule underneath both is worth saying plainly. Prediction does not reward
+description. It rewards whatever makes the next thing less surprising, and
+sometimes the cheapest way to be less surprised is to build the thing that is
+actually generating the data.
+
+<MarginNote>
+Sometimes. Not always, and not by magic. A predictor will happily settle for a
+shortcut that works on the data it saw, and much of the rest of this course is
+about telling the two apart.
+</MarginNote>
+
+## Predict the next what?
+
+The loop says predict the next thing. It never says what counts as a thing, and
+that choice decides what you end up with.
+
+Predict the next pixel and you get a system that is very good at leaves. Leaves
+are genuinely hard to predict, and they are also most of the pixels, so that is
+where the capacity goes <Gloss>*capacity* is how much a model can hold. Spend
+it on one thing and it is not there for another</Gloss>. Predict the next word
+and you get grammar, and a surprising amount of knowledge about the world,
+because that is what the next word turns on. Predict the next state of some
+compact description and you get something a planner can use.
+
+Same loop, three different machines. The only thing that changed is what was
+put on the right-hand side of the guess.
+
+So *predict the next thing* is not one method. It is a family, and picking the
+target is the design decision that matters most.
+
+## Being right is the same as being brief
+
+There is a second way to look at the whole business, and it turns out to be the
+same way.
+
+Suppose you have to send a message down a wire, and you are charged by the
+symbol. You and the receiver share a predictor. Before each symbol, both of you
+run it and get a list of what is likely next. Now you only need to send enough
+to pick out the right one from that list.
+
+If the predictor was confident and correct, that costs almost nothing. If it
+was confident and wrong, it costs a lot. Shannon made this exact: a symbol you
+gave a probability of one in two costs one bit <Gloss>one bit is one yes or no
+answer, so eight bits can pick one option out of 256</Gloss>, one in four costs
+two, one in a thousand costs about ten.
+
+<Figure
+  n="3.3"
+  caption={<>The same sentence, written down by predictors of increasing quality. The bits per character are published estimates for English rather than anything this figure computed. The bottom row is roughly where Shannon put a person guessing English letter by letter, and where good language models sit today.</>}
+>
+  <PredictionCompression />
+</Figure>
+
+So the length of the shortest message you can write is a measurement of how
+well you predicted. A better predictor is a better compressor, and the same
+thing read backwards: whatever compresses your data the hardest has understood
+the most about it.
+
+That is not a metaphor. There is a long-running prize for compressing a
+snapshot of Wikipedia, on the argument that you cannot squeeze text much
+further without knowing what the text means. Every winner so far has been, in
+effect, a language model.
+
+And it explains why prediction is worth so much more than it looks. You are not
+asking a system to memorise. Memorising is the expensive option: a lookup table
+of everything that ever happened is enormous and useless on anything new. The
+cheap option, the one that actually gets you a shorter message, is to work out
+the rule that produced the data and keep that instead.
+
+## Where it stops being enough
+
+Two honest limits, because the argument so far has been suspiciously tidy.
+
+**Predicting well is not the same as being useful.** A system can be excellent
+at continuing a recording and still hand you nothing you can act on. Saying what
+comes next is not the same as saying what would come next if you did something
+different. Only the second one supports a decision.
+
+**Being unsurprised is not the same as being right.** A predictor that has only
+ever seen calm weather is not surprised by calm weather, and that tells you
+nothing about what it would do in a storm. Low error on what you happened to
+record is a weaker claim than it sounds.
+
+None of that undoes the chapter. Prediction really is enough to pull structure
+out of raw experience, and it really is the cheapest signal anyone has found.
+It is just not free, and it does not aim itself.
+
+## Try it
+
+<Figure
+  n="3.4"
+  caption={<>Eight questions on the loop and what it produces. The last two are the ones that separate a good predictor from a useful one.</>}
+>
+  <Quiz chapter={3} />
+</Figure>
+
+---
+
+Everything here has quietly assumed the thing being predicted is small. Two
+numbers for a ball, one word at a time for language. A camera hands you two
+million numbers, thirty times a second, and almost all of them are the leaves.
+
+Thanks for reading. Chapter 4 is about the squeeze in the middle. How a system
+gets from what the world looks like to what state it is in, and why that narrow
+point does more work than the prediction on either side of it.
+
+## Sources
+
+<Figure
+  n="3.5"
+  caption={<>Ordered for someone building on this rather than for historical completeness.</>}
+>
+  <SourceList chapter={3} />
+</Figure>
