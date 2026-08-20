@@ -3,6 +3,7 @@ import { PredictionHero } from "@/components/prediction-hero";
 import { CHAPTERS, TOTAL_MINUTES } from "@/lib/chapters";
 import { Subscribe } from "@/components/subscribe";
 import { StarCta } from "@/components/star-cta";
+import { Byline } from "@/components/byline";
 import { getStars } from "@/lib/github";
 import { DefinitionMap } from "@/components/definition-map";
 import type { Metadata } from "next";
@@ -59,6 +60,7 @@ export default async function Home() {
           <p className="label">
             {CHAPTERS.length} chapters &middot; {runtime(TOTAL_MINUTES)} &middot; no signup
           </p>
+          <Byline locale="en" />
         </div>
       </section>
 

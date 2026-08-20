@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SignalMark } from "./signal-mark";
 import { useT } from "./locale-provider";
 import { REPO_URL } from "@/lib/github";
+import { AUTHOR, AUTHOR_URL } from "@/lib/author";
 
 export function SiteFooter() {
   const t = useT();
@@ -28,6 +29,14 @@ export function SiteFooter() {
             className="label hover:text-ink transition-colors"
           >
             {t("foot.source")}
+          </a>
+          <a
+            href={AUTHOR_URL}
+            target="_blank"
+            rel="noopener noreferrer me"
+            className="label hover:text-ink transition-colors"
+          >
+            {AUTHOR}
           </a>
           <span className="label">&copy; {new Date().getFullYear()}</span>
         </div>

@@ -273,6 +273,7 @@ const en: Dict = {
   "sub.sending": "Sending",
   "foot.body":
     "A free primer on world models. Free to read, free to share, free to steal for your own course. Attribution appreciated.",
+  "byline.by": "By",
   "star.title": "Everything here is open source",
   "star.body": "The prose, the figures and every interactive on this site are in one public repository. Read it, correct it, lift a component for your own writing. If it was useful, a star is the cheapest way to help somebody else find it.",
   "star.compact": "This chapter is free and open source. A star helps the next person find it.",
@@ -517,6 +518,7 @@ const zh: Dict = {
   "sub.sending": "发送中",
   "foot.body":
     "一份关于世界模型的免费入门读物。免费阅读，欢迎转发，也欢迎直接拿去用在你自己的课程里。注明出处即可。",
+  "byline.by": "作者",
   "star.title": "这里的一切都是开源的",
   "star.body": "本站的文字、图表和每一个可交互组件都放在同一个公开仓库里。读它、纠正它，或者把某个组件拿去用在你自己的写作里。如果它对你有用，点个 star 是帮别人找到它最省事的办法。",
   "star.compact": "这一章是免费且开源的。点个 star，能帮下一个人找到它。",

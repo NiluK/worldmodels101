@@ -9,6 +9,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { localePath, translate, type Locale } from "@/lib/i18n";
 import { StarCta } from "@/components/star-cta";
+import { Byline } from "@/components/byline";
 import { getStars } from "@/lib/github";
 
 export async function ChapterView({ locale, slug }: { locale: Locale; slug: string }) {
@@ -58,7 +59,8 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
               <h1 className="display text-[clamp(2.4rem,7vw,4.6rem)] leading-[0.92]">
                 {chapter.title}
               </h1>
-              <p className="label mt-5 flex flex-wrap items-center gap-x-3 gap-y-1">
+              <Byline locale={locale} className="mt-5 block" />
+              <p className="label mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                 <span>{t("chapter.read", { n: chapter.minutes })}</span>
                 {hasPdf && (
                   <a

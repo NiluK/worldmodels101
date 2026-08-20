@@ -3,6 +3,7 @@ import { PredictionHero } from "@/components/prediction-hero";
 import { CHAPTERS, TOTAL_MINUTES, chapterText } from "@/lib/chapters";
 import { Subscribe } from "@/components/subscribe";
 import { StarCta } from "@/components/star-cta";
+import { Byline } from "@/components/byline";
 import { getStars } from "@/lib/github";
 import { DefinitionMap } from "@/components/definition-map";
 import { translate, localePath } from "@/lib/i18n";
@@ -51,6 +52,7 @@ export default async function HomeZh() {
             <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
           </Link>
           <p className="label">{t("site.meta", { n: CHAPTERS.length, time: runtime(TOTAL_MINUTES) })}</p>
+          <Byline locale="zh" />
         </div>
       </section>
 
