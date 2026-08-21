@@ -66,10 +66,10 @@ export const CHAPTERS: Chapter[] = [
     slug: "dreaming",
     title: "Learning in a Dream",
     blurb:
-      "Once you have a simulator, you can practise inside it. Policy learning in imagination, why it is so sample-efficient, and how agents learn to exploit the bugs in their own dreams.",
-    demo: "An agent trained only in the dream, dropped into the real environment.",
-    minutes: 15,
-    status: "planned",
+      "A month of robot time becomes a day if the practice happens inside the model. What that exchange rate really costs, and why the fix for an agent exploiting its own dream is to make the dream worse on purpose.",
+    demo: "Turn the uncertainty in the dream up and down, and watch both scores fail at opposite ends.",
+    minutes: 10,
+    status: "ready",
   },
   {
     n: 7,
@@ -135,7 +135,11 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
     blurb: "一个在训练时每一步都拿到真相的模型，一上线拿到的就是它自己上一次的答案。是什么把过去带着往前走，以及为什么那个头条准确率数字量的是另一份工作。",
     demo: "同一个模型，两种跑法：每步都被纠正，或者放开去吃自己的输出。",
   },
-  dreaming: { title: "在梦里学习", blurb: "有了模拟器，你就可以在里面练习。", demo: "" },
+  dreaming: {
+    title: "在梦里学习",
+    blurb: "如果练习发生在模型里面，一个月的机器人时间就变成一天。这笔汇率真正的代价是什么，以及为什么「智能体在利用自己的梦」的解法是故意把梦弄差。",
+    demo: "把梦里的不确定性调高调低，看着两条分数在两端各自失败。",
+  },
   jepa: { title: "反对生成的理由", blurb: "在表征空间里预测，而不是在像素空间里。", demo: "" },
   "video-worlds": { title: "视频作为世界模拟器", blurb: "当生成式视频被推到可控为止。", demo: "" },
   "whats-broken": { title: "哪些地方还不行", blurb: "长时程漂移、物体恒存性、反事实，以及评测问题。", demo: "" },

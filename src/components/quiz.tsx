@@ -163,6 +163,7 @@ function questionsFor(chapter: number, locale: string): Q[] {
     3: { en: QUESTIONS_CH3, zh: QUESTIONS_CH3_ZH },
     4: { en: QUESTIONS_CH4, zh: QUESTIONS_CH4_ZH },
     5: { en: QUESTIONS_CH5, zh: QUESTIONS_CH5_ZH },
+    6: { en: QUESTIONS_CH6, zh: QUESTIONS_CH6_ZH },
   };
   const set = sets[chapter] ?? sets[1];
   return (locale === "zh" && set.zh) || set.en;
@@ -212,7 +213,7 @@ function QuizInteractive({ chapter }: { chapter: number }) {
         </p>
         <p className="mx-auto mt-6 max-w-[46ch] text-[1rem] leading-relaxed text-ink-muted">
           {t(
-            `quiz.verdict.ch${chapter >= 1 && chapter <= 5 ? chapter : 1}.${
+            `quiz.verdict.ch${chapter >= 1 && chapter <= 6 ? chapter : 1}.${
               score === QUESTIONS.length ? "all" : score >= QUESTIONS.length - 3 ? "most" : "few"
             }`,
           )}
@@ -540,6 +541,164 @@ const QUESTIONS_ZH: Q[] = [
 
 /** Chapter 2: the Dynamics Model in depth. All concept questions; classifying
     is Chapter 1's job and repeating it here would test the wrong thing. */
+const QUESTIONS_CH6: Q[] = [
+  {
+    kind: "choice",
+    stem: "Training inside a model changes the exchange rate on which resource?",
+    options: [
+      "Memory, which becomes cheaper",
+      "Contact with the world, which is the scarce one, paid for instead in compute, which is not",
+      "Model accuracy, which improves for free",
+      "The number of parameters needed",
+    ],
+    answer: 1,
+    why: "The learner still needs its experience. What changes is where the steps come from and which budget pays for them.",
+  },
+  {
+    kind: "choice",
+    stem: "Why can the imagination ratio not simply be turned up without limit?",
+    options: [
+      "Imagined steps take as long as real ones",
+      "The model is only trustworthy where it has data, and that comes from real steps",
+      "Policies cannot learn from generated data",
+      "The compute cost grows faster than linearly",
+    ],
+    answer: 1,
+    why: "Imagined steps are worth having while the model can supply them honestly, and it can only do that where it has been.",
+  },
+  {
+    kind: "choice",
+    stem: "What does the second lap of the loop fix that the first cannot?",
+    options: [
+      "It makes the model smaller",
+      "A better policy visits new places, producing exactly the data the first model was missing",
+      "It removes the need for a decoder",
+      "It shortens the rollouts",
+    ],
+    answer: 1,
+    why: "A model fitted to the flailing of an untrained agent is only good where an untrained agent goes. The model gets better because the policy does, and the other way round.",
+  },
+  {
+    kind: "choice",
+    stem: "A policy trained inside a model is graded by what?",
+    options: [
+      "The world",
+      "The model, and nothing else, for the whole of training",
+      "A held-out test set from the real environment",
+      "A human evaluator",
+    ],
+    answer: 1,
+    why: "It has no access to the world during training, so it has no way to tell a genuinely good action from one that merely looks good to the marker.",
+  },
+  {
+    kind: "choice",
+    stem: "Ha and Schmidhuber's agent found a way of moving that stopped its dream producing fireballs. What kind of failure is that?",
+    options: [
+      "A bug in the training code",
+      "The policy maximising the score the model hands it, which is exactly what it was asked to do",
+      "The model being too small",
+      "Insufficient exploration",
+    ],
+    answer: 1,
+    why: "Nothing went wrong. Those were the cheapest points available inside the model, and the policy was thorough.",
+  },
+  {
+    kind: "choice",
+    stem: "How is this different from a planner exploiting a model at decision time?",
+    options: [
+      "It is the same problem with a different name",
+      "A plan can be inspected and overruled; a trained policy walks out with the exploit already in its weights",
+      "Planners are not affected by model error",
+      "Policies are easier to correct afterwards",
+    ],
+    answer: 1,
+    why: "That difference is what makes the dream version harder to catch. There is no plan sitting there to look at.",
+  },
+  {
+    kind: "choice",
+    stem: "Why deliberately add uncertainty to a model you worked hard to make accurate?",
+    options: [
+      "To speed up training",
+      "So a trick that only works when the model rolls one particular way stops being worth building on",
+      "To reduce memory use",
+      "To make the model smaller",
+    ],
+    answer: 1,
+    why: "If the policy is exploiting a quirk, the fix is to make the quirk unreliable rather than to make the model better.",
+  },
+  {
+    kind: "choice",
+    stem: "Both ends of the uncertainty dial fail. How?",
+    options: [
+      "Both ends make training unstable",
+      "A confident dream gets exploited; a dream with too much noise has no task left in it to learn",
+      "Low settings are slow, high settings are fast",
+      "Only the high end fails",
+    ],
+    answer: 1,
+    why: "The useful setting is a hump rather than a direction: a narrow band where neither failure has taken over.",
+  },
+];
+
+const QUESTIONS_CH6_ZH: Q[] = [
+  {
+    kind: "choice",
+    stem: "在模型里面训练，改变的是哪种资源的汇率？",
+    options: ["内存，它变便宜了", "和世界的接触，也就是稀缺的那一份；改由不稀缺的算力来付", "模型精度，它免费变好了", "所需的参数量"],
+    answer: 1,
+    why: "学习者仍然需要它那份经验。变的是这些步从哪儿来，以及由哪份预算付账。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么想象的比例不能无限往上调？",
+    options: ["想象的步数和真实的一样慢", "模型只在它有数据的地方值得信任，而数据来自真实的步数", "策略没法从生成的数据里学", "算力开销的增长快于线性"],
+    answer: 1,
+    why: "想象出来的步数，只有在模型还能诚实地供得上时才值钱，而它只在自己去过的地方做得到。",
+  },
+  {
+    kind: "choice",
+    stem: "循环的第二圈修好了第一圈修不了的什么？",
+    options: ["它把模型变小了", "更好的策略会去新的地方，产生的恰好就是第一个模型缺的那份数据", "它去掉了对解码器的需要", "它缩短了推演"],
+    answer: 1,
+    why: "拟合在「未训练的智能体乱扑腾」之上的模型，只在那种智能体会去的地方管用。模型变好是因为策略变好，反过来也一样。",
+  },
+  {
+    kind: "choice",
+    stem: "一个在模型里面训练的策略，是被什么打分的？",
+    options: ["世界", "模型，而且整个训练过程中只有模型", "来自真实环境的一份留出测试集", "一位人类评估者"],
+    answer: 1,
+    why: "它在训练期间接触不到世界，所以没法把「真正好的动作」和「只是在批改者眼里好看的动作」分开。",
+  },
+  {
+    kind: "choice",
+    stem: "Ha 与 Schmidhuber 的智能体找到了一种移动方式，让它的梦不再产生火球。这是哪一类失败？",
+    options: ["训练代码里的 bug", "策略在最大化模型交给它的分数，而这正是它被要求做的事", "模型太小了", "探索不足"],
+    answer: 1,
+    why: "什么岔子都没出。那些是模型里面最便宜的分数，而这个策略很彻底。",
+  },
+  {
+    kind: "choice",
+    stem: "这和「规划器在决策时利用模型」有什么不同？",
+    options: ["是同一个问题换了个名字", "方案可以被查看和否决；而训练出来的策略走出来时，漏洞已经在它的权重里了", "规划器不受模型误差影响", "策略事后更容易纠正"],
+    answer: 1,
+    why: "正是这个差别让梦里那个版本更难被抓住。没有一份摆在那儿可以看的方案。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么要给一个你费劲做准的模型故意加上不确定性？",
+    options: ["为了加快训练", "好让一个只有在模型碰巧那样掷一次时才管用的把戏，不再值得往上搭房子", "为了减少内存占用", "为了把模型做小"],
+    answer: 1,
+    why: "如果策略在利用某个怪癖，解法是让这个怪癖变得不可靠，而不是把模型做得更好。",
+  },
+  {
+    kind: "choice",
+    stem: "不确定性旋钮的两端都会失败。怎么个失败法？",
+    options: ["两端都让训练不稳", "笃定的梦会被利用；噪声太大的梦里已经没有任务可学了", "低端慢，高端快", "只有高端会失败"],
+    answer: 1,
+    why: "有用的设置是一个峰而不是一个方向：那条「两种失败都还没占上风」的窄带。",
+  },
+];
+
 const QUESTIONS_CH5: Q[] = [
   {
     kind: "choice",

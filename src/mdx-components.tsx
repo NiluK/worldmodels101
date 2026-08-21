@@ -14,6 +14,8 @@ import { LatentInterpolate } from "@/components/latent-interpolate";
 import { Bottleneck } from "@/components/bottleneck";
 import { FreeRunning } from "@/components/free-running";
 import { MemoryTrade } from "@/components/memory-trade";
+import { DreamBudget } from "@/components/dream-budget";
+import { DreamTemperature } from "@/components/dream-temperature";
 import { AgentLoop } from "@/components/agent-loop";
 import { SourceList } from "@/components/sources";
 import { Quote, Gloss } from "@/components/quote";
@@ -49,6 +51,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Bottleneck,
     FreeRunning,
     MemoryTrade,
+    DreamBudget,
+    DreamTemperature,
     AgentLoop,
     SourceList,
     Quote,

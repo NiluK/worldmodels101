@@ -67,6 +67,9 @@ const NOTES_ZH: Record<string, string> = {
   "https://www.nvidia.com/en-us/ai/cosmos/": "一个边界案例：预测式视频世界与显式仿真并置。",
   "https://arxiv.org/abs/2210.13382": "在 Othello-GPT 内部找到棋盘状态，并且能对它做因果干预。",
   "https://arxiv.org/abs/2309.00941": "把这个发现进一步锐化的后续工作。",
+  "https://arxiv.org/abs/2010.02193": "同一个循环，做到了它开始打败那些直接从环境里学的智能体的规模。",
+  "https://arxiv.org/abs/1703.06907": "同一个想法从机器人学那边过来：让模拟器的变化比现实还大，于是没有任何东西能依赖它的某一个版本。",
+  "https://arxiv.org/abs/1910.07113": "把随机化推到足以把策略从模拟搬到真实硬件上，以及对这件事代价的一份诚实交代。",
   "https://arxiv.org/abs/1506.03099": "把这个错配点了名，并正面处理：训练时就让模型吃自己的预测，而且随着它变好逐步加量。",
   "https://arxiv.org/abs/1511.06732": "给整段推演打分，而不是给单步打分，好让被优化的东西就是你真正要跑的那个东西。",
   "https://arxiv.org/abs/1706.03762": "另一个答案：别再做摘要了，把每一步都留着，代价是开销随长度增长。",
@@ -123,10 +126,23 @@ const SOURCES_CH5 = [
   { t: "Mamba: Linear-Time Sequence Modeling with Selective State Spaces", a: "Gu & Dao, 2023", u: "https://arxiv.org/abs/2312.00752", n: "A summary that decides what to keep based on what it is looking at, which is the concession the fixed version could not make." },
 ];
 
+const SOURCES_CH6 = [
+  { t: "World Models", a: "Ha & Schmidhuber, 2018", u: "https://arxiv.org/abs/1803.10122", n: "The agent trained entirely inside its own dream, the policy that stopped the dream producing fireballs, and the temperature dial that closed the gap. This chapter in one paper." },
+  { t: "Dream to Control (Dreamer)", a: "Hafner et al., 2019", u: "https://arxiv.org/abs/1912.01603", n: "Behaviour learned from long imagined rollouts, with the actor and critic never touching the environment during training." },
+  { t: "Mastering Atari with Discrete World Models (DreamerV2)", a: "Hafner et al., 2020", u: "https://arxiv.org/abs/2010.02193", n: "The same loop at a scale where it started beating agents that learn directly from the environment." },
+  { t: "Mastering diverse control tasks through world models (DreamerV3)", a: "Hafner et al., Nature 2025", u: "https://www.nature.com/articles/s41586-025-08744-2", n: "One configuration across more than 150 tasks, and the strongest available answer to whether learning in imagination generalises." },
+  { t: "Dyna: an Integrated Architecture for Learning, Planning and Reacting", a: "Sutton, 1991", u: "https://mlanthology.org/icml/1990/sutton1990icml-integrated/", n: "The loop itself, thirty years early: act, fit a model, learn from experience the model made up, repeat." },
+  { t: "When to Trust Your Model: Model-Based Policy Optimisation", a: "Janner et al., 2019", u: "https://arxiv.org/abs/1906.08253", n: "Short imagined rollouts branched from real states, which is the other way of stopping a policy from leaning on the model too far out." },
+  { t: "Domain Randomization for Transferring Deep Neural Networks", a: "Tobin et al., 2017", u: "https://arxiv.org/abs/1703.06907", n: "The same idea arriving from robotics: make the simulator vary more than reality does, so nothing can depend on any one version of it." },
+  { t: "Solving Rubik's Cube with a Robot Hand", a: "OpenAI et al., 2019", u: "https://arxiv.org/abs/1910.07113", n: "Randomisation pushed hard enough to carry a policy from simulation onto real hardware, and an honest account of what that cost." },
+];
+
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
   const locale = useLocale();
   const rows =
-    chapter === 5
+    chapter === 6
+      ? SOURCES_CH6
+      : chapter === 5
       ? SOURCES_CH5
       : chapter === 4
       ? SOURCES_CH4
