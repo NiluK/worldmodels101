@@ -67,6 +67,11 @@ const NOTES_ZH: Record<string, string> = {
   "https://www.nvidia.com/en-us/ai/cosmos/": "一个边界案例：预测式视频世界与显式仿真并置。",
   "https://arxiv.org/abs/2210.13382": "在 Othello-GPT 内部找到棋盘状态，并且能对它做因果干预。",
   "https://arxiv.org/abs/2309.00941": "把这个发现进一步锐化的后续工作。",
+  "https://arxiv.org/abs/1312.6114": "变分自编码器。它加进去的噪声，正是这个空间最后能被走通、而不是变成一堆互不相干的地址的原因。",
+  "https://doi.org/10.1126/science.1127647": "在有现代机器撑腰之前的瓶颈论证。需付费。",
+  "https://arxiv.org/abs/1711.00937": "当那份简短描述被强制变成少数几个离散符号、而不是连续数字时，会发生什么。",
+  "https://openreview.net/forum?id=Sy2fzU9gl": "把瓶颈上的压力调大，坐标轴就开始对上一些你叫得出名字的东西。这篇也很好地展示了那样做的代价。",
+  "https://arxiv.org/abs/1606.05579": "「一个好的表征，是它的各个方向都有含义」这个主张，写在这个领域还不拥挤的时候。",
   "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf": "一个符号的代价在这里变成了「你给它的概率」。预测与压缩是同一件事，一切都从这儿开始。",
   "https://doi.org/10.1002/j.1538-7305.1951.tb01366.x": "香农让人坐下来，一个字母一个字母地猜英文。图 3.3 最下面那一行大致就是他测出来的。",
   "https://doi.org/10.1207/s15516709cog1402_1": "训练一个小网络去预测下一个词，然后往里看：名词、动词、有生命与无生命，没有一样是被要求过的。",
@@ -90,9 +95,27 @@ const SOURCES_CH3 = [
   { t: "Formal theory of creativity, fun, and intrinsic motivation", a: "Schmidhuber, 2010", u: "https://people.idsia.ch/~juergen/creativity.html", n: "Compression progress as a drive in its own right: not just a way to measure a model, but a reason to go and look at something." },
 ];
 
+const SOURCES_CH4 = [
+  { t: "Auto-Encoding Variational Bayes", a: "Kingma & Welling, 2013", u: "https://arxiv.org/abs/1312.6114", n: "The variational autoencoder. The noise it adds is the reason the space ends up navigable instead of a scatter of unrelated addresses." },
+  { t: "Reducing the Dimensionality of Data with Neural Networks", a: "Hinton & Salakhutdinov, 2006", u: "https://doi.org/10.1126/science.1127647", n: "The bottleneck argument before it had modern machinery behind it. Paywalled." },
+  { t: "World Models", a: "Ha & Schmidhuber, 2018", u: "https://arxiv.org/abs/1803.10122", n: "Every frame crushed to thirty-two numbers, and everything after that working only from those. The clearest example of the squeeze in a working agent." },
+  { t: "Learning Latent Dynamics for Planning from Pixels (PlaNet)", a: "Hafner et al., 2018", u: "https://arxiv.org/abs/1811.04551", n: "Encodes pixels to a compact state and then plans in it, without ever rebuilding a frame in order to decide anything." },
+  { t: "Neural Discrete Representation Learning (VQ-VAE)", a: "van den Oord et al., 2017", u: "https://arxiv.org/abs/1711.00937", n: "What happens when the short list is forced to be a handful of discrete symbols rather than continuous numbers." },
+  { t: "beta-VAE", a: "Higgins et al., 2017", u: "https://openreview.net/forum?id=Sy2fzU9gl", n: "Turn the pressure on the bottleneck up and the axes start to line up with things you can name. Also a good demonstration of what that costs." },
+  { t: "Early Visual Concept Learning with Unsupervised Deep Learning", a: "Higgins et al., 2016", u: "https://arxiv.org/abs/1606.05579", n: "The argument that a good representation is one whose directions mean something, written before it was a crowded field." },
+  { t: "Representation Learning: A Review and New Perspectives", a: "Bengio, Courville & Vincent, 2013", u: "https://arxiv.org/abs/1206.5538", n: "Still the best single statement of what a learned representation is supposed to be for, and of how many of these questions were already open." },
+];
+
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
   const locale = useLocale();
-  const rows = chapter === 3 ? SOURCES_CH3 : chapter === 2 ? SOURCES_CH2 : SOURCES_CH1;
+  const rows =
+    chapter === 4
+      ? SOURCES_CH4
+      : chapter === 3
+        ? SOURCES_CH3
+        : chapter === 2
+          ? SOURCES_CH2
+          : SOURCES_CH1;
   return (
     <ol className="border-t border-ink">
       {rows.map((s) => (

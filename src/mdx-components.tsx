@@ -9,6 +9,9 @@ import { OutputGallery } from "@/components/output-gallery";
 import { FramesToState } from "@/components/frames-to-state";
 import { PredictionCompression } from "@/components/prediction-compression";
 import { GuessCheckAdjust } from "@/components/guess-check-adjust";
+import { LatentRoom } from "@/components/latent-room";
+import { LatentInterpolate } from "@/components/latent-interpolate";
+import { Bottleneck } from "@/components/bottleneck";
 import { AgentLoop } from "@/components/agent-loop";
 import { SourceList } from "@/components/sources";
 import { Quote, Gloss } from "@/components/quote";
@@ -39,6 +42,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     FramesToState,
     PredictionCompression,
     GuessCheckAdjust,
+    LatentRoom,
+    LatentInterpolate,
+    Bottleneck,
     AgentLoop,
     SourceList,
     Quote,

@@ -46,10 +46,10 @@ export const CHAPTERS: Chapter[] = [
     slug: "latents",
     title: "Latent Space",
     blurb:
-      "You cannot predict pixels and you should not try. Encoders, bottlenecks, and the move from what the world looks like to what state it is in.",
-    demo: "Drag a point through a 2-D latent space and watch the world it decodes to.",
-    minutes: 15,
-    status: "planned",
+      "A camera measures tens of thousands of numbers. The decision needs two or three. What happens at the squeeze in between, and why that narrow point sets the ceiling on everything after it.",
+    demo: "Drag a point through a two-number space and watch the room it decodes to.",
+    minutes: 11,
+    status: "ready",
   },
   {
     n: 5,
