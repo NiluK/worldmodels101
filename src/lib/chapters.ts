@@ -56,10 +56,10 @@ export const CHAPTERS: Chapter[] = [
     slug: "dynamics",
     title: "Dynamics",
     blurb:
-      "The transition model: given where we are and what we do, where do we end up? RNNs, state-space models, transformers, and the compounding error that eventually eats them all.",
-    demo: "Roll out an imagined trajectory against the real one and watch them peel apart.",
-    minutes: 16,
-    status: "planned",
+      "A model trained on the truth at every step gets its own last answer instead the moment you run it. What carries the past forward, and why the headline accuracy number measures the wrong job.",
+    demo: "One model, two ways of running it: corrected every step, or left to eat its own output.",
+    minutes: 11,
+    status: "ready",
   },
   {
     n: 6,
@@ -130,7 +130,11 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
     blurb: "摄像机测量几万个数字，而这个决定只需要两三个。中间那道收窄口发生了什么，以及为什么那个窄点给它后面的一切定了上限。",
     demo: "在一个两个数字的空间里拖一个点，看着它解码出来的房间。",
   },
-  dynamics: { title: "动力学", blurb: "转移模型，以及最终吞掉它们的累积误差。", demo: "" },
+  dynamics: {
+    title: "动力学",
+    blurb: "一个在训练时每一步都拿到真相的模型，一上线拿到的就是它自己上一次的答案。是什么把过去带着往前走，以及为什么那个头条准确率数字量的是另一份工作。",
+    demo: "同一个模型，两种跑法：每步都被纠正，或者放开去吃自己的输出。",
+  },
   dreaming: { title: "在梦里学习", blurb: "有了模拟器，你就可以在里面练习。", demo: "" },
   jepa: { title: "反对生成的理由", blurb: "在表征空间里预测，而不是在像素空间里。", demo: "" },
   "video-worlds": { title: "视频作为世界模拟器", blurb: "当生成式视频被推到可控为止。", demo: "" },

@@ -7,6 +7,7 @@ const EN: Record<string, () => Promise<{ default: ComponentType }>> = {
   "the-idea": () => import("./the-idea.mdx"),
   prediction: () => import("./prediction.mdx"),
   latents: () => import("./latents.mdx"),
+  dynamics: () => import("./dynamics.mdx"),
 };
 
 const ZH: Record<string, () => Promise<{ default: ComponentType }>> = {
@@ -14,6 +15,7 @@ const ZH: Record<string, () => Promise<{ default: ComponentType }>> = {
   "the-idea": () => import("./zh/the-idea.mdx"),
   prediction: () => import("./zh/prediction.mdx"),
   latents: () => import("./zh/latents.mdx"),
+  dynamics: () => import("./zh/dynamics.mdx"),
 };
 
 export const CONTENT = EN;

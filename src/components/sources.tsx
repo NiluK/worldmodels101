@@ -67,6 +67,12 @@ const NOTES_ZH: Record<string, string> = {
   "https://www.nvidia.com/en-us/ai/cosmos/": "一个边界案例：预测式视频世界与显式仿真并置。",
   "https://arxiv.org/abs/2210.13382": "在 Othello-GPT 内部找到棋盘状态，并且能对它做因果干预。",
   "https://arxiv.org/abs/2309.00941": "把这个发现进一步锐化的后续工作。",
+  "https://arxiv.org/abs/1506.03099": "把这个错配点了名，并正面处理：训练时就让模型吃自己的预测，而且随着它变好逐步加量。",
+  "https://arxiv.org/abs/1511.06732": "给整段推演打分，而不是给单步打分，好让被优化的东西就是你真正要跑的那个东西。",
+  "https://arxiv.org/abs/1706.03762": "另一个答案：别再做摘要了，把每一步都留着，代价是开销随长度增长。",
+  "https://arxiv.org/abs/2111.00396": "「做摘要」这条路带着更好的机器回来了，也是状态空间模型重新进入讨论的原因。",
+  "https://arxiv.org/abs/2312.00752": "一份会根据自己正在看的东西来决定留什么的摘要，而这正是固定版本做不到的那个让步。",
+  "https://doi.org/10.1162/neco.1997.9.8.1735": "那份固定摘要，被做成能比梯度愿意的更久地抓住一些东西。需付费。",
   "https://arxiv.org/abs/1312.6114": "变分自编码器。它加进去的噪声，正是这个空间最后能被走通、而不是变成一堆互不相干的地址的原因。",
   "https://doi.org/10.1126/science.1127647": "在有现代机器撑腰之前的瓶颈论证。需付费。",
   "https://arxiv.org/abs/1711.00937": "当那份简短描述被强制变成少数几个离散符号、而不是连续数字时，会发生什么。",
@@ -106,10 +112,23 @@ const SOURCES_CH4 = [
   { t: "Representation Learning: A Review and New Perspectives", a: "Bengio, Courville & Vincent, 2013", u: "https://arxiv.org/abs/1206.5538", n: "Still the best single statement of what a learned representation is supposed to be for, and of how many of these questions were already open." },
 ];
 
+const SOURCES_CH5 = [
+  { t: "Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks", a: "Bengio et al., 2015", u: "https://arxiv.org/abs/1506.03099", n: "The mismatch named and attacked head on: let the model eat its own predictions during training, and raise the dose as it improves." },
+  { t: "Sequence Level Training with Recurrent Neural Networks", a: "Ranzato et al., 2015", u: "https://arxiv.org/abs/1511.06732", n: "Score the whole rollout rather than the single step, so the thing being optimised is the thing you will actually run." },
+  { t: "Learning Latent Dynamics for Planning from Pixels (PlaNet)", a: "Hafner et al., 2018", u: "https://arxiv.org/abs/1811.04551", n: "The argument for carrying a deterministic part and a stochastic part together, because each one fails alone in a different direction." },
+  { t: "Dream to Control (Dreamer)", a: "Hafner et al., 2019", u: "https://arxiv.org/abs/1912.01603", n: "What a latent transition model is for once it works: long imagined rollouts that behaviour can be learned from." },
+  { t: "Long Short-Term Memory", a: "Hochreiter & Schmidhuber, 1997", u: "https://doi.org/10.1162/neco.1997.9.8.1735", n: "The fixed summary, made to hold on to things for longer than the gradient wanted it to. Paywalled." },
+  { t: "Attention Is All You Need", a: "Vaswani et al., 2017", u: "https://arxiv.org/abs/1706.03762", n: "The other answer: stop summarising, keep every step, and pay for it in how the cost grows with length." },
+  { t: "Efficiently Modeling Long Sequences with Structured State Spaces (S4)", a: "Gu et al., 2021", u: "https://arxiv.org/abs/2111.00396", n: "The summary approach returning with better machinery, and the reason state-space models are back in the conversation." },
+  { t: "Mamba: Linear-Time Sequence Modeling with Selective State Spaces", a: "Gu & Dao, 2023", u: "https://arxiv.org/abs/2312.00752", n: "A summary that decides what to keep based on what it is looking at, which is the concession the fixed version could not make." },
+];
+
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
   const locale = useLocale();
   const rows =
-    chapter === 4
+    chapter === 5
+      ? SOURCES_CH5
+      : chapter === 4
       ? SOURCES_CH4
       : chapter === 3
         ? SOURCES_CH3

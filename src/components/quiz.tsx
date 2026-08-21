@@ -162,6 +162,7 @@ function questionsFor(chapter: number, locale: string): Q[] {
     2: { en: QUESTIONS_CH2, zh: QUESTIONS_CH2_ZH },
     3: { en: QUESTIONS_CH3, zh: QUESTIONS_CH3_ZH },
     4: { en: QUESTIONS_CH4, zh: QUESTIONS_CH4_ZH },
+    5: { en: QUESTIONS_CH5, zh: QUESTIONS_CH5_ZH },
   };
   const set = sets[chapter] ?? sets[1];
   return (locale === "zh" && set.zh) || set.en;
@@ -211,7 +212,7 @@ function QuizInteractive({ chapter }: { chapter: number }) {
         </p>
         <p className="mx-auto mt-6 max-w-[46ch] text-[1rem] leading-relaxed text-ink-muted">
           {t(
-            `quiz.verdict.ch${chapter >= 1 && chapter <= 4 ? chapter : 1}.${
+            `quiz.verdict.ch${chapter >= 1 && chapter <= 5 ? chapter : 1}.${
               score === QUESTIONS.length ? "all" : score >= QUESTIONS.length - 3 ? "most" : "few"
             }`,
           )}
@@ -539,6 +540,184 @@ const QUESTIONS_ZH: Q[] = [
 
 /** Chapter 2: the Dynamics Model in depth. All concept questions; classifying
     is Chapter 1's job and repeating it here would test the wrong thing. */
+const QUESTIONS_CH5: Q[] = [
+  {
+    kind: "choice",
+    stem: "A transition model reports a very low average one-step error. Why does that number not tell you what you want to know?",
+    options: [
+      "It was probably measured wrong",
+      "You will use it many steps at a time, and after the first step it is fed its own answer rather than the truth",
+      "One-step errors are always understated",
+      "Averages hide outliers",
+    ],
+    answer: 1,
+    why: "The measurement is honest. It is a measurement of a job the model will never be asked to do.",
+  },
+  {
+    kind: "choice",
+    stem: "In the figure, the corrected line and the free-running line come from the same model with the same per-step bias. Why do they end up so far apart?",
+    options: [
+      "The free-running one accumulates a larger bias",
+      "One is given the true previous state at every step, so its mistakes never feed anything",
+      "The corrected one uses a different model",
+      "Random noise differs between the runs",
+    ],
+    answer: 1,
+    why: "Correction resets the input to the truth every step, so error cannot compound. Nothing about the model changed between the two lines.",
+  },
+  {
+    kind: "choice",
+    stem: "What is teacher forcing?",
+    options: [
+      "Training on data labelled by a larger model",
+      "Showing the model the true previous value at each training step, because that is what the recording contains",
+      "Forcing the model to use a fixed learning rate",
+      "Training only on the hardest examples",
+    ],
+    answer: 1,
+    why: "It makes training stable, and it also means the model is never once asked to recover from being slightly wrong, which is the only thing it will have to do later.",
+  },
+  {
+    kind: "choice",
+    stem: "What does a fixed summary have to do that attention never has to do?",
+    options: [
+      "Run faster",
+      "Decide what is worth keeping, without knowing what will be needed later",
+      "Store the whole sequence",
+      "Handle actions",
+    ],
+    answer: 1,
+    why: "That is the whole trade. Attention never decides, which is exactly why it never compresses and why its cost grows with length.",
+  },
+  {
+    kind: "choice",
+    stem: "For a short sequence, which is cheaper per step?",
+    options: [
+      "Always the summary",
+      "Always attention",
+      "Attention, until the sequence gets long enough to cross over",
+      "They are identical",
+    ],
+    answer: 2,
+    why: "Updating a summary costs the same whatever the length, so it only wins once the sequence is long. Below the crossover, looking at everything is genuinely the cheaper option.",
+  },
+  {
+    kind: "choice",
+    stem: "Why carry a deterministic part and a stochastic part in the state at the same time?",
+    options: [
+      "To use more parameters",
+      "Deterministic alone cannot represent real uncertainty; stochastic alone struggles to remember, because noise enters at every step",
+      "To make the model differentiable",
+      "To support larger batches",
+    ],
+    answer: 1,
+    why: "Each one fails alone, and in a different direction. A ball's motion belongs in the first; whether the door opens belongs in the second.",
+  },
+  {
+    kind: "choice",
+    stem: "Replanning after every real observation helps a great deal. Why?",
+    options: [
+      "It makes the model more accurate",
+      "A fresh measurement resets the accumulated error to nothing",
+      "It reduces the number of steps computed",
+      "It removes the model's bias",
+    ],
+    answer: 1,
+    why: "It does not touch the model at all. It just stops letting the error compound for very long before reality gets a say.",
+  },
+  {
+    kind: "choice",
+    stem: "What do scheduled sampling, rollout-level training, short horizons and replanning have in common?",
+    options: [
+      "They fix the mismatch",
+      "They all make the model more accurate per step",
+      "None removes the mismatch; each limits how much damage it does",
+      "They only apply to recurrent models",
+    ],
+    answer: 2,
+    why: "The honest summary is that a learned transition model is trustworthy over some horizon, and part of the engineering is knowing how long that is.",
+  },
+];
+
+const QUESTIONS_CH5_ZH: Q[] = [
+  {
+    kind: "choice",
+    stem: "一个转移模型报告说自己的平均单步误差非常低。为什么这个数字并不能告诉你你想知道的事？",
+    options: [
+      "它多半量错了",
+      "你会一次用它很多步，而从第一步之后，喂给它的就是它自己的答案，不是真相",
+      "单步误差总是被低估",
+      "平均值掩盖了异常值",
+    ],
+    answer: 1,
+    why: "这个测量是诚实的。它测的是一份这个模型永远不会被要求做的工作。",
+  },
+  {
+    kind: "choice",
+    stem: "图里那条被纠正的线和那条自己跑的线，来自同一个模型、同一个每步偏差。为什么最后差这么远？",
+    options: [
+      "自己跑的那条积累了更大的偏差",
+      "其中一条在每一步都被给了真实的上一个状态，所以它的错误从来没机会去喂任何东西",
+      "被纠正的那条用的是另一个模型",
+      "两次运行的随机噪声不同",
+    ],
+    answer: 1,
+    why: "纠正会在每一步把输入重置回真相，于是误差没法复利。两条线之间，模型本身什么都没变。",
+  },
+  {
+    kind: "choice",
+    stem: "什么是教师强制？",
+    options: [
+      "在更大的模型标注的数据上训练",
+      "训练时每一步都把真实的上一个值展示给模型，因为记录里装的就是这个",
+      "强制模型使用固定学习率",
+      "只在最难的样本上训练",
+    ],
+    answer: 1,
+    why: "它让训练更稳，同时也意味着模型一次都没有被要求过从「有点偏」里恢复，而那恰恰是它之后唯一要做的事。",
+  },
+  {
+    kind: "choice",
+    stem: "一份固定摘要必须做、而注意力从来不必做的事是什么？",
+    options: ["跑得更快", "在不知道后面会用到什么的情况下，决定什么值得留下", "存下整个序列", "处理动作"],
+    answer: 1,
+    why: "这就是整个取舍。注意力从来不做决定，而这正是它从来不压缩、以及它的开销随长度增长的原因。",
+  },
+  {
+    kind: "choice",
+    stem: "对一个短序列来说，哪一种每步更便宜？",
+    options: ["永远是摘要", "永远是注意力", "注意力，直到序列长到越过交叉点为止", "两者一样"],
+    answer: 2,
+    why: "更新一份摘要的开销不随长度变化，所以它只有在序列够长时才占优。在交叉点以下，全都看一遍确实是更便宜的那个选项。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么要在状态里同时带一个确定的部分和一个随机的部分？",
+    options: [
+      "为了用更多参数",
+      "只有确定的部分表示不了真正的不确定性；只有随机的部分则很难记住东西，因为每一步都在注入噪声",
+      "为了让模型可导",
+      "为了支持更大的批量",
+    ],
+    answer: 1,
+    why: "单独留任何一个都会失败，而且失败的方向不同。球的运动属于前者；门会不会开属于后者。",
+  },
+  {
+    kind: "choice",
+    stem: "每来一次真实观测就重新规划，帮助非常大。为什么？",
+    options: ["它让模型更准", "一次新的测量会把累积起来的误差清零", "它减少了要算的步数", "它消除了模型的偏差"],
+    answer: 1,
+    why: "它压根没碰模型。它只是不让误差复利太久，就把话语权还给了现实。",
+  },
+  {
+    kind: "choice",
+    stem: "计划采样、整段推演训练、短时程、重新规划，这四者的共同点是什么？",
+    options: ["它们修好了这个错配", "它们都让模型每一步更准", "没有一个消除了这个错配；每一个都只是限制它能造成多大破坏", "它们只适用于循环模型"],
+    answer: 2,
+    why: "诚实的总结是：一个学出来的转移模型只在某个时程内值得信任，而工程的一部分就是知道那个时程有多长。",
+  },
+];
+
 const QUESTIONS_CH4: Q[] = [
   {
     kind: "choice",

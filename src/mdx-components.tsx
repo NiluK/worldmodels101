@@ -12,6 +12,8 @@ import { GuessCheckAdjust } from "@/components/guess-check-adjust";
 import { LatentRoom } from "@/components/latent-room";
 import { LatentInterpolate } from "@/components/latent-interpolate";
 import { Bottleneck } from "@/components/bottleneck";
+import { FreeRunning } from "@/components/free-running";
+import { MemoryTrade } from "@/components/memory-trade";
 import { AgentLoop } from "@/components/agent-loop";
 import { SourceList } from "@/components/sources";
 import { Quote, Gloss } from "@/components/quote";
@@ -45,6 +47,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     LatentRoom,
     LatentInterpolate,
     Bottleneck,
+    FreeRunning,
+    MemoryTrade,
     AgentLoop,
     SourceList,
     Quote,

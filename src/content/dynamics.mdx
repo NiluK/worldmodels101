@@ -1,0 +1,152 @@
+A model that predicts one step ahead is easy to be impressed by.
+
+Show it where things are, ask what happens next, compare its answer to what
+happened. Do that ten thousand times and read off the average error. The number
+will be small, and it will be honest, and it will not tell you what you want to
+know.
+
+Because you were never going to use it one step at a time. You were going to
+ask it for a hundred steps, and on step two it stops being given the truth and
+starts being given its own answer.
+
+<Figure
+  n="5.1"
+  caption={<>One model, one bias, two ways of running it. The grey line is corrected at every step, the way it was during training, and it tracks the truth so closely that it mostly disappears underneath it. That is the result. The vermilion line is the same model left to consume its own output, the way it will actually be used.</>}
+>
+  <FreeRunning />
+</Figure>
+
+At four per cent error per step, corrected, it is still hugging the truth after
+thirty steps. Left alone, it ends up thirty-nine times further away. Same model.
+Same mistake. The only thing that changed is what it was handed at the start of
+each step.
+
+## The mismatch
+
+This has a name, and the name is unhelpfully technical for something so
+simple. During training, a sequence model is usually shown the true previous
+value at every step, because that is what the recording contains and it makes
+the training stable. That is called **teacher forcing**.
+
+The trouble is that nobody teacher-forces you in production. At the moment of
+use the model gets its own last answer, which is slightly wrong, and it has
+never once been asked to recover from being slightly wrong.
+
+<MarginNote>
+So it is not that the model is bad at long horizons. It is that it was trained
+on a distribution of inputs it will never see again the moment you start
+rolling it out, and nothing in the training loop noticed.
+</MarginNote>
+
+Look at that figure again and notice what the grey line is really telling you.
+It is not a measure of how good the model is. It is a measure of how good the
+model is at a job it will never be asked to do.
+
+## What has to happen at each step
+
+Strip the machinery away and a transition model does one thing: take what you
+know, take what you did, and produce what you know next.
+
+The awkward part is the first of those. What you know is not just the last
+picture. It is everything relevant that has ever happened, folded into
+something small enough to carry. A ball behind a wall is still moving. A door
+you opened four rooms ago is still open.
+
+So the real question is how the past gets carried, and there are two answers.
+
+**Carry a summary.** Keep one fixed block of numbers. Every time something new
+arrives, fold it in and throw the old block away. The work per step never
+changes, however long the sequence gets. This is what recurrent networks do
+<Gloss>a network with a loop in it: each step's output is handed back as part
+of the next step's input</Gloss>, and what the state-space models that have
+come back into fashion do too.
+
+**Keep everything.** Store every step, and when a new one arrives, look back
+over all of them and decide what is relevant. Nothing gets thrown away, because
+nothing has to be summarised. This is attention <Gloss>for each new step, score every earlier step for
+relevance, then read mostly from the ones that scored highest</Gloss>, and it
+is what transformers do.
+
+<Figure
+  n="5.2"
+  caption={<>Both columns use a state of the same width, so the only thing changing is how long the sequence has got. Neither column is the winner. Notice where the second row crosses over: looking at everything is genuinely cheaper for short sequences, and genuinely not for long ones.</>}
+>
+  <MemoryTrade />
+</Figure>
+
+The trade underneath is not really about speed. A fixed summary has to decide,
+at every step, what is worth keeping, and it has to decide without knowing what
+will be needed later. Attention never has to decide, which is exactly why it
+never compresses.
+
+It is the same tension as the squeeze between a camera and a decision, one
+level up. Something has to be thrown away, and the thing throwing it away does
+not know the future.
+
+## Splitting the difference
+
+A useful trick, and one worth knowing because it shows up in the systems that
+work.
+
+Carry two things forward rather than one. One part is computed the same way
+every time, and holds whatever reliably follows from the last state. The other
+is sampled, and holds whatever could still go either way. A ball's motion goes
+in the first. Whether the door opens goes in the second.
+
+Keep only the deterministic part and the model cannot represent genuine
+uncertainty, so it confidently invents one future. Keep only the stochastic
+part and it struggles to remember anything for long, because noise gets
+injected at every step. PlaNet's argument for carrying both is that each one
+fails alone in a different direction.
+
+## Living with it
+
+Nobody has removed the mismatch. What the field has instead is four ways of
+not being destroyed by it.
+
+**Train it on its own output.** If the problem is that the model never
+practised recovering from its own mistakes, let it make some during training.
+Feed it its own predictions part of the time, and raise that fraction as it
+improves. The usual name for this is *scheduled sampling*.
+
+**Train the rollout, not the step.** Instead of scoring one-step accuracy,
+score a whole imagined stretch against a whole real one, so the thing being
+optimised is the thing you will actually use.
+
+**Do not go far.** Keep the rollouts short and start them from real states.
+Cheap, effective, and it gives up the part of the appeal that was infinite.
+
+**Look again.** Predict a few steps, act on one, take a fresh observation, and
+start over. This is most of robotics, and it works because a real measurement
+resets the accumulated error to nothing.
+
+None of these is a fix. They are all the same admission: a learned transition
+model is trustworthy over a horizon, and part of the engineering is knowing how
+long that horizon is.
+
+## Try it
+
+<Figure
+  n="5.3"
+  caption={<>Eight questions on the step and the mismatch. The first three are the ones that change how you read a paper's headline number.</>}
+>
+  <Quiz chapter={5} />
+</Figure>
+
+---
+
+So far every step has been paid for in reality. The model is trained on
+recorded experience, checked against recorded experience, and corrected by it.
+
+Thanks for reading. Chapter 6 is about what happens when you stop paying. The
+model gets good enough that an agent can do its learning inside it, and then
+you find out what the agent found in there.
+
+## Sources
+
+<Figure
+  n="5.4"
+  caption={<>Ordered for someone building on this rather than for historical completeness.</>}
+>
+  <SourceList chapter={5} />
+</Figure>
