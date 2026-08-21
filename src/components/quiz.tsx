@@ -152,7 +152,9 @@ function QuizInteractive({ chapter }: { chapter: number }) {
   const t = useT();
   const QUESTIONS =
     chapter === 3
-      ? QUESTIONS_CH3
+      ? locale === "zh"
+        ? QUESTIONS_CH3_ZH
+        : QUESTIONS_CH3
       : chapter === 2
         ? locale === "zh"
           ? QUESTIONS_CH2_ZH
@@ -360,7 +362,9 @@ function QuizPrinted({ chapter }: { chapter: number }) {
   const t = useT();
   const QUESTIONS =
     chapter === 3
-      ? QUESTIONS_CH3
+      ? locale === "zh"
+        ? QUESTIONS_CH3_ZH
+        : QUESTIONS_CH3
       : chapter === 2
         ? locale === "zh"
           ? QUESTIONS_CH2_ZH
@@ -633,6 +637,100 @@ const QUESTIONS_CH3: Q[] = [
     ],
     answer: 1,
     why: "Being unsurprised by what you happened to record is a weaker claim than it sounds, and saying what comes next is not the same as saying what would come next under a different action.",
+  },
+];
+
+const QUESTIONS_CH3_ZH: Q[] = [
+  {
+    kind: "choice",
+    stem: "一张球在飞行中的照片。有什么是你从它推不出来的？",
+    options: ["球在哪里", "球有多大", "它往哪个方向走、走得多快", "它是什么颜色"],
+    answer: 2,
+    why: "方向和速度不在任何单独一帧里。它们存在于帧与帧之间的关系中，而这正是预测器不得不自己造出来的那类东西。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么「预测下一个东西」比用标注数据训练便宜那么多？",
+    options: [
+      "模型更小",
+      "答案本来就在记录里，没有人需要写标注",
+      "它需要的计算时间更少",
+      "它收敛需要的步数更少",
+    ],
+    answer: 1,
+    why: "每一刻都是上一刻的答案。这把任何东西的任何记录都变成了训练集，也去掉了「得有人标注一百万个样本」这一步。",
+  },
+  {
+    kind: "choice",
+    stem: "Elman 的网络只被训练去预测下一个词，而它的内部状态自己分成了名词、动词、有生命与无生命。为什么？",
+    options: [
+      "这些类别本来就在训练标注里",
+      "架构里每个类别有一个单元",
+      "一个词的类别正是它的下一个词所依赖的东西，所以这些类别是「少犯错」最省事的办法",
+      "它把语料背了下来",
+    ],
+    answer: 2,
+    why: "没有任何东西提供过这些类别。预测奖励的是任何能让下一刻更不意外的东西，而语法类别恰好就是这样的东西。",
+  },
+  {
+    kind: "choice",
+    stem: "探针在一个只用合法黑白棋着法训练的网络里找到了棋盘状态。是什么让它从一件趣闻变成一个发现？",
+    options: [
+      "探针非常准",
+      "网络很大",
+      "改动那个内部棋盘，网络接下来走的棋也跟着变",
+      "棋盘可以画成一张图",
+    ],
+    answer: 2,
+    why: "光是准，有可能只是数字里的巧合。对表征做干预、再看到行为跟着改变，才说明网络确实在用它。",
+  },
+  {
+    kind: "choice",
+    stem: "在一个好的预测器下，一个你很有把握而且猜对了的符号，发送起来几乎不花钱。为什么？",
+    options: [
+      "它可以从消息里省掉",
+      "一个符号的代价由你给它的概率决定",
+      "常见符号被存在一张表里",
+      "接收方自己猜就行，不需要消息",
+    ],
+    answer: 1,
+    why: "香农把这个价格写精确了。概率高就意味着码长短，这也是为什么更好的预测器字面意义上就是更好的压缩器。",
+  },
+  {
+    kind: "choice",
+    stem: "从压缩的角度看，「把训练数据背下来」是怎么回事？",
+    options: [
+      "这是能用的最好策略",
+      "这是贵的那个选项：把一切都记下来的查找表既庞大又对新东西没用",
+      "它比任何规律压得都好",
+      "所有学习做的都是这件事",
+    ],
+    answer: 1,
+    why: "短消息来自「找出生成数据的规律，然后只留下它」。背，恰恰是压缩要惩罚的东西。",
+  },
+  {
+    kind: "choice",
+    stem: "同一个循环，不同的目标：预测下一个像素、下一个词，或者下一个紧凑状态。这个选择改变了什么？",
+    options: [
+      "什么也没变，重要的是那个循环",
+      "只改变训练要多久",
+      "改变这个系统最后擅长什么，以及它的容量花在哪里",
+      "改变这套方法算不算自监督",
+    ],
+    answer: 2,
+    why: "去预测每一个像素，容量大半会花在树叶上，因为那里才是大部分像素。挑目标是这里最要紧的设计决定。",
+  },
+  {
+    kind: "choice",
+    stem: "一个模型在预测某段记录的下一帧时误差非常低。单凭这一点，什么是它没告诉你的？",
+    options: [
+      "它见过这段记录",
+      "如果你做了别的动作它会预测什么，以及它在录下来的范围之外会怎么样",
+      "误差是不是量对了",
+      "这段记录是不是够长",
+    ],
+    answer: 1,
+    why: "对你碰巧录下来的东西不感到意外，是个比听起来弱得多的论断；而说出接下来会发生什么，也不等于说出在另一个动作下会发生什么。",
   },
 ];
 

@@ -120,7 +120,11 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
     blurb: "一个能往前推演的模型，让你在真的付出代价之前先把一个动作试一遍。麻烦在于：一个强到能找出最佳方案的搜索，也强到能找出模型出错的地方。",
     demo: "半秒钟接一记发球，两辆车和一堵墙，还有一个搜索越卖力、结果越差的规划器。",
   },
-  prediction: { title: "预测即学习", blurb: "猜下一个东西，检验，修正。", demo: "" },
+  prediction: {
+    title: "预测即学习",
+    blurb: "让一个东西去预测接下来会发生什么，它就不得不把「下一刻取决于什么」造出来。同一个循环换个角度读，原来就是压缩。",
+    demo: "先一帧，再两帧：看着仍然可能的未来随着证据到来而收窄。",
+  },
   latents: { title: "潜在空间", blurb: "你没法预测像素，也不该去预测。", demo: "" },
   dynamics: { title: "动力学", blurb: "转移模型，以及最终吞掉它们的累积误差。", demo: "" },
   dreaming: { title: "在梦里学习", blurb: "有了模拟器，你就可以在里面练习。", demo: "" },

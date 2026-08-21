@@ -67,6 +67,13 @@ const NOTES_ZH: Record<string, string> = {
   "https://www.nvidia.com/en-us/ai/cosmos/": "一个边界案例：预测式视频世界与显式仿真并置。",
   "https://arxiv.org/abs/2210.13382": "在 Othello-GPT 内部找到棋盘状态，并且能对它做因果干预。",
   "https://arxiv.org/abs/2309.00941": "把这个发现进一步锐化的后续工作。",
+  "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf": "一个符号的代价在这里变成了「你给它的概率」。预测与压缩是同一件事，一切都从这儿开始。",
+  "https://doi.org/10.1002/j.1538-7305.1951.tb01366.x": "香农让人坐下来，一个字母一个字母地猜英文。图 3.3 最下面那一行大致就是他测出来的。",
+  "https://doi.org/10.1207/s15516709cog1402_1": "训练一个小网络去预测下一个词，然后往里看：名词、动词、有生命与无生命，没有一样是被要求过的。",
+  "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf": "把「预测下一个词」放大之后，长出了没有人训练过的能力。这是「目标选择才是那个设计决定」最有力的证据。",
+  "http://prize.hutter1.net/": "一项压缩维基百科快照的现金悬赏，理由是：不建模文本的含义，你就压不动它。",
+  "https://arxiv.org/abs/1206.5538": "这篇综述梳理了「一个好的学出来的表征是拿来干什么的」，写在预测彻底赢下这场争论之前。",
+  "https://people.idsia.ch/~juergen/creativity.html": "把压缩进展本身当作一种驱动力：它不只是衡量模型的尺子，也是跑去看点什么的理由。",
   "https://doi.org/10.1080/02640414.2012.759658": "比赛分析，把「最早可能是对球做出的反应」定在击球后大约 140 到 160 毫秒。需付费。",
   "https://doi.org/10.1080/02640414.2021.1976484": "开头那个 177 毫秒的出处，是测出来的，不是估出来的。需付费。",
 };
