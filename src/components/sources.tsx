@@ -71,6 +71,7 @@ const NOTES_ZH: Record<string, string> = {
   "https://arxiv.org/abs/2411.02385": "图 8.2 的实测版本。视频模型在训练分布之内符合物理规律，出了这个范围就不会外推。",
   "https://openai.com/index/video-generation-models-as-world-simulators/": "让「涌现出物理」这个说法进入主流的那份报告。值得读一读它究竟主张了什么、又没主张什么。",
   "https://arxiv.org/abs/2501.03575": "把生成视频当作机器人和车辆的训练数据来造，而这正是这类系统毫无争议地擅长的用途。",
+  "https://arxiv.org/abs/2311.17982": "对这个测量问题一次认真的尝试，也很适合用来看清：要拆到多少个互相独立的维度之后，排序才会变得不再显然。",
   "https://arxiv.org/abs/2402.15391": "可以用动作操控的生成环境。",
   "https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/": "报告称能在多分钟的交互里回想起先前见过的细节。",
   "https://www.worldlabs.ai/blog/marble-world-model": "高斯泼溅加碰撞网格：一次显式的结构导出。",
@@ -168,10 +169,22 @@ const SOURCES_CH8 = [
   { t: "Cosmos", a: "NVIDIA", u: "https://www.nvidia.com/en-us/ai/cosmos/", n: "The product framing, and a useful boundary case: generative video beside explicit simulation, sold as one platform." },
 ];
 
+const SOURCES_CH9 = [
+  { t: "How Far is Video Generation from World Model: A Physical Law Perspective", a: "Kang et al., 2024", u: "https://arxiv.org/abs/2411.02385", n: "Physical laws matched inside the training distribution and not extrapolated outside it. The clearest measured statement of the gap this chapter is about." },
+  { t: "VBench: Comprehensive Benchmark Suite for Video Generative Models", a: "Huang et al., 2023", u: "https://arxiv.org/abs/2311.17982", n: "A serious attempt at the measurement problem, and useful for seeing how many separate dimensions it takes before the ordering stops being obvious." },
+  { t: "Benchmarking Model-Based Reinforcement Learning", a: "Wang et al., 2019", u: "https://arxiv.org/abs/1907.02057", n: "Where model-based methods win and lose, and the discovery that the planning horizon is the number that decides it." },
+  { t: "When to Trust Your Model: Model-Based Policy Optimisation", a: "Janner et al., 2019", u: "https://arxiv.org/abs/1906.08253", n: "Short rollouts as an answer to a model you cannot trust for long. The title is this chapter's question." },
+  { t: "Emergent World Representations", a: "Li et al., 2022", u: "https://arxiv.org/abs/2210.13382", n: "The strongest available evidence that something structured forms inside a predictor, and a good example of what it takes to show it rather than assert it." },
+  { t: "Genie 3", a: "Google DeepMind, 2025", u: "https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/", n: "Reported coherence over minutes, from the lab that built it. Included as an example of exactly the kind of claim this chapter is asking you to read carefully." },
+  { t: "A Path Towards Autonomous Machine Intelligence", a: "LeCun, 2022", u: "https://openreview.net/forum?id=BZ5a1r-kVsf", n: "The most complete statement of what a world model would have to do to be worth the name, which doubles as a list of what is still missing." },
+];
+
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
   const locale = useLocale();
   const rows =
-    chapter === 8
+    chapter === 9
+      ? SOURCES_CH9
+      : chapter === 8
       ? SOURCES_CH8
       : chapter === 7
       ? SOURCES_CH7

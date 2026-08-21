@@ -166,6 +166,7 @@ function questionsFor(chapter: number, locale: string): Q[] {
     6: { en: QUESTIONS_CH6, zh: QUESTIONS_CH6_ZH },
     7: { en: QUESTIONS_CH7, zh: QUESTIONS_CH7_ZH },
     8: { en: QUESTIONS_CH8, zh: QUESTIONS_CH8_ZH },
+    9: { en: QUESTIONS_CH9, zh: QUESTIONS_CH9_ZH },
   };
   const set = sets[chapter] ?? sets[1];
   return (locale === "zh" && set.zh) || set.en;
@@ -215,7 +216,7 @@ function QuizInteractive({ chapter }: { chapter: number }) {
         </p>
         <p className="mx-auto mt-6 max-w-[46ch] text-[1rem] leading-relaxed text-ink-muted">
           {t(
-            `quiz.verdict.ch${chapter >= 1 && chapter <= 8 ? chapter : 1}.${
+            `quiz.verdict.ch${chapter >= 1 && chapter <= 9 ? chapter : 1}.${
               score === QUESTIONS.length ? "all" : score >= QUESTIONS.length - 3 ? "most" : "few"
             }`,
           )}
@@ -543,6 +544,164 @@ const QUESTIONS_ZH: Q[] = [
 
 /** Chapter 2: the Dynamics Model in depth. All concept questions; classifying
     is Chapter 1's job and repeating it here would test the wrong thing. */
+const QUESTIONS_CH9: Q[] = [
+  {
+    kind: "choice",
+    stem: "Why is an average error over a long rollout close to useless as a report?",
+    options: [
+      "Averages are always misleading",
+      "The properties of a scene break in an order, and the ones that survive longest are the ones a per-frame score rewards",
+      "The error is measured in the wrong units",
+      "Rollouts are too short to average over",
+    ],
+    answer: 1,
+    why: "Colour and texture hold up almost indefinitely. Object identity goes first. So the average stays low long after the rollout has stopped being usable.",
+  },
+  {
+    kind: "choice",
+    stem: "A rollout still looks completely fine in any single frame. What does that tell you?",
+    options: [
+      "It is still usable",
+      "Very little. Most of the pixels are surfaces and light, and nothing in a per-frame loss is watching whether objects stayed themselves",
+      "The model has learned physics",
+      "The horizon has not been reached",
+    ],
+    answer: 1,
+    why: "This is the specific way the subject is easy to fool yourself about, and it is why demos are weaker evidence than they feel.",
+  },
+  {
+    kind: "choice",
+    stem: "Why is object permanence hard for these systems in particular?",
+    options: [
+      "The models are too small",
+      "Nothing is storing an object; consistency is a property of a good predictor, so it degrades gradually and without warning",
+      "Occlusion is computationally expensive",
+      "Training data lacks occluded objects",
+    ],
+    answer: 1,
+    why: "There is no error message when the chair becomes a different chair. That is what it means for consistency to be learned rather than enforced.",
+  },
+  {
+    kind: "choice",
+    stem: "You ask a model what would have happened if you had acted differently. What have you got?",
+    options: [
+      "A fact about the world",
+      "An answer that is true inside the model, with nothing in it indicating whether the model had data there",
+      "A proof",
+      "Nothing, models cannot answer that",
+    ],
+    answer: 1,
+    why: "Where the model has data the two are close. Where it does not, they are not, and the model answers with equal confidence either way.",
+  },
+  {
+    kind: "choice",
+    stem: "Short rollouts, replanning and starting from real states all work. What do they have in common?",
+    options: [
+      "They make the model more accurate",
+      "They are all ways of not needing the model to be right for very long",
+      "They only apply to robotics",
+      "They remove the need for a policy",
+    ],
+    answer: 1,
+    why: "Read uncharitably, the whole toolkit is an admission. The horizon over which a model holds up is the number that decides what you can build.",
+  },
+  {
+    kind: "choice",
+    stem: "Why does downstream task success not settle which model is better?",
+    options: [
+      "Tasks are too easy",
+      "It scores the model and the policy together, so a good policy hides a bad model",
+      "It cannot be measured reliably",
+      "It only works in simulation",
+    ],
+    answer: 1,
+    why: "It looks like the honest answer and it conflates the two things you were trying to tell apart.",
+  },
+  {
+    kind: "choice",
+    stem: "Someone says their system is the best available. What is the first thing to ask?",
+    options: [
+      "How large is it",
+      "Which measure, and what does that measure ignore",
+      "What hardware it runs on",
+      "How long it trained for",
+    ],
+    answer: 1,
+    why: "There is no overall score. Frame quality, consistency over a long rollout, whether it obeys the action, and cost genuinely disagree, and anyone implying an ordering has picked one.",
+  },
+  {
+    kind: "choice",
+    stem: "Across the whole course, which single question does the most work on an unfamiliar system?",
+    options: [
+      "How many parameters does it have",
+      "What does it output, and can you roll it forward under actions nobody took",
+      "Is it open source",
+      "Does it use a transformer",
+    ],
+    answer: 1,
+    why: "The first half decides what it can be used for. The second decides whether it can support a decision. Almost everything else follows, and neither depends on knowing the architecture.",
+  },
+];
+
+const QUESTIONS_CH9_ZH: Q[] = [
+  {
+    kind: "choice",
+    stem: "为什么「整段长推演的平均误差」作为一份报告几乎没用？",
+    options: ["平均值总是误导人的", "场景的各种性质是按顺序坏掉的，而活得最久的恰好是逐帧打分会奖励的那些", "误差的单位不对", "推演太短，平均不出来"],
+    answer: 1,
+    why: "颜色和纹理几乎能一直稳住，物体身份最先没。所以在推演早已不能用之后很久，平均值仍然很低。",
+  },
+  {
+    kind: "choice",
+    stem: "一段推演单看任何一帧都还完全没问题。这说明了什么？",
+    options: ["它还能用", "说明不了多少。大部分像素是表面和光，而逐帧损失里没有任何东西在盯着物体有没有还是它自己", "模型学会了物理", "还没到时程上限"],
+    answer: 1,
+    why: "这正是这个主题里最容易骗到自己的方式，也是为什么演示作为证据比它给人的感觉要弱。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么物体恒存对这类系统格外难？",
+    options: ["模型太小了", "没有任何东西在存着一个物体；一致性是好预测器的性质，所以它会逐渐地、不打招呼地退化", "遮挡的计算开销很大", "训练数据里缺少被遮挡的物体"],
+    answer: 1,
+    why: "椅子变成另一把椅子的时候不会有报错。这就是「一致性是学出来的、而不是被强制的」的含义。",
+  },
+  {
+    kind: "choice",
+    stem: "你问模型「如果当时做了别的会怎样」。你拿到的是什么？",
+    options: ["一个关于世界的事实", "一个在模型内部为真的答案，而且里面没有任何东西提示模型在那里有没有数据", "一个证明", "什么也没有，模型答不了这种问题"],
+    answer: 1,
+    why: "在模型有数据的地方两者接近，没数据的地方就不接近，而模型两种情况下都同样自信地作答。",
+  },
+  {
+    kind: "choice",
+    stem: "短推演、重新规划、从真实状态出发，这些都管用。它们的共同点是什么？",
+    options: ["它们让模型更准", "它们都是「让你不需要模型正确太久」的办法", "它们只适用于机器人", "它们去掉了对策略的需要"],
+    answer: 1,
+    why: "往刻薄了读，这整套工具就是一句承认。模型能撑住的那段时程，正是决定你能造出什么的那个数字。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么下游任务成功率定不了「哪个模型更好」？",
+    options: ["任务太简单", "它把模型和策略一起打分，于是一个好策略能盖住一个差模型", "它没法可靠地测量", "它只在模拟里有效"],
+    answer: 1,
+    why: "它看起来像是那个诚实的答案，而它恰好把你本想分开的那两样东西混在了一起。",
+  },
+  {
+    kind: "choice",
+    stem: "有人说他们的系统是目前最好的。第一句该问什么？",
+    options: ["它有多大", "用的是哪个尺度，而那个尺度忽略了什么", "它跑在什么硬件上", "它训练了多久"],
+    answer: 1,
+    why: "没有综合分数。画面质量、长推演的一致性、听不听动作、开销，这几项确实互相不一致；任何暗示存在排序的人，都是挑了一个。",
+  },
+  {
+    kind: "choice",
+    stem: "面对一个不熟悉的系统，整门课里哪一个问题最顶用？",
+    options: ["它有多少参数", "它输出什么，以及你能不能在没人执行过的动作下把它往前推", "它开不开源", "它用不用 transformer"],
+    answer: 1,
+    why: "前半句决定了它能被用来干什么，后半句决定了它撑不撑得起一个决定。几乎其他一切都由此而来，而这两者都不需要你知道架构。",
+  },
+];
+
 const QUESTIONS_CH8: Q[] = [
   {
     kind: "choice",

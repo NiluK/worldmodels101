@@ -20,6 +20,8 @@ import { PixelBlur } from "@/components/pixel-blur";
 import { Collapse } from "@/components/collapse";
 import { EmergentPhysics } from "@/components/emergent-physics";
 import { ActionConditioned } from "@/components/action-conditioned";
+import { WhatBreaks } from "@/components/what-breaks";
+import { NoRanking } from "@/components/no-ranking";
 import { AgentLoop } from "@/components/agent-loop";
 import { SourceList } from "@/components/sources";
 import { Quote, Gloss } from "@/components/quote";
@@ -61,6 +63,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Collapse,
     EmergentPhysics,
     ActionConditioned,
+    WhatBreaks,
+    NoRanking,
     AgentLoop,
     SourceList,
     Quote,

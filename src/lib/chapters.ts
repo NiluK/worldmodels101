@@ -96,10 +96,10 @@ export const CHAPTERS: Chapter[] = [
     slug: "whats-broken",
     title: "What's Broken",
     blurb:
-      "Long-horizon drift, object permanence, counterfactuals, and the fact that nobody agrees how to evaluate any of this. The honest state of the field.",
-    demo: "A drift meter: watch a state-of-the-art rollout lose the plot over 1,000 steps.",
-    minutes: 13,
-    status: "planned",
+      "Scenes do not fail all at once, and the properties that survive longest are the ones a per-frame score rewards. What breaks, in what order, and why nobody can tell you which of these systems is best.",
+    demo: "Drag out to a thousand steps and read which properties have already gone.",
+    minutes: 10,
+    status: "ready",
   },
 ];
 
@@ -150,7 +150,11 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
     blurb: "给一个视频模型加上一个输入，它就不再是视频了。把这件事放大买到了什么，以及为什么「在训练过的范围里符合物理」和「掌握了那条规律」不是一回事。",
     demo: "一个起点，三个未来，取决于你按住哪个键。",
   },
-  "whats-broken": { title: "哪些地方还不行", blurb: "长时程漂移、物体恒存性、反事实，以及评测问题。", demo: "" },
+  "whats-broken": {
+    title: "哪些地方还不行",
+    blurb: "场景不是一下子全垮的，而活得最久的那些性质，恰好是逐帧打分会奖励的那些。什么会坏、按什么顺序坏，以及为什么没有人能告诉你这些系统里哪一个最好。",
+    demo: "把滑块拖到一千步，看看哪些性质已经没了。",
+  },
 };
 
 export function chapterText(locale: string, slug: string) {
