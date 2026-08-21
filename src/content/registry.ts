@@ -13,6 +13,7 @@ const ZH: Record<string, () => Promise<{ default: ComponentType }>> = {
   "what-people-mean": () => import("./zh/what-people-mean.mdx"),
   "the-idea": () => import("./zh/the-idea.mdx"),
   prediction: () => import("./zh/prediction.mdx"),
+  latents: () => import("./zh/latents.mdx"),
 };
 
 export const CONTENT = EN;

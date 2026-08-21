@@ -125,7 +125,11 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
     blurb: "让一个东西去预测接下来会发生什么，它就不得不把「下一刻取决于什么」造出来。同一个循环换个角度读，原来就是压缩。",
     demo: "先一帧，再两帧：看着仍然可能的未来随着证据到来而收窄。",
   },
-  latents: { title: "潜在空间", blurb: "你没法预测像素，也不该去预测。", demo: "" },
+  latents: {
+    title: "潜在空间",
+    blurb: "摄像机测量几万个数字，而这个决定只需要两三个。中间那道收窄口发生了什么，以及为什么那个窄点给它后面的一切定了上限。",
+    demo: "在一个两个数字的空间里拖一个点，看着它解码出来的房间。",
+  },
   dynamics: { title: "动力学", blurb: "转移模型，以及最终吞掉它们的累积误差。", demo: "" },
   dreaming: { title: "在梦里学习", blurb: "有了模拟器，你就可以在里面练习。", demo: "" },
   jepa: { title: "反对生成的理由", blurb: "在表征空间里预测，而不是在像素空间里。", demo: "" },
