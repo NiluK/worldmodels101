@@ -10,6 +10,7 @@ const EN: Record<string, () => Promise<{ default: ComponentType }>> = {
   dynamics: () => import("./dynamics.mdx"),
   dreaming: () => import("./dreaming.mdx"),
   jepa: () => import("./jepa.mdx"),
+  "video-worlds": () => import("./video-worlds.mdx"),
 };
 
 const ZH: Record<string, () => Promise<{ default: ComponentType }>> = {
@@ -20,6 +21,7 @@ const ZH: Record<string, () => Promise<{ default: ComponentType }>> = {
   dynamics: () => import("./zh/dynamics.mdx"),
   dreaming: () => import("./zh/dreaming.mdx"),
   jepa: () => import("./zh/jepa.mdx"),
+  "video-worlds": () => import("./zh/video-worlds.mdx"),
 };
 
 export const CONTENT = EN;

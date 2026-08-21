@@ -67,6 +67,10 @@ const NOTES_ZH: Record<string, string> = {
   "https://arxiv.org/abs/2404.08471": "嵌入预测这个目标最后到底学到了什么，是测出来的，不是断言出来的。",
   "https://arxiv.org/abs/2301.08243": "预测被遮住区域的表征，而不是像素。",
   "https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/": "先做无动作预训练，再做动作条件下的控制。",
+  "https://arxiv.org/abs/2408.14837": "DOOM 被逐帧地从此前的帧和输入里生成出来，快到可以玩。最清楚地说明了这类东西是可玩的，而不只是可看的。",
+  "https://arxiv.org/abs/2411.02385": "图 8.2 的实测版本。视频模型在训练分布之内符合物理规律，出了这个范围就不会外推。",
+  "https://openai.com/index/video-generation-models-as-world-simulators/": "让「涌现出物理」这个说法进入主流的那份报告。值得读一读它究竟主张了什么、又没主张什么。",
+  "https://arxiv.org/abs/2501.03575": "把生成视频当作机器人和车辆的训练数据来造，而这正是这类系统毫无争议地擅长的用途。",
   "https://arxiv.org/abs/2402.15391": "可以用动作操控的生成环境。",
   "https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/": "报告称能在多分钟的交互里回想起先前见过的细节。",
   "https://www.worldlabs.ai/blog/marble-world-model": "高斯泼溅加碰撞网格：一次显式的结构导出。",
@@ -154,10 +158,22 @@ const SOURCES_CH7 = [
   { t: "Learning and Leveraging World Models in Visual Representation Learning", a: "Garrido et al., 2024", u: "https://arxiv.org/abs/2404.08471", n: "What the embedding-prediction objective turns out to have learned, tested rather than asserted." },
 ];
 
+const SOURCES_CH8 = [
+  { t: "Genie: Generative Interactive Environments", a: "Bruce et al., 2024", u: "https://arxiv.org/abs/2402.15391", n: "Latent actions learned from unlabelled video, which is the move that turns a video model into somewhere you can be." },
+  { t: "Genie 3", a: "Google DeepMind, 2025", u: "https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/", n: "The reported numbers this chapter quotes: 720p, 24 frames a second, minutes of coherence. A lab report rather than a result anyone outside has repeated." },
+  { t: "Diffusion Models Are Real-Time Game Engines (GameNGen)", a: "Valevski et al., 2024", u: "https://arxiv.org/abs/2408.14837", n: "DOOM generated frame by frame from previous frames and inputs, fast enough to play. The clearest demonstration that this is playable rather than merely watchable." },
+  { t: "How Far is Video Generation from World Model: A Physical Law Perspective", a: "Kang et al., 2024", u: "https://arxiv.org/abs/2411.02385", n: "The measured version of Figure 8.2. Video models match physical laws within the distribution they were trained on, and do not extrapolate outside it." },
+  { t: "Video generation models as world simulators", a: "OpenAI, 2024", u: "https://openai.com/index/video-generation-models-as-world-simulators/", n: "The report that made the emergent-physics claim a mainstream one. Worth reading for exactly what it does and does not assert." },
+  { t: "Cosmos World Foundation Model Platform for Physical AI", a: "NVIDIA, 2025", u: "https://arxiv.org/abs/2501.03575", n: "Generated video built as training data for robots and vehicles, which is the use these systems are unambiguously good for." },
+  { t: "Cosmos", a: "NVIDIA", u: "https://www.nvidia.com/en-us/ai/cosmos/", n: "The product framing, and a useful boundary case: generative video beside explicit simulation, sold as one platform." },
+];
+
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
   const locale = useLocale();
   const rows =
-    chapter === 7
+    chapter === 8
+      ? SOURCES_CH8
+      : chapter === 7
       ? SOURCES_CH7
       : chapter === 6
       ? SOURCES_CH6

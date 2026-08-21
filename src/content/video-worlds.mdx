@@ -1,0 +1,141 @@
+Take a model that predicts the next frame of video, and add one input.
+
+Alongside the frames it has already seen, tell it which key is being held. Now the
+same opening gives you one continuation if you hold left and a different one if
+you hold right. It has stopped being a video and started being somewhere you
+are.
+
+<Figure
+  n="8.1"
+  caption={<>One model, one start, three futures. The first two frames are given; the rest are made up. Turn the action input off and all three rows become identical, which is the whole difference: without it there is exactly one future on offer, and it is whichever one the model finds most likely.</>}
+>
+  <ActionConditioned />
+</Figure>
+
+That is the entire architectural move. Everything else in this chapter is what
+happens when you do it at scale.
+
+## What scaling bought
+
+More than most people expected, including most of the people building it.
+
+Genie 3 is reported to generate interactive video at 720p and 24 frames a
+second. It is reported to hold a scene together over several minutes, and to
+take instructions part-way through: change the weather, add a flock of birds.
+Walk away from something, walk back, and it is roughly as you left it.
+
+<MarginNote>
+Take those numbers as the lab's report rather than as measurements anyone
+outside it has repeated. That is not a slight; it is the normal state of this
+subject, and Chapter 9 is largely about how little of it can currently be
+checked.
+</MarginNote>
+
+Nothing in that system stores the scene. There is no geometry behind the
+picture, no list of objects, nothing you could export. The room stays put
+because the model got extremely good at continuing what it had already drawn,
+and continuing consistently is part of continuing well.
+
+Which is a stranger achievement than it sounds. A system with no memory of a
+room, reconstructing that room from its own previous output, well enough that
+you cannot catch it out in a minute of looking.
+
+## What "emergent physics" means
+
+You will see the claim made about every one of these systems. It is worth
+being precise about what it can and cannot mean.
+
+The observation behind it is real. Train on enough video and the outputs start respecting things nobody put in.
+Dropped objects accelerate downwards. Water pools rather than piling up. Things
+hidden behind other things come back when the thing in front moves. No equation was supplied. Those regularities are in the
+training footage, and predicting the footage well requires reproducing them.
+
+The claim built on top is where the trouble starts. "It learned physics"
+suggests it acquired the rule, and there is a test for that. It is not whether
+the outputs look right on the sort of thing it was trained on.
+
+<Figure
+  n="8.2"
+  caption={<>The dashed line is a model fitted to the true behaviour across one band of speeds. Inside that band it is within a few per cent, and anyone testing it there would conclude it had the rule. Drag outside the band. It does not have the rule; it has a straight line through the part of the curve it was shown.</>}
+>
+  <EmergentPhysics />
+</Figure>
+
+Everything inside the band is consistent with having learned physics. It is
+equally consistent with having learned the answers to the questions it was
+asked. The two only come apart outside, and outside is exactly where nobody
+tests, because outside is where you have no footage to compare against.
+
+So the honest version of the claim is narrower and more useful. These systems
+reproduce a great many physical regularities across the range of situations
+they were trained on. Whether that constitutes having the rule is not settled
+by any demonstration you have seen, because the demonstrations are all inside
+the band.
+
+<MarginNote>
+This is not a special failing of video models. It is the ordinary problem with
+any fitted function, and the reason it feels different here is only that the
+outputs are so persuasive. A wrong answer that looks like a photograph is more
+convincing than a wrong number.
+</MarginNote>
+
+## What they are for
+
+Given all that, it would be easy to be dismissive, and that would be a mistake.
+
+For training other systems, a generated world is very useful. It costs nothing
+to run. It resets instantly. It will produce a thousand variations of a scene
+that would take a week to stage. NVIDIA's Cosmos is
+built and marketed on exactly this: physically-aware generated video as
+training data for robots and vehicles.
+
+For being a world you can move around in, they are already good. That is worth
+something on its own, and no other approach in this course delivers it.
+
+For being the thing an agent plans inside, they are the wrong shape. A planner
+needs to try a hundred action sequences and score them, which means running the
+model a hundred times, and running these models is expensive. It also needs a compact state to reason over, and a frame is the opposite of
+compact.
+
+## Where the seams are
+
+Three, briefly, because the next chapter is the full accounting.
+
+**Consistency is learned, not enforced.** Nothing prevents the room from
+changing. It usually does not, and the fact that it usually does not is a
+statistical property of a trained system rather than a guarantee.
+
+**The interesting moments are the vague ones.** A model trained on pixels is
+pushed towards the average of the possible futures wherever the future is open.
+The future is most open exactly when something is about to happen.
+
+**Nobody agrees how to score them.** There is no accepted measurement of
+whether a generated world is behaving, which means claims about improvement are
+mostly claims about how the outputs look to the person making them.
+
+## Try it
+
+<Figure
+  n="8.3"
+  caption={<>Eight questions on the move and the claim. The middle three are the ones worth being careful about when a demo is impressive.</>}
+>
+  <Quiz chapter={8} />
+</Figure>
+
+---
+
+Which brings us to the part of the subject that is usually left out of the
+announcements.
+
+Thanks for reading. Chapter 9 is the honest accounting: what drifts, what gets
+forgotten, what cannot be asked, and why nobody can currently tell you which of
+these systems is best.
+
+## Sources
+
+<Figure
+  n="8.4"
+  caption={<>Ordered for someone building on this rather than for historical completeness.</>}
+>
+  <SourceList chapter={8} />
+</Figure>

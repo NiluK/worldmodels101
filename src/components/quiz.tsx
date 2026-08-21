@@ -165,6 +165,7 @@ function questionsFor(chapter: number, locale: string): Q[] {
     5: { en: QUESTIONS_CH5, zh: QUESTIONS_CH5_ZH },
     6: { en: QUESTIONS_CH6, zh: QUESTIONS_CH6_ZH },
     7: { en: QUESTIONS_CH7, zh: QUESTIONS_CH7_ZH },
+    8: { en: QUESTIONS_CH8, zh: QUESTIONS_CH8_ZH },
   };
   const set = sets[chapter] ?? sets[1];
   return (locale === "zh" && set.zh) || set.en;
@@ -214,7 +215,7 @@ function QuizInteractive({ chapter }: { chapter: number }) {
         </p>
         <p className="mx-auto mt-6 max-w-[46ch] text-[1rem] leading-relaxed text-ink-muted">
           {t(
-            `quiz.verdict.ch${chapter >= 1 && chapter <= 7 ? chapter : 1}.${
+            `quiz.verdict.ch${chapter >= 1 && chapter <= 8 ? chapter : 1}.${
               score === QUESTIONS.length ? "all" : score >= QUESTIONS.length - 3 ? "most" : "few"
             }`,
           )}
@@ -542,6 +543,164 @@ const QUESTIONS_ZH: Q[] = [
 
 /** Chapter 2: the Dynamics Model in depth. All concept questions; classifying
     is Chapter 1's job and repeating it here would test the wrong thing. */
+const QUESTIONS_CH8: Q[] = [
+  {
+    kind: "choice",
+    stem: "What single change turns a video model into something you can steer?",
+    options: [
+      "More parameters",
+      "Conditioning each generated frame on an action as well as on the frames before it",
+      "Higher resolution",
+      "A longer context window",
+    ],
+    answer: 1,
+    why: "Without an action input there is exactly one future on offer: whichever the model finds most likely. With it, the same start has as many continuations as there are things you could do.",
+  },
+  {
+    kind: "choice",
+    stem: "A generated room stays as you left it when you turn back. What is holding it there?",
+    options: [
+      "Stored geometry behind the picture",
+      "A list of objects in memory",
+      "Nothing. The model got good at continuing consistently, which is part of continuing well",
+      "A separate persistence module",
+    ],
+    answer: 2,
+    why: "There is no scene behind the frames. Consistency is a statistical property of a well-trained system, which is a stranger achievement than storing it would be.",
+  },
+  {
+    kind: "choice",
+    stem: "Dropped objects in generated video accelerate downwards, and nobody supplied gravity. What does that establish?",
+    options: [
+      "The model has learned the law of gravity",
+      "That the regularity is in the training footage, and reproducing it is required to predict the footage well",
+      "The model contains a physics engine",
+      "Nothing at all",
+    ],
+    answer: 1,
+    why: "The observation is real. The question is whether reproducing a regularity across the range you trained on amounts to having the rule, and the observation alone does not settle it.",
+  },
+  {
+    kind: "choice",
+    stem: "In Figure 8.2, the model is within a few per cent across the band it was trained on. Why is that not evidence it has the rule?",
+    options: [
+      "The measurement is unreliable",
+      "Matching inside the band is equally consistent with having learned the answers to the questions it was asked",
+      "A few per cent is too large an error",
+      "The band was too narrow",
+    ],
+    answer: 1,
+    why: "Having the rule and having a fit through the sampled region only come apart outside the band, and outside is where nobody tests because there is no footage to compare against.",
+  },
+  {
+    kind: "choice",
+    stem: "Why is a generated video world the wrong shape for an agent to plan inside?",
+    options: [
+      "It is not accurate enough",
+      "Planning means running the model many times over, and a frame is the opposite of a compact state",
+      "It cannot be conditioned on actions",
+      "It has no reward signal",
+    ],
+    answer: 1,
+    why: "A planner needs to try many action sequences and score them cheaply. These models are expensive to run and produce frames rather than something small to reason over.",
+  },
+  {
+    kind: "choice",
+    stem: "What are generated worlds unambiguously good for right now?",
+    options: [
+      "Replacing physics engines",
+      "Producing training data and being a place you can move around in",
+      "Long-horizon planning",
+      "Compressing video",
+    ],
+    answer: 1,
+    why: "They reset instantly, cost nothing to run, and produce endless variation. And no other approach in this course gives you an actual picture to walk into.",
+  },
+  {
+    kind: "choice",
+    stem: "Why does a wrong answer from one of these systems feel more convincing than a wrong number?",
+    options: [
+      "The errors are smaller",
+      "It arrives as something that looks like a photograph",
+      "The models are better calibrated",
+      "It usually is not wrong",
+    ],
+    answer: 1,
+    why: "The extrapolation problem here is the ordinary problem with any fitted function. What is different is how persuasive the output is when it fails.",
+  },
+  {
+    kind: "choice",
+    stem: "Claims that these systems are improving are hard to check. Why?",
+    options: [
+      "The models are proprietary",
+      "There is no accepted measurement of whether a generated world is behaving",
+      "The improvements are too small",
+      "Nobody publishes results",
+    ],
+    answer: 1,
+    why: "Without an agreed score, most claims about improvement are claims about how the outputs look to the person making them.",
+  },
+];
+
+const QUESTIONS_CH8_ZH: Q[] = [
+  {
+    kind: "choice",
+    stem: "哪一个改动能把一个视频模型变成你可以操控的东西？",
+    options: ["更多参数", "让每一帧的生成同时以一个动作、以及之前那些帧为条件", "更高的分辨率", "更长的上下文窗口"],
+    answer: 1,
+    why: "没有动作输入，就只有一个未来可选：模型认为最可能的那一个。有了它，同一个起点有多少种可能的做法，就有多少种续接。",
+  },
+  {
+    kind: "choice",
+    stem: "你转回身，生成出来的房间还是你离开时的样子。是什么把它按在那里的？",
+    options: ["画面背后存着的几何结构", "内存里的一份物体清单", "什么都没有。模型只是很擅长一致地接着画，而这是「接得好」的一部分", "一个单独的持久化模块"],
+    answer: 2,
+    why: "那些帧背后并没有一个场景。一致性是一个训练良好的系统的统计性质，而这比「把它存下来」要奇怪得多。",
+  },
+  {
+    kind: "choice",
+    stem: "生成视频里掉落的物体会向下加速，而没有人提供过重力。这确立了什么？",
+    options: ["模型学会了万有引力定律", "这个规律就在训练素材里，而要把素材预测好就必须复现它", "模型里含着一个物理引擎", "什么也没确立"],
+    answer: 1,
+    why: "这个观察是真的。问题在于：在你训练过的范围里复现一个规律，算不算掌握了那条规律；而光凭这个观察定不下来。",
+  },
+  {
+    kind: "choice",
+    stem: "图 8.2 里，模型在它训练过的那一段范围里误差只有几个百分点。为什么这不算它掌握了规律的证据？",
+    options: ["测量不可靠", "在范围里对得上，同样也与「它记住了被问过那些问题的答案」相容", "几个百分点的误差太大了", "那段范围太窄"],
+    answer: 1,
+    why: "「掌握规律」和「在采样过的区域里拟合得好」只有在范围之外才分得开，而范围之外正是没人去测的地方，因为那里没有素材可以对照。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么生成视频世界的形状不适合智能体在里面做规划？",
+    options: ["它不够准", "规划意味着把模型跑很多遍，而一帧画面是「紧凑状态」的反面", "它没法以动作为条件", "它没有奖励信号"],
+    answer: 1,
+    why: "规划器需要便宜地试很多条动作序列并打分。这些模型跑起来很贵，而且产出的是画面，不是一个小到可以推理的东西。",
+  },
+  {
+    kind: "choice",
+    stem: "目前生成出来的世界，毫无争议地擅长什么？",
+    options: ["取代物理引擎", "产出训练数据，以及当一个你可以在里面走动的地方", "长时程规划", "压缩视频"],
+    answer: 1,
+    why: "它们瞬间重置，跑起来不花钱，还能产出无穷的变体。而且这门课里没有别的路数能给你一张真正能走进去的画面。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么这类系统给出的错误答案，比一个错误的数字更让人信服？",
+    options: ["它的误差更小", "它是以一张长得像照片的东西的形式出现的", "这些模型的置信度校准得更好", "它通常并没有错"],
+    answer: 1,
+    why: "这里的外推问题就是任何拟合函数都会有的普通问题。不一样的地方在于：它失败的时候，输出有多有说服力。",
+  },
+  {
+    kind: "choice",
+    stem: "关于这些系统「在进步」的说法很难核实。为什么？",
+    options: ["模型是闭源的", "目前没有公认的方法去衡量一个生成出来的世界表现得好不好", "改进幅度太小", "没有人公布结果"],
+    answer: 1,
+    why: "没有一个大家认的分数，「进步了」这类说法大多就是「输出在说这话的人眼里看起来怎么样」。",
+  },
+];
+
 const QUESTIONS_CH7: Q[] = [
   {
     kind: "choice",

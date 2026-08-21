@@ -86,10 +86,10 @@ export const CHAPTERS: Chapter[] = [
     slug: "video-worlds",
     title: "Video as World Simulator",
     blurb:
-      "Sora, Genie, GameNGen, Cosmos. What happens when you scale generative video until it becomes controllable, and what 'emergent physics' does and does not mean.",
-    demo: "Action-conditioned rollout: hold a key, steer a generated world.",
-    minutes: 16,
-    status: "planned",
+      "Add one input to a video model and it stops being a video. What scaling that bought, and why matching physics across the range you trained on is not the same as having the rule.",
+    demo: "One start, three futures, chosen by which key you hold.",
+    minutes: 10,
+    status: "ready",
   },
   {
     n: 9,
@@ -145,7 +145,11 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
     blurb: "当未来真的还没定时，可能最好的像素预测是一张不可能发生的画面。改成预测描述的理由，以及随之而来的那张账单。",
     demo: "两个可能的未来，以及那团比它们俩得分都高的糊影。",
   },
-  "video-worlds": { title: "视频作为世界模拟器", blurb: "当生成式视频被推到可控为止。", demo: "" },
+  "video-worlds": {
+    title: "视频作为世界模拟器",
+    blurb: "给一个视频模型加上一个输入，它就不再是视频了。把这件事放大买到了什么，以及为什么「在训练过的范围里符合物理」和「掌握了那条规律」不是一回事。",
+    demo: "一个起点，三个未来，取决于你按住哪个键。",
+  },
   "whats-broken": { title: "哪些地方还不行", blurb: "长时程漂移、物体恒存性、反事实，以及评测问题。", demo: "" },
 };
 
