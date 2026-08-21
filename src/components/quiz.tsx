@@ -164,6 +164,7 @@ function questionsFor(chapter: number, locale: string): Q[] {
     4: { en: QUESTIONS_CH4, zh: QUESTIONS_CH4_ZH },
     5: { en: QUESTIONS_CH5, zh: QUESTIONS_CH5_ZH },
     6: { en: QUESTIONS_CH6, zh: QUESTIONS_CH6_ZH },
+    7: { en: QUESTIONS_CH7, zh: QUESTIONS_CH7_ZH },
   };
   const set = sets[chapter] ?? sets[1];
   return (locale === "zh" && set.zh) || set.en;
@@ -213,7 +214,7 @@ function QuizInteractive({ chapter }: { chapter: number }) {
         </p>
         <p className="mx-auto mt-6 max-w-[46ch] text-[1rem] leading-relaxed text-ink-muted">
           {t(
-            `quiz.verdict.ch${chapter >= 1 && chapter <= 6 ? chapter : 1}.${
+            `quiz.verdict.ch${chapter >= 1 && chapter <= 7 ? chapter : 1}.${
               score === QUESTIONS.length ? "all" : score >= QUESTIONS.length - 3 ? "most" : "few"
             }`,
           )}
@@ -541,6 +542,164 @@ const QUESTIONS_ZH: Q[] = [
 
 /** Chapter 2: the Dynamics Model in depth. All concept questions; classifying
     is Chapter 1's job and repeating it here would test the wrong thing. */
+const QUESTIONS_CH7: Q[] = [
+  {
+    kind: "choice",
+    stem: "A car will turn left or right with equal probability. What does a pixel loss consider the best prediction?",
+    options: [
+      "The left turn",
+      "The right turn",
+      "The average of the two, which is a picture of neither",
+      "Whichever was more common in training",
+    ],
+    answer: 2,
+    why: "Squared error over a set of outcomes is minimised by their mean. Committing to one turn is punished half the time; the smear is punished a little all the time, and that wins.",
+  },
+  {
+    kind: "choice",
+    stem: "Why does generated video tend to get vague exactly when something interesting is about to happen?",
+    options: [
+      "The models run out of capacity",
+      "Interesting moments are where the future is uncertain, and uncertainty is what produces the smear",
+      "Frame rates drop",
+      "The encoder is too small",
+    ],
+    answer: 1,
+    why: "The vagueness is not a rendering problem. It is the training objective asking for the mean of the possible futures, and that mean is least like any one of them where the outcome is most open.",
+  },
+  {
+    kind: "choice",
+    stem: "A leaf at the edge of the frame moves unpredictably. Why does a pixel-predicting model spend capacity on it?",
+    options: [
+      "Leaves are important for scene understanding",
+      "The leaf is made of pixels, and pixels are what the model is marked on",
+      "It cannot tell leaves from cars",
+      "The encoder forces it to",
+    ],
+    answer: 1,
+    why: "Nothing tells the objective which pixels matter. Hard-to-predict and irrelevant is the worst combination, and it is most of the frame.",
+  },
+  {
+    kind: "choice",
+    stem: "What does predicting an embedding rather than a picture do to the leaf problem?",
+    options: [
+      "It makes the leaf easier to predict",
+      "If a detail does not survive the encoding, nothing downstream is graded on it",
+      "It moves the problem to the decoder",
+      "Nothing, the leaf is still in the input",
+    ],
+    answer: 1,
+    why: "The description was never obliged to record which way the leaf went, so the model is not punished for failing to say.",
+  },
+  {
+    kind: "choice",
+    stem: "Predicting pixels has one large virtue that predicting embeddings gives up. What is it?",
+    options: [
+      "It is faster to compute",
+      "The target is fixed: the model cannot make the next frame easier",
+      "It needs less data",
+      "It generalises better",
+    ],
+    answer: 1,
+    why: "The moment the target is produced by a network that is also being trained, the target can move, and there is a way to make it move somewhere very convenient.",
+  },
+  {
+    kind: "choice",
+    stem: "What is collapse?",
+    options: [
+      "The loss diverging to infinity",
+      "Every input encoding to the same description, so the prediction is always right and the representation says nothing",
+      "The model forgetting earlier training",
+      "Gradients vanishing in deep layers",
+    ],
+    answer: 1,
+    why: "It is a perfect score obtained by learning nothing, and it is the cheapest solution available unless something is specifically stopping it.",
+  },
+  {
+    kind: "choice",
+    stem: "In Figure 7.2, the run with the safeguard has a worse loss. What does that tell you?",
+    options: [
+      "The safeguard is badly tuned",
+      "An embedding loss is no longer a number you can read off as quality",
+      "The model needs more training",
+      "The safeguard should be removed once training stabilises",
+    ],
+    answer: 1,
+    why: "A pixel loss of zero means the frame was predicted. An embedding loss of zero might mean everything or nothing, and the number cannot tell you which.",
+  },
+  {
+    kind: "choice",
+    stem: "Does this argument show that generating pixels is a mistake?",
+    options: [
+      "Yes, it is strictly worse",
+      "No. It is a bad way to get a compact state to act on, and the only way anyone has to get an actual picture",
+      "Yes, except for very short videos",
+      "No, because collapse makes embeddings unusable",
+    ],
+    answer: 1,
+    why: "The two goals were never the same goal, and most of the confusion here is people comparing systems built for different ones.",
+  },
+];
+
+const QUESTIONS_CH7_ZH: Q[] = [
+  {
+    kind: "choice",
+    stem: "一辆车会以相同概率左转或右转。像素损失认为最好的预测是什么？",
+    options: ["左转", "右转", "两者的平均，也就是一张哪个都不是的画面", "训练里更常见的那一个"],
+    answer: 2,
+    why: "在一组结果上的平方误差由它们的均值最小化。笃定地选一边有一半时间会被重罚；糊影是一直被罚一点点，而后者赢了。",
+  },
+  {
+    kind: "choice",
+    stem: "为什么生成的视频恰好在有意思的事情快要发生时变糊？",
+    options: ["模型的容量用完了", "有意思的时刻正是未来不确定的时刻，而不确定性就是糊影的来源", "帧率掉了", "编码器太小"],
+    answer: 1,
+    why: "这份糊不是渲染问题。是训练目标在要求各个可能未来的均值，而在结果最开放的地方，这个均值最不像其中任何一个。",
+  },
+  {
+    kind: "choice",
+    stem: "画面边缘一片叶子的动向无法预测。为什么预测像素的模型还要在它身上花容量？",
+    options: ["叶子对理解场景很重要", "叶子是由像素构成的，而像素正是模型被打分的东西", "它分不清叶子和汽车", "编码器逼它这么做"],
+    answer: 1,
+    why: "没有任何东西告诉这个目标哪些像素才要紧。「难预测又不相关」是最糟的组合，而它占了画面的大部分。",
+  },
+  {
+    kind: "choice",
+    stem: "改成预测嵌入而不是画面，对叶子问题有什么影响？",
+    options: ["它让叶子更好预测了", "如果某个细节没挺过编码，后面就没有东西会因为它被打分", "它把问题挪给了解码器", "没有影响，叶子还在输入里"],
+    answer: 1,
+    why: "那份描述从来没有义务记下叶子往哪边动，所以模型也不会因为说不出而被罚。",
+  },
+  {
+    kind: "choice",
+    stem: "预测像素有一个大优点，是预测嵌入放弃掉的。是什么？",
+    options: ["算得更快", "目标是固定的：模型没法让下一帧变简单", "需要的数据更少", "泛化更好"],
+    answer: 1,
+    why: "一旦目标是由一个同样在被训练的网络产生的，目标就会动，而且存在一条把它挪到非常方便的位置的路。",
+  },
+  {
+    kind: "choice",
+    stem: "什么是塌缩？",
+    options: ["损失发散到无穷", "所有输入都编码成同一份描述，于是预测永远正确，而表征什么也没说", "模型忘掉了早先的训练", "深层里梯度消失"],
+    answer: 1,
+    why: "那是一个「什么都没学」换来的满分，而且除非有东西专门去拦，它就是最省事的那个解。",
+  },
+  {
+    kind: "choice",
+    stem: "图 7.2 里，开了防护的那一次损失更差。这说明了什么？",
+    options: ["防护没调好", "嵌入损失已经不再是一个可以直接当成质量读出来的数字", "模型还需要更多训练", "训练稳定之后就该把防护去掉"],
+    answer: 1,
+    why: "像素损失为零意味着那一帧被预测出来了。嵌入损失为零可能意味着什么都懂，也可能什么都不懂，而这个数字说不清是哪种。",
+  },
+  {
+    kind: "choice",
+    stem: "这个论点是不是说明了「生成像素」是个错误？",
+    options: ["是，它严格更差", "不是。想拿一个可以据以行动的紧凑状态，它是个糟糕的办法；而想拿一张真正的画面，它是目前唯一的办法", "是，除了很短的视频以外", "不是，因为塌缩让嵌入没法用"],
+    answer: 1,
+    why: "这两个目标从来就不是同一个目标，而这里大部分的混乱都是有人在拿为不同目标造出来的系统互相比较。",
+  },
+];
+
 const QUESTIONS_CH6: Q[] = [
   {
     kind: "choice",

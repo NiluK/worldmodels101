@@ -59,6 +59,12 @@ const NOTES_ZH: Record<string, string> = {
   "https://arxiv.org/abs/1907.02057": "基于模型的方法到底在哪里赢、在哪里输，以及「往前看多远」这个两难在哪里被命名和度量。",
   "https://arxiv.org/abs/1906.08312": "每一种不确定性方法底下的那句警告：不确定性估计本身可能就是错的，而校正它会改变规划的结果。",
   "https://arxiv.org/abs/2005.13239": "把悲观写进目标：按模型的不确定性给预测回报打折，于是面生的捷径必须为「面生」付出代价。",
+  "https://openreview.net/forum?id=BZ5a1r-kVsf": "整个论点的出处，包括为什么对一个要去行动的系统来说，预测外观是错的活。",
+  "https://arxiv.org/abs/2006.07733": "那份缓慢更新的目标副本，以及那个让大家相信「不把东西推开也能避免塌缩」的结果。",
+  "https://arxiv.org/abs/2105.04906": "显式的做法：惩罚那些各个分量已经塌掉或互相重复的表征。图 7.2 里那道防护的正经版本。",
+  "https://arxiv.org/abs/2304.12210": "一份诚实的综述，包括这个领域有多大一部分是「防止平凡解获胜」的机器。",
+  "https://arxiv.org/abs/2111.06377": "值得记住的反例：把被遮住那部分的像素重建出来，结果照样非常好用。",
+  "https://arxiv.org/abs/2404.08471": "嵌入预测这个目标最后到底学到了什么，是测出来的，不是断言出来的。",
   "https://arxiv.org/abs/2301.08243": "预测被遮住区域的表征，而不是像素。",
   "https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/": "先做无动作预训练，再做动作条件下的控制。",
   "https://arxiv.org/abs/2402.15391": "可以用动作操控的生成环境。",
@@ -137,10 +143,23 @@ const SOURCES_CH6 = [
   { t: "Solving Rubik's Cube with a Robot Hand", a: "OpenAI et al., 2019", u: "https://arxiv.org/abs/1910.07113", n: "Randomisation pushed hard enough to carry a policy from simulation onto real hardware, and an honest account of what that cost." },
 ];
 
+const SOURCES_CH7 = [
+  { t: "A Path Towards Autonomous Machine Intelligence", a: "LeCun, 2022", u: "https://openreview.net/forum?id=BZ5a1r-kVsf", n: "The position paper the whole argument comes from, including why predicting appearances is the wrong job for a system meant to act." },
+  { t: "I-JEPA", a: "Assran et al., 2023", u: "https://arxiv.org/abs/2301.08243", n: "Hide part of an image and predict the embedding of the missing piece rather than redrawing it. The clean statement of the method." },
+  { t: "V-JEPA 2", a: "Meta AI, 2025", u: "https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/", n: "The video version, pre-trained without actions and then post-trained for control, which is where the argument meets a robot." },
+  { t: "Bootstrap Your Own Latent (BYOL)", a: "Grill et al., 2020", u: "https://arxiv.org/abs/2006.07733", n: "The slowly-updating target copy, and the result that made people believe you could avoid collapse without pushing things apart." },
+  { t: "VICReg", a: "Bardes, Ponce & LeCun, 2021", u: "https://arxiv.org/abs/2105.04906", n: "The explicit approach: penalise a representation whose components have collapsed or duplicated each other. Figure 7.2's safeguard, done properly." },
+  { t: "A Cookbook of Self-Supervised Learning", a: "Balestriero et al., 2023", u: "https://arxiv.org/abs/2304.12210", n: "The honest survey, including how much of this field is machinery for stopping the trivial solution from winning." },
+  { t: "Masked Autoencoders Are Scalable Vision Learners", a: "He et al., 2021", u: "https://arxiv.org/abs/2111.06377", n: "The counter-example worth holding on to: reconstruct the pixels of the masked part, and it works very well anyway." },
+  { t: "Learning and Leveraging World Models in Visual Representation Learning", a: "Garrido et al., 2024", u: "https://arxiv.org/abs/2404.08471", n: "What the embedding-prediction objective turns out to have learned, tested rather than asserted." },
+];
+
 export function SourceListFor({ chapter = 1 }: { chapter?: number }) {
   const locale = useLocale();
   const rows =
-    chapter === 6
+    chapter === 7
+      ? SOURCES_CH7
+      : chapter === 6
       ? SOURCES_CH6
       : chapter === 5
       ? SOURCES_CH5

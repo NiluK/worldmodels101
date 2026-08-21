@@ -16,6 +16,8 @@ import { FreeRunning } from "@/components/free-running";
 import { MemoryTrade } from "@/components/memory-trade";
 import { DreamBudget } from "@/components/dream-budget";
 import { DreamTemperature } from "@/components/dream-temperature";
+import { PixelBlur } from "@/components/pixel-blur";
+import { Collapse } from "@/components/collapse";
 import { AgentLoop } from "@/components/agent-loop";
 import { SourceList } from "@/components/sources";
 import { Quote, Gloss } from "@/components/quote";
@@ -53,6 +55,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     MemoryTrade,
     DreamBudget,
     DreamTemperature,
+    PixelBlur,
+    Collapse,
     AgentLoop,
     SourceList,
     Quote,

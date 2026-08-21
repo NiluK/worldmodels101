@@ -9,6 +9,7 @@ const EN: Record<string, () => Promise<{ default: ComponentType }>> = {
   latents: () => import("./latents.mdx"),
   dynamics: () => import("./dynamics.mdx"),
   dreaming: () => import("./dreaming.mdx"),
+  jepa: () => import("./jepa.mdx"),
 };
 
 const ZH: Record<string, () => Promise<{ default: ComponentType }>> = {
@@ -18,6 +19,7 @@ const ZH: Record<string, () => Promise<{ default: ComponentType }>> = {
   latents: () => import("./zh/latents.mdx"),
   dynamics: () => import("./zh/dynamics.mdx"),
   dreaming: () => import("./zh/dreaming.mdx"),
+  jepa: () => import("./zh/jepa.mdx"),
 };
 
 export const CONTENT = EN;

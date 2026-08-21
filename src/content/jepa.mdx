@@ -1,0 +1,155 @@
+Point a camera at a road and ask what the next second looks like.
+
+A leaf on a tree at the edge of the frame will move. Which way it moves is
+unknowable, and it is also the least interesting fact available. Nothing you
+might decide to do depends on it.
+
+But a model asked to predict the picture has to predict that leaf, because the
+leaf is made of pixels and pixels are what it is being marked on. Multiply that by every leaf, every ripple, every flicker of light on wet
+tarmac. Most of the capacity in the system has now gone to things that are hard
+to predict and do not matter.
+
+That is the smaller of the two problems.
+
+## The average of two futures is neither of them
+
+Here is the larger one.
+
+A car is coming to a junction. It will turn left or it will turn right. You
+genuinely do not know which, and no amount of looking harder at the current
+frame will tell you.
+
+Ask a model to predict the next picture and score it by how close the pixels
+are, and there is a mathematically best answer. It is not either turn. It is
+the average of them.
+
+<Figure
+  n="7.1"
+  caption={<>The middle panel is not an impression of blurriness. It is the two futures drawn at their probabilities, which is their average, which is exactly what squared error is minimised by. Slide the chance towards either end and the optimum resolves; leave it near the middle and the best available prediction is a picture of something that cannot happen.</>}
+>
+  <PixelBlur />
+</Figure>
+
+Read that middle panel again. It scores better than either of the real futures.
+A model that confidently predicted the left turn would be punished half the
+time; the ghost is punished a little all the time, and a little all the time
+wins.
+
+So the training signal is not asking for a plausible future. It is asking for
+the mean of the futures, and when the future is genuinely open, the mean is a
+smear that never occurs.
+
+<MarginNote>
+This is why generated video gets vague exactly when something interesting is
+about to happen. Uncertainty is where the smear comes from, and uncertainty is
+concentrated at the moments that matter.
+</MarginNote>
+
+## Predict the description instead
+
+The proposal is short. Stop predicting the picture.
+
+Encode what you can see into a compact description <Gloss>an *embedding*: a
+short list of numbers standing in for something bigger, arranged so that
+similar things land near each other</Gloss>. Encode the part you are predicting
+into one too. Then train the model to predict the
+second description from the first, and never decode anything back into pixels
+at all.
+
+This buys two things at once.
+
+The leaf problem goes away, because the description was never obliged to record
+which way the leaf went. If a detail does not survive the encoding, nothing
+downstream is graded on it.
+
+The averaging problem gets smaller, because you are no longer averaging
+pictures. The description of a car turning left and the description of a car turning
+right can share almost everything. What is being predicted may be a single
+point that both of them are close to, so the prediction has somewhere sensible
+to land.
+
+<MarginNote>
+This is the JEPA family, and the name says the architecture: joint embedding,
+because both sides get embedded, and predictive, because the training signal is
+one embedding predicting another.
+</MarginNote>
+
+## The bill for that
+
+Now the part that is usually skipped, and it is not a small part.
+
+Predicting pixels has one enormous virtue. The target is fixed. The next frame
+is the next frame, and the model cannot make it easier.
+
+Predict an embedding and that stops being true, because the thing you are
+predicting is produced by a network that is also being trained. There is now a
+way to get a perfect score that involves learning nothing at all: make every
+description identical. The prediction is then always exactly right, the loss
+goes to zero, and the representation says nothing about anything.
+
+<Figure
+  n="7.2"
+  caption={<>A two-by-two encoder trained on four pairs by gradient descent. Nothing here is illustrative: the numbers are whatever the arithmetic produces. Without the safeguard the loss reaches zero and the representation reaches zero with it. Turn the safeguard on and the loss never gets close to zero, which is the point. The useful run is the one that looks worse.</>}
+>
+  <Collapse />
+</Figure>
+
+Everything difficult about these methods lives in preventing that. Keep a second
+copy of the encoder that updates slowly <Gloss>usually called a *target
+encoder*: it trails the one being trained, so the thing being predicted cannot
+sprint away from the thing predicting it</Gloss>, so the target cannot run away.
+Push different inputs apart explicitly. Penalise descriptions whose components
+all say the same thing. There are several families of answer and none of them
+is elegant.
+
+Notice what has happened to the loss. It is no longer a measurement you can
+read. A pixel loss of zero means the model predicted the frame. An embedding loss of
+zero might mean it understands everything, or nothing at all, and the number
+will not tell you which. The score stopped being trustworthy at the same
+moment it stopped being about pixels.
+
+## What this does not settle
+
+It would be tidy to end with generation being a mistake. It is not.
+
+Systems that predict pixels are the ones producing worlds you can walk around
+in, and they work. Whatever is being wasted on leaves, they are delivering
+something that no amount of embedding prediction delivers, which is an actual
+picture. If you want to see the future rather than reason about it, somebody
+has to draw it.
+
+So the honest statement of the argument is narrower than the slogan. Predicting
+appearances spends most of its capacity on things no decision depends on. And
+when the future is uncertain, it is trained towards an image of something that
+will not happen. If what you want is a compact state to act on, that is a bad
+way to get one. If what you want is a picture, it is the only way anyone has.
+
+The two goals were never the same goal. Most of the confusion in this corner of
+the field is people comparing systems that were built for different ones.
+
+## Try it
+
+<Figure
+  n="7.3"
+  caption={<>Eight questions on the argument and its bill. The last two are the ones that stop this reading as a knock-down case.</>}
+>
+  <Quiz chapter={7} />
+</Figure>
+
+---
+
+Which leaves the systems that went the other way, and went hard.
+
+Thanks for reading. Chapter 8 is about what happens when you scale pixel
+prediction until the result is something you can steer with a keyboard. Also
+about what "it learned physics" does and does not mean when someone says it
+about a video model.
+
+## Sources
+
+<Figure
+  n="7.4"
+  caption={<>Ordered for someone building on this rather than for historical completeness.</>}
+>
+  <SourceList chapter={7} />
+</Figure>

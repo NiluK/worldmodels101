@@ -76,10 +76,10 @@ export const CHAPTERS: Chapter[] = [
     slug: "jepa",
     title: "The Case Against Generation",
     blurb:
-      "Predicting every pixel means spending capacity on the position of every leaf. The argument for predicting in representation space, and what JEPA actually changes.",
-    demo: "The same ambiguous future scored by pixel loss and by representation loss.",
-    minutes: 14,
-    status: "planned",
+      "When the future is genuinely open, the best possible pixel prediction is a picture of something that cannot happen. The case for predicting descriptions instead, and the bill that arrives with it.",
+    demo: "Two possible futures, and the smear that scores better than either of them.",
+    minutes: 10,
+    status: "ready",
   },
   {
     n: 8,
@@ -140,7 +140,11 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
     blurb: "如果练习发生在模型里面，一个月的机器人时间就变成一天。这笔汇率真正的代价是什么，以及为什么「智能体在利用自己的梦」的解法是故意把梦弄差。",
     demo: "把梦里的不确定性调高调低，看着两条分数在两端各自失败。",
   },
-  jepa: { title: "反对生成的理由", blurb: "在表征空间里预测，而不是在像素空间里。", demo: "" },
+  jepa: {
+    title: "反对生成的理由",
+    blurb: "当未来真的还没定时，可能最好的像素预测是一张不可能发生的画面。改成预测描述的理由，以及随之而来的那张账单。",
+    demo: "两个可能的未来，以及那团比它们俩得分都高的糊影。",
+  },
   "video-worlds": { title: "视频作为世界模拟器", blurb: "当生成式视频被推到可控为止。", demo: "" },
   "whats-broken": { title: "哪些地方还不行", blurb: "长时程漂移、物体恒存性、反事实，以及评测问题。", demo: "" },
 };
