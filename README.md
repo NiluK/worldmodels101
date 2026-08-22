@@ -111,3 +111,9 @@ as fact.
 Technical corrections, translation fixes, and broken demos are worth reporting.
 [Open an issue](https://github.com/NiluK/worldmodels101/issues). Corrections are
 credited.
+
+## License and attribution
+
+The application code and course material in this repository are licensed under
+[CC BY-SA 4.0](LICENSE). Reuse must credit Nilushanan Kulasingham and World
+Models 101, identify changes, and keep adaptations under the same license.
