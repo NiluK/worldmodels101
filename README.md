@@ -1,92 +1,113 @@
 # World Models 101
 
-A free, interactive primer on world models, at [worldmodels101.com](https://worldmodels101.com).
+A free, interactive course on how machines learn to predict, simulate, and plan.
 
-The phrase now describes at least five different classes of system, and the
-people using it rarely specify which. The site exists to sort that out first and
-teach the machinery second.
+[Read the course](https://worldmodels101.com) · [简体中文](https://worldmodels101.com/zh) · [Star the repository](https://github.com/NiluK/worldmodels101)
+
+[![The World Models 101 course homepage](public/readme-preview.png)](https://worldmodels101.com)
+
+The phrase "world model" now describes at least five different classes of
+system, and the people using it rarely specify which. World Models 101 sorts
+that out first, then teaches the machinery.
+
+Nine chapters. About two hours. No signup. Every chapter has an interactive,
+a Simplified Chinese edition, and a printable PDF.
+
+## What people mean by world model
 
 | Definition | Predicts | Examples |
 |---|---|---|
 | Renderer | Pixels | Genie 3, Sora, GameNGen |
 | Simulator | Geometry and physics | Marble, NVIDIA Cosmos* |
-| Controller | Compact state | Dreamer, PlaNet, Ha & Schmidhuber |
+| Controller | Compact state | Dreamer, PlaNet, Ha and Schmidhuber |
 | Representation | Embeddings | V-JEPA 2, I-JEPA |
-| Implicit Model | Nothing; it is found, not run | Othello-GPT |
+| Implicit model | Nothing; researchers find it rather than run it | Othello-GPT |
 
-\* Cosmos straddles Renderer and Simulator, which is why it is in the chapter at
-all.
+\* Cosmos straddles Renderer and Simulator. That ambiguity is the point. Before
+asking whether something is a world model, ask what it predicts and what you can
+do with the prediction.
 
-## Status
+## The course
 
-Chapter 1 is written and interactive. Chapter 2 exists in draft. Chapters 3
-through 9 are titles, blurbs and a named demo each. Nothing is paywalled and
-nothing will be.
+| | Chapter | The thing you can poke |
+|---:|---|---|
+| 01 | [What People Mean](https://worldmodels101.com/chapters/what-people-mean) | A map of five definitions and the question that separates them |
+| 02 | [The Idea](https://worldmodels101.com/chapters/the-idea) | A planner that gets worse as it searches harder inside a flawed model |
+| 03 | [Prediction as Learning](https://worldmodels101.com/chapters/prediction) | Possible futures collapsing as new evidence arrives |
+| 04 | [Latent Space](https://worldmodels101.com/chapters/latents) | A two-number space that decodes into a room |
+| 05 | [Dynamics](https://worldmodels101.com/chapters/dynamics) | One model run with corrections, then left to consume its own output |
+| 06 | [Learning in a Dream](https://worldmodels101.com/chapters/dreaming) | The point where cheaper imagined experience becomes worse experience |
+| 07 | [The Case Against Generation](https://worldmodels101.com/chapters/jepa) | Two possible futures and the impossible blur that scores above both |
+| 08 | [Video as World Simulator](https://worldmodels101.com/chapters/video-worlds) | One starting frame and three futures selected by an action |
+| 09 | [What's Broken](https://worldmodels101.com/chapters/whats-broken) | A thousand-step rollout showing which properties fail first |
 
-## Running it
+The chapters are ordered for learning rather than history. Each one states which
+definition of world model is in use, cites the underlying papers, and ends with
+a short quiz. You can read the whole course online or download any chapter as a
+PDF from its page.
+
+## Run it locally
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
+The production checks are:
+
+```bash
+pnpm lint
+pnpm build
+```
+
 ## Narration
 
 Chapter audio is generated at build time rather than per request, so no API key
-reaches a browser and each chapter is a static asset.
+reaches a browser and each recording is a static asset.
 
 ```bash
 pnpm narrate --voices   # list the voices on the account
-pnpm narrate            # generate anything whose script changed
-pnpm narrate --force    # regenerate everything
+pnpm narrate            # generate scripts whose content changed
+pnpm narrate --force    # regenerate every script
 ```
 
-Needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`. A content-hashed manifest
-means editing one script re-synthesises only that chapter. The on-page player is
-currently hidden behind `SHOW_NARRATION` in `src/lib/flags.ts`; the audio still
-builds and deploys.
+Narration needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`. A content-hashed
+manifest means editing one script only regenerates that chapter. The on-page
+player is currently hidden behind `SHOW_NARRATION` in `src/lib/flags.ts`.
 
-## PDF
+## Print and PDF
 
-Each chapter can be printed to a publication-quality PDF. Print styling lives in
-`globals.css` under `@media print`: interactive controls are removed rather than
-frozen mid-state, the quiz swaps to a static form with an answer key, and
-scroll-reveal opacity is forced back to 1 so nothing the reader never scrolled
-past prints blank.
+Every chapter has a print layout. Interactive controls disappear, quizzes become
+static questions with an answer key, and unrevealed sections remain visible.
 
 ```bash
-pnpm dev              # in another shell
+pnpm dev                         # in another shell
 pnpm pdf what-people-mean 1
 ```
 
-Output lands in `public/pdf/` and the chapter page links it automatically once
-the file exists.
+The command writes to `public/pdf/`. A chapter page links its PDF automatically
+when the corresponding file exists.
 
-## House rules
+## Design rules
 
-Three constraints are worth knowing before changing anything.
+**Colour carries meaning.** Vermilion marks what a model imagined. Slate marks
+what happened. Neither colour is available for decoration.
 
-**Colour carries meaning.** Vermilion is what a model imagined; slate is what
-actually happened. It holds across the logo, every figure and every demo, so
-neither is available for decoration. Terrain in the landscape demo has its own
-palette for exactly this reason.
+**Contrast is a contract.** Every text token clears WCAG AA on the background
+where it appears. Muted text must also stay visibly separate from body text, or
+the reading hierarchy collapses. The contrast notes live at the top of
+`src/app/globals.css`.
 
-**Contrast is a contract, and it is not only a ratio.** Every text token clears
-WCAG AA on every surface it actually appears on, and the rules are documented at
-the top of `src/app/globals.css`. Muted text must also stay perceptually
-separate from body ink, or the hierarchy collapses and a gloss reads as body
-copy. Raising a token's contrast past that gap makes the page technically more
-compliant and visibly worse. Tinted backgrounds break tokens that pass fine on
-paper, which is why `--imagine-on-soft` exists.
+**State never depends on dimmed text.** Lowering text opacity can break contrast.
+Active states add emphasis instead.
 
-**Never dim text to signal state.** Fading below full opacity drops text under
-AA even at 0.7. Signal the active thing by adding emphasis instead.
+## Sources and corrections
 
-## Sources
+Videos come from the lab that built the system or a researcher who authored the
+work. Every YouTube ID is checked against the oEmbed endpoint before it ships.
+Claims that cannot be independently verified are attributed rather than stated
+as fact.
 
-Every video is either from the lab that built the system or from the researcher
-who authored the work, and every id is checked against YouTube's oEmbed endpoint
-for channel and title before it ships. Claims that cannot be independently
-verified are attributed as reported rather than stated as fact.
-
-Corrections are welcome and will be credited.
+Technical corrections, translation fixes, and broken demos are worth reporting.
+[Open an issue](https://github.com/NiluK/worldmodels101/issues). Corrections are
+credited.
