@@ -23,6 +23,11 @@ import { useCompact } from "./use-compact";
  * has a world coordinate, survives being looked away from, and the map panel
  * shows exactly what is being stored. Same renderer; the only thing that
  * changed is whether anything persists behind the picture.
+ *
+ * `mode="hero"` is the same component with the test stripped off: the scene,
+ * drag and keys, the pads and the heading and stride readouts. No switch, no
+ * scripted turn, no store panel, no verdict; nothing persists, so it is the
+ * Renderer and only the Renderer. `mode="test"` (the default) is the full figure.
  */
 
 const FOV = 1.2217;            // 70 degrees across the frame
@@ -108,6 +113,8 @@ const TEXT = {
     mapAria: (n: number) => `Top-down map: your position and heading, and ${n} stored landmark positions.`,
     aria: (hdg: number, lm: string, on: boolean) =>
       `A generated first-person landscape seen from heading ${hdg} degrees. Landmark ${lm}. Hold the world is ${on ? "on" : "off"}.`,
+    heroAria: (hdg: number) =>
+      `A generated first-person landscape seen from heading ${hdg} degrees. Nothing is stored behind the picture.`,
   },
   zh: {
     hint: "拖动画面环顾四周，或点击画面后用方向键。",
@@ -137,6 +144,8 @@ const TEXT = {
     mapAria: (n: number) => `俯视地图：你的位置和朝向，以及 ${n} 个存下来的标记位置。`,
     aria: (hdg: number, lm: string, on: boolean) =>
       `一片生成出来的第一人称风景，朝向 ${hdg} 度。标记${lm}。「保持世界不变」${on ? "已开启" : "已关闭"}。`,
+    heroAria: (hdg: number) =>
+      `一片生成出来的第一人称风景，朝向 ${hdg} 度。画面背后什么都没有存着。`,
   },
 };
 
@@ -238,7 +247,8 @@ type Snap = {
   stored: number;         // how many landmark coordinates exist (for the map label)
 };
 
-export function GeneratedLandscape() {
+export function GeneratedLandscape({ mode = "test" }: { mode?: "hero" | "test" }) {
+  const hero = mode === "hero";
   const locale = useLocale();
   const T = TEXT[locale] ?? TEXT.en;
   const { ref: rootRef, compact } = useCompact(640);
@@ -283,11 +293,11 @@ export function GeneratedLandscape() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const map = mapRef.current;
-    if (!canvas || !map) return;
+    const map = mapRef.current;   // absent in hero mode; the store panel is not mounted
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    const mctx = map.getContext("2d");
-    if (!ctx || !mctx) return;
+    const mctx = map ? map.getContext("2d") : null;
+    if (!ctx) return;
 
     const reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
     reducedRef.current = reducedMq.matches;
@@ -385,11 +395,12 @@ export function GeneratedLandscape() {
       canvas!.width = Math.round(W * dpr);
       canvas!.height = Math.round(H * dpr);
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const mr = map!.getBoundingClientRect();
+      if (!map || !mctx) return;
+      const mr = map.getBoundingClientRect();
       MW = mr.width; MH = mr.height;
-      map!.width = Math.round(MW * dpr);
-      map!.height = Math.round(MH * dpr);
-      mctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      map.width = Math.round(MW * dpr);
+      map.height = Math.round(MH * dpr);
+      mctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     function drawScene() {
@@ -524,7 +535,8 @@ export function GeneratedLandscape() {
     }
 
     function drawMap() {
-      const g = mctx!;
+      if (!mctx) return;
+      const g = mctx;
       g.clearRect(0, 0, MW, MH);
       if (!persistRef.current) return;
       const S = 5; // px per stride
@@ -726,7 +738,7 @@ export function GeneratedLandscape() {
 
     const ro = new ResizeObserver(() => { resize(); draw(); });
     ro.observe(canvas);
-    ro.observe(map);
+    if (map) ro.observe(map);
     resize();
     const themeObs = new MutationObserver(() => { C = readPalette(); draw(); });
     themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
@@ -801,7 +813,7 @@ export function GeneratedLandscape() {
       ? T.ahead(snap.lm.dist)
       : T.bearing(Math.abs(snap.lm.deg), snap.lm.deg > 0 ? "right" : "left", snap.lm.dist)
     : T.notInView;
-  const aria = T.aria(snap.hdg, lmText, persist);
+  const aria = hero ? T.heroAria(snap.hdg) : T.aria(snap.hdg, lmText, persist);
 
   const verdictText =
     verdict?.kind === "moved" ? T.moved(verdict.deg, verdict.side)
@@ -809,9 +821,10 @@ export function GeneratedLandscape() {
     : verdict?.kind === "gone" ? T.gone
     : verdict?.kind === "stayed" ? T.stayed
     : null;
-  const status = phase === "away" ? T.away : phase === "back" ? T.back : verdictText ?? (focused ? T.keys : T.hint);
+  const status = hero ? T.hint
+    : phase === "away" ? T.away : phase === "back" ? T.back : verdictText ?? (focused ? T.keys : T.hint);
 
-  const panel = (
+  const panel = hero ? null : (
     <div className={compact ? "flex flex-col gap-2 border-t border-rule px-5 py-4" : "flex flex-col gap-2 border-l border-rule p-3"}>
       <p className="label">{T.stored}</p>
       <div
@@ -831,7 +844,7 @@ export function GeneratedLandscape() {
 
   return (
     <div ref={rootRef}>
-      <div className={compact ? "" : "grid grid-cols-[1fr_11.5rem]"}>
+      <div className={hero || compact ? "" : "grid grid-cols-[1fr_11.5rem]"}>
         <canvas
           ref={canvasRef}
           tabIndex={0}
@@ -859,42 +872,46 @@ export function GeneratedLandscape() {
           <Pad k="back" glyph="↓" label={T.backStep} press={press} />
           <Pad k="right" glyph="→" label={T.right} press={press} />
         </div>
-        <button
-          type="button"
-          onClick={() => api.current?.runTest()}
-          disabled={phase !== "idle"}
-          className="label h-10 border border-rule-strong bg-paper px-4 !text-ink transition-colors hover:border-ink disabled:cursor-default disabled:opacity-60"
-        >
-          {T.test}
-        </button>
-        <label className="ml-auto flex cursor-pointer items-center gap-3">
-          <span className="label">{T.hold}</span>
+        {!hero && (
           <button
             type="button"
-            role="switch"
-            aria-checked={persist}
-            onClick={toggleHold}
-            className={`relative h-6 w-11 border transition-colors ${
-              persist ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
-            }`}
+            onClick={() => api.current?.runTest()}
+            disabled={phase !== "idle"}
+            className="label h-10 border border-rule-strong bg-paper px-4 !text-ink transition-colors hover:border-ink disabled:cursor-default disabled:opacity-60"
           >
-            <span
-              className={`absolute top-[3px] h-4 w-4 transition-all ${
-                persist ? "left-[25px] bg-paper" : "left-[3px] bg-rule-strong"
-              }`}
-            />
+            {T.test}
           </button>
-        </label>
+        )}
+        {!hero && (
+          <label className="ml-auto flex cursor-pointer items-center gap-3">
+            <span className="label">{T.hold}</span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={persist}
+              onClick={toggleHold}
+              className={`relative h-6 w-11 border transition-colors ${
+                persist ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
+              }`}
+            >
+              <span
+                className={`absolute top-[3px] h-4 w-4 transition-all ${
+                  persist ? "left-[25px] bg-paper" : "left-[3px] bg-rule-strong"
+                }`}
+              />
+            </button>
+          </label>
+        )}
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">
           {status}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-3">
+      <div className={`grid grid-cols-1 gap-px border-t border-rule bg-rule ${hero ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
         {[
           [T.heading, `${snap.hdg}°`],
           [T.fromStart, T.strides(snap.from)],
-          [T.landmark, lmText],
+          ...(hero ? [] : [[T.landmark, lmText]]),
         ].map(([k, v]) => (
           <div key={k} className="bg-paper px-5 py-3 md:px-8">
             <p className="label">{k}</p>

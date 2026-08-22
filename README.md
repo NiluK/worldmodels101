@@ -31,15 +31,15 @@ do with the prediction.
 
 | | Chapter | The thing you can poke |
 |---:|---|---|
-| 01 | [What People Mean](https://worldmodels101.com/chapters/what-people-mean) | A map of five definitions and the question that separates them |
-| 02 | [The Idea](https://worldmodels101.com/chapters/the-idea) | A planner that gets worse as it searches harder inside a flawed model |
-| 03 | [Prediction as Learning](https://worldmodels101.com/chapters/prediction) | Possible futures collapsing as new evidence arrives |
-| 04 | [Latent Space](https://worldmodels101.com/chapters/latents) | A two-number space that decodes into a room |
-| 05 | [Dynamics](https://worldmodels101.com/chapters/dynamics) | One model run with corrections, then left to consume its own output |
-| 06 | [Learning in a Dream](https://worldmodels101.com/chapters/dreaming) | The point where cheaper imagined experience becomes worse experience |
-| 07 | [The Case Against Generation](https://worldmodels101.com/chapters/jepa) | Two possible futures and the impossible blur that scores above both |
-| 08 | [Video as World Simulator](https://worldmodels101.com/chapters/video-worlds) | One starting frame and three futures selected by an action |
-| 09 | [What's Broken](https://worldmodels101.com/chapters/whats-broken) | A thousand-step rollout showing which properties fail first |
+| 01 | [What Is a World Model?](https://worldmodels101.com/chapters/what-people-mean) | A map of five definitions and the question that separates them |
+| 02 | [How Do World Models Work?](https://worldmodels101.com/chapters/the-idea) | A planner that gets worse as it searches harder inside a flawed model |
+| 03 | [Why Is Prediction the Same as Learning?](https://worldmodels101.com/chapters/prediction) | Possible futures collapsing as new evidence arrives |
+| 04 | [What Is Latent Space?](https://worldmodels101.com/chapters/latents) | A two-number space that decodes into a room |
+| 05 | [What Is a Dynamics Model?](https://worldmodels101.com/chapters/dynamics) | One model run with corrections, then left to consume its own output |
+| 06 | [Can an AI Learn Inside Its Own World Model?](https://worldmodels101.com/chapters/dreaming) | The point where cheaper imagined experience becomes worse experience |
+| 07 | [What Is JEPA, and Why Not Predict Pixels?](https://worldmodels101.com/chapters/jepa) | Two possible futures and the impossible blur that scores above both |
+| 08 | [Are Video Models World Simulators?](https://worldmodels101.com/chapters/video-worlds) | One starting frame and three futures selected by an action |
+| 09 | [What Is Still Broken in World Models?](https://worldmodels101.com/chapters/whats-broken) | A thousand-step rollout showing which properties fail first |
 
 The chapters are ordered for learning rather than history. Each one states which
 definition of world model is in use, cites the underlying papers, and ends with

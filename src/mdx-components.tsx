@@ -47,6 +47,14 @@ import { TwoNetworks } from "@/components/two-networks";
 import { ExperienceBill } from "@/components/experience-bill";
 import { ThreePieces } from "@/components/three-pieces";
 import { WordTravels } from "@/components/word-travels";
+import { TwoStories } from "@/components/two-stories";
+import { ThreePapers1990 } from "@/components/three-papers-1990";
+import { PlanOrLearn } from "@/components/plan-or-learn";
+import { ThreeNumbers } from "@/components/three-numbers";
+import { PredictTheSummary } from "@/components/predict-the-summary";
+import { ProbeBoard } from "@/components/probe-board";
+import { StateObservation } from "@/components/state-observation";
+import { BallBehindWall } from "@/components/ball-behind-wall";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -87,6 +95,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ExperienceBill,
     ThreePieces,
     WordTravels,
+    TwoStories,
+    ThreePapers1990,
+    PlanOrLearn,
+    ThreeNumbers,
+    PredictTheSummary,
+    ProbeBoard,
+    StateObservation,
+    BallBehindWall,
     HorizonSlider,
     RolloutEquation,
     Quiz,
