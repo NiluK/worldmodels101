@@ -122,7 +122,7 @@ const TEXT: Record<Locale, Text> = {
     },
     when: { schmidhuber: "1990", sutton: "1991", thrun: "1990" },
     title: {
-      schmidhuber: "Recurrent world models for planning and curiosity",
+      schmidhuber: "Making the World Differentiable (technical report FKI-126-90)",
       sutton: "Dyna, an Integrated Architecture for Learning, Planning and Reacting",
       thrun: "Planning with an Adaptive World Model",
     },
@@ -154,7 +154,7 @@ const TEXT: Record<Locale, Text> = {
     },
     when: { schmidhuber: "1990", sutton: "1991", thrun: "1990" },
     title: {
-      schmidhuber: "Recurrent world models for planning and curiosity",
+      schmidhuber: "Making the World Differentiable (technical report FKI-126-90)",
       sutton: "Dyna, an Integrated Architecture for Learning, Planning and Reacting",
       thrun: "Planning with an Adaptive World Model",
     },

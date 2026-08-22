@@ -18,7 +18,7 @@ export const CHAPTERS: Chapter[] = [
     blurb:
       "The phrase has covered at least five different machines since 2018, and the people using it rarely say which. A field guide to the five, where each came from, and the one test that separates them.",
     demo: "The map: five definitions of the term, and the question that tells them apart.",
-    minutes: 24,
+    minutes: 23,
     status: "ready",
   },
   {
@@ -58,7 +58,7 @@ export const CHAPTERS: Chapter[] = [
     blurb:
       "In training, the model is handed the truth at every step. The moment you deploy it, it gets its own last answer instead. What carries the past forward, and why the headline accuracy number measures a job the model will never be asked to do.",
     demo: "One model, two ways of running it: corrected every step, or left to eat its own output.",
-    minutes: 16,
+    minutes: 17,
     status: "ready",
   },
   {

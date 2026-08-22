@@ -160,6 +160,36 @@ filter from the 1960s (the maths inside every GPS receiver) is this loop. A
 measurement corrects the part of the state you can see. Error in the part you
 cannot see, and the model's bias, do not reset to zero.
 
+The blend inside that filter is the cleanest picture of predict-then-correct
+there is, so it is worth a short detour. Picture a radar tracking a plane. At
+each moment you have two stories about where the plane is. One comes from
+physics: take the last position and the last speed, and predict where the plane
+should be now. The other comes from the radar, which hands you a blip.
+
+Both stories are uncertain. Each is really a bell curve, a Gaussian, with the
+most likely spot in the middle and the less likely ones fading out either side.
+Multiply the two curves together and you get a third bell curve, which sits
+between the two and is narrower than either. That is the new belief.
+
+<Figure
+  n="5.3"
+  caption={<>Here are the two stories about where the plane is, drawn as bell curves on one axis. Slide how sure physics is and how noisy the radar is, and watch the new belief lean toward the sharper story while staying narrower than either. The gain is the number that says how far it leaned. Now press Correct to make the new belief the next physics prediction, and watch it widen again as the plane moves on.</>}
+>
+  <TwoStories />
+</Figure>
+
+How far the new belief leans from physics toward the radar is set by one number
+between zero and one, which the field calls the Kalman gain. As you can see
+from the figure, a noisy radar pulls the gain toward zero, so the filter sticks
+with physics. A sharp radar pulls it toward one, so the filter trusts the
+reading.
+
+Then it repeats: predict, correct, predict, correct. Every new blip, however
+wrong on its own, tightens what the filter knows. The estimate hugs the truth
+even though every reading it ever got was off, and it does that one tick at a
+time without ever waiting for the future. That is the look-again truce in its
+original form, and it only works because fresh readings keep arriving.
+
 None of these is a fix. A paper that sells one as a fix is overclaiming. Each
 admits that a learned transition model can be trusted over a limited horizon.
 Part of the engineering is measuring how long that horizon is.
@@ -175,7 +205,7 @@ Training on perturbed or self-generated states does ask it. The answer is a
 separate skill, and that is the claim I would most want a sceptic to take away.
 
 <Figure
-  n="5.3"
+  n="5.4"
   caption={<>Both toy models are exact on the demonstrated path. Drag the offset to start them off it. One has only learned what comes next on the line, and drifts away. The other has practised nearby states and bends back. The arithmetic is made up, but the distinction is real, and it is the finding behind Professor Forcing, described next.</>}
 >
   <RecoveryBasin />
@@ -205,7 +235,7 @@ training objective, or it does not appear at all.
 ## Try it
 
 <Figure
-  n="5.4"
+  n="5.5"
   caption={<>Eight questions on the step and the second-step problem. The first three change how you read a paper's headline number.</>}
 >
   <Quiz chapter={5} />
@@ -219,8 +249,9 @@ experience, checked against it and corrected by it.
 ## Sources
 
 <Figure
-  n="5.5"
+  n="5.6"
   caption={<>Ordered for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={5} />
 </Figure>
+

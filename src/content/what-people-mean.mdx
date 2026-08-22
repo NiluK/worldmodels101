@@ -51,244 +51,16 @@ Secondly, I'll be leaning on the figures. Each one is something you can press
 and drag, and I'll tell you what to press and what you should expect to see.
 The chapter makes a lot more sense if you do.
 
-## One equation, sixty years
-
-Let's start with where the term came from, because it started somewhere
-specific. Everything after it either grew from that start or pushed against it.
-The start was control theory, the engineering maths of keeping a machine on
-course: an autopilot, a thermostat, a rocket.
-
-Later it moved into reinforcement learning <Gloss>training an agent by letting
-it act, watching what happens, and rewarding what worked</Gloss>. There, a
-world model is a learned transition function. All that means is a rule for what
-comes next, one the agent picks up from experience.
-
-A state and an action go in, and the next state comes out. When I say state, I
-mean a description of how things stand at one moment. Written down, it looks
-like this.
-
-<Figure
-  n="1.3"
-  caption={<>Every system below is really an argument about what belongs in place of <em>s</em>. It could be pixels, 3-D geometry, a short list of numbers, or an embedding. That choice is the main axis the five definitions separate along, so keep it in mind.</>}
->
-  <TransitionEquation />
-</Figure>
-
-The oldest ancestor is the Kalman filter, from 1960. Rudolf Kalman, a
-Hungarian-born engineer, set it out in *A New Approach to Linear Filtering and
-Prediction Problems*. A filter here is a piece of maths that cleans up noisy
-readings. If you feed it a radar's blips on a plane, it keeps a running best
-guess of where the plane is and how fast it is going.
-
-Within a decade it was flying in Apollo's guidance computer. It is still the
-maths inside a GPS receiver. I'd say that is one half of what a world model
-does. There is a hidden state you never see directly, and the job is to
-estimate it from what you can see.
-
-The trick inside it is the same one that runs in every GPS receiver, drone and
-self-driving car, so let's walk through it. At each moment you have two stories
-about where the plane is. One comes from physics: take the last position and
-the last speed, and predict where the plane should be now. The other comes from
-the radar, which hands you a blip.
-
-Both stories are uncertain. Each is really a bell curve, a Gaussian, with the
-most likely spot in the middle and the less likely ones fading out either side.
-Multiply the two curves together and you get a third bell curve, which sits
-between the two and is narrower than either. That is the new belief.
-
-<Figure
-  n="1.4"
-  caption={<>Here are the two stories about where the plane is, drawn as bell curves on one axis. Slide how sure physics is and how noisy the radar is, and watch the new belief lean toward the sharper story while staying narrower than either. The gain is the number that says how far it leaned. Now press Correct to make the new belief the next physics prediction, and watch it widen again as the plane moves on.</>}
->
-  <TwoStories />
-</Figure>
-
-How far the new belief leans from physics toward the radar is set by one number
-between zero and one, which the field calls the Kalman gain. As you can see
-from the figure, a noisy radar pulls the gain toward zero, so the filter sticks
-with physics. A sharp radar pulls it toward one, so the filter trusts the
-reading.
-
-Then it repeats: predict, correct, predict, correct. Every new blip, however
-wrong on its own, tightens what the filter knows. The estimate hugs the truth
-even though every reading it ever got was off, and it does that one tick at a
-time without ever waiting for the future.
-
-<Figure
-  n="1.5"
-  caption={<>A plane flies along a smooth path, and a radar reports its position every couple of seconds with noise on top. A Kalman filter keeps a running guess of where the plane is and how fast it is going. Scrub the time or press play, and watch the band around the estimate tighten as the blips arrive. Turn the radar noise up, and the estimate still sits closer to the plane than the blips do. Drop the blips for a stretch and it coasts on its own dynamics while the band opens. The gain readout is the lean: near zero it trusts physics, near one it trusts the radar. The greyed-out control is the point I want you to notice: the filter can propagate a turn you hand it, but nothing here learns the dynamics or weighs one turn against another. Distances are illustrative.</>}
->
-  <KalmanTracker />
-</Figure>
-
-What it does not do is the other half. You can hand a Kalman filter a known
-control input, a turn you have decided on, and it will propagate it, so it can
-tell you where that turn would take the plane. But the rules for how the state
-moves are written in by the engineer rather than learned, and nothing in it
-compares two turns to pick one. It is an estimator, not a planner, and its
-dynamics are supplied rather than learned. That is why I call it an ancestor
-rather than a member.
-
-The other half took thirty years and a different field. By 1990 neural
-networks, programs that learn from examples rather than from rules someone
-typed in, were back in fashion. Three groups reached for the same design in the
-same year, so let's take them one at a time.
-
-Jürgen Schmidhuber, then a young researcher in Munich, built a system in two
-parts. His paper was *Recurrent world models for planning and curiosity*. One
-network learned to predict what the world would do next. A second one chose
-actions, and the first told it what each choice would lead to.
-
-<Figure
-  n="1.6"
-  caption={<>This is the 1990 design in miniature. Point at an arrow and the world model draws where it thinks you would land. Press it, and the world answers. The model knows about the walls but not the patches: ice carries you on, and drift and lift push you off your row. Now switch on "Learn from mistakes" and press "Run a lap" three times. You should see the surprises fall lap by lap, because the chooser now plans inside a model that knows the route. Then press "Forget", switch learning off, and run three more: every lap is as surprised as the first.</>}
->
-  <TwoNetworks />
-</Figure>
-
-He called the first network the world model, and that is the phrase's birth
-certificate. Schmidhuber, who later co-invented the LSTM memory cell, has spent
-a career insisting the field forgets who had its ideas first. On this one, the
-record is plainly his.
-
-In the same period Richard Sutton built Dyna. It was a learning agent that
-practised partly on real experience and partly on experience its own model made
-up. His paper was *Dyna: an Integrated Architecture for Learning, Planning and
-Reacting*.
-
-Sutton and Andrew Barto went on to write the textbook every reinforcement
-learning student still reads. The two shared the 2024 Turing Award, announced the following spring.
-
-<Figure
-  n="1.7"
-  caption={<>Here are the three systems from 1990 and 1991, each drawn as a loop. Click a card to enlarge it and read what its model does and what uses it. Then turn on the shared shape and watch: the world and the arrows fade, and the same two boxes light up on every card.</>}
->
-  <ThreePapers1990 />
-</Figure>
-
-Sebastian Thrun, Knut Möller and Alexander Linden made the third, in *Planning
-with an Adaptive World Model*. As you can see from the figure, all three had
-the shape of the modern idea. A learned model says what happens next, and
-something else uses it to decide.
-
-The label did not stick, though. The networks of 1990 were small, and their
-worlds were mazes and a few dozen numbers. Nobody could learn a useful model of
-anything with a camera in it.
-
-For most of the next twenty-five years the model-based line, meaning agents
-that carry a model and use it, stayed a minority interest. When deep learning
-reached reinforcement learning, the headline result was DeepMind's DQN in 2013.
-It learned Atari games from pixels with no model of the game at all. Model-free
-had the momentum, and the two-part design of 1990 looked like a relic.
-
-<Figure
-  n="1.8"
-  caption={<>The curves here are shapes rather than measurements. Pick what one step costs, then drag the budget and watch where the shaded region stops. In a simulator, a program that imitates the world, the budget reaches past the crossover and the slow climber wins. On a robot it stops long before that, and the only agent that has learned anything is the one carrying a model. Then switch on the bad model to see what happens when the model is wrong in the places you go.</>}
->
-  <ExperienceBill />
-</Figure>
-
-David Ha and Jürgen Schmidhuber's *World Models* (2018) is the paper that made
-the label popular. I read it as a reply to that momentum. Ha was then at Google
-Brain. The paper showed the 1990 design working on a car-racing game and a
-level of the video game Doom, in three pieces.
-
-The first is an encoder <Gloss>a network that squeezes a video frame down to a
-short list of numbers</Gloss>, thirty-two numbers here. The second is a
-dynamics model, which predicted where those numbers go next. The third is a
-small controller, the piece that picks actions.
-
-The controller was trained almost entirely inside the model's own imagined
-rollouts, futures the model played out for itself. Then it was moved back into
-the real game, and it still worked.
-
-<Figure
-  n="1.9"
-  caption={<>Ha and Schmidhuber's three pieces, drawn as a loop. Select a box to see what goes in and what comes out, then press Step and watch the thirty-two numbers change. Now flip the switch to run inside the dream: the dynamics model feeds its own prediction back, and the game is no longer consulted. That is how the controller was trained before it was moved back into the real game. Then have a go at the question underneath.</>}
->
-  <ThreePieces />
-</Figure>
-
-One thing that can mislead you in the papers is the naming. Ha and Schmidhuber
-call their third module the controller, meaning the small policy that picks
-actions. The world model is the module beside it, the one the controller plans
-inside. If you called the whole thing "the controller" you would name it after
-the one piece that is plainly not a world model.
-
-PlaNet came the same year, from Danijar Hafner and colleagues, with Ha among
-the authors. The paper was *Learning Latent Dynamics for Planning from
-Pixels*. It learned those dynamics straight from pixels. Then it planned in
-latent space <Gloss>latent just means the model's own compressed description:
-a few hundred numbers instead of a million pixels</Gloss>.
-
-At every step it tried many action sequences inside the model and took the best
-first move. Dreamer (2019) came from the same group, in a paper called *Dream
-to Control*. Instead of searching for a plan at every step, it learned its
-behaviour from futures imagined inside the model.
-
-<Figure
-  n="1.10"
-  caption={<>Two copies of the same small world. On the left, press Decide: the model imagines twelve futures, keeps the best, and the dot takes one step, so every decision costs seventy-two model calls. On the right, press Train in imagination once and then Decide: the behaviour was learned in advance, so each step costs the model nothing. The thing to watch is the two total-calls counters rather than the dots.</>}
->
-  <PlanOrLearn />
-</Figure>
-
-Its third version reached *Nature* in 2025 with one set of settings across more
-than 150 tasks. That is as close to a dynasty as this field gets. By the end of
-2019, though, the reinforcement learning reading of the word was settled.
-
-Then the word travelled, in two directions at once. In 2022 Yann LeCun
-published *A Path Towards Autonomous Machine Intelligence*. He was Meta's chief
-AI scientist at the time, and he is a Turing Award winner. He argued that
-predicting every pixel of the next frame is the wrong job, because most pixels
-are detail nobody can predict.
-
-JEPA, the family of models that followed at Meta, predicts a summary of the
-next frame instead. That lets it drop the decoder, which is the part that would
-have turned the prediction back into pixels.
-
-<Figure
-  n="1.11"
-  caption={<>Scrub through the years and watch the parts. Each era switches a part on, relabels it or points it at a new target, and now and then one switches a part off. Nothing ever gets replaced, and that is how systems built for different reasons ended up sharing a name.</>}
->
-  <ArchitectureTimeline />
-</Figure>
-
-The other direction went toward worlds you can see and walk through. In
-February 2024 OpenAI published Sora with a report titled *Video generation
-models as world simulators*. The same month Genie arrived from Jake Bruce and
-colleagues at DeepMind. It learned its own set of actions from unlabelled
-internet video of games, then let you play what it drew.
-
-Cosmos from NVIDIA and Marble from World Labs followed in 2025. Meanwhile the
-interpretability people had borrowed the word for something with no demo at
-all. Their claim was that a model trained for one job had grown a model of the
-world inside itself. We'll come back to that one.
-
-By June 2026 World Labs had published *A Functional Taxonomy of World Models*,
-a sorting system for the mess. The dictionaries had begun. Four traditions each
-held a different piece of one problem. From the outside, the term looks
-confused.
-
-<Figure
-  n="1.12"
-  caption={<>Drag the year back to 2013 and come forward. For most of the decade only one lane has anything on it, and the guides only begin to bend after 2022. Click a dot to see who used the phrase, what they meant by it, and what their system hands you. As you can see, the lines meet at one phrase rather than at one thing.</>}
->
-  <WordTravels />
-</Figure>
-
-The four only noticed they were neighbours when their outputs started to look
-alike. By then each of them had been using the word for years.
-
 ## The five definitions
 
-Now let's go through the five. Treat these categories as contracts rather than
+Let's go through the five first, and come back for the history of how they
+came to share a name once you have the map. Treat these categories as contracts rather than
 species. Each one describes what a system promises to hand you. Modern work
 crosses between them all the time, as NVIDIA's Cosmos and Meta's V-JEPA 2 are
 about to show.
 
 <Figure
-  n="1.13"
+  n="1.3"
   caption={<>Four of these are systems you can run. They are ordered by how abstract the predicted object is. The fifth is a claim about another system rather than a system itself, which is why it sits off the axis.</>}
 >
   <DefinitionMap />
@@ -314,7 +86,7 @@ So persistence exists, meaning things stay where you left them. It is learned
 through generation, though, rather than guaranteed by stored geometry.
 
 <Figure
-  n="1.14"
+  n="1.4"
   caption={<>The same five, this time drawn by what each one hands you. Vermilion, the orange-red, marks the predicted object in every panel. Left to right is the same axis as the map above: a picture, then structure, then a compact state, then a summary, and finally something that is not an output at all.</>}
 >
   <OutputGallery />
@@ -338,7 +110,7 @@ generates physically-aware video, built as training data for robots and
 self-driving cars. It is also the case that keeps the map honest.
 
 <Figure
-  n="1.15"
+  n="1.5"
   caption={<>I'd read this as a comparison of promises rather than a pass/fail test. Marble hands you geometry that another program can open, so you can check it yourself. Genie 3's coherence is reported by the lab that built it, and you cannot check that. The difference is what each one promises, and how much of it you can check.</>}
 >
   <VideoPair
@@ -370,7 +142,8 @@ are being sold, and which interface you are about to build against.
 **The Dynamics Model** predicts compact state under actions, often with the
 reward. Compact means a short list of numbers rather than a picture. It is the
 oldest of the four runnable categories. It is the one the line from Schmidhuber
-to Dreamer was building toward.
+to Dreamer, which we will walk through in the history below, was building
+toward.
 
 MuZero, from Julian Schrittwieser and colleagues at DeepMind, is the proof. Its
 model predicted only reward, value and likely moves, never the board. With that
@@ -378,13 +151,14 @@ it matched AlphaZero, its famous predecessor, at Go, chess and shogi. It was
 never told the rules.
 
 <Figure
-  n="1.16"
+  n="1.6"
   caption={<>MuZero's model sits in the middle. Leave the switch on three numbers and press Search to step a small tree: every node asks for reward, value and policy, and the board on the right is never drawn. Now flip the switch to the next board and watch each node pay for a picture that the search then reads nothing from. The values are illustrative.</>}
 >
   <ThreeNumbers />
 </Figure>
 
-PlaNet plans inside a model like this, searching afresh at every step. Dreamer
+Two systems you will meet properly in the history, PlaNet and Dreamer, use it
+in different ways. PlaNet plans inside a model like this, searching afresh at every step. Dreamer
 learns behaviour from futures imagined through one. What matters here is
 whether you can search inside it. How real it looks does not come into it.
 
@@ -401,7 +175,7 @@ control <Gloss>plan a few steps, take one, plan again</Gloss>. Meta reports it
 driving a Franka robot arm in a lab it never saw during training.
 
 <Figure
-  n="1.17"
+  n="1.7"
   caption={<>Choose what the network is asked to predict for the hidden block, then press Predict. With pixels as the target, a decoder has to turn the prediction back into a picture, and the best it can do for a block it cannot see is a blur. With a summary as the target, nothing is turned back into pixels. Look at the bottom row, which is what survives training: the encoder in both cases, and only one of them ever built a decoder.</>}
 >
   <PredictTheSummary />
@@ -418,7 +192,8 @@ the machinery of another on top. The categories describe a training target
 rather than a fixed identity.
 
 **The Implicit Model** is a different kind of claim altogether. It is the least
-discussed of the five, because it has no demo.
+demoed of the five and the most argued about, because there is nothing to run:
+the claim is about the inside of a network.
 
 Othello-GPT is a small language model trained only to predict legal moves in
 Othello, a board game played with two-sided discs. It was never shown a board.
@@ -426,7 +201,7 @@ Kenneth Li and colleagues (2022), who trained it, reported in *Emergent World
 Representations* that the board was there inside it anyway.
 
 <Figure
-  n="1.18"
+  n="1.8"
   caption={<>Othello-GPT only ever saw move tokens like the strip on the left. Press Read the board and a probe draws an 8 by 8 board out of the network's activations, and nobody put one in. Flip a square in that inner board and watch the list of next legal moves change, which is how Li and colleagues showed the model was playing from it. Then switch to mine and theirs, which is Nanda's reframing, and the probe can be a straight line.</>}
 >
   <ProbeBoard />
@@ -437,13 +212,214 @@ network's activations</Gloss> could read it out. When they changed that inner
 board by hand, the model's next moves changed too.
 
 Neel Nanda and colleagues (2023) followed up, in a paper called *Othello-GPT
-has a linear emergent world representation*. The board was there in a form
-plain enough for the simplest probe to read. You only had to ask for "mine" and
-"theirs" instead of black and white.
+has a linear emergent world representation*: the board was there in a form
+plain enough for the simplest probe to read, once you asked for "mine" and
+"theirs" instead of black and white. Nobody handed the model a function called
+`world_model`. The phrase here is a claim about what grew inside another
+system, so it is a finding rather than an interface.
 
-Nobody handed the model a function called `world_model`. The phrase here is a
-claim about what grew inside another system, so it is a finding rather than an
-interface.
+## One equation, sixty years
+
+Now for where the term came from, because it started somewhere specific.
+Everything after it either grew from that start or pushed against it. The start
+was control theory, the engineering maths of keeping a machine on course: an
+autopilot, a thermostat, a rocket.
+
+Later it moved into reinforcement learning <Gloss>training an agent by letting
+it act, watching what happens, and rewarding what worked</Gloss>, where a world
+model is a learned transition function, a rule for what comes next that the
+agent picks up from experience. A state and an action go in, and the next state
+comes out. When I say state, I mean a description of how things stand at one
+moment. Written down, it looks like this.
+
+<Figure
+  n="1.9"
+  caption={<>Every system below is really an argument about what belongs in place of <em>s</em>. It could be pixels, 3-D geometry, a short list of numbers, or an embedding. That choice is the main axis the five definitions separate along, so keep it in mind.</>}
+>
+  <TransitionEquation />
+</Figure>
+
+The oldest ancestor is the Kalman filter, from 1960. Rudolf Kalman, a
+Hungarian-born engineer, set it out in *A New Approach to Linear Filtering and
+Prediction Problems*. A filter here is a piece of maths that cleans up noisy
+readings. If you feed it a radar's blips on a plane, it keeps a running best
+guess of where the plane is and how fast it is going.
+
+Within a decade it was flying in Apollo's guidance computer. It is still the
+maths inside a GPS receiver. I'd say that is one half of what a world model
+does. There is a hidden state you never see directly, and the job is to
+estimate it from what you can see.
+Under the hood it keeps two stories about where the plane is, one from physics
+and one from the radar, and blends them into a guess sharper than either. I
+take that blend apart in chapter 5; here the shape is what matters.
+
+<Figure
+  n="1.10"
+  caption={<>A plane flies along a smooth path, and a radar reports its position every couple of seconds with noise on top. A Kalman filter keeps a running guess of where the plane is and how fast it is going. Scrub the time or press play, and watch the band around the estimate tighten as the blips arrive. Turn the radar noise up, and the estimate still sits closer to the plane than the blips do. Drop the blips for a stretch and it coasts on its own dynamics while the band opens. The gain readout is how far it leaned toward the radar at each step, a number chapter 5 takes apart. The greyed-out control is the point I want you to notice: the filter can propagate a turn you hand it, but nothing here learns the dynamics or weighs one turn against another. Distances are illustrative.</>}
+>
+  <KalmanTracker />
+</Figure>
+
+What it does not do is the other half. You can hand a Kalman filter a known
+control input, a turn you have decided on, and it will propagate it, so it can
+tell you where that turn would take the plane. But the rules for how the state
+moves are written in by the engineer rather than learned, and nothing in it
+compares two turns to pick one. It is an estimator, not a planner, and its
+dynamics are supplied rather than learned. That is why I call it an ancestor
+rather than a member.
+
+The other half took thirty years and a different field. By 1990 neural
+networks, programs that learn from examples rather than from rules someone
+typed in, were back in fashion. Three groups reached for the same design in the
+same year, so let's take them one at a time.
+
+Jürgen Schmidhuber, then a young researcher in Munich, built a system in two
+parts. His 1990 technical report had a title only he could love: *Making the World
+Differentiable: On Using Self-Supervised Fully Recurrent Neural Networks for
+Dynamic Reinforcement Learning and Planning in Non-Stationary Environments*. One
+network learned to predict what the world would do next. A second one chose
+actions, and the first told it what each choice would lead to.
+
+<Figure
+  n="1.11"
+  caption={<>This is the 1990 design in miniature. Point at an arrow and the world model draws where it thinks you would land. Press it, and the world answers. The model knows about the walls but not the patches: ice carries you on, and drift and lift push you off your row. Now switch on "Learn from mistakes" and press "Run a lap" three times. You should see the surprises fall lap by lap, because the chooser now plans inside a model that knows the route. Then press "Forget", switch learning off, and run three more: every lap is as surprised as the first.</>}
+>
+  <TwoNetworks />
+</Figure>
+
+He called the first network the world model, and that is the phrase's birth
+certificate. Schmidhuber, who later co-invented the LSTM memory cell, has spent
+a career insisting the field forgets who had its ideas first. On this one, the
+record is plainly his.
+
+In the same period Richard Sutton built Dyna. It was a learning agent that
+practised partly on real experience and partly on experience its own model made
+up. His paper was *Dyna: an Integrated Architecture for Learning, Planning and
+Reacting*.
+
+Sutton and Andrew Barto went on to write the textbook every reinforcement
+learning student still reads. The two shared the 2024 Turing Award, announced the following spring.
+
+<Figure
+  n="1.12"
+  caption={<>Here are the three systems from 1990 and 1991, each drawn as a loop. Click a card to enlarge it and read what its model does and what uses it. Then turn on the shared shape and watch: the world and the arrows fade, and the same two boxes light up on every card.</>}
+>
+  <ThreePapers1990 />
+</Figure>
+
+Sebastian Thrun, Knut Möller and Alexander Linden made the third, in *Planning
+with an Adaptive World Model*. As you can see from the figure, all three had
+the shape of the modern idea. A learned model says what happens next, and
+something else uses it to decide.
+
+The label did not stick, though. The networks of 1990 were small, and their
+worlds were mazes and a few dozen numbers. Nobody could learn a useful model of
+anything with a camera in it.
+
+For most of the next twenty-five years the model-based line, meaning agents
+that carry a model and use it, stayed a minority interest. When deep learning
+reached reinforcement learning, the headline result was DeepMind's DQN in 2013.
+It learned Atari games from pixels with no model of the game at all. Model-free
+had the momentum, and the two-part design of 1990 looked like a relic.
+
+<Figure
+  n="1.13"
+  caption={<>The curves here are shapes rather than measurements. Pick what one step costs, then drag the budget and watch where the shaded region stops. In a simulator, a program that imitates the world, the budget reaches past the crossover and the slow climber wins. On a robot it stops long before that, and the only agent that has learned anything is the one carrying a model. Then switch on the bad model to see what happens when the model is wrong in the places you go.</>}
+>
+  <ExperienceBill />
+</Figure>
+
+David Ha and Jürgen Schmidhuber's *World Models* (2018) is the paper that made
+the label popular. I read it as a reply to that momentum. Ha was then at Google
+Brain. The paper showed the 1990 design working on a car-racing game and a
+level of the video game Doom, in three pieces.
+
+The first is an encoder <Gloss>a network that squeezes a video frame down to a
+short list of numbers</Gloss>, thirty-two numbers here. The second is a
+dynamics model, which predicted where those numbers go next. The third is a
+small controller, the piece that picks actions.
+
+The controller was trained almost entirely inside the model's own imagined
+rollouts, futures the model played out for itself. Then it was moved back into
+the real game, and it still worked.
+
+<Figure
+  n="1.14"
+  caption={<>Ha and Schmidhuber's three pieces, drawn as a loop. Select a box to see what goes in and what comes out, then press Step and watch the thirty-two numbers change. Now flip the switch to run inside the dream: the dynamics model feeds its own prediction back, and the game is no longer consulted. That is how the controller was trained before it was moved back into the real game. Then have a go at the question underneath.</>}
+>
+  <ThreePieces />
+</Figure>
+
+One thing that can mislead you in the papers is the naming. Ha and Schmidhuber
+call their third module the controller, meaning the small policy that picks
+actions. The world model is the module beside it, the one the controller plans
+inside. If you called the whole thing "the controller" you would name it after
+the one piece that is plainly not a world model.
+
+PlaNet came the same year, from Danijar Hafner and colleagues, with Ha among
+the authors. The paper was *Learning Latent Dynamics for Planning from
+Pixels*. It learned those dynamics straight from pixels. Then it planned in
+latent space <Gloss>latent just means the model's own compressed description:
+a few hundred numbers instead of a million pixels</Gloss>.
+
+At every step it tried many action sequences inside the model and took the best
+first move. Dreamer (2019) came from the same group, in a paper called *Dream
+to Control*. Instead of searching for a plan at every step, it learned its
+behaviour from futures imagined inside the model.
+
+<Figure
+  n="1.15"
+  caption={<>Two copies of the same small world. On the left, press Decide: the model imagines twelve futures, keeps the best, and the dot takes one step, so every decision costs seventy-two model calls. On the right, press Train in imagination once and then Decide: the behaviour was learned in advance, so each step costs the model nothing. The thing to watch is the two total-calls counters rather than the dots.</>}
+>
+  <PlanOrLearn />
+</Figure>
+
+Its third version reached *Nature* in 2025 with one set of settings across more
+than 150 tasks. That is as close to a dynasty as this field gets. By the end of
+2019, though, the reinforcement learning reading of the word was settled.
+
+Then the word travelled, in two directions at once. In 2022 Yann LeCun
+published *A Path Towards Autonomous Machine Intelligence*. He was Meta's chief
+AI scientist at the time, and he is a Turing Award winner. He argued that
+predicting every pixel of the next frame is the wrong job, because most pixels
+are detail nobody can predict.
+
+JEPA, the family of models that followed at Meta, predicts a summary of the
+next frame instead. That lets it drop the decoder, which is the part that would
+have turned the prediction back into pixels.
+
+<Figure
+  n="1.16"
+  caption={<>Scrub through the years and watch the parts. Each era switches a part on, relabels it or points it at a new target, and now and then one switches a part off. Nothing ever gets replaced, and that is how systems built for different reasons ended up sharing a name.</>}
+>
+  <ArchitectureTimeline />
+</Figure>
+
+The other direction went toward worlds you can see and walk through. In
+February 2024 OpenAI published Sora with a report titled *Video generation
+models as world simulators*. The same month Genie arrived from Jake Bruce and
+colleagues at DeepMind. It learned its own set of actions from unlabelled
+internet video of games, then let you play what it drew.
+
+Cosmos from NVIDIA and Marble from World Labs followed in 2025. Meanwhile the
+interpretability people had borrowed the word for something with no demo at
+all. Their claim was that a model trained for one job had grown a model of the
+world inside itself. We'll come back to that one.
+
+By June 2026 World Labs had published *A Functional Taxonomy of World Models*,
+a sorting system for the mess. The dictionaries had begun. Four traditions each
+held a different piece of one problem. From the outside, the term looks
+confused.
+
+<Figure
+  n="1.17"
+  caption={<>Drag the year back to 2013 and come forward. For most of the decade only one lane has anything on it, and the guides only begin to bend after 2022. Click a dot to see who used the phrase, what they meant by it, and what their system hands you. As you can see, the lines meet at one phrase rather than at one thing.</>}
+>
+  <WordTravels />
+</Figure>
+
+The four only noticed they were neighbours when their outputs started to look
+alike. By then each of them had been using the word for years.
 
 ## The test that was supposed to settle it
 
@@ -453,7 +429,7 @@ a world inside it keeps the furniture where you left it, and something that is
 only drawing pictures cannot. I call it the turn-around test.
 
 <Figure
-  n="1.19"
+  n="1.18"
   caption={<>The turn-around test, made playable. With the switch off, press Turn away and back and look at where the vermilion (orange-red) post comes back. Then switch the world on and run it again. The panel on the right shows you what is stored in each case.</>}
 >
   <GeneratedLandscape mode="test" />
@@ -483,7 +459,7 @@ rather than something anyone outside the lab can check.
 </MarginNote>
 
 <Figure
-  n="1.20"
+  n="1.19"
   caption={<>This is persistence learned through generation, watched over a long run. Drag out to a thousand steps and read off which properties are still holding: texture and count go last, and identity and physics go first. Nothing here was stored; all of it was continued.</>}
 >
   <WhatBreaks />
@@ -513,7 +489,7 @@ Think of the chair behind you, a ball still rolling out of shot, or whether the
 cupboard is open. All of it is real and none of it is visible.
 
 <Figure
-  n="1.21"
+  n="1.20"
   caption={<>Turn the camera with the slider and watch the two columns. The state column never changes what it lists. The observation column only shows what falls inside the wedge, and marks the rest with a question mark. Now turn away from the ball, press Step time once or twice, then turn back: the ball has moved, and your last observation of it was wrong the whole time.</>}
 >
   <StateObservation />
@@ -543,7 +519,7 @@ long before there was anything to build it out of.
 </Quote>
 
 <Figure
-  n="1.22"
+  n="1.21"
   caption={<>Craik's small-scale model, run by a machine. The planner writes down runs of actions, plays each one through the model, and keeps the best. Raise the budget and you should see the rejects fade and the plan sharpen.</>}
 >
   <Planner />
@@ -565,7 +541,7 @@ predicts how things could change. The agent acts, the world changes, and a new
 observation arrives.
 
 <Figure
-  n="1.23"
+  n="1.22"
   caption={<>The agent-environment loop, with each definition shown as a specialist on one arc. Systems that look incompatible share a name because each one owns a piece of the same loop.</>}
 >
   <AgentLoop />
@@ -593,7 +569,7 @@ still go either way. You can think of the split as the model admitting what it
 does not know.
 
 <Figure
-  n="1.24"
+  n="1.23"
   caption={<>Drag time forward and watch the ball go behind the wall. The faint dot is the answer a deterministic model gives: one coordinate, moved on at the known speed. Switch on the stochastic part and the model also carries a spread, which widens the longer the ball is hidden. Keep going past the point where the dot comes out, and ask yourself which answer was honest.</>}
 >
   <BallBehindWall />
@@ -610,7 +586,7 @@ control input you gave it, but it never learned the dynamics or weighed one
 action against another. The learning and the choosing came later.
 
 <Figure
-  n="1.25"
+  n="1.24"
   caption={<>One start and three futures, chosen by which key you hold. Turn the action input off and watch the three rows fold into one: without an action there is only what probably happens next, and no longer what happens if you do this.</>}
 >
   <ActionConditioned />
@@ -627,7 +603,7 @@ wrong. Get step one slightly wrong, though, and step twenty can be somewhere
 else entirely.
 
 <Figure
-  n="1.26"
+  n="1.25"
   caption={<>The same model, this time asked for a stretch of future instead of a single step. Two things grow and one does not, and that is the whole difficulty.</>}
 >
   <RolloutEquation />
@@ -642,7 +618,7 @@ from 2025. They sit at the two ends of the map, fighting the same problem from
 opposite sides.
 
 <Figure
-  n="1.27"
+  n="1.26"
   caption={<>Both dots start in the same place under the same rules, except that one is running dynamics that are a few percent off. Drag to about 8 and you'll see they are still together. Keep going, and notice that nothing breaks at any single step. The gap is what piles up.</>}
 >
   <HorizonSlider />
@@ -668,7 +644,7 @@ to hear from you.
 ## Try it
 
 <Figure
-  n="1.28"
+  n="1.27"
   caption={<>Thirteen questions across the whole chapter. They ask you to place systems I never named, using the ideas the figures were built to teach. One of them is a trap, and it is the kind of mistake I'd rather you made here than in a meeting.</>}
 >
   <Quiz />
@@ -677,8 +653,9 @@ to hear from you.
 ## Sources
 
 <Figure
-  n="1.29"
+  n="1.28"
   caption={<>I've ordered these for someone building on this rather than for historical completeness, and preferred first-party material throughout.</>}
 >
   <SourceList />
 </Figure>
+
