@@ -1,45 +1,70 @@
-Yann LeCun was Meta's chief AI scientist at the time, and he is a Turing Award winner. He is one of
-the people who made convolutional networks work. In 2022 he published *A Path
-Towards Autonomous Machine Intelligence*, a position paper on how machines
-should learn. One charge in it was aimed at the reflex then governing learned
-world models: when in doubt, predict the next picture.
+If you've followed the world model argument online, you'll have run into a
+slogan: stop predicting pixels. It comes from Yann LeCun. He was Meta's chief
+AI scientist at the time, and he is a Turing Award winner. He is also one of
+the people who made convolutional networks work, the kind of network that reads
+images.
 
-Point a camera at a road and ask what the next second looks like. A leaf at the
-edge of the frame will move, and which way is unknowable. It is also the least
-useful fact on offer, since nothing you might do about the road depends on it.
-A model asked to predict the picture has to predict that leaf anyway.
+In 2022 he published *A Path Towards Autonomous Machine Intelligence*. It is a
+position paper, meaning a case for how machines should learn rather than a
+result. One charge in it was aimed at the reflex then governing learned
+world models. The reflex was this: when in doubt, predict the next picture.
+
+His smaller charge starts with a camera pointed at a road. Ask what the next
+second looks like: a leaf at the edge of the frame will move, and which way is
+unknowable. It is also the least useful fact on offer, since nothing you might
+do about the road depends on it. A model asked to predict the picture has to
+predict that leaf anyway.
 
 The leaf is made of pixels, and pixels are what the model is marked on.
 Multiply that by every leaf, every ripple, every flicker of light on wet
 tarmac. Most of the capacity has gone to things that are hard to predict and do
 not matter. That is the leaf problem, the smaller of the two charges.
 
-## A deterministic average of two futures is neither
+<Figure
+  n="7.1"
+  caption={<>A road scene, scored the way a pixel loss scores it. Press Next second and watch where the error lands: the car ahead moves the way the model expected, and the leaves and the puddle flicker the way nobody could expect. Now drag the foliage slider up and read the ledger on the right. The share of the error on things a driver would care about keeps shrinking, and every one of those pixels pulls on the weights just as hard. The numbers are illustrative.</>}
+>
+  <LeafLedger />
+</Figure>
+
+I should say this argument took me a while to get straight. The posts online
+tended to give you either the slogan or a wall of maths. What I wanted was the
+case laid out in order: the two charges against pixels, the reply the pixel
+people already had, what JEPA does instead, and what it costs. That is this
+chapter.
+
+The short version is this. JEPA is a family of models from Meta that predicts
+a description of what it cannot see, instead of the pixels. I'm going to assume
+you have read chapter 1, or at least know that an embedding is a short list of
+numbers standing in for a picture. Everything else I will explain as we go, and
+I'll lean on the figures, so do press things.
+
+## An average of two futures is neither
 
 The larger charge is a car coming to a junction. It will turn left or right.
 You do not know which, and no amount of staring at the current frame will tell
 you.
 
-Ask a deterministic model, one that gives a single answer, for one next
-picture. Score it by squared pixel error, the gap at each pixel squared and
-added up. The best answer in the maths is the conditional average of the two
-turns: the left and right futures blended at their odds, rather than either one
-on its own.
+Now let's ask a deterministic model, one that gives a single answer every
+time, for one next picture. Score it by squared pixel error, the gap at each
+pixel squared and added up. The best answer in the maths is the conditional
+average of the two turns. That is the left and right futures blended at their
+odds, rather than either one on its own.
 
 <Figure
-  n="7.1"
-  caption={<>The middle panel is the two futures drawn at their probabilities. That average is what squared error rewards. Drag the chance to either end and the best answer settles on one turn. Leave it near the middle and watch the best prediction become a picture of something that cannot happen.</>}
+  n="7.2"
+  caption={<>The middle panel is the two futures drawn at their odds, and that average is what squared error rewards. Drag the chance to either end and you should see the best answer settle on one turn. Leave it near the middle and the best prediction becomes a picture of something that cannot happen.</>}
 >
   <PixelBlur />
 </Figure>
 
-The middle panel scores better than either real future. A model that predicted
-the left turn would be punished half the time. The ghost in the middle is
-punished a little all the time, and under squared error a little all the time
-wins.
+Have a look at the middle panel. It scores better than either real future. A
+model that predicted the left turn would be punished half the time. The ghost
+in the middle is punished a little all the time, and under squared error a
+little all the time wins.
 
-That training signal asks for the mean, not for a plausible future. When the
-future is open, the mean is a smear that never occurs.
+So that training signal asks for the mean rather than for a plausible future.
+When the future is open, the mean is a smear that never occurs.
 
 <MarginNote>
 A deterministic predictor trained with a mean-seeking pixel loss goes vague
@@ -49,31 +74,31 @@ that failure by drawing samples rather than aiming at a mean.
 
 ## The ghost had an answer five years early
 
-Pixel prediction had dealt with the ghost by 2017, five years before the
-position paper. SV2P, short for *Stochastic Variational Video Prediction*, is
-Mohammad Babaeizadeh and colleagues' video predictor from that year. Emily
-Denton and Rob Fergus built a similar one. Both learn a spread of possible
-futures and draw one at random.
+One complication, though. The pixel camp had dealt with the ghost by 2017,
+five years before the position paper. SV2P, short for *Stochastic Variational
+Video Prediction*, is Mohammad Babaeizadeh and colleagues' video model from
+that year, and Emily Denton and Rob Fergus built one like it. Both learn a
+spread of futures and draw one at random.
 
 The trick is a hidden variable, a few numbers standing in for whatever the
-frame cannot tell you, such as which way the car turns. Draw the variable, then
-the frame that goes with it. Each draw can be sharp even when the model has no
-idea which turn will happen.
+frame cannot tell you, such as which way the car turns. Draw the variable
+first, then the frame that goes with it. Each draw can be sharp even when the
+model has no idea which turn will happen.
 
 <Figure
-  n="7.2"
-  caption={<>Switch from the mean to samples of the same two futures and the in-between frame disappears. Press draw a few times. The uncertainty survives as variation across draws. The model still does not say which draw the world will choose, so a planner has to value risk across the whole spread.</>}
+  n="7.3"
+  caption={<>Switch from the mean to samples of the same two futures, and the in-between frame disappears. Press draw a few times. The uncertainty survives as variation across draws. What the model still does not say is which draw the world will choose, so a planner has to value risk across the whole spread.</>}
 >
   <FutureSampler />
 </Figure>
 
 That kills the blur objection, and anyone still running it is arguing with
-2017. It does not kill the rest of the case.
+2017. It does not kill the rest of the case, though.
 
 Sampling fixes the form of the output. It does not make useless texture cheap,
 make rare futures well estimated, or tell a decision maker which possible
 future matters. Stochastic generation keeps the target. Embedding prediction
-changes it, and that is the real line between the two camps.
+changes it, and as we'll see, that is the real line between the two camps.
 
 ## Predict the description instead
 
@@ -82,24 +107,39 @@ into a compact description <Gloss>an *embedding*, a short list of numbers that
 stands in for something bigger</Gloss>. Similar things land near each other in
 that list. Encode the part you are predicting into one too.
 
-Then train the model to predict the second description from the first, and
-never decode anything back into pixels. I-JEPA, a 2023 image model from Mahmoud
-Assran and colleagues in LeCun's group at Meta, is the idea at its cleanest.
-Hide part of the picture and predict the embedding of the missing piece.
+Then train the model to predict the second description from the first. Nothing
+is ever decoded back into pixels. I-JEPA is the idea at its cleanest: a 2023
+image model from Mahmoud Assran and colleagues in LeCun's group at Meta. Hide
+part of the picture and predict the embedding of the missing piece.
+
+<Figure
+  n="7.4"
+  caption={<>You may remember this one from chapter 1. Choose what the network is asked to predict for the hidden block, then press Predict. With pixels as the target, a decoder has to turn the prediction back into a picture, and the best it can do for a block it cannot see is a blur. With a summary as the target, nothing is turned back into pixels. Look at the bottom row, which is what survives training: the encoder in both cases, and only one of them ever built a decoder.</>}
+>
+  <PredictTheSummary />
+</Figure>
 
 V-JEPA 2, from Meta AI in 2025, does the same for video. It is trained first on
 plain video, with no actions, then again on a robot's actions, for control.
 That is where the argument meets a robot.
 
-This buys two things. The leaf problem goes away. The description never had to
-record which way the leaf went, and if a detail does not survive the encoding,
-nothing downstream is graded on it.
+This buys two things. The leaf problem goes away, because the description never
+had to record which way the leaf went. If a detail does not survive the
+encoding, nothing downstream is graded on it.
 
 The ghost shrinks as well, because you are no longer averaging pictures. The
 descriptions of a car turning left and one turning right can share most of
-their coordinates. The part still open is either kept explicit or dropped as
-irrelevant. A space of descriptions can still hold two separate answers,
-though, and changing the representation does not get rid of uncertainty.
+their entries. The part still open is either kept explicit or dropped as
+irrelevant. I'd add one caution here: a space of descriptions can still hold
+two separate answers, and changing the representation does not get rid of
+uncertainty.
+
+<Figure
+  n="7.5"
+  caption={<>The same junction as Figure 7.2, this time described rather than drawn. Each future is a short list of numbers, and most of the entries agree: road, speed, a car at a junction. Leave the switch on pixels and the prediction is the ghost again. Flip it to description and watch what happens: the shared entries are predicted outright, and the one entry that differs is the only place the two futures still disagree. The lists are illustrative.</>}
+>
+  <SharedDescription />
+</Figure>
 
 <MarginNote>
 This is the JEPA family, and the name is the architecture read aloud. It is
@@ -114,28 +154,29 @@ target is fixed. The next frame is the next frame, and the model cannot make it
 easier. Predict an embedding and that stops being true.
 
 The target now comes from the encoder, the network that turns pictures into
-descriptions, which is also being trained. It can get a perfect score while
-learning nothing, by making every description identical. The prediction is then
-always right, the loss goes to zero, and the representation says nothing about
-anything. That failure is called collapse.
+descriptions, and that network is also being trained. It can get a perfect
+score while learning nothing, by making every description the same. The
+prediction is then always right, the loss goes to zero, and the descriptions
+say nothing about anything. That failure is called collapse.
 
 <Figure
-  n="7.3"
-  caption={<>A tiny encoder, two numbers in and two out, trained on four pairs by gradient descent. Leave the safeguard off and drag the step forward: the loss and the spread of the representation reach zero together. Turn the safeguard on and the loss never gets close to zero. The useful run is the one that looks worse.</>}
+  n="7.6"
+  caption={<>A tiny encoder, two numbers in and two out, trained on four pairs by gradient descent. Leave the safeguard off and drag the step forward: you should see the loss and the spread of the representation reach zero together. Now turn the safeguard on and drag again. The loss never gets close to zero, and that is the run you want. The useful run is the one that looks worse.</>}
 >
   <Collapse />
 </Figure>
 
 Everything hard about these methods lives in preventing that, and the fixes are
 a lineage. In 2020 the received wisdom for learning descriptions without labels
-was contrastive. Pull two views of the same image together, and push everything
-else apart so the descriptions cannot all pile up in one place.
+was contrastive, meaning you learn by comparing pairs. Pull two views of the
+same image together. Push everything else apart, so the descriptions cannot all
+pile up in one place.
 
-BYOL, short for *Bootstrap Your Own Latent*, a 2020 method from Jean-Bastien
-Grill and colleagues at DeepMind, dropped the pushing apart. It keeps a second
-copy of the encoder that updates slowly <Gloss>usually called a *target
-encoder*, it trails the one being trained</Gloss>, and predicts that copy's
-output. The target cannot run away from the predictor.
+BYOL, short for *Bootstrap Your Own Latent*, is a 2020 method from
+Jean-Bastien Grill and colleagues at DeepMind. It dropped the pushing apart.
+Instead it keeps a second copy of the encoder that updates slowly <Gloss>usually
+called a *target encoder*, it trails the one being trained</Gloss>, and it
+predicts that copy's output. The target cannot run away from the predictor.
 
 By the standard account it should have collapsed. It did not, and that
 convinced people collapse could be avoided without pushing anything apart.
@@ -143,16 +184,30 @@ convinced people collapse could be avoided without pushing anything apart.
 VICReg, a 2021 method from Adrien Bardes, Jean Ponce and LeCun, went the
 explicit route instead. The name is the recipe read aloud: variance,
 invariance, covariance. It penalises descriptions whose parts have collapsed or
-copied each other, which is Figure 7.3's safeguard done properly.
+copied each other. That is Figure 7.6's safeguard done properly.
 
-Randall Balestriero and colleagues' 2023 survey, *A Cookbook of Self-Supervised
-Learning*, is frank that much of the field is machinery for stopping the
-trivial solution from winning. None of it is elegant. With the model grading
-its own homework, I doubt it ever will be.
+<Figure
+  n="7.7"
+  caption={<>Three ways of stopping the pile-up, each run on the same little cloud of descriptions. Pick one and press Step a few times. Contrastive pushes every pair apart. BYOL pushes nothing apart, and the cloud still holds its shape because the target it chases trails behind. VICReg leaves the points alone and penalises the cloud itself when its spread drops or its two axes copy each other. The cloud is illustrative; watch the spread readout.</>}
+>
+  <CollapseLineage />
+</Figure>
+
+Randall Balestriero and colleagues wrote a 2023 survey, *A Cookbook of
+Self-Supervised Learning*. It is frank that much of the field is machinery for
+stopping the trivial solution from winning. None of it is elegant. With the
+model grading its own homework, I doubt it ever will be.
 
 The loss is also no longer a number you can read. A pixel loss of zero means
 the model predicted the frame. An embedding loss of zero might mean it
 understands everything, or nothing at all. The number will not tell you which.
+
+<Figure
+  n="7.8"
+  caption={<>Two training runs, both ending with a loss of zero. Press Reveal on the pixel run and there is nothing to reveal: zero means the frame was predicted. Press Reveal on the embedding run and the same zero splits two ways, one where the descriptions still tell left from right and one where they have all become the same. Only the probe underneath can tell you which you got. The curves are illustrative.</>}
+>
+  <TwoZeroLosses />
+</Figure>
 
 So Quentin Garrido and colleagues tested what had been learned. They checked
 what the embeddings could do. Their 2024 paper is *Learning and Leveraging
@@ -169,28 +224,41 @@ that. To see the future rather than reason about it, somebody has to draw it.
 
 The awkward counter-example comes from LeCun's own lab. Kaiming He, best known
 for ResNet, the network design computer vision ran on for years, was at that
-lab in 2021. His paper that year, *Masked Autoencoders Are Scalable Vision
-Learners*, hides most of an image and rebuilds its pixels, the thing JEPA
-refuses to do.
+lab in 2021. His paper that year was *Masked Autoencoders Are Scalable Vision
+Learners*. It hides most of an image and rebuilds its pixels, the very thing
+JEPA refuses to do.
+
+<Figure
+  n="7.9"
+  caption={<>Drag the mask up to three quarters of the image and press Rebuild. The decoder redraws the hidden patches, roughly, which is exactly the job the previous section said was wasteful. Then press Test the encoder. The descriptions it learned still sort the shapes cleanly, and that is the result to keep in mind next time you hear the slogan. Illustrative throughout.</>}
+>
+  <MaskedRebuild />
+</Figure>
 
 The descriptions it learns are very good anyway, and it came out the year
 before the position paper. I keep that result next to every JEPA claim.
 
 The version of the argument that holds up is narrower than the slogan. The
-narrow version is right. Predicting appearances spends most of its capacity on
-things no decision depends on. When the future is uncertain, a deterministic
-predictor is trained towards an image of something that will not happen.
+narrow version is right, though. Predicting appearances spends most of its
+capacity on things no decision depends on. When the future is open, a
+deterministic predictor is trained towards a picture of something that will
+not happen.
 
 If what you want is a compact state to act on, that is a bad way to get one. If
 what you want is a picture, it is the only way anyone has. Most of the
 confusion in this corner of the field comes from comparing systems built for
 different goals.
 
+Hopefully this chapter helped. There is a short quiz below if you want to check
+the argument stuck, including the part about what it does not settle. If I have
+got something wrong, or you know a better source than the ones I used, the
+About page has a corrections section. I would be glad to hear from you.
+
 ## Try it
 
 <Figure
-  n="7.4"
-  caption={<>Eight questions on the argument and its bill. The last two stop the argument being read as a knock-down case.</>}
+  n="7.10"
+  caption={<>Eight questions on the argument and its bill. The last two are there to stop the argument being read as a knock-down case, which is the mistake I'd most like you to avoid.</>}
 >
   <Quiz chapter={7} />
 </Figure>
@@ -198,8 +266,8 @@ different goals.
 ## Sources
 
 <Figure
-  n="7.5"
-  caption={<>Ordered for someone building on this rather than for historical completeness.</>}
+  n="7.11"
+  caption={<>I've ordered these for someone building on this rather than for historical completeness, and preferred first-party material throughout.</>}
 >
   <SourceList chapter={7} />
 </Figure>

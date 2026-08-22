@@ -222,7 +222,7 @@ const en: Dict = {
   "db.note": "The learner needs {total} steps of experience from somewhere. Sliding the ratio does not change that. It changes where the steps come from, and which budget pays.",
   "db.v.none": "No model. Every step of experience is bought from the world at full price.",
   "db.v.some": "Most of the experience is now imagined, and the contact time falls with it.",
-  "db.v.lots": "Almost all of it is imagined. Whether the model can supply that is the next figure's problem.",
+  "db.v.lots": "Almost all of it is imagined. Whether the model can supply that is a later figure's problem.",
   "dt.temp": "Uncertainty in the dream",
   "dt.inDream": "score inside the dream",
   "dt.inWorld": "score in the world",

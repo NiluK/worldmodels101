@@ -3,36 +3,94 @@ times first. Every drop costs something real: wall-clock seconds, and wear on
 the joints. Someone nearby has to reset the scene when the arm knocks the bin
 over. At one attempt a second, that is a month of doing nothing else.
 
-Spend part of the month collecting experience, fit a model to it, and let the
-arm practise inside the model, where a drop costs only compute. Richard Sutton
-wrote that loop down in 1991 and called the agent Dyna. Sutton is a founder of
-reinforcement learning, where an agent learns by acting and being rewarded,
-and co-wrote its standard textbook.
+The idea this chapter is about is simple enough to say in a sentence. Spend part of that month collecting
+experience, fit a model to it, and let the arm practise inside the model, where
+a drop costs only compute. Richard Sutton wrote that loop down in 1991 and
+called the agent Dyna. Sutton is a founder of reinforcement learning, where an
+agent learns by acting and being rewarded, and he co-wrote its standard
+textbook.
 
-Dyna was tiny, a loop in a grid maze, and thirty years early. Danijar Hafner's
-Dreamer, which runs the same loop with deep networks, arrived in 2019.
+Dyna was tiny, a loop in a grid maze, and about thirty years early. Danijar
+Hafner's Dreamer, which runs the same loop with deep networks, arrived in 2019.
+The question in the title is whether the loop works, and the short answer is
+yes. The longer answer, which is what this chapter is for, is about what it
+costs.
 
 <Figure
   n="6.1"
-  caption={<>Hold the update steps fixed and slide where they come from. World contact is usually the budget that runs out first; model compute is still one. This ledger prices a real step and an imagined one the same. That is the assumption that fails first.</>}
+  caption={<>Let's start with the arithmetic behind the pitch. The learner needs two million steps of experience from somewhere, and sliding the ratio never changes that number. What it changes is where the steps come from. Slide it up and watch the time spent in the world fall, while the total time barely moves, because an imagined step is priced at a tiny fraction of a real one. The thing to notice is that this ledger prices a real step and an imagined one as the same kind of step. That is the assumption that fails first. The costs are illustrative.</>}
 >
   <DreamBudget />
 </Figure>
 
-At twenty imagined steps for every real one, the ledger turns a month into
-about a day and a half. That has been the sales pitch from Dyna to Dreamer. It
-holds only while an imagined transition stays useful enough to count.
+At twenty imagined steps for every real one, you should see the ledger turn
+about a month into about a day and a half. That has been the sales pitch from
+Dyna to Dreamer, and the saving is real. It holds only while an imagined step
+stays useful enough to count. Most of this chapter is about when that stops
+being true.
 
-## The loop that has to go round twice
+Two things before we go on. Firstly, I'm going to assume you have read
+chapter 1, or at least that you are happy with a world model meaning a learned
+model of what happens next. Secondly, I'll be leaning on the figures again.
+Each one is something you can press, and I'll tell you what to press and what
+you should expect to see.
 
-Dyna's loop has four steps and it repeats. Act in the world for a while and
-keep what happened. Fit a model to it.
+## The short answer is yes, and Dreamer is the evidence
 
-Train the **policy** <Gloss>the part that picks the action. It is what is being
-trained here; the model is not</Gloss> inside that model, which costs
-compute rather than robot contact. Then take the behaviour back out. It
-collects better experience than the last lap's, and that makes the next model
-better.
+Learning inside a model is the biggest practical argument for building one,
+and Dreamer is the evidence. Danijar Hafner built it as a Toronto PhD student
+working inside Google Brain, a year after his PlaNet had planned by search
+inside a learned model. Dreamer dropped the search and trained a policy
+<Gloss>the part that picks the action. It is what is being trained here; the
+model is not</Gloss> instead.
+
+<Figure
+  n="6.2"
+  caption={<>This is the same figure as in chapter 1, and it is the difference between PlaNet and Dreamer. On the left, press Decide: the model imagines twelve futures, keeps the best, and the dot takes one step, so every decision costs seventy-two model calls. On the right, press Train in imagination once and then Decide. The behaviour was learned in advance, inside the model, so each step costs the model nothing. Watch the two total-calls counters rather than the dots.</>}
+>
+  <PlanOrLearn />
+</Figure>
+
+*Dream to Control*, the 2019 paper, learned its behaviour from long imagined
+rollouts. Neither the actor nor the critic ever touched the environment while
+it learned. The actor is the policy under another name. The critic is a second
+network that guesses how much reward lies ahead.
+
+DreamerV2 followed in 2020 as *Mastering Atari with Discrete World Models*.
+The discrete part is a state made of multiple-choice answers rather than
+dials. On the Atari games it started beating agents that learn straight from
+the environment.
+
+DreamerV3 arrived in *Nature* in 2025 as *Mastering diverse control tasks
+through world models*. It ran with one set of settings across more than 150
+tasks. It was the first agent to collect diamonds in Minecraft without human
+data, which takes a long chain of steps in order. That is the strongest answer
+I know of to whether learning in imagination generalises.
+
+<Figure
+  n="6.3"
+  caption={<>Another one from chapter 1, because it is the robot case in one picture. The curves are shapes rather than measurements. Pick what one step costs, then drag the budget and watch where the shaded region stops. In a simulator the budget reaches past the crossover. On a robot it stops long before that, and the only agent that has learned anything is the one carrying a model. Then switch on the bad model, and keep that switch in mind for the rest of the chapter.</>}
+>
+  <ExperienceBill />
+</Figure>
+
+So systems like these get competent on a fraction of the world contact that
+learning directly would need. On a real robot, as you can see, that fraction
+is the difference between possible and not. The month of dropped objects is
+what the dynasty was built to shorten. Now let's look at what the loop is
+doing, because that is where the cost hides.
+
+## The loop has to go round twice
+
+Dyna's loop has four steps, and it repeats. Act in the world for a while and
+keep what happened. Fit a model to it. Train the policy inside that model,
+which costs compute rather than robot contact, and then take the behaviour
+back out.
+
+The behaviour that comes back out collects better experience than the last
+lap's did. That makes the next model better. The second lap is the part I want
+you to watch in the figure below, because it is the part the summaries tend to
+drop.
 
 <MarginNote>
 The loop going round again is the part the summaries drop. A model fitted to
@@ -41,9 +99,16 @@ It improves because the agent improves, and the agent improves because the
 model did.
 </MarginNote>
 
+<Figure
+  n="6.4"
+  caption={<>A small grid world with a target in the far corner. Press Run a lap. The first policy wanders at random, so the model only learns the cells near the start, which are the shaded ones, and a policy trained inside it has no idea where the target is. Press it again. The better policy goes further, the shaded region grows, and after a lap or two the model finally covers the target. Then press Reset and try turning off Improve the policy: the shaded region stops growing, lap after lap. Illustrative, but the shape is the point.</>}
+>
+  <SecondLap />
+</Figure>
+
 The first model is fitted to whatever a useless policy bumped into. It knows
-the floor and nothing about the target. The second lap fixes that. The better
-policy goes to new places and brings back the data the first model was
+the floor and nothing about the target. The second lap fixes that, because the
+better policy goes to new places and brings back the data the first model was
 missing.
 
 That is why Figure 6.1's ratio cannot be turned up at will. Imagined steps are
@@ -51,20 +116,21 @@ worth having only while the model can supply them honestly, and it can only do
 that where it has been. A network for a robot's world has to guess about the
 rest, and the guessing is where the next thirty years went.
 
-## Imagined experience is not the same currency
+## Imagined experience is a different currency
 
 A training log counts one real transition and one model-generated transition
-as two rows. A transition is one step of experience: an action and what it
-led to. The learner cannot count them the same.
+as two rows. A transition is one step of experience: an action and what it led
+to. The learner cannot count them the same. If you take one thing from this
+chapter, take that.
 
 Imagined experience carries the model's blind spots. The discount compounds
 with every step a rollout, a chain of imagined transitions, takes from a real
-state. Call this the exchange rate. The name makes the right things sound
-expensive.
+state. I call this the exchange rate, because the name makes the right things
+sound expensive.
 
 <Figure
-  n="6.2"
-  caption={<>Push up the imagined share or the model's per-step error. On paper the batch still holds 100 transitions; the experience it is worth falls. The discount is for illustration, not an estimate, and it exposes the assumption that generated and observed rows trade at par.</>}
+  n="6.5"
+  caption={<>Push up the imagined share, then push up the model's per-step error. On paper the batch still holds 100 transitions. Watch the effective experience bar, which is what the learner is really getting, fall as you do. The discount is for illustration rather than an estimate. What it exposes is the assumption that generated and observed rows trade at par.</>}
 >
   <ImaginedData />
 </Figure>
@@ -78,12 +144,19 @@ That trades volume for trust. More imagination helps only while each step is
 priced by how far it has travelled from evidence. A system that refuses to
 price it pays later, in the world, at the real rate.
 
+<Figure
+  n="6.6"
+  caption={<>The dark dots along the bottom are real states from the replay buffer, and the vermilion branches growing out of them are imagined rollouts. Drag the rollout length. At one or two steps every imagined state sits close to evidence. Drag it out to twenty and watch the branches fade as they travel, because the model's error compounds along each one. MBPO keeps the branches short and starts a fresh one from every real state instead. The fading is illustrative.</>}
+>
+  <BranchedRollouts />
+</Figure>
+
 ## The fireball policy
 
 A policy trained inside a model is scored by that model. The model is all it
 can see, so it cannot tell a good action from one that only looks good to its
-examiner. It will find the second kind. Those are the cheapest points on
-offer, and the policy is a thorough student.
+examiner. It will find the second kind, because those are the cheapest points
+on offer, and the policy is a thorough student.
 
 David Ha and Jürgen Schmidhuber met this head-on in 2018, in *World Models*.
 Schmidhuber had argued for learned world models since 1990 and co-invented the
@@ -92,11 +165,20 @@ Google Brain, published it as an interactive web page.
 
 Their agent was a tiny controller trained entirely inside a dream of a Doom
 level where the player dodges fireballs. The controller found a way of moving
-that stopped the dream producing fireballs at all.
+that stopped the dream producing fireballs at all. Let's see what that looks
+like.
+
+<Figure
+  n="6.7"
+  caption={<>Press Train in the dream and watch the score climb. Then look at the fireballs: the agent has found a way of moving that stops the dream spawning them, so the score in there is nearly perfect. Now press Run in the real game. The same moves, and the fireballs keep coming, because the game never agreed to stop. Everything here is a toy, but the finding is Ha and Schmidhuber's.</>}
+>
+  <FireballPolicy />
+</Figure>
 
 Inside the model this was an excellent policy. In the real game it was
 worthless, because the real game had not agreed to stop firing. The fireball
-policy is the student that found the examiner's blind spot.
+policy is the student that found the examiner's blind spot, and I'd keep that
+picture in your head for the rest of the chapter.
 
 <MarginNote>
 The planner version is easier to catch, and I count that in planning's
@@ -116,6 +198,17 @@ High means it samples more widely</Gloss>. Then the same action stops always
 producing the same handy outcome, and a trick that needs the dream to roll one
 way is not worth building on.
 
+<Figure
+  n="6.8"
+  caption={<>Slide the temperature. Start at the left and you should see the dream score high and the world score low, which is the fireball policy again. Slide right and the gap closes, and then both scores collapse. The curves copy the reported shape rather than any one system. The finding is Ha and Schmidhuber's: the agent scored far better inside its dream than in the game, and more uncertainty closed the gap. Read the useful setting as a hump rather than a direction.</>}
+>
+  <DreamTemperature />
+</Figure>
+
+Both ends of that dial fail, as you can see. A confident dream gets exploited,
+and a noisy one has no task left to learn. What works is the narrow band where
+neither failure has taken over.
+
 Robotics had made the same move a year earlier. A simulator is a hand-built
 model with quirks of its own. Josh Tobin and colleagues at OpenAI called the
 fix domain randomisation, in a 2017 paper of that name. Colours, lighting and
@@ -127,51 +220,22 @@ Nothing learned there could depend on one version of it. OpenAI's 2019 paper,
 Its randomisation widened on its own as the policy improved.
 
 <Figure
-  n="6.3"
-  caption={<>Slide the temperature. The curves copy the reported shape, not any one system. The finding is Ha and Schmidhuber's: the agent scored far better inside its dream than in the game, and more uncertainty closed the gap. Read the useful setting as a hump, not a direction.</>}
+  n="6.9"
+  caption={<>The simulator draws the same scene over and over with the colours and camera changed, and the real world is the one fixed sample on the right. Leave the variation low and press Train: the policy leans on the exact colour and the exact camera it saw, and the real scene falls outside that. Turn the variation up past the real scene and train again, and now it sits inside the band. Switch on Widen as it learns to see the Rubik's Cube version. Illustrative throughout.</>}
 >
-  <DreamTemperature />
+  <RandomisedSimulator />
 </Figure>
-
-Both ends of that dial fail. A confident dream gets exploited, and a noisy one
-has no task left to learn. What works is the narrow band where neither failure
-has taken over.
 
 It is a strange thing to have to do. You spend the whole budget making the
 model accurate, then blur it so nothing can lean on the accuracy. The blur is
 the method admitting that its examiner can be bribed, and two fields made that
 admission within a year of each other.
 
-## The Dreamer dynasty, and what it did not buy
+## What the dynasty did not buy
 
-Learning inside a model is the biggest practical argument for building one,
-and Dreamer is the evidence. Danijar Hafner built it as a Toronto PhD student
-working inside Google Brain. His PlaNet, a year earlier, had planned by search
-inside a learned model. Dreamer dropped the search and trained a policy
-instead.
-
-*Dream to Control*, in 2019, learned behaviour from long imagined rollouts,
-and neither the actor nor the critic ever touched the environment. The actor
-is the policy under another name. The critic is a second network that
-estimates how much reward lies ahead.
-
-DreamerV2 followed in 2020 as *Mastering Atari with Discrete World Models*.
-The discrete part is a state made of multiple-choice answers rather than
-dials. On the Atari games it started beating agents that learn straight from
-the environment.
-
-DreamerV3 arrived in Nature in 2025 as *Mastering diverse control tasks through
-world models*. It ran with one set of settings across more than 150 tasks. It
-was the first agent to collect diamonds in Minecraft without human data, which
-takes a long chain of steps in order. That is the strongest answer I know of
-to whether learning in imagination generalises.
-
-Systems like these get competent on a fraction of the world contact that
-learning directly would need. On a real robot, that fraction is the difference
-between possible and not. The month of dropped objects is what the dynasty was
-built to shorten.
-
-Three things it did not buy, each the exchange rate again.
+So we have the answer to the title, and we have the price. Let me close with
+three things the Dreamer line did not buy, because each one is the exchange
+rate again.
 
 **It did not remove the need for real experience.** It changed the exchange
 rate, and a rate is not a free pass. Something still has to go out and find
@@ -179,31 +243,46 @@ out what happens. The model can be trusted only where that has been done.
 
 **It did not make the scoring honest.** The policy is graded by the model the
 whole way through. Short rollouts, the temperature dial and the randomised
-simulator all make that grading harder to game, and none makes it correct.
+simulator all make that grading harder to game, and none of them makes it
+correct.
+
+<Figure
+  n="6.10"
+  caption={<>Ha and Schmidhuber's three pieces, borrowed from chapter 1. Flip the switch to run inside the dream and watch the loop close: the dynamics model feeds its own prediction back, and the game is no longer consulted. That sealed loop is everything the policy gets graded against. It is why a score in there is a claim about the world rather than a test of it.</>}
+>
+  <ThreePieces />
+</Figure>
 
 **It did not make the transfer free.** A policy that works in the dream is an
 untested claim about the world until somebody runs it out there. Ha and
 Schmidhuber did, and found the fireballs still coming.
 
+Hopefully this chapter helped. There is a short quiz below if you want to
+check the ideas stuck. If I have got something wrong, or you know a better
+source than the ones I used, the About page has a corrections section. I would
+be glad to hear from you.
+
 ## Try it
 
 <Figure
-  n="6.4"
-  caption={<>Eight questions on the loop and what lives inside it. The last three separate the pitch from what the loop delivers. Put them to anyone fresh from a Dreamer paper.</>}
+  n="6.11"
+  caption={<>Eight questions on the loop and what lives inside it. The last three separate the pitch from what the loop delivers, and they are the ones I'd put to anyone fresh from a Dreamer paper.</>}
 >
   <Quiz chapter={6} />
 </Figure>
 
 ---
 
-Every system above takes for granted that the model should predict what
-things look like. Frames, pixels, scenes: what you would see if you were there.
+One last thing before you move on. Every system above takes for granted that
+the model should predict what things look like: frames, pixels, scenes, what
+you would see if you were there. The next chapter asks whether that is the
+right job.
 
 ## Sources
 
 <Figure
-  n="6.5"
-  caption={<>Ordered for someone building on this rather than for historical completeness.</>}
+  n="6.12"
+  caption={<>I've ordered these for someone building on this rather than for historical completeness, and preferred first-party material throughout.</>}
 >
   <SourceList chapter={6} />
 </Figure>

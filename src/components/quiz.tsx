@@ -765,7 +765,7 @@ const QUESTIONS_CH8: Q[] = [
   },
   {
     kind: "choice",
-    stem: "In Figure 8.3, the model is within a few per cent across the band it was trained on. Why is that not evidence it has the rule?",
+    stem: "In Figure 8.7, the model is within a few per cent across the band it was trained on. Why is that not evidence it has the rule?",
     options: [
       "The measurement is unreliable",
       "Matching inside the band is equally consistent with having learned the answers to the questions it was asked",
@@ -849,7 +849,7 @@ const QUESTIONS_CH8_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "图 8.3 里，模型在它训练过的那一段范围里误差只有几个百分点。为什么这不算它掌握了规律的证据？",
+    stem: "图 8.7 里，模型在它训练过的那一段范围里误差只有几个百分点。为什么这不算它掌握了规律的证据？",
     options: ["测量不可靠", "在范围里对得上，同样也与「它记住了被问过那些问题的答案」相容", "几个百分点的误差太大了", "那段范围太窄"],
     answer: 1,
     why: "「掌握规律」和「在采样过的区域里拟合得好」只有在范围之外才分得开，而范围之外正是没人去测的地方，因为那里没有素材可以对照。",
@@ -959,7 +959,7 @@ const QUESTIONS_CH7: Q[] = [
   },
   {
     kind: "choice",
-    stem: "In Figure 7.3, the run with the safeguard has a worse loss. What does that tell you?",
+    stem: "In Figure 7.6, the run with the safeguard has a worse loss. What does that tell you?",
     options: [
       "The safeguard is badly tuned",
       "An embedding loss is no longer a number you can read off as quality",
@@ -1028,7 +1028,7 @@ const QUESTIONS_CH7_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "图 7.3 里，开了防护的那一次损失更差。这说明了什么？",
+    stem: "图 7.6 里，开了防护的那一次损失更差。这说明了什么？",
     options: ["防护没调好", "嵌入损失已经不再是一个可以直接当成质量读出来的数字", "模型还需要更多训练", "训练稳定之后就该把防护去掉"],
     answer: 1,
     why: "像素损失为零意味着那一帧被预测出来了。嵌入损失为零可能意味着什么都懂，也可能什么都不懂，而这个数字说不清是哪种。",

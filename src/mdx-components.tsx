@@ -55,6 +55,44 @@ import { PredictTheSummary } from "@/components/predict-the-summary";
 import { ProbeBoard } from "@/components/probe-board";
 import { StateObservation } from "@/components/state-observation";
 import { BallBehindWall } from "@/components/ball-behind-wall";
+import { BranchedRollouts } from "@/components/branched-rollouts";
+import { CacheOrRecipe } from "@/components/cache-or-recipe";
+import { CollapseLineage } from "@/components/collapse-lineage";
+import { CompressionProgress } from "@/components/compression-progress";
+import { CopiedFromFootage } from "@/components/copied-from-footage";
+import { CostOfASymbol } from "@/components/cost-of-a-symbol";
+import { EnsembleDisagreement } from "@/components/ensemble-disagreement";
+import { FireballPolicy } from "@/components/fireball-policy";
+import { FiveFailures } from "@/components/five-failures";
+import { FourQuestions } from "@/components/four-questions";
+import { KeepOrLookBack } from "@/components/keep-or-look-back";
+import { LatentActions } from "@/components/latent-actions";
+import { LeafLedger } from "@/components/leaf-ledger";
+import { MaskedRebuild } from "@/components/masked-rebuild";
+import { MemoriseOrRule } from "@/components/memorise-or-rule";
+import { ModelAndPolicy } from "@/components/model-and-policy";
+import { NameableAxes } from "@/components/nameable-axes";
+import { NextWordDepends } from "@/components/next-word-depends";
+import { NoiseToFrame } from "@/components/noise-to-frame";
+import { PixelBudget } from "@/components/pixel-budget";
+import { PixelsOrLatent } from "@/components/pixels-or-latent";
+import { ProfessorForcing } from "@/components/professor-forcing";
+import { RandomisedSimulator } from "@/components/randomised-simulator";
+import { SamePointTwoFutures } from "@/components/same-point-two-futures";
+import { ScheduledSamplingDial } from "@/components/scheduled-sampling-dial";
+import { SecondLap } from "@/components/second-lap";
+import { SeedLottery } from "@/components/seed-lottery";
+import { SharedDescription } from "@/components/shared-description";
+import { SingleFrameAlibi } from "@/components/single-frame-alibi";
+import { StowawayLedger } from "@/components/stowaway-ledger";
+import { TeacherForcingLoop } from "@/components/teacher-forcing-loop";
+import { ThousandVersions } from "@/components/thousand-versions";
+import { ThreeTargets } from "@/components/three-targets";
+import { TrustHorizon } from "@/components/trust-horizon";
+import { TwoZeroLosses } from "@/components/two-zero-losses";
+import { UncertaintyPenalty } from "@/components/uncertainty-penalty";
+import { WhoLabelledIt } from "@/components/who-labelled-it";
+import { WordClusters } from "@/components/word-clusters";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -103,6 +141,44 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ProbeBoard,
     StateObservation,
     BallBehindWall,
+    BranchedRollouts,
+    CacheOrRecipe,
+    CollapseLineage,
+    CompressionProgress,
+    CopiedFromFootage,
+    CostOfASymbol,
+    EnsembleDisagreement,
+    FireballPolicy,
+    FiveFailures,
+    FourQuestions,
+    KeepOrLookBack,
+    LatentActions,
+    LeafLedger,
+    MaskedRebuild,
+    MemoriseOrRule,
+    ModelAndPolicy,
+    NameableAxes,
+    NextWordDepends,
+    NoiseToFrame,
+    PixelBudget,
+    PixelsOrLatent,
+    ProfessorForcing,
+    RandomisedSimulator,
+    SamePointTwoFutures,
+    ScheduledSamplingDial,
+    SecondLap,
+    SeedLottery,
+    SharedDescription,
+    SingleFrameAlibi,
+    StowawayLedger,
+    TeacherForcingLoop,
+    ThousandVersions,
+    ThreeTargets,
+    TrustHorizon,
+    TwoZeroLosses,
+    UncertaintyPenalty,
+    WhoLabelledIt,
+    WordClusters,
     HorizonSlider,
     RolloutEquation,
     Quiz,

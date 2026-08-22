@@ -1,31 +1,58 @@
-A dynamics paper leads with its one-step error, and it is the easiest number to
-be impressed by.
+If you have read the last chapter, you have a state: a short list of numbers
+that stands in for what the camera saw. This chapter is about the next step,
+which is the step where that state moves. A dynamics model, also called a
+transition model, does one job. Take what you know, take what you did, and
+produce what you know next.
 
-Show the model where things are and ask what happens next. Compare its answer
-to what happened, then do that ten thousand times and read off the average. The
-result will be small and honest.
+The awkward word there is know, and I want to flag it early, because it covers
+more than the last picture. It is everything that has happened and still
+matters, folded into something small enough to carry. A ball behind a wall is
+still moving. A door you opened four rooms ago is still open.
+
+I should say that what confused me for longest here was a number, and not the
+definition. A dynamics paper leads with its one-step error, and it is the
+easiest number to be impressed by. I was impressed by it for a good while, and
+part of this chapter is me explaining why I stopped.
+
+Two things before we start. Firstly, I'm going to assume you have read chapter
+1, or at least that you know a state is what is there and an observation is the
+part you can see. Secondly, I'll lean on the figures again, and tell you what
+to press and what you should see. Let's start with the job itself.
+
+<Figure
+  n="5.1"
+  caption={<>This is the one job, written down. The <em>s</em> on the right is what you know, the <em>a</em> is what you did, and the <em>s</em> on the left is what you know next. Hover a symbol and its plain-English reading lights up. Keep your eye on the left-hand <em>s</em>, because everything in this chapter comes from feeding it back in as the next right-hand <em>s</em>.</>}
+>
+  <TransitionEquation />
+</Figure>
+
+Now the number. Show the model where things are and ask what happens next.
+Compare its answer to what happened, then do that ten thousand times and read
+off the average. The result will be small and honest.
 
 It also measures a job the model will never be asked to do. You were going to
 ask it for a hundred steps. From step two it stops being handed the truth and
 starts being handed its own last answer.
 
-Call that the second-step problem. The field put a name to it in 2015, tried
-two rival cures within a year, and has not solved it since.
+I call that the second-step problem. The field put a name to it in 2015, tried
+two rival cures within a year, and has not solved it since. Let's look at what
+it does to one small model before we go into any of that.
 
 <Figure
-  n="5.1"
-  caption={<>One model, one bias, two ways of running it. The grey line is corrected at every step, the way it was during training, and mostly disappears underneath the truth. The vermilion line is the same model left to eat its own output, the way it will be run. Push the bias up and watch which line notices.</>}
+  n="5.2"
+  caption={<>One model, one bias, two ways of running it. The grey line is corrected at every step, the way it was during training, and mostly disappears underneath the truth. The vermilion (orange-red) line is the same model left to eat its own output, the way it will be run. Push the bias up and watch which line notices. The distances are illustrative.</>}
 >
   <FreeRunning />
 </Figure>
 
-At four per cent error per step, the corrected line is still hugging the truth
-after thirty steps. The free-running line, same model, same bias, ends up
-thirty-nine times further away.
+Judging from the readouts, at four per cent error per step the corrected line
+is still hugging the truth after thirty steps. The free-running line, same
+model, same bias, ends up thirty-nine times further away. That is the whole
+chapter in one picture, so keep it in mind as we go.
 
 ## The inherited habit
 
-The practice came with the first networks trained on sequences, decades before
+The habit came with the first networks trained on sequences, decades before
 world models. During training a sequence model is shown the true previous value
 at every step. That is what the recording contains, and it keeps training
 stable. The field calls this **teacher forcing**.
@@ -34,53 +61,60 @@ The cost is that nobody teacher-forces you in production. At the moment of use
 the model gets its own last answer, which is slightly wrong. It has never once
 been asked to recover from being slightly wrong.
 
+<Figure
+  n="5.3"
+  caption={<>The same five steps, drawn with the arrows that feed each one. Leave the switch on training and every step is handed the recorded truth, so a mistake goes nowhere. Flip it to in use and each step is handed the one before it, so the first small mistake rides along into every later step. Press Step and watch where the vermilion comes from.</>}
+>
+  <TeacherForcingLoop />
+</Figure>
+
 Samy Bengio and his co-authors named that gap in 2015, in *Scheduled Sampling
 for Sequence Prediction with Recurrent Neural Networks*. Bengio was at Google,
 working on networks that caption a photo one word at a time, each word fed back
 as the next input. That is a rollout, and the captions drifted the way the
-vermilion line drifts.
+vermilion line drifts. A paper that leads with the grey line is describing the
+wrong run.
 
 <MarginNote>
-Calling the model bad at long horizons misreads it. It was trained on a
-distribution of inputs it will never see again once you start rolling it out.
-Nothing in the training loop noticed.
+I'd resist calling the model bad at long horizons, because that misreads it.
+It was trained on a distribution of inputs it will never see again once you
+start rolling it out, and nothing in the training loop noticed.
 </MarginNote>
-
-A paper that leads with the grey line is describing the wrong run.
 
 ## The memory wars, 1997 to 2023
 
-A transition model does one job. Take what you know, take what you did, and
-produce what you know next.
-
-The awkward word is know, because it covers more than the last picture. It is
-everything that has happened and still matters, folded into something small
-enough to carry. A ball behind a wall is still moving. A door you opened four
-rooms ago is still open.
-
-The question is how the past gets carried. Since 1997 it has had two answers,
-which take turns being fashionable.
+Let's go back to the word know, because the question underneath it is how the
+past gets carried. Since 1997 it has had two answers, which take turns being
+fashionable, and I'll give you both before we compare them.
 
 **Carry a summary.** Keep one fixed block of numbers. Every time something new
 arrives, fold it in and throw the old block away. The work per step never
 changes however long the sequence gets.
-
-This is what recurrent networks do <Gloss>a network with a loop in it. Each
-step's output feeds back into the next step's input</Gloss>. The summary camp's
-founding paper is *Long Short-Term Memory*, from Sepp Hochreiter and Jürgen
-Schmidhuber in 1997. Their LSTM was a loop built to hold a fact longer than
-training pressure wanted, and it ended up running speech recognition and
-translation until transformers arrived.
 
 **Keep a window.** Store the steps that fit in the context. When a new one
 arrives, look back over them to decide what matters. This is attention
 <Gloss>for each new step, score the earlier steps for how much they matter,
 then read mostly from the ones that scored highest</Gloss>.
 
-Transformers, the architecture under today's language models, have done it
-since 2017. That year Ashish Vaswani and colleagues at Google published
-*Attention Is All You Need*, and the title meant what it said: the loop went
-out. Within a few years the window had replaced the summary almost everywhere.
+<Figure
+  n="5.4"
+  caption={<>Both columns use a state of the same width, so the only thing that changes is the sequence length. Drag the length up and watch the second row. Neither column wins: looking at everything is cheaper for short sequences and dearer for long ones.</>}
+>
+  <MemoryTrade />
+</Figure>
+
+The summary is what recurrent networks do <Gloss>a network with a loop in it, so
+each step's output feeds back into the next step's input</Gloss>. The summary
+camp's founding paper is *Long Short-Term Memory*, from Sepp Hochreiter and
+Jürgen Schmidhuber in 1997. Their LSTM was a loop built to hold a fact longer
+than training pressure wanted. It ended up running speech recognition and
+translation until transformers arrived.
+
+The window is what transformers do, and they are the architecture under
+today's language models. They have done it since 2017, when Ashish Vaswani and
+colleagues at Google published *Attention Is All You Need*. The title meant
+what it said: the loop went out. Within a few years the window had replaced the
+summary almost everywhere.
 
 Then the summary came back. The state-space models keep the fixed summary and
 add better machinery. S4 came from Albert Gu and colleagues at Stanford in
@@ -88,34 +122,35 @@ add better machinery. S4 came from Albert Gu and colleagues at Stanford in
 Mamba came from Gu and Tri Dao in 2023, as *Mamba: Linear-Time Sequence
 Modeling with Selective State Spaces*.
 
+Speed is the half of the trade that gets benchmarked, and it is the duller
+half. A fixed summary has to decide at every step what is worth keeping,
+without knowing what will be needed later. Mamba gave a little ground: its
+summary decides what to keep based on what it is looking at. Attention puts off
+the decision until the read, and pays by keeping a finite bank of earlier
+states.
+
 <Figure
-  n="5.2"
-  caption={<>Both columns use a state of the same width, so the only thing that changes is the sequence length. Drag the length up and watch the second row. Neither column wins: looking at everything is cheaper for short sequences and dearer for long ones.</>}
+  n="5.5"
+  caption={<>Six facts arrive one at a time, and a summary with room for three has to keep or drop each one as it comes. A question arrives at the end. Pick the question, press Play, and watch the summary: it cannot see the question coming, so sometimes it dropped the one fact that was needed. Switch to the window and the same question is answered by looking back, at the cost of keeping all six. Illustrative.</>}
 >
-  <MemoryTrade />
+  <KeepOrLookBack />
 </Figure>
 
-Speed is the half of the trade that gets benchmarked, and the duller half. A
-fixed summary has to decide at every step what is worth keeping, without
-knowing what will be needed later. Mamba gave a little ground: its summary
-decides what to keep based on what it is looking at. Attention puts off the
-decision until the read, and pays by keeping a finite bank of earlier states.
-
-This is the squeeze between a camera and a decision, one level up. Something has to be thrown away, and whatever is doing the throwing
-does not know the future. That is why twenty-six years of rivalry have no
-winner.
+This is the squeeze between a camera and a decision from chapter 4, one level
+up. Something has to be thrown away, and whatever is doing the throwing does
+not know the future. That is why twenty-six years of rivalry have no winner.
 
 ## Splitting the difference
 
 The systems that work share one trick. It arrived in 2018 with PlaNet, from
-Danijar Hafner and colleagues: *Learning Latent Dynamics for Planning from
+Danijar Hafner and colleagues, in *Learning Latent Dynamics for Planning from
 Pixels*. It learned a model from raw pixels and planned inside it instead of in
 the pixels.
 
-Carry two things forward rather than one. One part is deterministic: computed
-the same way every time, it holds whatever reliably follows from the last
-state. The other is stochastic: sampled, so it holds whatever could still go
-either way.
+The trick is to carry two things forward rather than one. One part is
+deterministic: computed the same way every time, it holds whatever reliably
+follows from the last state. The other is stochastic: sampled, so it holds
+whatever could still go either way.
 
 A ball's motion goes in the first. Whether the door opens goes in the second.
 Keep only the deterministic part and the model has no way to say it is unsure,
@@ -123,27 +158,42 @@ so it confidently invents one future. Keep only the stochastic part and it
 struggles to remember anything for long, because noise gets added at every
 step.
 
+<Figure
+  n="5.6"
+  caption={<>The split, on a ball. Drag time forward and let the ball go behind the wall. With the switch on deterministic only, the model hands back one dot, moved on at the known speed, and it is wrong for the whole stretch where the ball is stopped. Switch the stochastic part on and it carries a spread as well, which widens the longer the ball is hidden and collapses when it comes out. The first part remembers, and the second admits doubt.</>}
+>
+  <BallBehindWall />
+</Figure>
+
 PlaNet ran the comparison and argued for carrying both, because each one fails
 alone in a different direction. Dreamer is what that argument bought. The same
 group published it a year later as *Dream to Control*, and let an agent learn
-to behave inside the model's imagined rollouts. The split state went into it,
-and into every Dreamer since, up to the *Nature* paper of 2025.
+to behave inside the model's imagined rollouts.
 
-That is how a 2018 design choice became the spine of a seven-year dynasty: it
-is a state that can both remember and admit doubt.
+The split state went into it, and into every Dreamer since, up to the *Nature*
+paper of 2025. That is how a 2018 design choice became the spine of a
+seven-year dynasty. It is a state that can both remember and admit doubt.
 
 ## Four truces with the second step
 
 Nobody has removed the second-step problem, and I do not expect anyone to.
-Instead the field has four ways of not being destroyed by it.
+Instead the field has four ways of not being destroyed by it, so let's take
+them in turn.
 
 **Train it on its own output.** If the complaint is that the model never
 practised recovering from its own mistakes, let it make some during training.
 Feed it its own predictions part of the time, and raise that share as it
 improves. This is Bengio's *scheduled sampling*, the most direct of the four.
 
+<Figure
+  n="5.7"
+  caption={<>Ten training steps in a row. The slider is how often the model is handed its own last answer instead of the recorded truth. At zero this is teacher forcing, and every input is the truth. Drag it up and the vermilion inputs appear, which is the model practising on its own mistakes. Press Run the schedule to raise the share over a run the way Bengio did, and read the verdict underneath. Illustrative.</>}
+>
+  <ScheduledSamplingDial />
+</Figure>
+
 **Train the rollout, not the step.** Instead of scoring one-step accuracy,
-score a whole imagined stretch against a whole real one. Then what gets
+score a whole imagined stretch against a whole real one, so that what gets
 optimised is what you will run. Marc'Aurelio Ranzato and colleagues at Facebook
 made that case in 2015 too, in *Sequence Level Training with Recurrent Neural
 Networks*. The two 2015 papers read as a pair: one fixes the input and the
@@ -154,32 +204,43 @@ is cheap, it works, and it gives up the part of the appeal that was infinite.
 Michael Janner and colleagues made it a method in 2019, under a title that is
 also the question: *When to Trust Your Model*.
 
+<Figure
+  n="5.8"
+  caption={<>Two dots start from the same real state, and one of them is running dynamics that are a few per cent off. Drag the horizon to 5 or so and they are still together, which is the stretch Janner's method is willing to trust. Keep dragging and watch the gap open. Nothing breaks at any single step, which is why this truce is a number you measure rather than a rule.</>}
+>
+  <HorizonSlider />
+</Figure>
+
 **Look again.** Predict a few steps, act on one, take a fresh observation and
-start over. This is most of robotics, and the oldest idea here: Rudolf Kalman's
-filter from the 1960s (the maths inside every GPS receiver) is this loop. A
-measurement corrects the part of the state you can see. Error in the part you
-cannot see, and the model's bias, do not reset to zero.
+start over. This is most of robotics, and the oldest idea here. A measurement
+corrects the part of the state you can see, but error in the part you cannot
+see, and the model's bias, do not reset to zero.
 
-The blend inside that filter is the cleanest picture of predict-then-correct
-there is, so it is worth a short detour. Picture a radar tracking a plane. At
-each moment you have two stories about where the plane is. One comes from
-physics: take the last position and the last speed, and predict where the plane
-should be now. The other comes from the radar, which hands you a blip.
+The oldest form of it is Rudolf Kalman's filter from the 1960s, the maths
+inside every GPS receiver. That filter is this loop, and the blend inside it is
+the cleanest picture of predict-then-correct there is, so let's take a short
+detour through it. Picture a radar tracking a plane. At each moment you have
+two stories about where the plane is.
 
-Both stories are uncertain. Each is really a bell curve, a Gaussian, with the
-most likely spot in the middle and the less likely ones fading out either side.
+One comes from physics: take the last position and the last speed, and predict
+where the plane should be now. The other comes from the radar, which hands you
+a blip. Both stories are uncertain, and each is really a bell curve, a
+Gaussian, with the most likely spot in the middle and the less likely ones
+fading out either side.
+
 Multiply the two curves together and you get a third bell curve, which sits
-between the two and is narrower than either. That is the new belief.
+between the two and is narrower than either. That is the new belief, and the
+figure below lets you watch it form.
 
 <Figure
-  n="5.3"
-  caption={<>Here are the two stories about where the plane is, drawn as bell curves on one axis. Slide how sure physics is and how noisy the radar is, and watch the new belief lean toward the sharper story while staying narrower than either. The gain is the number that says how far it leaned. Now press Correct to make the new belief the next physics prediction, and watch it widen again as the plane moves on.</>}
+  n="5.9"
+  caption={<>Here are the two stories about where the plane is, drawn as bell curves on one axis. Slide how sure physics is and how noisy the radar is, and watch the new belief lean toward the sharper story while staying narrower than either. The gain readout is the number that says how far it leaned. Now press Correct to make the new belief the next physics prediction, and watch it widen again as the plane moves on. The positions are illustrative.</>}
 >
   <TwoStories />
 </Figure>
 
-How far the new belief leans from physics toward the radar is set by one number
-between zero and one, which the field calls the Kalman gain. As you can see
+How far the new belief leans from physics toward the radar is set by one
+number between zero and one. The field calls it the Kalman gain. As you can see
 from the figure, a noisy radar pulls the gain toward zero, so the filter sticks
 with physics. A sharp radar pulls it toward one, so the filter trusts the
 reading.
@@ -190,9 +251,16 @@ even though every reading it ever got was off, and it does that one tick at a
 time without ever waiting for the future. That is the look-again truce in its
 original form, and it only works because fresh readings keep arriving.
 
-None of these is a fix. A paper that sells one as a fix is overclaiming. Each
-admits that a learned transition model can be trusted over a limited horizon.
-Part of the engineering is measuring how long that horizon is.
+<Figure
+  n="5.10"
+  caption={<>The same blend, run for a whole flight. Press play and watch the band around the estimate tighten as the blips arrive, even with the radar noise turned up. Then drop the blips for a stretch: the filter coasts on physics alone and the band opens, because nothing is correcting it. That opening band is a free run, which is the second-step problem again. Distances are illustrative.</>}
+>
+  <KalmanTracker />
+</Figure>
+
+None of these is a fix, and a paper that sells one as a fix is overclaiming.
+Each admits that a learned transition model can be trusted over a limited
+horizon. Part of the engineering is measuring how long that horizon is.
 
 ## Recovery is a separate skill
 
@@ -202,11 +270,12 @@ demonstrated path, nothing in their scores says which way they move after a
 small mistake.
 
 Training on perturbed or self-generated states does ask it. The answer is a
-separate skill, and that is the claim I would most want a sceptic to take away.
+separate skill, and that is the claim I would most want a sceptic to take
+away. Have a go with the figure below.
 
 <Figure
-  n="5.4"
-  caption={<>Both toy models are exact on the demonstrated path. Drag the offset to start them off it. One has only learned what comes next on the line, and drifts away. The other has practised nearby states and bends back. The arithmetic is made up, but the distinction is real, and it is the finding behind Professor Forcing, described next.</>}
+  n="5.11"
+  caption={<>Both toy models are exact on the demonstrated path. Drag the offset to start them off it. One has only learned what comes next on the line, and drifts away. The other has practised nearby states and bends back. The arithmetic is made up, but the distinction is real, and it is the finding behind Professor Forcing, which we come to next.</>}
 >
   <RecoveryBasin />
 </Figure>
@@ -222,8 +291,15 @@ best-known attacks on the gap came one from each.
 It attacks the gap from the other side and leaves the input alone. Instead it
 trains the model until its internal states look the same whether it is
 teacher-forced or running free. The judge is a second network trained to tell
-the two kinds of run apart. The model has to fool it (the trick behind
-generative adversarial networks: one network forges, another spots forgeries).
+the two kinds of run apart. The model has to fool it, which is the trick behind
+generative adversarial networks: one network forges, another spots forgeries.
+
+<Figure
+  n="5.12"
+  caption={<>Two runs of the same model, one teacher-forced and one free, each leaving a trail of hidden states. The judge on the right is trained to say which trail is which. Press Train a round a few times and watch the free trail pulled over toward the forced one until the judge is guessing. Nothing here touched the inputs. The trails are illustrative.</>}
+>
+  <ProfessorForcing />
+</Figure>
 
 I think it is the more under-read of the two, perhaps because transformers
 arrived the next year and took the field's attention. The problem moved into
@@ -232,26 +308,29 @@ world models, where every rollout is a free run.
 What the two papers share is that recovery has to appear somewhere in the
 training objective, or it does not appear at all.
 
+Everything in this chapter was paid for in reality. The model was trained on
+recorded experience, checked against it and corrected by it. The next chapter
+asks what happens when an agent learns inside the model instead.
+
+Hopefully this one helped. There is a short quiz below if you want to check the
+ideas stuck. If I have got something wrong, or you know a better source than
+the ones I used, the About page has a corrections section. I would be glad to
+hear from you.
+
 ## Try it
 
 <Figure
-  n="5.5"
-  caption={<>Eight questions on the step and the second-step problem. The first three change how you read a paper's headline number.</>}
+  n="5.13"
+  caption={<>Eight questions on the step and the second-step problem. The first three change how you read a paper's headline number, so try those even if you skip the rest.</>}
 >
   <Quiz chapter={5} />
 </Figure>
 
----
-
-Everything above was paid for in reality. The model was trained on recorded
-experience, checked against it and corrected by it.
-
 ## Sources
 
 <Figure
-  n="5.6"
-  caption={<>Ordered for someone building on this rather than for historical completeness.</>}
+  n="5.14"
+  caption={<>I've ordered these for someone building on this rather than for historical completeness, and preferred first-party material throughout.</>}
 >
   <SourceList chapter={5} />
 </Figure>
-

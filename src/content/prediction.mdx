@@ -1,26 +1,26 @@
-Take a photograph of a ball in mid-air. Ask where it will be a moment later,
-and you cannot say. Up, down, sideways, or barely moving at all, the picture
+Take a photograph of a ball in mid-air and ask where it will be a moment
+later. You cannot say. Up, down, sideways, or barely moving at all, the picture
 looks the same. Everything the answer depends on is missing from a single
 frame.
 
-Now take two photographs a fraction of a second apart. The answer arrives
-before you have finished asking. Both pictures were equally sharp, so detail is
-not what changed.
+Now take two photographs a fraction of a second apart. This time the answer
+arrives before you have finished asking. Both pictures were equally sharp, so
+detail is not what changed.
 
-Two frames hold something one frame cannot: a direction and a speed. Neither is
-drawn on either picture. They live in the relationship between the two, and you
-pulled them out without being told to.
+Two frames hold something one frame cannot: a direction and a speed. Neither
+is drawn on either picture. They live in the relationship between the two, and
+you pulled them out without being told to.
 
 <Figure
   n="3.1"
-  caption={<>The fan is every future still consistent with what has been seen. Add frames and watch it narrow. One frame rules out nothing. A second fixes the heading and the speed, and a third settles whether the path is bending. Each extra frame is one more quantity you can work out, and none of them was in any single picture.</>}
+  caption={<>Drag the slider from one frame to three and watch the fan. The fan is every future still consistent with what has been seen. One frame rules out nothing. A second fixes the heading and the speed, and a third settles whether the path is bending. Each extra frame is one more quantity you can work out, and none of them was in any single picture.</>}
 >
   <FramesToState />
 </Figure>
 
-Ask something to predict what comes next and it has no choice but to build
+Ask something to predict what comes next, and it has no choice but to build
 whatever the next moment depends on. It was never asked for those things, and
-it cannot be right without them. Call them stowaways: the quantities a
+it cannot be right without them. I call them stowaways: the quantities a
 predictor is forced to carry that nobody put on the manifest. Direction and
 speed are the first two.
 
@@ -34,6 +34,26 @@ grammar inside a network asked only to guess the next word. Then in 2022
 Kenneth Li and colleagues wrote *Emergent World Representations*, and found a
 whole game board inside a network asked only to guess moves.
 
+<Figure
+  n="3.2"
+  caption={<>The three finds we'll walk through, laid out as a ledger. Each row says what the system was asked to do and what instrument was used to look. Press Open the hold and the third column fills in with what it had to carry to do the job. None of those was on the manifest.</>}
+>
+  <StowawayLedger />
+</Figure>
+
+I should say that the title of this chapter is a question I used to find
+irritating. "Prediction is learning" gets said a lot, usually as a slogan, and
+nobody would tell me what the predictor had learned or how anybody had checked.
+What I wanted was the chain of results, in order, with the instruments. This
+chapter is that chain, and if the slogan has annoyed you like it annoyed me,
+hopefully it helps.
+
+Two things before we start. Firstly, I'm going to assume you have read chapter
+1, or at least that you know what I mean by a state: what is there, whether or
+not you can see it. Secondly, I'll be leaning on the figures again. Each one is
+something you can press, and I'll tell you what to press and what you should
+see.
+
 ## Guess, check, adjust
 
 The loop is as small as it sounds. Look at what you have and say what you think
@@ -42,7 +62,20 @@ little in the direction that would have been less wrong, and go again.
 
 None of the steps is clever. The power is in what the loop does not need:
 nobody has to label anything, because the target is the next piece of the
-recording.
+recording. Let's watch it run before we go any further.
+
+<Figure
+  n="3.3"
+  caption={<>Press Run. The predictor guesses the next number from the previous two, and is corrected a little after every guess. It starts at zero and knows nothing. Watch the dashed line climb onto the solid one, then look under What it has learned: two numbers that nobody supplied, reached by being wrong and adjusting.</>}
+>
+  <GuessCheckAdjust />
+</Figure>
+
+Nothing in that figure was told the rule. It was told, two hundred and twenty
+times, by how much it had just missed. Each time it nudged its own two numbers
+<Gloss>the *weights*: the adjustable numbers inside a model, and the only thing
+that learning ever changes</Gloss> a little way towards being right, and that
+was enough. Splendid.
 
 <MarginNote>
 This is all that *self-supervised* means. Supervised, because the model is
@@ -51,29 +84,23 @@ telling rather than a person with a spreadsheet.
 </MarginNote>
 
 For most of the field's history a model learned from examples that somebody had
-labelled. A million images meant somebody writing down what was in each one.
-Labelling was the expensive part, and the size of a dataset was the size of
+labelled. A million images meant a person writing down what was in each one.
+The labels were the costly part, and the size of a dataset was the size of
 somebody's budget. Prediction skips the bill, because any recording of anything
 is already a training set.
 
 The argument was still open in 2013, when Yoshua Bengio, Aaron Courville and
-Pascal Vincent wrote *Representation Learning: A Review and New Perspectives*,
-a survey that reads as a case still being made. A field does not argue for long
-against free data. That convenience, more than any single result, is why
-prediction ate the field.
+Pascal Vincent wrote *Representation Learning: A Review and New Perspectives*.
+It is a survey, and it reads as a case still being made. A field does not argue
+for long against free data. That convenience, more than any single result, is
+why prediction ate the field.
 
 <Figure
-  n="3.2"
-  caption={<>A predictor guessing the next number from the previous two, corrected a little after every guess. It starts at zero and knows nothing. Watch the dashed line climb onto the solid one. Then look at what it learned: two numbers that nobody supplied, reached by being wrong and adjusting.</>}
+  n="3.4"
+  caption={<>Flip the switch between the two ways of training. On the left, every example needs a person to write the answer beside it, and the labels bill climbs with the data. On the right, the answer is the next frame of the same recording, and nobody is paid for anything. Drag the amount of data up and watch which bill grows. The numbers are illustrative.</>}
 >
-  <GuessCheckAdjust />
+  <WhoLabelledIt />
 </Figure>
-
-Nothing in that figure was told the rule. It was told, two hundred and twenty
-times, by how much it had just missed. Each time it nudged its own two numbers
-<Gloss>the *weights*: the adjustable numbers inside a model, and the only thing
-that learning ever changes</Gloss> a little way towards being right. That was
-enough.
 
 ## What guessing forces you to build
 
@@ -88,6 +115,13 @@ things that can be eaten.
 Nobody had given the network a single category. It reached them because a
 word's category is what its next word depends on. The title, *Finding Structure
 in Time*, is honest. The structure was found rather than installed.
+
+<Figure
+  n="3.5"
+  caption={<>Each dot is one word, placed by the network's internal state for it. Leave the switch on Before training and the words are scattered. Flip it to After training and watch them sort: nouns to one side, verbs to the other, and inside the nouns the animate ones apart from the inanimate. Hover or tap a dot to read the word. Nothing here was labelled, and the positions are illustrative.</>}
+>
+  <WordClusters />
+</Figure>
 
 For a long time that was where it stopped. The network was small and the
 grammar was a toy, and a toy is not a claim about the world. The finding waited
@@ -106,18 +140,26 @@ board was in there, which on its own is a curiosity.
 
 The intervention is what made it a finding. Change that internal board, and the
 moves the network goes on to make change with it. So the board is there because
-the network is using it.
+the network is using it. Let's do both steps ourselves.
+
+<Figure
+  n="3.6"
+  caption={<>Press Read the board first. A probe draws an eight-by-eight board out of the network's activations, and nobody put one in. Now press Flip a square in the inner board and watch the list of next legal moves change. That is the intervention. Then switch on Ask as mine/theirs, which is the 2023 reframing I'm about to describe, and the probe label changes from a small network to a straight line.</>}
+>
+  <ProbeBoard />
+</Figure>
 
 Neel Nanda and colleagues studied the same network again in 2023, in
 *Othello-GPT has a linear emergent world representation*. Li's probe had been a
 small network of its own, because a straight line had failed. Nanda showed a
-straight line works once you ask the right question. The network stored each
-square as mine or theirs rather than black or white, and flipped its view every
-turn.
+straight line works once you ask the right question. As you saw with the
+switch, the network stored each square as mine or theirs rather than black or
+white, and flipped its view every turn.
 
-The same rule is under both results, thirty-two years apart. Prediction rewards
-nothing except making the next moment less surprising. Sometimes the cheapest
-way to be less surprised is to build the process that is generating the data.
+The same rule sits under both results, thirty-two years apart. Prediction
+rewards one thing only, and that is making the next moment less surprising.
+Sometimes the cheapest way to be less surprised is to build the very thing
+that is making the data.
 
 <MarginNote>
 Sometimes is the right word. A predictor will settle for any shortcut that
@@ -128,18 +170,26 @@ for is most of the work.
 ## Predict the next what?
 
 The loop says predict the next thing. It never says what counts as a thing, and
-that silence is where the design decision hides.
+that silence is where the design decision hides. Let's take three choices in
+turn.
 
 Predict the next pixel and you get a system that is very good at leaves. Leaves
 are hard to predict and they are also most of the pixels, so that is where the
 capacity goes <Gloss>*capacity* is how much a model can hold. Spend it on one
-thing and it is not there for another</Gloss>. Call that the leaf problem,
-since chapter 4 is built around it.
+thing and it is not there for another</Gloss>. I call that the leaf problem,
+and chapter 4 is built around it.
 
-Predict the next word and you get grammar and a surprising amount of knowledge
-about the world. That is what the next word turns on. In 2019 Alec Radford and
-colleagues at OpenAI showed how far it goes at scale, in *Language Models are
-Unsupervised Multitask Learners*.
+<Figure
+  n="3.7"
+  caption={<>Same loop, three targets. Pick what goes on the right-hand side of the guess. Start on pixels and watch where the capacity bar goes: to the leaves, which are most of the picture and the hardest part to call. Switch to the next word and the bar moves onto grammar and facts. Switch to a compact state and you get something a planner can search. The bars are illustrative. The point is that nothing else in the loop changed.</>}
+>
+  <ThreeTargets />
+</Figure>
+
+Predict the next word and you get grammar, plus a surprising amount of
+knowledge about the world. That is what the next word turns on. In 2019 Alec
+Radford and colleagues at OpenAI showed how far it goes at scale. Their paper
+was *Language Models are Unsupervised Multitask Learners*.
 
 Their model was GPT-2. It was trained on nothing but next-word prediction over
 a large pile of web text. It came out able to answer questions, summarise, and
@@ -147,13 +197,21 @@ translate a little, and nobody had trained it for any of those. OpenAI released
 it in stages, uneasy about what a fluent text machine might be used for.
 
 The model learned those tasks because the next word sometimes depends on them.
-That is the best evidence that the target decides the machine.
+To my mind that is the best evidence we have that the target decides the
+machine.
+
+<Figure
+  n="3.8"
+  caption={<>Step through the sentences and try to fill the blank yourself before you press Reveal. Each one is chosen so that the next word turns on something else: a fact, a translation, a summary of what came before. Nobody has to teach those as tasks. They are what the next word sometimes depends on.</>}
+>
+  <NextWordDepends />
+</Figure>
 
 Predict the next state of some compact description and you get something a
-planner can use.
+planner can use. Compact means a short list of numbers rather than a picture.
 
-The same loop gives three different machines, and all that changed is what was
-put on the right-hand side of the guess. So *predict the next thing* is a
+So the same loop gives three different machines, and all that changed is what
+was put on the right-hand side of the guess. *Predict the next thing* is a
 family of methods rather than one. Picking the target is the design decision
 that matters most, and I have little patience for arguments about prediction
 that never say what is being predicted.
@@ -161,16 +219,22 @@ that never say what is being predicted.
 ## Being right is the same as being brief
 
 There is a second way to look at the whole business. It is four decades older
-than Elman's result, and it turns out to be the same way.
+than Elman's result, and it turns out to be the same way. Shannon was a
+mathematician at Bell Labs, the research arm of the American telephone company,
+whose business was pushing more calls down the same wire. Suppose you have to
+send a message down a wire and you are charged by the symbol.
 
-Shannon was a mathematician at Bell Labs, the research arm of the American
-telephone company, whose business was pushing more calls down the same wire.
-Suppose you have to send a message down a wire and you are charged by the
-symbol. You and the receiver share a predictor.
+You and the receiver share a predictor. Before each symbol both of you run it
+and get a list of what is likely next, so you need only send enough to pick the
+right one. Confident and correct costs almost nothing. Confident and wrong
+costs a lot.
 
-Before each symbol both of you run it and get a list of what is likely next, so
-you need only send enough to pick the right one. Confident and correct costs
-almost nothing. Confident and wrong costs a lot.
+<Figure
+  n="3.9"
+  caption={<>Drag the slider to set how likely the shared predictor said the symbol that actually arrived was, and read off what that symbol costs to send. Half way along, one in two, costs one bit. Push it towards the left end, where the predictor was confident and wrong, and watch the price climb. Push it right and it is nearly free.</>}
+>
+  <CostOfASymbol />
+</Figure>
 
 Shannon made this exact in 1948. A symbol you gave a probability of one in two
 costs one bit <Gloss>one bit is one yes or no answer, so eight bits can pick
@@ -181,11 +245,11 @@ first appeared in print there.
 Three years later he turned the argument on English itself. In *Prediction and
 Entropy of Printed English* he had people guess a passage one letter at a time.
 A language people can guess is cheap to send, and the experiment measured how
-cheap. That put a human being on the bottom row of Figure 3.3.
+cheap. That put a human being on the bottom row of Figure 3.10.
 
 <Figure
-  n="3.3"
-  caption={<>The same sentence, written down by predictors of increasing quality. Read it top to bottom and watch the price fall. The bits per character are published estimates for English rather than anything this figure computed. The bottom row is roughly where Shannon's 1951 experiment put a person guessing letter by letter. It is also where good language models sit today.</>}
+  n="3.10"
+  caption={<>Step the predictor up from No model to A good predictor and watch the price of the same sentence fall. The bits per character are published estimates for English rather than anything this figure computed. The bottom row is roughly where Shannon's 1951 experiment put a person guessing letter by letter, and it is also where good language models sit today.</>}
 >
   <PredictionCompression />
 </Figure>
@@ -202,15 +266,22 @@ much further without knowing what it means. Every winner to date has been, in
 effect, a language model.
 
 Jürgen Schmidhuber went a step further in 2010. Schmidhuber ran a lab in
-Switzerland, had co-invented the LSTM (a memory network that was the workhorse
-of speech recognition for years), and would in 2018 co-write the paper this
-course is named after. His 2010 paper was *Formal theory of creativity, fun,
-and intrinsic motivation*.
+Switzerland and had co-invented the LSTM, a memory network that was the
+workhorse of speech recognition for years. In 2018 he would co-write the paper
+this course is named after. His 2010 paper was *Formal theory of creativity,
+fun, and intrinsic motivation*.
 
 He proposed rewarding a learner for compression progress. That is the discovery
 that it can now squeeze its data further than it could a moment ago. Getting
 better at compressing becomes a drive in its own right, a reason to go and look
 at new things.
+
+<Figure
+  n="3.11"
+  caption={<>Three things a learner could look at: static, a pattern it already knows, and a pattern it is still learning. Pick one and press Watch. The bar is how short the learner can write down what it has seen so far, and the reward at each step is how much shorter it just got. Static never gets shorter, and the known pattern is already short, so neither pays anything. All the reward is in the middle one. Illustrative.</>}
+>
+  <CompressionProgress />
+</Figure>
 
 The same reading says why the stowaways were never optional. Memorising is the
 costly way. A lookup table of everything that ever happened is huge, and
@@ -219,47 +290,74 @@ useless on anything new.
 The cheap option, the one that shortens the message, is to work out the rule
 that produced the data and keep that instead. The rule is the stowaway.
 
+<Figure
+  n="3.12"
+  caption={<>Drag the amount of data up and watch the two boxes. The table stores every value it has seen, and grows with the data. The rule is two numbers, the same two the predictor in Figure 3.3 found, and it does not grow at all. Then press New data and see which of the two has anything to say about it.</>}
+>
+  <MemoriseOrRule />
+</Figure>
+
 ## Where it stops being enough
 
-There are two limits.
+There are two limits, and I want to be clear about both before the quiz.
 
 **Predicting well is not the same as being useful.** A system can be excellent
 at continuing a recording and still hand you nothing you can act on. Saying
-what comes next is a different question from saying what would come next if you
-did something different. Only the second supports a decision. Li's network
+what comes next is a different question from saying what would come next if
+you did something different. Only the second supports a decision. Li's network
 carries a board and was still only ever asked which moves were legal.
+
+<Figure
+  n="3.13"
+  caption={<>Hold a key and you get a different future for each one. That is a model answering what happens if, and it is the question a decision needs. Now turn the action input off and watch the three rows fold into one. That is a model answering what happens next, and it is all a pure predictor has to offer.</>}
+>
+  <ActionConditioned />
+</Figure>
 
 **Being unsurprised is not the same as being right.** A predictor that has only
 ever seen calm weather is not surprised by calm weather. That tells you nothing
-about what it would do in a storm. Low error on what you happened to record is
-a weaker claim than it sounds, and it is the claim most headline numbers make.
+about what it would do in a storm.
+
+Low error on what you happened to record is a weaker claim than it sounds, and
+it is the claim most headline numbers make. Let's see it with a ball instead of
+weather, in a figure I've borrowed from chapter 8.
+
+<Figure
+  n="3.14"
+  caption={<>Drag the launch speed across the band the model was trained on and it lands close to the truth, so anyone testing it there would say it has the rule. Keep dragging past the band and watch the gap open. The calm days were the band. It never saw a storm.</>}
+>
+  <EmergentPhysics />
+</Figure>
 
 Neither limit undoes the argument. Prediction is enough to pull structure out
 of raw experience, and it is the cheapest signal anyone has found. The line
 from Shannon through Elman to Othello-GPT is people proving that with better
 instruments. It is not free, and it does not aim itself.
 
+Everything here has assumed that what is being predicted is small: two numbers
+for a ball, and one word at a time for language. A camera hands you two million
+numbers, thirty times a second, and almost all of them are the leaves. That is
+the leaf problem arriving at full size, and it is where chapter 4 picks up.
+
+Hopefully this chapter helped. There is a short quiz below if you want to check
+that the chain held together for you. If I have got something wrong, or you
+know a better source than the ones I used, the About page has a corrections
+section, and I would be glad to hear from you.
+
 ## Try it
 
 <Figure
-  n="3.4"
-  caption={<>Eight questions on the loop and what it produces. The last two are the ones that separate a good predictor from a useful one.</>}
+  n="3.15"
+  caption={<>Eight questions on the loop and what it produces. The last two are the ones that separate a good predictor from a useful one, and they are the ones I'd most like you to get right.</>}
 >
   <Quiz chapter={3} />
 </Figure>
 
----
-
-Everything here has assumed that what is being predicted is small: two numbers
-for a ball, and one word at a time for language. A camera hands you two million
-numbers, thirty times a second, and almost all of them are the leaves. That is
-the leaf problem arriving at full size.
-
 ## Sources
 
 <Figure
-  n="3.5"
-  caption={<>Ordered for someone building on this rather than for historical completeness.</>}
+  n="3.16"
+  caption={<>I've ordered these for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={3} />
 </Figure>

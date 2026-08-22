@@ -18,15 +18,22 @@ export function Reveal({
   className?: string;
 }) {
   const still = useReducedMotion();
-  if (still) return <div className={className}>{children}</div>;
 
+  /**
+   * The server cannot know the reader's motion preference, so it always renders
+   * the motion wrapper. Rendering a plain div on the client under reduced motion
+   * mismatched that markup and could leave the figure at the server's opacity 0.
+   * Same element on both sides; under reduced motion it simply lands at its
+   * resting state with no transition.
+   */
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={still ? false : { opacity: 0, y: 14 }}
+      animate={still ? { opacity: 1, y: 0 } : undefined}
+      whileInView={still ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: still ? 0 : 0.55, delay: still ? 0 : delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
