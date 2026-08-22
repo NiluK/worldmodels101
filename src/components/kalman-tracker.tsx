@@ -89,6 +89,8 @@ type Step = {
   est: Vec4 | null;
   /** position covariance, the top-left 2x2 of P */
   cov: [number, number, number] | null;
+  /** Kalman gain on position, 0 to 1: how far the update leaned toward the blip */
+  gain: number | null;
 };
 
 /**
@@ -99,6 +101,7 @@ function simulate(sigma: number, shadow: boolean): Step[] {
   const steps: Step[] = [];
   let x: Vec4 | null = null;
   let P: Mat = I4;
+  let gain: number | null = null;
   const R2 = sigma * sigma;
   for (let i = 0; i <= N; i++) {
     const tp = truth(i);
@@ -137,6 +140,7 @@ function simulate(sigma: number, shadow: boolean): Step[] {
         ];
         const PHt = P.map((row) => [row[0], row[1]]);
         const K = mul(PHt, Si);
+        gain = Math.min(1, Math.max(0, (K[0][0] + K[1][1]) / 2));
         x = x.map((v, r) => v + K[r][0] * y[0] + K[r][1] * y[1]) as Vec4;
         const KH = K.map((row) => [-row[0], -row[1], 0, 0]);
         P = mul(add(I4, KH), P);
@@ -148,6 +152,7 @@ function simulate(sigma: number, shadow: boolean): Step[] {
       blip: z,
       est: x ? ([...x] as Vec4) : null,
       cov: x ? [P[0][0], P[0][1], P[1][1]] : null,
+      gain,
     });
   }
   return steps;
@@ -189,6 +194,7 @@ type Text = Record<
   | "rEst"
   | "rBand"
   | "rSpeed"
+  | "rGain"
   | "units"
   | "pm"
   | "speed"
@@ -222,6 +228,7 @@ const TEXT: Record<"en" | "zh", Text> = {
     rEst: "Estimate off by",
     rBand: "Band, 95%",
     rSpeed: "Speed, estimate / true",
+    rGain: "Gain, physics 0 to radar 1",
     units: "{n} m",
     pm: "±{n} m",
     speed: "{a} / {b} m/s",
@@ -252,6 +259,7 @@ const TEXT: Record<"en" | "zh", Text> = {
     rEst: "估计偏差",
     rBand: "不确定带，95%",
     rSpeed: "速度：估计 / 真实",
+    rGain: "增益：0 信物理，1 信雷达",
     units: "{n} 米",
     pm: "±{n} 米",
     speed: "{a} / {b} 米每秒",
@@ -326,6 +334,7 @@ export function KalmanTracker() {
     : null;
   const ell = now.cov ? ellipse(now.cov) : null;
   const estSpeed = now.est ? Math.hypot(now.est[2], now.est[3]) : null;
+  const gainNow = now.gain;
   const tNow = Math.max(t, 1);
   const prev = truth(tNow - 1);
   const cur = truth(tNow);
@@ -541,12 +550,13 @@ export function KalmanTracker() {
         <p className="label !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-px border-t border-rule bg-rule xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-px border-t border-rule bg-rule sm:grid-cols-3 xl:grid-cols-5">
         {[
           [s.rBlip, blipErr === null ? s.none : fill(s.units, { n: fmtM(blipErr) })],
           [s.rEst, estErr === null ? s.none : fill(s.units, { n: fmtM(estErr) })],
           [s.rBand, ell ? fill(s.pm, { n: fmtM(ell.rx) }) : s.none],
           [s.rSpeed, estSpeed === null ? s.none : fill(s.speed, { a: fmtSpeed(estSpeed), b: fmtSpeed(trueSpeed) })],
+          [s.rGain, gainNow === null ? s.none : gainNow.toFixed(2)],
         ].map(([label, value]) => (
           <div key={label} className="bg-paper px-5 py-3 md:px-8">
             <p className="label">{label}</p>

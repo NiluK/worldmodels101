@@ -65,6 +65,28 @@ maths inside a GPS receiver. That is one half of what a world model does.
 There is a hidden state you never see directly, and the job is to estimate it
 from what you can see.
 
+The trick inside it is the same one that runs in every GPS receiver, drone
+and self-driving car. At each moment you have two
+stories about where the plane is. One comes from physics: take the last
+position and the last speed, and predict where it should be now. The other
+comes from the radar, which hands you a blip.
+
+Both stories are uncertain. Each is really a bell curve, a Gaussian, with the
+most likely spot in the middle and the less likely ones fading out either side.
+Multiply the two curves together and you get a third bell curve. It sits
+between the two, and it is narrower than either of them. That is the new
+belief.
+
+How far the new belief leans from physics toward the radar is set by one
+number between zero and one, which the field calls the Kalman gain. A noisy radar pulls
+the gain toward zero, so the filter sticks with physics. A sharp radar pulls
+it toward one, so the filter trusts the reading.
+
+Then it repeats. Predict, correct, predict, correct. Every new blip, however
+wrong on its own, tightens what the filter knows. The estimate hugs the truth
+even though every reading it ever got was off, and it does that one tick at a
+time without ever waiting for the future.
+
 It never asks the other half, what happens if I act. The dynamics in a Kalman
 filter, the rules for how the state moves, are written in by the engineer
 rather than learned. It never compares two actions either. That is why it is an
@@ -72,7 +94,7 @@ ancestor rather than a member.
 
 <Figure
   n="1.4"
-  caption={<>A plane flies on a smooth path. A radar reports its position every couple of seconds, with noise on top. A Kalman filter keeps a running guess of where the plane is and how fast it is going. Scrub the time or press play, and watch the band around the estimate tighten as blips arrive. Turn the radar noise up, and the estimate still sits closer to the plane than the blips do. Drop the blips for a stretch, and it coasts on its own dynamics while the band opens. The greyed control is the point: nothing here can ask what happens if the plane turns. Distances are illustrative.</>}
+  caption={<>A plane flies on a smooth path. A radar reports its position every couple of seconds, with noise on top. A Kalman filter keeps a running guess of where the plane is and how fast it is going. Scrub the time or press play, and watch the band around the estimate tighten as blips arrive. Turn the radar noise up, and the estimate still sits closer to the plane than the blips do. Drop the blips for a stretch, and it coasts on its own dynamics while the band opens. The gain readout is the lean: near zero it trusts physics, near one it trusts the radar. The greyed control is the point: nothing here can ask what happens if the plane turns. Distances are illustrative.</>}
 >
   <KalmanTracker />
 </Figure>
