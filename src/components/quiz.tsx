@@ -169,7 +169,31 @@ function questionsFor(chapter: number, locale: string): Q[] {
     9: { en: QUESTIONS_CH9, zh: QUESTIONS_CH9_ZH },
   };
   const set = sets[chapter] ?? sets[1];
-  return (locale === "zh" && set.zh) || set.en;
+  const questions = (locale === "zh" && set.zh) || set.en;
+  return chapter >= 5 ? rotateLaterChoices(questions, chapter) : questions;
+}
+
+/** Keep readers from learning that the second option is usually right. */
+const CHOICE_ROTATIONS: Record<number, number[]> = {
+  5: [0, 2, 3, 1, 3, 2, 3, 0],
+  6: [1, 3, 2, 0, 1, 3, 2, 0],
+  7: [2, 2, 0, 1, 3, 2, 0, 1],
+  8: [2, 2, 1, 0, 2, 3, 1, 0],
+  9: [3, 1, 2, 0, 3, 1, 2, 0],
+};
+
+function rotateLaterChoices(questions: Q[], chapter: number): Q[] {
+  const rotations = CHOICE_ROTATIONS[chapter] ?? [];
+  return questions.map((question, index) => {
+    if (question.kind !== "choice") return question;
+    const shift = (rotations[index] ?? 0) % question.options.length;
+    if (shift === 0) return question;
+    return {
+      ...question,
+      options: [...question.options.slice(-shift), ...question.options.slice(0, -shift)],
+      answer: (question.answer + shift) % question.options.length,
+    };
+  });
 }
 
 function QuizInteractive({ chapter }: { chapter: number }) {
@@ -547,15 +571,15 @@ const QUESTIONS_ZH: Q[] = [
 const QUESTIONS_CH9: Q[] = [
   {
     kind: "choice",
-    stem: "Why is an average error over a long rollout close to useless as a report?",
+    stem: "Why is one average error insufficient as a long-rollout report?",
     options: [
       "Averages are always misleading",
-      "The properties of a scene break in an order, and the ones that survive longest are the ones a per-frame score rewards",
+      "Different properties can fail at different horizons, and an average hides which contract was lost",
       "The error is measured in the wrong units",
       "Rollouts are too short to average over",
     ],
     answer: 1,
-    why: "Colour and texture hold up almost indefinitely. Object identity goes first. So the average stays low long after the rollout has stopped being usable.",
+    why: "There is no universal failure order. The point is to report separate horizons for identity, physics, control and appearance instead of allowing one strong dimension to conceal another.",
   },
   {
     kind: "choice",
@@ -571,15 +595,15 @@ const QUESTIONS_CH9: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Why is object permanence hard for these systems in particular?",
+    stem: "Why is object permanence fragile in a renderer with no exposed object store?",
     options: [
       "The models are too small",
-      "Nothing is storing an object; consistency is a property of a good predictor, so it degrades gradually and without warning",
+      "Identity is carried implicitly by predictor state rather than enforced by a persistent record",
       "Occlusion is computationally expensive",
       "Training data lacks occluded objects",
     ],
     answer: 1,
-    why: "There is no error message when the chair becomes a different chair. That is what it means for consistency to be learned rather than enforced.",
+    why: "A structured simulator may store objects explicitly. In the renderer case, identity can drift gradually because persistence is an inferred behaviour rather than an inspectable record.",
   },
   {
     kind: "choice",
@@ -619,7 +643,7 @@ const QUESTIONS_CH9: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Someone says their system is the best available. What is the first thing to ask?",
+    stem: "A benchmark winner is best on geometry but mediocre on action fidelity. What is the first thing to ask?",
     options: [
       "How large is it",
       "Which measure, and what does that measure ignore",
@@ -627,7 +651,7 @@ const QUESTIONS_CH9: Q[] = [
       "How long it trained for",
     ],
     answer: 1,
-    why: "There is no overall score. Frame quality, consistency over a long rollout, whether it obeys the action, and cost genuinely disagree, and anyone implying an ordering has picked one.",
+    why: "Benchmarks such as PlayWorld make useful dimensions explicit. They do not remove the need to say which contract matters for the intended use or how competing dimensions were combined.",
   },
   {
     kind: "choice",
@@ -646,10 +670,10 @@ const QUESTIONS_CH9: Q[] = [
 const QUESTIONS_CH9_ZH: Q[] = [
   {
     kind: "choice",
-    stem: "为什么「整段长推演的平均误差」作为一份报告几乎没用？",
-    options: ["平均值总是误导人的", "场景的各种性质是按顺序坏掉的，而活得最久的恰好是逐帧打分会奖励的那些", "误差的单位不对", "推演太短，平均不出来"],
+    stem: "为什么一个平均误差不足以报告长推演？",
+    options: ["平均值总是误导人的", "不同性质可能在不同的时程坏掉，而平均值藏住了丢掉的是哪份契约", "误差的单位不对", "推演太短，平均不出来"],
     answer: 1,
-    why: "颜色和纹理几乎能一直稳住，物体身份最先没。所以在推演早已不能用之后很久，平均值仍然很低。",
+    why: "不存在普遍的失败顺序。重点是分别报告身份、物理、控制和外观的时程，不让一个强项遮住另一个弱项。",
   },
   {
     kind: "choice",
@@ -660,10 +684,10 @@ const QUESTIONS_CH9_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "为什么物体恒存对这类系统格外难？",
-    options: ["模型太小了", "没有任何东西在存着一个物体；一致性是好预测器的性质，所以它会逐渐地、不打招呼地退化", "遮挡的计算开销很大", "训练数据里缺少被遮挡的物体"],
+    stem: "为什么物体恒存对没有暴露物体存储的渲染器格外脆弱？",
+    options: ["模型太小了", "身份由预测器状态隐式携带，而不是由持久记录强制", "遮挡的计算开销很大", "训练数据里缺少被遮挡的物体"],
     answer: 1,
-    why: "椅子变成另一把椅子的时候不会有报错。这就是「一致性是学出来的、而不是被强制的」的含义。",
+    why: "结构化仿真器可以显式存物体；对渲染器来说，持久性是推断出的行为而不是可检查的记录，所以身份可能逐渐漂掉。",
   },
   {
     kind: "choice",
@@ -688,10 +712,10 @@ const QUESTIONS_CH9_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "有人说他们的系统是目前最好的。第一句该问什么？",
+    stem: "一个基准赢家的几何最好，动作保真度却一般。第一句该问什么？",
     options: ["它有多大", "用的是哪个尺度，而那个尺度忽略了什么", "它跑在什么硬件上", "它训练了多久"],
     answer: 1,
-    why: "没有综合分数。画面质量、长推演的一致性、听不听动作、开销，这几项确实互相不一致；任何暗示存在排序的人，都是挑了一个。",
+    why: "PlayWorld 一类基准会把有用维度分开。它们不会替你决定具体用途重视哪份契约，也不会自动给互相竞争的维度一个合并规则。",
   },
   {
     kind: "choice",
@@ -705,7 +729,7 @@ const QUESTIONS_CH9_ZH: Q[] = [
 const QUESTIONS_CH8: Q[] = [
   {
     kind: "choice",
-    stem: "What single change turns a video model into something you can steer?",
+    stem: "What change makes a video model capable of being steered, without proving that it will obey?",
     options: [
       "More parameters",
       "Conditioning each generated frame on an action as well as on the frames before it",
@@ -713,19 +737,19 @@ const QUESTIONS_CH8: Q[] = [
       "A longer context window",
     ],
     answer: 1,
-    why: "Without an action input there is exactly one future on offer: whichever the model finds most likely. With it, the same start has as many continuations as there are things you could do.",
+    why: "Action conditioning supplies the interface. Controllability still has to be tested by varying the action from the same start and measuring whether the requested futures separate.",
   },
   {
     kind: "choice",
-    stem: "A generated room stays as you left it when you turn back. What is holding it there?",
+    stem: "A generated room stays as you left it when you turn back. What can you conclude about its memory?",
     options: [
-      "Stored geometry behind the picture",
-      "A list of objects in memory",
-      "Nothing. The model got good at continuing consistently, which is part of continuing well",
-      "A separate persistence module",
+      "It must contain exportable geometry",
+      "It has no memory of any kind",
+      "Some internal state supports persistence, but the behaviour does not reveal whether it is a scene graph, context or another mechanism",
+      "It must use a separate object database",
     ],
     answer: 2,
-    why: "There is no scene behind the frames. Consistency is a statistical property of a well-trained system, which is a stranger achievement than storing it would be.",
+    why: "Behaviour establishes persistence, not implementation. Genie 3 is reported to refer back to its trajectory, while exposing no persistent geometry or object store to inspect.",
   },
   {
     kind: "choice",
@@ -741,7 +765,7 @@ const QUESTIONS_CH8: Q[] = [
   },
   {
     kind: "choice",
-    stem: "In Figure 8.2, the model is within a few per cent across the band it was trained on. Why is that not evidence it has the rule?",
+    stem: "In Figure 8.3, the model is within a few per cent across the band it was trained on. Why is that not evidence it has the rule?",
     options: [
       "The measurement is unreliable",
       "Matching inside the band is equally consistent with having learned the answers to the questions it was asked",
@@ -773,7 +797,7 @@ const QUESTIONS_CH8: Q[] = [
       "Compressing video",
     ],
     answer: 1,
-    why: "They reset instantly, cost nothing to run, and produce endless variation. And no other approach in this course gives you an actual picture to walk into.",
+    why: "They avoid real-world contact, reset instantly and produce broad variation, while still costing compute. No other approach in this course gives you an actual picture to walk into.",
   },
   {
     kind: "choice",
@@ -789,32 +813,32 @@ const QUESTIONS_CH8: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Claims that these systems are improving are hard to check. Why?",
+    stem: "A system improves its geometry score but loses action fidelity. Is it better overall?",
     options: [
-      "The models are proprietary",
-      "There is no accepted measurement of whether a generated world is behaving",
-      "The improvements are too small",
-      "Nobody publishes results",
+      "Yes, geometry is the only objective measure",
+      "Not without a declared use case or rule for combining the dimensions",
+      "No, action fidelity always dominates",
+      "Yes, any benchmark gain establishes overall progress",
     ],
     answer: 1,
-    why: "Without an agreed score, most claims about improvement are claims about how the outputs look to the person making them.",
+    why: "Benchmarks now measure several useful dimensions. The unresolved part is how to combine them when systems and applications value different contracts.",
   },
 ];
 
 const QUESTIONS_CH8_ZH: Q[] = [
   {
     kind: "choice",
-    stem: "哪一个改动能把一个视频模型变成你可以操控的东西？",
+    stem: "哪一个改动能让视频模型具备被操控的可能，却不能证明它会听话？",
     options: ["更多参数", "让每一帧的生成同时以一个动作、以及之前那些帧为条件", "更高的分辨率", "更长的上下文窗口"],
     answer: 1,
-    why: "没有动作输入，就只有一个未来可选：模型认为最可能的那一个。有了它，同一个起点有多少种可能的做法，就有多少种续接。",
+    why: "动作条件提供的是接口。可控性仍要固定起点、只改变动作，再测所要求的未来是否真的分开。",
   },
   {
     kind: "choice",
-    stem: "你转回身，生成出来的房间还是你离开时的样子。是什么把它按在那里的？",
-    options: ["画面背后存着的几何结构", "内存里的一份物体清单", "什么都没有。模型只是很擅长一致地接着画，而这是「接得好」的一部分", "一个单独的持久化模块"],
+    stem: "你转回身，生成出来的房间还是离开时的样子。关于它的记忆，你能推出什么？",
+    options: ["里面一定有可导出的几何结构", "它没有任何形式的记忆", "某种内部状态支撑着持久性，但这个行为看不出它是场景图、上下文还是别的机制", "它一定用了单独的物体数据库"],
     answer: 2,
-    why: "那些帧背后并没有一个场景。一致性是一个训练良好的系统的统计性质，而这比「把它存下来」要奇怪得多。",
+    why: "这个行为证明了持久性，没有证明实现方式。据称 Genie 3 会参照此前轨迹，但没有暴露可检查的持久几何结构或物体存储。",
   },
   {
     kind: "choice",
@@ -825,7 +849,7 @@ const QUESTIONS_CH8_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "图 8.2 里，模型在它训练过的那一段范围里误差只有几个百分点。为什么这不算它掌握了规律的证据？",
+    stem: "图 8.3 里，模型在它训练过的那一段范围里误差只有几个百分点。为什么这不算它掌握了规律的证据？",
     options: ["测量不可靠", "在范围里对得上，同样也与「它记住了被问过那些问题的答案」相容", "几个百分点的误差太大了", "那段范围太窄"],
     answer: 1,
     why: "「掌握规律」和「在采样过的区域里拟合得好」只有在范围之外才分得开，而范围之外正是没人去测的地方，因为那里没有素材可以对照。",
@@ -842,7 +866,7 @@ const QUESTIONS_CH8_ZH: Q[] = [
     stem: "目前生成出来的世界，毫无争议地擅长什么？",
     options: ["取代物理引擎", "产出训练数据，以及当一个你可以在里面走动的地方", "长时程规划", "压缩视频"],
     answer: 1,
-    why: "它们瞬间重置，跑起来不花钱，还能产出无穷的变体。而且这门课里没有别的路数能给你一张真正能走进去的画面。",
+    why: "它们避开真实世界接触、能瞬间重置并产出广泛变体，但仍然要付计算代价。而且这门课里没有别的路数能给你一张真正能走进去的画面。",
   },
   {
     kind: "choice",
@@ -853,17 +877,17 @@ const QUESTIONS_CH8_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "关于这些系统「在进步」的说法很难核实。为什么？",
-    options: ["模型是闭源的", "目前没有公认的方法去衡量一个生成出来的世界表现得好不好", "改进幅度太小", "没有人公布结果"],
+    stem: "一个系统的几何分数提高了，动作保真度却下降了。它综合来看更好吗？",
+    options: ["是，几何是唯一客观尺度", "除非先声明用途或给出合并各维度的规则，否则答不了", "不是，动作保真度永远更重要", "是，任何基准上涨都证明综合进步"],
     answer: 1,
-    why: "没有一个大家认的分数，「进步了」这类说法大多就是「输出在说这话的人眼里看起来怎么样」。",
+    why: "现在的基准已经能测几个有用维度。没解决的是：当不同系统和用途重视不同契约时，该怎么把它们合起来。",
   },
 ];
 
 const QUESTIONS_CH7: Q[] = [
   {
     kind: "choice",
-    stem: "A car will turn left or right with equal probability. What does a pixel loss consider the best prediction?",
+    stem: "A deterministic predictor uses squared pixel error and a car turns left or right with equal probability. What is its optimum?",
     options: [
       "The left turn",
       "The right turn",
@@ -875,15 +899,15 @@ const QUESTIONS_CH7: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Why does generated video tend to get vague exactly when something interesting is about to happen?",
+    stem: "A stochastic video model now draws sharp left and right turns instead of their blur. What has it fixed, and what has it not?",
     options: [
-      "The models run out of capacity",
-      "Interesting moments are where the future is uncertain, and uncertainty is what produces the smear",
-      "Frame rates drop",
-      "The encoder is too small",
+      "It has learned which turn the real car will choose",
+      "It fixed the impossible average but still has to represent probabilities and decision risk",
+      "It removed the need for a pixel target",
+      "It proved embedding prediction is unnecessary",
     ],
     answer: 1,
-    why: "The vagueness is not a rendering problem. It is the training objective asking for the mean of the possible futures, and that mean is least like any one of them where the outcome is most open.",
+    why: "Sampling is a real solution to blur: each draw can be plausible. It does not identify which draw reality will select or tell a planner how to value the distribution.",
   },
   {
     kind: "choice",
@@ -935,7 +959,7 @@ const QUESTIONS_CH7: Q[] = [
   },
   {
     kind: "choice",
-    stem: "In Figure 7.2, the run with the safeguard has a worse loss. What does that tell you?",
+    stem: "In Figure 7.3, the run with the safeguard has a worse loss. What does that tell you?",
     options: [
       "The safeguard is badly tuned",
       "An embedding loss is no longer a number you can read off as quality",
@@ -962,17 +986,17 @@ const QUESTIONS_CH7: Q[] = [
 const QUESTIONS_CH7_ZH: Q[] = [
   {
     kind: "choice",
-    stem: "一辆车会以相同概率左转或右转。像素损失认为最好的预测是什么？",
+    stem: "一个确定性预测器使用像素平方误差，而汽车以相同概率左转或右转。它的最优解是什么？",
     options: ["左转", "右转", "两者的平均，也就是一张哪个都不是的画面", "训练里更常见的那一个"],
     answer: 2,
     why: "在一组结果上的平方误差由它们的均值最小化。笃定地选一边有一半时间会被重罚；糊影是一直被罚一点点，而后者赢了。",
   },
   {
     kind: "choice",
-    stem: "为什么生成的视频恰好在有意思的事情快要发生时变糊？",
-    options: ["模型的容量用完了", "有意思的时刻正是未来不确定的时刻，而不确定性就是糊影的来源", "帧率掉了", "编码器太小"],
+    stem: "一个随机视频模型现在能分别采样清晰的左转和右转，不再输出糊影。它修好了什么，又没修好什么？",
+    options: ["它已经知道真实汽车会选哪边", "它修好了不可能的平均画面，但仍要表达概率与决策风险", "它不再需要像素目标", "它证明了嵌入预测没有必要"],
     answer: 1,
-    why: "这份糊不是渲染问题。是训练目标在要求各个可能未来的均值，而在结果最开放的地方，这个均值最不像其中任何一个。",
+    why: "采样是对模糊问题的真正解法：每次抽样都可以合理。但它不会指出现实会选哪一次，也不会替规划器给整个分布定价。",
   },
   {
     kind: "choice",
@@ -1004,7 +1028,7 @@ const QUESTIONS_CH7_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "图 7.2 里，开了防护的那一次损失更差。这说明了什么？",
+    stem: "图 7.3 里，开了防护的那一次损失更差。这说明了什么？",
     options: ["防护没调好", "嵌入损失已经不再是一个可以直接当成质量读出来的数字", "模型还需要更多训练", "训练稳定之后就该把防护去掉"],
     answer: 1,
     why: "像素损失为零意味着那一帧被预测出来了。嵌入损失为零可能意味着什么都懂，也可能什么都不懂，而这个数字说不清是哪种。",
@@ -1024,7 +1048,7 @@ const QUESTIONS_CH6: Q[] = [
     stem: "Training inside a model changes the exchange rate on which resource?",
     options: [
       "Memory, which becomes cheaper",
-      "Contact with the world, which is the scarce one, paid for instead in compute, which is not",
+      "Contact with the world, which is replaced in part by model compute",
       "Model accuracy, which improves for free",
       "The number of parameters needed",
     ],
@@ -1033,15 +1057,15 @@ const QUESTIONS_CH6: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Why can the imagination ratio not simply be turned up without limit?",
+    stem: "A dashboard counts 90 imagined and 10 real transitions as 100 training examples. What is missing from that ledger?",
     options: [
-      "Imagined steps take as long as real ones",
-      "The model is only trustworthy where it has data, and that comes from real steps",
-      "Policies cannot learn from generated data",
-      "The compute cost grows faster than linearly",
+      "Imagined transitions cannot be stored",
+      "A reliability discount for model error and distance from a real state",
+      "The policy's parameter count",
+      "A requirement that both sources use the same batch size",
     ],
     answer: 1,
-    why: "Imagined steps are worth having while the model can supply them honestly, and it can only do that where it has been.",
+    why: "Rows are exchangeable to the logger, not to the learner. Synthetic experience inherits the model's blind spots, and that debt compounds along a rollout.",
   },
   {
     kind: "choice",
@@ -1121,16 +1145,16 @@ const QUESTIONS_CH6_ZH: Q[] = [
   {
     kind: "choice",
     stem: "在模型里面训练，改变的是哪种资源的汇率？",
-    options: ["内存，它变便宜了", "和世界的接触，也就是稀缺的那一份；改由不稀缺的算力来付", "模型精度，它免费变好了", "所需的参数量"],
+    options: ["内存，它变便宜了", "和世界的接触；其中一部分改由模型计算来付", "模型精度，它免费变好了", "所需的参数量"],
     answer: 1,
     why: "学习者仍然需要它那份经验。变的是这些步从哪儿来，以及由哪份预算付账。",
   },
   {
     kind: "choice",
-    stem: "为什么想象的比例不能无限往上调？",
-    options: ["想象的步数和真实的一样慢", "模型只在它有数据的地方值得信任，而数据来自真实的步数", "策略没法从生成的数据里学", "算力开销的增长快于线性"],
+    stem: "一个仪表盘把 90 次想象转移和 10 次真实转移记成 100 个训练样本。这本账漏了什么？",
+    options: ["想象转移没法保存", "要按模型误差以及离真实状态多远，给可靠性打折", "策略的参数量", "两种来源必须使用同样的批量大小"],
     answer: 1,
-    why: "想象出来的步数，只有在模型还能诚实地供得上时才值钱，而它只在自己去过的地方做得到。",
+    why: "对日志来说每一行都一样，对学习者不是。合成经验继承模型的盲点，而且这笔债会沿推演累积。",
   },
   {
     kind: "choice",
@@ -1215,15 +1239,15 @@ const QUESTIONS_CH5: Q[] = [
   },
   {
     kind: "choice",
-    stem: "What does a fixed summary have to do that attention never has to do?",
+    stem: "A sequence is longer than the transformer's context window. Which statement is accurate?",
     options: [
-      "Run faster",
-      "Decide what is worth keeping, without knowing what will be needed later",
-      "Store the whole sequence",
-      "Handle actions",
+      "Attention can still read every earlier step exactly",
+      "The model must discard, compress or retrieve beyond the window; attention only postponed the decision",
+      "Only recurrent models have a finite memory",
+      "A longer sequence changes accuracy but not compute",
     ],
     answer: 1,
-    why: "That is the whole trade. Attention never decides, which is exactly why it never compresses and why its cost grows with length.",
+    why: "Attention avoids squeezing the past into one fixed state, but only inside a finite context. Its weighted read also compresses the available steps for the current prediction.",
   },
   {
     kind: "choice",
@@ -1251,15 +1275,15 @@ const QUESTIONS_CH5: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Replanning after every real observation helps a great deal. Why?",
+    stem: "Two models tie on one-step error along a demonstrated path. After a small perturbation, only one returns. What did the original test miss?",
     options: [
-      "It makes the model more accurate",
-      "A fresh measurement resets the accumulated error to nothing",
-      "It reduces the number of steps computed",
-      "It removes the model's bias",
+      "The models' parameter counts",
+      "Recovery behaviour on states created by the model or by disturbances",
+      "The camera resolution",
+      "Whether the transition is deterministic",
     ],
     answer: 1,
-    why: "It does not touch the model at all. It just stops letting the error compound for very long before reality gets a say.",
+    why: "One-step testing on the centre line never visits the states deployment creates after a mistake. Recovery is a separate behaviour and must be trained or tested off that line.",
   },
   {
     kind: "choice",
@@ -1314,10 +1338,10 @@ const QUESTIONS_CH5_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "一份固定摘要必须做、而注意力从来不必做的事是什么？",
-    options: ["跑得更快", "在不知道后面会用到什么的情况下，决定什么值得留下", "存下整个序列", "处理动作"],
+    stem: "一段序列已经长过 transformer 的上下文窗口。哪句话准确？",
+    options: ["注意力仍能逐字读取所有早先步骤", "模型必须在窗口之外丢弃、压缩或检索；注意力只是推迟了这次决定", "只有循环模型的记忆是有限的", "序列变长只影响准确率，不影响计算量"],
     answer: 1,
-    why: "这就是整个取舍。注意力从来不做决定，而这正是它从来不压缩、以及它的开销随长度增长的原因。",
+    why: "注意力不必把过去挤进一个固定状态，但这只在有限上下文之内成立。为当前预测做的加权读取本身也在压缩可见步骤。",
   },
   {
     kind: "choice",
@@ -1340,10 +1364,10 @@ const QUESTIONS_CH5_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "每来一次真实观测就重新规划，帮助非常大。为什么？",
-    options: ["它让模型更准", "一次新的测量会把累积起来的误差清零", "它减少了要算的步数", "它消除了模型的偏差"],
+    stem: "两个模型在演示轨迹上的单步误差相同。受到一点扰动后，只有一个会回来。原来的测试漏掉了什么？",
+    options: ["模型的参数量", "模型自己的误差或外界扰动产生的状态上的恢复行为", "摄像机分辨率", "转移是不是确定性的"],
     answer: 1,
-    why: "它压根没碰模型。它只是不让误差复利太久，就把话语权还给了现实。",
+    why: "只沿中心线做单步测试，永远不会访问上线后一次小错会产生的状态。恢复是另一种行为，必须在那条线之外训练或检验。",
   },
   {
     kind: "choice",

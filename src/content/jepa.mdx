@@ -11,7 +11,7 @@ to predict and do not matter.
 
 That is the smaller of the two problems.
 
-## The average of two futures is neither of them
+## A deterministic average of two futures is neither
 
 Here is the larger one.
 
@@ -19,9 +19,9 @@ A car is coming to a junction. It will turn left or it will turn right. You
 genuinely do not know which, and no amount of looking harder at the current
 frame will tell you.
 
-Ask a model to predict the next picture and score it by how close the pixels
-are, and there is a mathematically best answer. It is not either turn. It is
-the average of them.
+Ask a deterministic model for one next picture and score it with squared pixel
+error, and there is a mathematically best answer. It is not either turn. It is
+the conditional average of them.
 
 <Figure
   n="7.1"
@@ -35,15 +35,35 @@ A model that confidently predicted the left turn would be punished half the
 time; the ghost is punished a little all the time, and a little all the time
 wins.
 
-So the training signal is not asking for a plausible future. It is asking for
-the mean of the futures, and when the future is genuinely open, the mean is a
+That particular training signal is not asking for a plausible future. It is
+asking for the mean, and when the future is genuinely open, the mean can be a
 smear that never occurs.
 
 <MarginNote>
-This is why generated video gets vague exactly when something interesting is
-about to happen. Uncertainty is where the smear comes from, and uncertainty is
-concentrated at the moments that matter.
+A deterministic predictor trained with a mean-seeking pixel loss gets vague
+exactly when something interesting is about to happen. Modern generators often
+use stochastic objectives precisely to avoid that failure.
 </MarginNote>
+
+## Sampling is a real counterargument
+
+Pixel prediction does not have to emit one answer. Stochastic video models such
+as SV2P and Denton and Fergus's model learn a distribution over futures, then
+draw from it. Each draw can be sharp and plausible even when the model is unsure
+which turn will occur.
+
+<Figure
+  n="7.2"
+  caption={<>Switch from the conditional mean to samples from the same two-outcome distribution. Sampling removes the impossible in-between frame and preserves uncertainty across draws. It does not reveal which draw the world will choose, and a planner still has to value risk across the whole distribution.</>}
+>
+  <FutureSampler />
+</Figure>
+
+This kills the blur objection. It does not kill the rest of the case against
+generation. Sampling fixes the form of the output; it does not make
+irrelevant texture cheap, make rare futures well estimated, or tell a decision
+maker which possible future matters. Embedding prediction changes the target.
+Stochastic generation keeps the target and represents its uncertainty better.
 
 ## Predict the description instead
 
@@ -62,11 +82,11 @@ The leaf problem goes away, because the description was never obliged to record
 which way the leaf went. If a detail does not survive the encoding, nothing
 downstream is graded on it.
 
-The averaging problem gets smaller, because you are no longer averaging
-pictures. The description of a car turning left and the description of a car turning
-right can share almost everything. What is being predicted may be a single
-point that both of them are close to, so the prediction has somewhere sensible
-to land.
+The averaging problem can get smaller, because you are no longer averaging
+pictures. The descriptions of a car turning left and right can share most of
+their coordinates, leaving the unresolved part explicit or irrelevant. A
+feature space can still be multimodal, however; changing the representation
+does not abolish uncertainty.
 
 <MarginNote>
 This is the JEPA family, and the name says the architecture: joint embedding,
@@ -82,14 +102,14 @@ Predicting pixels has one enormous virtue. The target is fixed. The next frame
 is the next frame, and the model cannot make it easier.
 
 Predict an embedding and that stops being true, because the thing you are
-predicting is produced by a network that is also being trained. There is now a
-way to get a perfect score that involves learning nothing at all: make every
-description identical. The prediction is then always exactly right, the loss
+predicting is produced by a network that is also being trained. The network can
+get a perfect score while learning nothing. It makes every description
+identical. The prediction is then always exactly right, the loss
 goes to zero, and the representation says nothing about anything.
 
 <Figure
-  n="7.2"
-  caption={<>A two-by-two encoder trained on four pairs by gradient descent. Nothing here is illustrative: the numbers are whatever the arithmetic produces. Without the safeguard the loss reaches zero and the representation reaches zero with it. Turn the safeguard on and the loss never gets close to zero, which is the point. The useful run is the one that looks worse.</>}
+  n="7.3"
+  caption={<>A two-by-two encoder trained on four pairs by gradient descent. The numbers come straight from the arithmetic. Without the safeguard, the loss and the representation both reach zero. Turn the safeguard on and the loss never gets close to zero. The useful run is the one that looks worse.</>}
 >
   <Collapse />
 </Figure>
@@ -130,7 +150,7 @@ the field is people comparing systems that were built for different ones.
 ## Try it
 
 <Figure
-  n="7.3"
+  n="7.4"
   caption={<>Eight questions on the argument and its bill. The last two are the ones that stop this reading as a knock-down case.</>}
 >
   <Quiz chapter={7} />
@@ -148,7 +168,7 @@ about a video model.
 ## Sources
 
 <Figure
-  n="7.4"
+  n="7.5"
   caption={<>Ordered for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={7} />

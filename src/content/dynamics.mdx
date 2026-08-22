@@ -61,23 +61,24 @@ changes, however long the sequence gets. This is what recurrent networks do
 of the next step's input</Gloss>, and what the state-space models that have
 come back into fashion do too.
 
-**Keep everything.** Store every step, and when a new one arrives, look back
-over all of them and decide what is relevant. Nothing gets thrown away, because
-nothing has to be summarised. This is attention <Gloss>for each new step, score every earlier step for
-relevance, then read mostly from the ones that scored highest</Gloss>, and it
-is what transformers do.
+**Keep a window.** Store the steps that fit in the context, and when a new one
+arrives, look back over them to decide what is relevant. This is attention
+<Gloss>for each new step, score the available earlier steps for relevance, then
+read mostly from the ones that scored highest</Gloss>, and it is what
+transformers do. The context is finite. The weighted read also compresses the
+available past into what this prediction needs.
 
 <Figure
   n="5.2"
-  caption={<>Both columns use a state of the same width, so the only thing changing is how long the sequence has got. Neither column is the winner. Notice where the second row crosses over: looking at everything is genuinely cheaper for short sequences, and genuinely not for long ones.</>}
+  caption={<>Both columns use a state of the same width, so the only thing changing is how long the sequence has got. Neither column wins. In the second row, looking at everything is cheaper for short sequences and more expensive for long ones.</>}
 >
   <MemoryTrade />
 </Figure>
 
-The trade underneath is not really about speed. A fixed summary has to decide,
+The trade underneath is not only about speed. A fixed summary has to decide,
 at every step, what is worth keeping, and it has to decide without knowing what
-will be needed later. Attention never has to decide, which is exactly why it
-never compresses.
+will be needed later. Attention postpones that decision until the read, at the
+cost of retaining a finite bank of earlier states.
 
 It is the same tension as the squeeze between a camera and a decision, one
 level up. Something has to be thrown away, and the thing throwing it away does
@@ -117,17 +118,38 @@ optimised is the thing you will actually use.
 Cheap, effective, and it gives up the part of the appeal that was infinite.
 
 **Look again.** Predict a few steps, act on one, take a fresh observation, and
-start over. This is most of robotics, and it works because a real measurement
-resets the accumulated error to nothing.
+start over. This is most of robotics. A measurement can correct the observed
+part of the state; hidden-state error and model bias do not reset to zero.
 
-None of these is a fix. They are all the same admission: a learned transition
-model is trustworthy over a horizon, and part of the engineering is knowing how
+None of these is a fix. Each admits that a learned transition model is
+trustworthy over a limited horizon. Part of the engineering is measuring how
 long that horizon is.
+
+## Recovery is a separate skill
+
+Two models can tie on the usual one-step test and behave oppositely in use. If
+both have only seen the demonstrated path, that test never asks which way they
+move after a small mistake. Training on perturbed or self-generated states asks
+whether the model can return to familiar ground.
+
+<Figure
+  n="5.3"
+  caption={<>Both toy models are exact on the demonstrated path. Move the starting state off it. One has only learned what comes next on the line and drifts away; the other has practised nearby states and bends back. The arithmetic is illustrative. The distinction between matching one-step behaviour and matching free-running dynamics is the empirical point behind Professor Forcing.</>}
+>
+  <RecoveryBasin />
+</Figure>
+
+Scheduled sampling is one way to expose a learner to its own states, but it
+guarantees nothing. The training target and the deployment distribution still
+change together. Professor Forcing attacks the same gap from another direction by
+making hidden-state trajectories under teacher forcing resemble trajectories
+produced while the model runs freely. The result that matters is common to both
+methods. Recovery has to appear somewhere in the training objective.
 
 ## Try it
 
 <Figure
-  n="5.3"
+  n="5.4"
   caption={<>Eight questions on the step and the mismatch. The first three are the ones that change how you read a paper's headline number.</>}
 >
   <Quiz chapter={5} />
@@ -145,7 +167,7 @@ you find out what the agent found in there.
 ## Sources
 
 <Figure
-  n="5.4"
+  n="5.5"
   caption={<>Ordered for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={5} />

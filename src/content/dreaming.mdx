@@ -12,13 +12,14 @@ the thing practise inside the model instead.
 
 <Figure
   n="6.1"
-  caption={<>The learner needs a fixed amount of experience and does not care where it comes from. Slide the ratio up and watch which budget pays. Contact with the world is the scarce one; the compute is not. What this figure deliberately does not show is whether the model stays good enough to supply what you are asking of it, which is the next one's problem.</>}
+  caption={<>Hold the number of update steps fixed and slide where they come from. World contact is often the scarce budget; model compute is still a budget. This first ledger counts real and imagined transitions alike. The chapter will remove that convenient assumption.</>}
 >
   <DreamBudget />
 </Figure>
 
-At twenty imagined steps for every real one, a month of robot time becomes a
-day. That is the entire pitch, and it is a good one.
+At twenty imagined steps for every real one, the contact-time ledger turns a
+month into roughly a day and a half. That is the pitch. It only holds while an
+imagined transition remains useful enough to count.
 
 ## The loop
 
@@ -26,8 +27,8 @@ Four steps, going round.
 
 Act in the world for a while and keep what happened. Fit a model to it. Train
 the **policy** <Gloss>the part that actually picks the action, which is the
-thing being trained here, not the model</Gloss> inside that model, for as long
-as you like, because nothing in there costs anything. Then take the behaviour back out into the world, where it
+thing being trained here, not the model</Gloss> inside that model. Those steps
+cost compute rather than robot contact. Then take the behaviour back out into the world, where it
 collects better experience than it could before, which makes the next model
 better.
 
@@ -46,6 +47,24 @@ model was missing.
 That is also why the ratio in the figure cannot simply be turned up for free.
 Imagined steps are only worth having while the model can still supply them
 honestly, and the model can only do that where it has been.
+
+## Imagined experience is not the same currency
+
+A training log can count one real transition and one model-generated transition
+as two rows. The learner cannot. Synthetic experience inherits the model's blind
+spots, and the discount compounds as a rollout moves away from a real state.
+
+<Figure
+  n="6.2"
+  caption={<>A deliberately simple ledger. Increase the imagined share or the model's per-step error. The nominal batch stays at 100 transitions while its effective experience falls. The discount is illustrative, not an estimator; its job is to expose the assumption that generated and observed rows are exchangeable.</>}
+>
+  <ImaginedData />
+</Figure>
+
+MBPO reported its strongest results with short model rollouts that begin from
+real replay-buffer states. Short rollouts surrender some volume and stay closer
+to observed data. More imagination helps only while each step is priced by how
+far it has travelled from evidence.
 
 ## What the dreamer finds in there
 
@@ -84,8 +103,8 @@ stops always producing the same convenient outcome. A trick that only works
 when the model happens to roll one way stops being worth building on.
 
 <Figure
-  n="6.2"
-  caption={<>The two curves are the reported shape rather than a simulation of any particular system. What is not invented is the finding underneath: an agent scoring far better inside its own dream than in the game it was dreaming about, with more uncertainty in the dream being what closed the gap. Notice that the useful setting is a hump, not a direction.</>}
+  n="6.3"
+  caption={<>The two curves reproduce the reported shape rather than any particular system. The finding underneath is real. The agent scored far better inside its dream than in the game, and more uncertainty closed the gap. The useful setting is a hump, not a direction.</>}
 >
   <DreamTemperature />
 </Figure>
@@ -124,7 +143,7 @@ out there.
 ## Try it
 
 <Figure
-  n="6.3"
+  n="6.4"
   caption={<>Eight questions on the loop and what lives inside it. The last three are the ones that separate the pitch from what you actually get.</>}
 >
   <Quiz chapter={6} />
@@ -142,7 +161,7 @@ along, and what you get instead if you refuse to predict appearances at all.
 ## Sources
 
 <Figure
-  n="6.4"
+  n="6.5"
   caption={<>Ordered for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={6} />

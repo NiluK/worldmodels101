@@ -48,7 +48,7 @@ export const CHAPTERS: Chapter[] = [
     blurb:
       "A camera measures tens of thousands of numbers. The decision needs two or three. What happens at the squeeze in between, and why that narrow point sets the ceiling on everything after it.",
     demo: "Drag a point through a two-number space and watch the room it decodes to.",
-    minutes: 11,
+    minutes: 12,
     status: "ready",
   },
   {
@@ -58,7 +58,7 @@ export const CHAPTERS: Chapter[] = [
     blurb:
       "A model trained on the truth at every step gets its own last answer instead the moment you run it. What carries the past forward, and why the headline accuracy number measures the wrong job.",
     demo: "One model, two ways of running it: corrected every step, or left to eat its own output.",
-    minutes: 11,
+    minutes: 12,
     status: "ready",
   },
   {
@@ -68,7 +68,7 @@ export const CHAPTERS: Chapter[] = [
     blurb:
       "A month of robot time becomes a day if the practice happens inside the model. What that exchange rate really costs, and why the fix for an agent exploiting its own dream is to make the dream worse on purpose.",
     demo: "Turn the uncertainty in the dream up and down, and watch both scores fail at opposite ends.",
-    minutes: 10,
+    minutes: 12,
     status: "ready",
   },
   {
@@ -76,9 +76,9 @@ export const CHAPTERS: Chapter[] = [
     slug: "jepa",
     title: "The Case Against Generation",
     blurb:
-      "When the future is genuinely open, the best possible pixel prediction is a picture of something that cannot happen. The case for predicting descriptions instead, and the bill that arrives with it.",
+      "When a deterministic pixel predictor meets an open future, its optimum can be a picture of something that cannot happen. What sampling fixes, what embeddings avoid, and what each still owes.",
     demo: "Two possible futures, and the smear that scores better than either of them.",
-    minutes: 10,
+    minutes: 12,
     status: "ready",
   },
   {
@@ -86,9 +86,9 @@ export const CHAPTERS: Chapter[] = [
     slug: "video-worlds",
     title: "Video as World Simulator",
     blurb:
-      "Add one input to a video model and it stops being a video. What scaling that bought, and why matching physics across the range you trained on is not the same as having the rule.",
+      "Add an action input to a video model and it becomes steerable in principle. How to tell conditioning from control, what scaling bought, and why fitting physics is not the same as having the rule.",
     demo: "One start, three futures, chosen by which key you hold.",
-    minutes: 10,
+    minutes: 12,
     status: "ready",
   },
   {
@@ -96,9 +96,9 @@ export const CHAPTERS: Chapter[] = [
     slug: "whats-broken",
     title: "What's Broken",
     blurb:
-      "Scenes do not fail all at once, and the properties that survive longest are the ones a per-frame score rewards. What breaks, in what order, and why nobody can tell you which of these systems is best.",
+      "Scenes do not fail all at once, and different systems fail under different contracts. A synthesis of what to test, which benchmark claims compose, and which do not.",
     demo: "Drag out to a thousand steps and read which properties have already gone.",
-    minutes: 10,
+    minutes: 13,
     status: "ready",
   },
 ];
@@ -142,17 +142,17 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
   },
   jepa: {
     title: "反对生成的理由",
-    blurb: "当未来真的还没定时，可能最好的像素预测是一张不可能发生的画面。改成预测描述的理由，以及随之而来的那张账单。",
+    blurb: "当确定性像素预测器遇上开放的未来，最优解可能是一张不可能发生的画面。采样修好什么、嵌入避开什么，以及两者各自欠下的账。",
     demo: "两个可能的未来，以及那团比它们俩得分都高的糊影。",
   },
   "video-worlds": {
     title: "视频作为世界模拟器",
-    blurb: "给一个视频模型加上一个输入，它就不再是视频了。把这件事放大买到了什么，以及为什么「在训练过的范围里符合物理」和「掌握了那条规律」不是一回事。",
+    blurb: "给视频模型加上动作输入，只是让它原则上可以被操控。怎样区分条件与控制、放大买到了什么，以及为什么拟合物理不等于掌握规律。",
     demo: "一个起点，三个未来，取决于你按住哪个键。",
   },
   "whats-broken": {
     title: "哪些地方还不行",
-    blurb: "场景不是一下子全垮的，而活得最久的那些性质，恰好是逐帧打分会奖励的那些。什么会坏、按什么顺序坏，以及为什么没有人能告诉你这些系统里哪一个最好。",
+    blurb: "场景不是一下子全垮的，不同系统也会在不同契约下失败。该测什么、哪些基准结论能合起来、哪些不能：到这里做一次总整理。",
     demo: "把滑块拖到一千步，看看哪些性质已经没了。",
   },
 };

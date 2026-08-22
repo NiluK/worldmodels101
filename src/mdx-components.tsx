@@ -37,6 +37,11 @@ import { ServeBudget } from "@/components/serve-budget";
 import { LearnedDynamics } from "@/components/learned-dynamics";
 import { CompoundingRollout } from "@/components/compounding-rollout";
 import { ArgmaxMismatch } from "@/components/argmax-mismatch";
+import { RecoveryBasin } from "@/components/recovery-basin";
+import { ImaginedData } from "@/components/imagined-data";
+import { FutureSampler } from "@/components/future-sampler";
+import { ActionFidelity } from "@/components/action-fidelity";
+import { FailureMatrix } from "@/components/failure-matrix";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -81,6 +86,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     LearnedDynamics,
     CompoundingRollout,
     ArgmaxMismatch,
+    RecoveryBasin,
+    ImaginedData,
+    FutureSampler,
+    ActionFidelity,
+    FailureMatrix,
     ...components,
   };
 }

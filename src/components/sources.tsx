@@ -61,14 +61,14 @@ const NOTES_ZH: Record<string, string> = {
   "https://arxiv.org/abs/2005.13239": "把悲观写进目标：按模型的不确定性给预测回报打折，于是面生的捷径必须为「面生」付出代价。",
   "https://openreview.net/forum?id=BZ5a1r-kVsf": "整个论点的出处，包括为什么对一个要去行动的系统来说，预测外观是错的活。",
   "https://arxiv.org/abs/2006.07733": "那份缓慢更新的目标副本，以及那个让大家相信「不把东西推开也能避免塌缩」的结果。",
-  "https://arxiv.org/abs/2105.04906": "显式的做法：惩罚那些各个分量已经塌掉或互相重复的表征。图 7.2 里那道防护的正经版本。",
+  "https://arxiv.org/abs/2105.04906": "显式的做法：惩罚那些各个分量已经塌掉或互相重复的表征。图 7.3 里那道防护的正经版本。",
   "https://arxiv.org/abs/2304.12210": "一份诚实的综述，包括这个领域有多大一部分是「防止平凡解获胜」的机器。",
   "https://arxiv.org/abs/2111.06377": "值得记住的反例：把被遮住那部分的像素重建出来，结果照样非常好用。",
   "https://arxiv.org/abs/2404.08471": "嵌入预测这个目标最后到底学到了什么，是测出来的，不是断言出来的。",
   "https://arxiv.org/abs/2301.08243": "预测被遮住区域的表征，而不是像素。",
   "https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/": "先做无动作预训练，再做动作条件下的控制。",
   "https://arxiv.org/abs/2408.14837": "DOOM 被逐帧地从此前的帧和输入里生成出来，快到可以玩。最清楚地说明了这类东西是可玩的，而不只是可看的。",
-  "https://arxiv.org/abs/2411.02385": "图 8.2 的实测版本。视频模型在训练分布之内符合物理规律，出了这个范围就不会外推。",
+  "https://arxiv.org/abs/2411.02385": "图 8.3 的实测版本。视频模型在训练分布之内符合物理规律，出了这个范围就不会外推。",
   "https://openai.com/index/video-generation-models-as-world-simulators/": "让「涌现出物理」这个说法进入主流的那份报告。值得读一读它究竟主张了什么、又没主张什么。",
   "https://arxiv.org/abs/2501.03575": "把生成视频当作机器人和车辆的训练数据来造，而这正是这类系统毫无争议地擅长的用途。",
   "https://arxiv.org/abs/2311.17982": "对这个测量问题一次认真的尝试，也很适合用来看清：要拆到多少个互相独立的维度之后，排序才会变得不再显然。",
@@ -92,6 +92,10 @@ const NOTES_ZH: Record<string, string> = {
   "https://arxiv.org/abs/1711.00937": "当那份简短描述被强制变成少数几个离散符号、而不是连续数字时，会发生什么。",
   "https://openreview.net/forum?id=Sy2fzU9gl": "把瓶颈上的压力调大，坐标轴就开始对上一些你叫得出名字的东西。这篇也很好地展示了那样做的代价。",
   "https://arxiv.org/abs/1606.05579": "「一个好的表征，是它的各个方向都有含义」这个主张，写在这个领域还不拥挤的时候。",
+  "https://arxiv.org/abs/1811.12359": "证明一个重要边界：没有归纳偏置，纯无监督的解耦在一般情况下不可识别。瓶颈会施加压力，却不会自动给坐标轴命名。",
+  "https://arxiv.org/abs/1610.09038": "不直接安排模型吃多少自己的输出，而是让教师强制和自由运行时的隐藏轨迹彼此相像。恢复能力必须进入训练目标。",
+  "https://arxiv.org/abs/1710.11252": "像素预测对模糊问题的真正反驳：学习未来的分布，并从中采样清晰、各自可能的结果。",
+  "https://arxiv.org/abs/2608.13552": "面向可交互世界模型的新基准：171 个场景，分别测试几何、交互保真度，以及物体离开和重返视野时的演化。",
   "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf": "一个符号的代价在这里变成了「你给它的概率」。预测与压缩是同一件事，一切都从这儿开始。",
   "https://doi.org/10.1002/j.1538-7305.1951.tb01366.x": "香农让人坐下来，一个字母一个字母地猜英文。图 3.3 最下面那一行大致就是他测出来的。",
   "https://doi.org/10.1207/s15516709cog1402_1": "训练一个小网络去预测下一个词，然后往里看：名词、动词、有生命与无生命，没有一样是被要求过的。",
@@ -116,6 +120,7 @@ const SOURCES_CH3 = [
 ];
 
 const SOURCES_CH4 = [
+  { t: "Challenging Common Assumptions in the Unsupervised Learning of Disentangled Representations", a: "Locatello et al., 2019", u: "https://arxiv.org/abs/1811.12359", n: "The result that prevents a bottleneck from being magic: without inductive biases, unsupervised disentanglement is impossible in general and the axes are not identifiable." },
   { t: "Auto-Encoding Variational Bayes", a: "Kingma & Welling, 2013", u: "https://arxiv.org/abs/1312.6114", n: "The variational autoencoder. The noise it adds is the reason the space ends up navigable instead of a scatter of unrelated addresses." },
   { t: "Reducing the Dimensionality of Data with Neural Networks", a: "Hinton & Salakhutdinov, 2006", u: "https://doi.org/10.1126/science.1127647", n: "The bottleneck argument before it had modern machinery behind it. Paywalled." },
   { t: "World Models", a: "Ha & Schmidhuber, 2018", u: "https://arxiv.org/abs/1803.10122", n: "Every frame crushed to thirty-two numbers, and everything after that working only from those. The clearest example of the squeeze in a working agent." },
@@ -127,12 +132,13 @@ const SOURCES_CH4 = [
 ];
 
 const SOURCES_CH5 = [
+  { t: "Professor Forcing: A New Algorithm for Training Recurrent Networks", a: "Lamb et al., 2016", u: "https://arxiv.org/abs/1610.09038", n: "Aligns hidden-state trajectories under teacher forcing with those produced during free running. A direct attempt to train the recovery behaviour a one-step test never asks for." },
   { t: "Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks", a: "Bengio et al., 2015", u: "https://arxiv.org/abs/1506.03099", n: "The mismatch named and attacked head on: let the model eat its own predictions during training, and raise the dose as it improves." },
   { t: "Sequence Level Training with Recurrent Neural Networks", a: "Ranzato et al., 2015", u: "https://arxiv.org/abs/1511.06732", n: "Score the whole rollout rather than the single step, so the thing being optimised is the thing you will actually run." },
   { t: "Learning Latent Dynamics for Planning from Pixels (PlaNet)", a: "Hafner et al., 2018", u: "https://arxiv.org/abs/1811.04551", n: "The argument for carrying a deterministic part and a stochastic part together, because each one fails alone in a different direction." },
   { t: "Dream to Control (Dreamer)", a: "Hafner et al., 2019", u: "https://arxiv.org/abs/1912.01603", n: "What a latent transition model is for once it works: long imagined rollouts that behaviour can be learned from." },
   { t: "Long Short-Term Memory", a: "Hochreiter & Schmidhuber, 1997", u: "https://doi.org/10.1162/neco.1997.9.8.1735", n: "The fixed summary, made to hold on to things for longer than the gradient wanted it to. Paywalled." },
-  { t: "Attention Is All You Need", a: "Vaswani et al., 2017", u: "https://arxiv.org/abs/1706.03762", n: "The other answer: stop summarising, keep every step, and pay for it in how the cost grows with length." },
+  { t: "Attention Is All You Need", a: "Vaswani et al., 2017", u: "https://arxiv.org/abs/1706.03762", n: "The other answer: retain the available context and choose what to read at each step, paying a cost that grows with sequence length." },
   { t: "Efficiently Modeling Long Sequences with Structured State Spaces (S4)", a: "Gu et al., 2021", u: "https://arxiv.org/abs/2111.00396", n: "The summary approach returning with better machinery, and the reason state-space models are back in the conversation." },
   { t: "Mamba: Linear-Time Sequence Modeling with Selective State Spaces", a: "Gu & Dao, 2023", u: "https://arxiv.org/abs/2312.00752", n: "A summary that decides what to keep based on what it is looking at, which is the concession the fixed version could not make." },
 ];
@@ -149,11 +155,12 @@ const SOURCES_CH6 = [
 ];
 
 const SOURCES_CH7 = [
+  { t: "Stochastic Variational Video Prediction (SV2P)", a: "Babaeizadeh et al., 2017", u: "https://arxiv.org/abs/1710.11252", n: "The real counterargument to deterministic blur: learn a distribution and draw distinct plausible futures instead of returning their pixelwise mean." },
   { t: "A Path Towards Autonomous Machine Intelligence", a: "LeCun, 2022", u: "https://openreview.net/forum?id=BZ5a1r-kVsf", n: "The position paper the whole argument comes from, including why predicting appearances is the wrong job for a system meant to act." },
   { t: "I-JEPA", a: "Assran et al., 2023", u: "https://arxiv.org/abs/2301.08243", n: "Hide part of an image and predict the embedding of the missing piece rather than redrawing it. The clean statement of the method." },
   { t: "V-JEPA 2", a: "Meta AI, 2025", u: "https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/", n: "The video version, pre-trained without actions and then post-trained for control, which is where the argument meets a robot." },
   { t: "Bootstrap Your Own Latent (BYOL)", a: "Grill et al., 2020", u: "https://arxiv.org/abs/2006.07733", n: "The slowly-updating target copy, and the result that made people believe you could avoid collapse without pushing things apart." },
-  { t: "VICReg", a: "Bardes, Ponce & LeCun, 2021", u: "https://arxiv.org/abs/2105.04906", n: "The explicit approach: penalise a representation whose components have collapsed or duplicated each other. Figure 7.2's safeguard, done properly." },
+  { t: "VICReg", a: "Bardes, Ponce & LeCun, 2021", u: "https://arxiv.org/abs/2105.04906", n: "The explicit approach: penalise a representation whose components have collapsed or duplicated each other. Figure 7.3's safeguard, done properly." },
   { t: "A Cookbook of Self-Supervised Learning", a: "Balestriero et al., 2023", u: "https://arxiv.org/abs/2304.12210", n: "The honest survey, including how much of this field is machinery for stopping the trivial solution from winning." },
   { t: "Masked Autoencoders Are Scalable Vision Learners", a: "He et al., 2021", u: "https://arxiv.org/abs/2111.06377", n: "The counter-example worth holding on to: reconstruct the pixels of the masked part, and it works very well anyway." },
   { t: "Learning and Leveraging World Models in Visual Representation Learning", a: "Garrido et al., 2024", u: "https://arxiv.org/abs/2404.08471", n: "What the embedding-prediction objective turns out to have learned, tested rather than asserted." },
@@ -163,13 +170,14 @@ const SOURCES_CH8 = [
   { t: "Genie: Generative Interactive Environments", a: "Bruce et al., 2024", u: "https://arxiv.org/abs/2402.15391", n: "Latent actions learned from unlabelled video, which is the move that turns a video model into somewhere you can be." },
   { t: "Genie 3", a: "Google DeepMind, 2025", u: "https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/", n: "The reported numbers this chapter quotes: 720p, 24 frames a second, minutes of coherence. A lab report rather than a result anyone outside has repeated." },
   { t: "Diffusion Models Are Real-Time Game Engines (GameNGen)", a: "Valevski et al., 2024", u: "https://arxiv.org/abs/2408.14837", n: "DOOM generated frame by frame from previous frames and inputs, fast enough to play. The clearest demonstration that this is playable rather than merely watchable." },
-  { t: "How Far is Video Generation from World Model: A Physical Law Perspective", a: "Kang et al., 2024", u: "https://arxiv.org/abs/2411.02385", n: "The measured version of Figure 8.2. Video models match physical laws within the distribution they were trained on, and do not extrapolate outside it." },
+  { t: "How Far is Video Generation from World Model: A Physical Law Perspective", a: "Kang et al., 2024", u: "https://arxiv.org/abs/2411.02385", n: "The measured version of Figure 8.3. Video models match physical laws within the distribution they were trained on, and do not extrapolate outside it." },
   { t: "Video generation models as world simulators", a: "OpenAI, 2024", u: "https://openai.com/index/video-generation-models-as-world-simulators/", n: "The report that made the emergent-physics claim a mainstream one. Worth reading for exactly what it does and does not assert." },
   { t: "Cosmos World Foundation Model Platform for Physical AI", a: "NVIDIA, 2025", u: "https://arxiv.org/abs/2501.03575", n: "Generated video built as training data for robots and vehicles, which is the use these systems are unambiguously good for." },
   { t: "Cosmos", a: "NVIDIA", u: "https://www.nvidia.com/en-us/ai/cosmos/", n: "The product framing, and a useful boundary case: generative video beside explicit simulation, sold as one platform." },
 ];
 
 const SOURCES_CH9 = [
+  { t: "PlayWorld: A Benchmark for Interactive World Models", a: "Zhang et al., 2026", u: "https://arxiv.org/abs/2608.13552", n: "A current benchmark spanning 171 scenarios and separating geometry, interaction fidelity, and out-of-sight evolution rather than pretending world quality is one number." },
   { t: "How Far is Video Generation from World Model: A Physical Law Perspective", a: "Kang et al., 2024", u: "https://arxiv.org/abs/2411.02385", n: "Physical laws matched inside the training distribution and not extrapolated outside it. The clearest measured statement of the gap this chapter is about." },
   { t: "VBench: Comprehensive Benchmark Suite for Video Generative Models", a: "Huang et al., 2023", u: "https://arxiv.org/abs/2311.17982", n: "A serious attempt at the measurement problem, and useful for seeing how many separate dimensions it takes before the ordering stops being obvious." },
   { t: "Benchmarking Model-Based Reinforcement Learning", a: "Wang et al., 2019", u: "https://arxiv.org/abs/1907.02057", n: "Where model-based methods win and lose, and the discovery that the planning horizon is the number that decides it." },

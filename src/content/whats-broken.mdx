@@ -7,20 +7,22 @@ paper and being sold one.
 
 ## Rollouts do not fail all at once
 
-The usual way to report how long a model holds up is an average error over a
-rollout. That number is close to useless, because the properties of a scene
-break in an order, and the order is not the one you would guess.
+An average error over a rollout collapses distinct failures into one number.
+Identity can fail while texture remains sharp; action fidelity can fail while
+both look fine. The order depends on the system and task, so the useful report
+is not one horizon but a set of property-specific horizons.
 
 <Figure
   n="9.1"
-  caption={<>The horizons are illustrative of the ordering rather than measurements of any named system. What is not illustrative is the shape: things go in roughly this sequence, and the ones that survive longest are the ones a per-frame score happens to reward. Drag out to a few hundred steps and read the bottom right.</>}
+  caption={<>A diagnostic thought experiment, not a benchmark result. Its ordering is one plausible failure profile chosen to expose what an average hides. A different model may lose physics before identity or preserve layout longer. Drag the horizon. "Still looks good" is not the same claim as "still supports the task."</>}
 >
   <WhatBreaks />
 </Figure>
 
-Colour and lighting are stable almost indefinitely. Texture holds up well.
-What goes first is whether that is still the same object it was a moment ago,
-and whether things are still behaving as though they have mass.
+In this constructed profile, colour and texture outlast identity and physical
+behaviour. That ordering is not universal. Per-frame losses directly reward
+surfaces and light, while persistence has to be inferred across
+time.
 
 Which is precisely backwards from what you want, and it is not a coincidence.
 A loss computed per frame rewards getting most of the pixels approximately
@@ -34,10 +36,11 @@ subject is easy to fool yourself about.
 ## The three that keep coming back
 
 **Things stop being themselves.** Object permanence is the one everyone
-notices, and it is worth being precise about why it is hard. Nothing in these
-systems is storing an object. Consistency is a property of a well-trained
-predictor, so it degrades the way predictions degrade, gradually and without
-warning. There is no error message when the chair becomes a different chair.
+notices. In a renderer with no exposed object store, identity is carried by the
+predictor's hidden state rather than enforced by a persistent record. It can
+degrade gradually and without an error message when the chair becomes another
+chair. Structured simulators may store the object explicitly; they pay for that
+advantage by requiring the structure to be defined or learned correctly.
 
 **What if is not really available.** A model can tell you what is likely to
 happen next. Asking what would have happened if you had done something else is
@@ -57,17 +60,19 @@ long. Short rollouts. Replanning. Starting from real states. They work. They
 also amount to an admission that the thing does not hold up, and the horizon
 over which it does is the number that decides what you can build.
 
-## Nobody can tell you which one is best
+## There is no agreed overall winner
 
 This is the part that should bother you most, and it gets the least attention.
 
-There is no agreed way to measure whether a generated world is behaving. There
-are several disagreeing ways, and a system that wins on one routinely loses on
-another.
+Benchmarks now test generated worlds directly. PlayWorld, released in August
+2026, evaluates 171 scenarios across geometry,
+interaction fidelity and what happens to objects as they leave and re-enter
+view. Other suites emphasise perceptual video quality. What is still missing is
+an accepted way to turn these different contracts into one overall ordering.
 
 <Figure
   n="9.2"
-  caption={<>The scores are invented and the systems are not real. The structure is: these measures genuinely disagree, and there is no accepted way to combine them into an ordering. Click through the four and watch the winner change.</>}
+  caption={<>The scores are invented and the systems are not real. The disagreement is real. There is no accepted way to combine these measures into one ordering. Click through the four and watch the winner change.</>}
 >
   <NoRanking />
 </Figure>
@@ -80,15 +85,29 @@ reported. Cost decides whether anything can afford to search inside the thing,
 and it is reported least of all.
 
 Downstream task success looks like the honest answer, and it has its own
-problem: it scores the model and the policy together, so a good policy hides a
+problem. It scores the model and the policy together, so a good policy hides a
 bad model and the number tells you nothing about which you have.
 
-None of this means progress is not happening. It means claims about progress
-are currently claims about whichever measure the claimant chose.
+Progress is real. "Better" is incomplete until the measure and system contract
+are named.
 
-## What to do with all this
+## Match the failure test to the system
 
-Four questions, which between them handle most of what you will read.
+Chapter 1 separated five things that share a name. They should not face the same
+exam. A renderer lives or dies by persistence and action fidelity. A compact
+dynamics model lives or dies by rollout horizon and whether planning search can
+exploit it. A representation can look stable while discarding the variable the
+task needed. An implicit model needs a probe capable of falsifying the claim
+that the model is there at all.
+
+<Figure
+  n="9.3"
+  caption={<>The five Chapter 1 contracts crossed with five failure questions. The levels are editorial judgements, not benchmark scores. Select a row to reveal the question that most often binds that kind of system. A single "world model quality" axis would hide all five.</>}
+>
+  <FailureMatrix />
+</Figure>
+
+Four questions still handle most papers:
 
 **What does it output?** A picture, a structure, a compact state, an embedding.
 This decides what it can be used for and almost nothing else follows without
@@ -103,13 +122,13 @@ matters more than the architecture, and it is usually missing.
 **Which measure is the claim using, and what does that measure ignore?** There
 is no overall score. Anyone implying there is has picked one and not told you.
 
-That is the whole toolkit. It is unglamorous, and it will get you further
-through a paper than knowing any particular architecture.
+Those questions force a paper to name its output, its evidence and the horizon
+over which its claim holds. Architecture names alone do none of that work.
 
 ## Try it
 
 <Figure
-  n="9.3"
+  n="9.4"
   caption={<>Eight questions on the honest state of it. If you have read the whole course, the last one should be easy and slightly annoying.</>}
 >
   <Quiz chapter={9} />
@@ -130,7 +149,7 @@ correction is genuinely welcome and will be credited.
 ## Sources
 
 <Figure
-  n="9.4"
+  n="9.5"
   caption={<>Ordered for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={9} />

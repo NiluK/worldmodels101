@@ -1,19 +1,37 @@
 Take a model that predicts the next frame of video, and add one input.
 
-Alongside the frames it has already seen, tell it which key is being held. Now the
-same opening gives you one continuation if you hold left and a different one if
-you hold right. It has stopped being a video and started being somewhere you
-are.
+Alongside the frames it has already seen, tell it which key is being held. The
+model is now capable of giving the same opening one continuation for left and
+another for right. That action input is necessary for an interactive world. It
+does not, by itself, prove the model obeys it.
 
 <Figure
   n="8.1"
-  caption={<>One model, one start, three futures. The first two frames are given; the rest are made up. Turn the action input off and all three rows become identical, which is the whole difference: without it there is exactly one future on offer, and it is whichever one the model finds most likely.</>}
+  caption={<>One model, one start, three futures. The first two frames are given; the rest are made up. Turn the action input off and all three rows become identical. Without it there is one future on offer, whichever the model finds most likely.</>}
 >
   <ActionConditioned />
 </Figure>
 
-That is the entire architectural move. Everything else in this chapter is what
-happens when you do it at scale.
+That is the architectural move. Whether it becomes control is an empirical
+question.
+
+## An action input is not control
+
+A model can receive an action and still ignore it, respond weakly, or let it
+change appearance without changing the underlying trajectory. Controllability
+has to be measured by holding the start fixed, varying only the command, and
+checking whether the resulting futures separate in the requested way.
+
+<Figure
+  n="8.2"
+  caption={<>Every row receives a different command from the same starting frame. Move action fidelity towards zero. The input remains present, but the realised paths collapse together. Conditioning describes the interface. Fidelity says whether the model honoured it.</>}
+>
+  <ActionFidelity />
+</Figure>
+
+Video quality can hide weak control. If three beautiful continuations all go
+straight, the system has generated video. It has not generated the
+counterfactuals a planner asked for.
 
 ## What scaling bought
 
@@ -31,14 +49,11 @@ subject, and Chapter 9 is largely about how little of it can currently be
 checked.
 </MarginNote>
 
-Nothing in that system stores the scene. There is no geometry behind the
-picture, no list of objects, nothing you could export. The room stays put
-because the model got extremely good at continuing what it had already drawn,
-and continuing consistently is part of continuing well.
-
-Which is a stranger achievement than it sounds. A system with no memory of a
-room, reconstructing that room from its own previous output, well enough that
-you cannot catch it out in a minute of looking.
+The public interface exposes no persistent geometry or object database that you
+could inspect or export. That is not the same as having no memory. DeepMind says
+Genie 3 can refer back to its trajectory and retain visual information for about
+a minute. Whatever internal state supports that behaviour remains implicit in
+the generator rather than available as a scene graph.
 
 ## What "emergent physics" means
 
@@ -55,7 +70,7 @@ suggests it acquired the rule, and there is a test for that. It is not whether
 the outputs look right on the sort of thing it was trained on.
 
 <Figure
-  n="8.2"
+  n="8.3"
   caption={<>The dashed line is a model fitted to the true behaviour across one band of speeds. Inside that band it is within a few per cent, and anyone testing it there would conclude it had the rule. Drag outside the band. It does not have the rule; it has a straight line through the part of the curve it was shown.</>}
 >
   <EmergentPhysics />
@@ -83,8 +98,8 @@ convincing than a wrong number.
 
 Given all that, it would be easy to be dismissive, and that would be a mistake.
 
-For training other systems, a generated world is very useful. It costs nothing
-to run. It resets instantly. It will produce a thousand variations of a scene
+For training other systems, a generated world is very useful. It avoids real
+environment contact, but pays in accelerator time. It resets instantly and can produce a thousand variations of a scene
 that would take a week to stage. NVIDIA's Cosmos is
 built and marketed on exactly this: physically-aware generated video as
 training data for robots and vehicles.
@@ -92,10 +107,10 @@ training data for robots and vehicles.
 For being a world you can move around in, they are already good. That is worth
 something on its own, and no other approach in this course delivers it.
 
-For being the thing an agent plans inside, they are the wrong shape. A planner
-needs to try a hundred action sequences and score them, which means running the
-model a hundred times, and running these models is expensive. It also needs a compact state to reason over, and a frame is the opposite of
-compact.
+For being the thing an agent plans inside, raw video generators are an awkward
+shape. A planner may need to score a hundred action sequences, and rendering
+each one is expensive. Systems can distil a compact state or plan in a learned
+latent. In that case the state does the planning work, not the visible video.
 
 ## Where the seams are
 
@@ -109,14 +124,15 @@ statistical property of a trained system rather than a guarantee.
 pushed towards the average of the possible futures wherever the future is open.
 The future is most open exactly when something is about to happen.
 
-**Nobody agrees how to score them.** There is no accepted measurement of
-whether a generated world is behaving, which means claims about improvement are
-mostly claims about how the outputs look to the person making them.
+**The scores do not compose.** Benchmarks separately measure visual quality,
+geometry, action fidelity and persistence. There is no accepted rule for
+combining those results into one ranking. A claim about improvement therefore
+belongs to a particular test.
 
 ## Try it
 
 <Figure
-  n="8.3"
+  n="8.4"
   caption={<>Eight questions on the move and the claim. The middle three are the ones worth being careful about when a demo is impressive.</>}
 >
   <Quiz chapter={8} />
@@ -134,7 +150,7 @@ these systems is best.
 ## Sources
 
 <Figure
-  n="8.4"
+  n="8.5"
   caption={<>Ordered for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={8} />
