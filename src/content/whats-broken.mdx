@@ -93,16 +93,17 @@ are named.
 
 ## Match the failure test to the system
 
-Chapter 1 separated five things that share a name. They should not face the same
-exam. A renderer lives or dies by persistence and action fidelity. A compact
-dynamics model lives or dies by rollout horizon and whether planning search can
-exploit it. A representation can look stable while discarding the variable the
-task needed. An implicit model needs a probe capable of falsifying the claim
-that the model is there at all.
+The phrase covers five different machines, and they should not face the same
+exam. A renderer lives or dies by persistence and action fidelity. A simulator
+is the easy one to examine, because it exports structure another program can
+check. A compact dynamics model lives or dies by rollout horizon and whether
+planning search can exploit it. A representation can look stable while
+discarding the variable the task needed. An implicit model needs a probe
+capable of falsifying the claim that the model is there at all.
 
 <Figure
   n="9.3"
-  caption={<>The five Chapter 1 contracts crossed with five failure questions. The levels are editorial judgements, not benchmark scores. Select a row to reveal the question that most often binds that kind of system. A single "world model quality" axis would hide all five.</>}
+  caption={<>Five system contracts crossed with five failure questions. The levels are editorial judgements, not benchmark scores. Select a row to reveal the question that most often binds that kind of system. A single "world model quality" axis would hide all five.</>}
 >
   <FailureMatrix />
 </Figure>
