@@ -316,7 +316,7 @@ const en: Dict = {
   "pc.bigram.note": "After q, u is nearly free. Context is where the savings live.",
   "pc.trigram.note": "Two letters of context, and most of what follows is already narrowed.",
   "pc.word.note": "Once it knows words and how they go together, whole endings are predictable.",
-  "pc.strong.note": "Roughly where Shannon put a person guessing English, and where good language models sit.",
+  "pc.strong.note": "Roughly where Claude Shannon put a person guessing English, and where good language models sit.",
   "gca.run": "Run",
   "gca.pause": "Pause",
   "gca.again": "Again",
@@ -355,13 +355,6 @@ const en: Dict = {
   "spill.count": "5 incompatible answers",
   "spill.turnsOut": "Turns out to be",
 
-  "land.hint": "Click the picture, then use the arrow keys or WASD.",
-  "land.turn": "Turn right around, then come back. Is the marker where you left it?",
-  "land.hold": "Hold the world",
-  "land.left": "Turn left",
-  "land.right": "Turn right",
-  "land.fwd": "Walk forward",
-  "land.back": "Walk back",
 
   "loop.idle": "Every definition is a specialist on one arc of this loop. Hover any of them.",
   "loop.intervene": "intervene · the world is now different",
@@ -892,13 +885,6 @@ const zh: Dict = {
   "spill.count": "5 个互不相容的答案",
   "spill.turnsOut": "其实属于",
 
-  "land.hint": "先点击画面，然后用方向键或 WASD。",
-  "land.turn": "转一整圈再回来。标记还在原处吗？",
-  "land.hold": "保持世界不变",
-  "land.left": "向左转",
-  "land.right": "向右转",
-  "land.fwd": "向前走",
-  "land.back": "向后退",
 
   "loop.idle": "每一种定义都专精于这个回路上的某一段。把鼠标移到任意一个上面。",
   "loop.intervene": "干预 · 世界已经不同了",

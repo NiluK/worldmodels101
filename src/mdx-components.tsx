@@ -42,6 +42,11 @@ import { ImaginedData } from "@/components/imagined-data";
 import { FutureSampler } from "@/components/future-sampler";
 import { ActionFidelity } from "@/components/action-fidelity";
 import { FailureMatrix } from "@/components/failure-matrix";
+import { KalmanTracker } from "@/components/kalman-tracker";
+import { TwoNetworks } from "@/components/two-networks";
+import { ExperienceBill } from "@/components/experience-bill";
+import { ThreePieces } from "@/components/three-pieces";
+import { WordTravels } from "@/components/word-travels";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -77,6 +82,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     TransitionEquation,
     GeneratedLandscape,
     ArchitectureTimeline,
+    KalmanTracker,
+    TwoNetworks,
+    ExperienceBill,
+    ThreePieces,
+    WordTravels,
     HorizonSlider,
     RolloutEquation,
     Quiz,

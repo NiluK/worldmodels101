@@ -1093,7 +1093,7 @@ const QUESTIONS_CH6: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Ha and Schmidhuber's agent found a way of moving that stopped its dream producing fireballs. What kind of failure is that?",
+    stem: "David Ha and Jürgen Schmidhuber's agent found a way of moving that stopped its dream producing fireballs. What kind of failure is that?",
     options: [
       "A bug in the training code",
       "The policy maximising the score the model hands it, which is exactly what it was asked to do",
@@ -1172,7 +1172,7 @@ const QUESTIONS_CH6_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Ha 与 Schmidhuber 的智能体找到了一种移动方式，让它的梦不再产生火球。这是哪一类失败？",
+    stem: "David Ha 与 Jürgen Schmidhuber 的智能体找到了一种移动方式，让它的梦不再产生火球。这是哪一类失败？",
     options: ["训练代码里的 bug", "策略在最大化模型交给它的分数，而这正是它被要求做的事", "模型太小了", "探索不足"],
     answer: 1,
     why: "什么岔子都没出。那些是模型里面最便宜的分数，而这个策略很彻底。",
@@ -1578,7 +1578,7 @@ const QUESTIONS_CH3: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Elman's network was trained only to predict the next word, and its internal states sorted themselves into nouns, verbs, animate and inanimate. Why?",
+    stem: "Jeffrey Elman's network was trained only to predict the next word, and its internal states sorted themselves into nouns, verbs, animate and inanimate. Why?",
     options: [
       "Those categories were in the training labels",
       "The architecture had one unit per category",
@@ -1610,7 +1610,7 @@ const QUESTIONS_CH3: Q[] = [
       "The receiver guesses it and does not need the message",
     ],
     answer: 1,
-    why: "Shannon made the price exact. High probability means a short code, which is why a better predictor is a better compressor.",
+    why: "Claude Shannon made the price exact. High probability means a short code, which is why a better predictor is a better compressor.",
   },
   {
     kind: "choice",
@@ -1672,7 +1672,7 @@ const QUESTIONS_CH3_ZH: Q[] = [
   },
   {
     kind: "choice",
-    stem: "Elman 的网络只被训练去预测下一个词，而它的内部状态自己分成了名词、动词、有生命与无生命。为什么？",
+    stem: "Jeffrey Elman 的网络只被训练去预测下一个词，而它的内部状态自己分成了名词、动词、有生命与无生命。为什么？",
     options: [
       "这些类别本来就在训练标注里",
       "架构里每个类别有一个单元",

@@ -52,24 +52,24 @@ const ERAS_EN_NOTES = [
 /** Era copy per locale. Labels are dictionary keys so the diagram stays in step. */
 const ERA_TEXT: Record<string, Record<string, { who: string; note: string }>> = {
   en: {
-    "1960": { who: "Kalman", note: ERAS_EN_NOTES[0] },
-    "1990": { who: "Schmidhuber · Sutton", note: ERAS_EN_NOTES[1] },
-    "2018": { who: "Ha & Schmidhuber", note: ERAS_EN_NOTES[2] },
+    "1960": { who: "Rudolf Kalman", note: ERAS_EN_NOTES[0] },
+    "1990": { who: "Jürgen Schmidhuber · Richard Sutton", note: ERAS_EN_NOTES[1] },
+    "2018": { who: "David Ha & Jürgen Schmidhuber", note: ERAS_EN_NOTES[2] },
     "2018–19": { who: "PlaNet · Dreamer", note: ERAS_EN_NOTES[3] },
     "2023–25": { who: "I-JEPA · V-JEPA 2", note: ERAS_EN_NOTES[4] },
     "2024–26": { who: "Genie · Cosmos · Marble", note: ERAS_EN_NOTES[5] },
   },
   zh: {
     "1960": {
-      who: "卡尔曼",
+      who: "鲁道夫·卡尔曼",
       note: "通过运行一个前向模型、并用观测到的结果去修正它，从带噪声的测量里恢复出隐藏状态。动力学是给定的，不是学出来的，而且这里没有任何东西会问「如果我采取行动会怎样」。",
     },
     "1990": {
-      who: "Schmidhuber · Sutton",
+      who: "Jürgen Schmidhuber · Richard Sutton",
       note: "一个网络给世界建模，另一个选择动作，而前者预测后者的选择会带来什么。Dyna 补上了另一半：不只在世界里规划，也在学出来的模型里规划。",
     },
     "2018": {
-      who: "Ha 与 Schmidhuber",
+      who: "David Ha 与 Jürgen Schmidhuber",
       note: "一个编码器把每一帧压成一小串数字，一个循环动力学模型预测这串数字接下来往哪走，还有一个几乎完全在模型自己的推演里训练出来的小控制器。",
     },
     "2018–19": {

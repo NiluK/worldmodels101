@@ -36,7 +36,7 @@ export const CHAPTERS: Chapter[] = [
     slug: "prediction",
     title: "Prediction as Learning",
     blurb:
-      "Ask something to predict what comes next and it has no choice but to build whatever the next moment depends on. Elman showed it with words in 1990. Shannon had already shown that the same loop, read the other way, is compression.",
+      "Ask something to predict what comes next and it has no choice but to build whatever the next moment depends on. Jeffrey Elman showed it with words in 1990. Claude Shannon had already shown that the same loop, read the other way, is compression.",
     demo: "One frame, then two: watch the futures still open collapse as evidence arrives.",
     minutes: 16,
     status: "ready",
@@ -76,7 +76,7 @@ export const CHAPTERS: Chapter[] = [
     slug: "jepa",
     title: "The Case Against Generation",
     blurb:
-      "When a deterministic pixel predictor meets an open future, its best answer can be a picture of something that cannot happen. LeCun's case against generation, what sampling fixes, what embeddings avoid, and what each still owes.",
+      "When a deterministic pixel predictor meets an open future, its best answer can be a picture of something that cannot happen. Yann LeCun's case against generation, what sampling fixes, what embeddings avoid, and what each still owes.",
     demo: "Two possible futures, and the smear that scores better than either of them.",
     minutes: 16,
     status: "ready",

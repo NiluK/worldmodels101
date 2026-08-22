@@ -34,13 +34,13 @@ const RESULTS = [
     definition: "dynamics",
     what: "A reinforcement learning result from 2018 about a car in a racing game.",
     href: "https://worldmodels.github.io/",
-    cite: "World Models · Ha & Schmidhuber",
+    cite: "World Models · David Ha & Jürgen Schmidhuber",
   },
   {
     definition: "implicit",
     what: "An argument, conducted mostly at volume, about whether a language model that has never seen a chessboard has one inside it anyway.",
     href: "https://arxiv.org/abs/2210.13382",
-    cite: "Emergent World Representations · Li et al.",
+    cite: "Emergent World Representations · Kenneth Li et al.",
   },
 ];
 

@@ -87,7 +87,7 @@ export const DEFINITIONS: Definition[] = [
       "A compact model of the next state under actions, often alongside reward, learned so that something else can search inside it. The classical model-based definition, and the one the term was coined for.",
     test:
       "Can you roll it forward under actions nobody has taken yet, and search over them? That is the job this one exists to do.",
-    systems: ["Dreamer", "PlaNet", "Ha & Schmidhuber"],
+    systems: ["Dreamer", "PlaNet", "World Models (2018)"],
     camp: "Reinforcement learning and control theory. Named for what it models, not for the policy that uses it: in Ha and Schmidhuber\u2019s architecture the controller is a separate module from the model.",
     chapter: 2,
     video: {
