@@ -24,9 +24,9 @@ export function FailureMatrix() {
 
   return (
     <div>
-      <div className="overflow-x-auto px-5 pt-6 md:px-8">
-        <div className="min-w-[44rem]">
-          <div className="grid grid-cols-[10rem_repeat(5,minmax(6rem,1fr))] gap-px bg-rule">
+      <div className="px-4 pt-6 md:px-8">
+        <div>
+          <div className="grid grid-cols-[minmax(0,1fr)_repeat(5,minmax(2.2rem,1fr))] gap-px bg-rule sm:grid-cols-[10rem_repeat(5,minmax(6rem,1fr))]">
             <div className="bg-paper-raised p-3" />
             {RISKS.map((risk) => <div key={risk} className="bg-paper-raised p-3"><span className="label !text-[0.58rem]">{t(`fm.risk.${risk}`)}</span></div>)}
             {CONTRACTS.map((contract) => (

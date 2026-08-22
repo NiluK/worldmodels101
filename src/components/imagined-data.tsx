@@ -67,7 +67,7 @@ function Ledger({ label, value, tone, suffix }: { label: string; value: number; 
         <span className="label tnum !text-ink">{suffix}</span>
       </div>
       <div className="mt-1.5 h-4 bg-rule">
-        <div className="h-full transition-[width] duration-300" style={{ width: `${Math.max(0, Math.min(100, value))}%`, background: tone }} />
+        <div className="h-full transition-[width] duration-300" style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(2)}%`, background: tone }} />
       </div>
     </div>
   );
