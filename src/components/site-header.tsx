@@ -7,13 +7,14 @@ import { ThemeToggle } from "./theme-toggle";
 import { LanguageSwitch } from "./language-switch";
 import { useT, useLocale } from "./locale-provider";
 import { localePath } from "@/lib/i18n";
+import { StarButton } from "./star-cta";
 
 /**
  * Four nav items plus a two-language switch do not fit beside the wordmark on a
  * phone: the switch used to break mid-character. Below `md` everything except
  * the mark collapses into a panel.
  */
-export function SiteHeader() {
+export function SiteHeader({ stars }: { stars: number | null }) {
   const t = useT();
   const locale = useLocale();
   const [open, setOpen] = useState(false);
@@ -55,6 +56,7 @@ export function SiteHeader() {
           </Link>
           <LanguageSwitch />
           <ThemeToggle />
+          <StarButton locale={locale} stars={stars} placement="header" />
         </nav>
 
         {/* narrow: one button */}

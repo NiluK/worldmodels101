@@ -24,6 +24,44 @@ function GitHubMark({ size = 18 }: { size?: number }) {
   );
 }
 
+export function StarButton({
+  locale,
+  stars,
+  placement = "body",
+}: {
+  locale: Locale;
+  stars: number | null;
+  placement?: "body" | "header" | "mobile";
+}) {
+  const t = (k: string, v?: Record<string, string | number>) => translate(locale, k, v);
+  const count = stars !== null && stars >= SHOW_COUNT_FROM
+    ? stars.toLocaleString(locale === "zh" ? "zh-CN" : "en-GB")
+    : null;
+  const size = placement === "mobile"
+    ? "min-h-12 w-full max-w-[20rem] justify-center px-5 py-3"
+    : placement === "header"
+      ? "h-9 px-3.5"
+      : "px-5 py-2.5";
+
+  return (
+    <a
+      href={REPO_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={count ? `${t("star.button")}, ${count}` : t("star.button")}
+      className={`group pointer-events-auto inline-flex items-center gap-2.5 border border-ink bg-ink text-paper shadow-[0_5px_20px_rgb(0_0_0_/_0.14)] transition-[color,background-color,border-color,transform] hover:-translate-y-px hover:border-imagine hover:bg-imagine active:translate-y-0 ${size}`}
+    >
+      <GitHubMark size={placement === "mobile" ? 18 : 16} />
+      <span className="label whitespace-nowrap !text-paper">{t("star.button")}</span>
+      {count && (
+        <span className="label tnum whitespace-nowrap border-l border-paper/30 pl-2.5 !text-paper/70">
+          {count}
+        </span>
+      )}
+    </a>
+  );
+}
+
 /**
  * The ask. Deliberately states why a star helps rather than just asking for
  * one: this site is a reputation play with no paywall, so the only currency
@@ -40,22 +78,7 @@ export function StarCta({
 }) {
   const t = (k: string, v?: Record<string, string | number>) => translate(locale, k, v);
 
-  const button = (
-    <a
-      href={REPO_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group inline-flex items-center gap-2.5 border border-ink bg-ink px-5 py-2.5 text-paper transition-colors hover:border-imagine hover:bg-imagine"
-    >
-      <GitHubMark size={16} />
-      <span className="label !text-paper">{t("star.button")}</span>
-      {stars !== null && stars >= SHOW_COUNT_FROM && (
-        <span className="label tnum !text-paper/70 border-l border-paper/30 pl-2.5">
-          {stars.toLocaleString(locale === "zh" ? "zh-CN" : "en-GB")}
-        </span>
-      )}
-    </a>
-  );
+  const button = <StarButton locale={locale} stars={stars} />;
 
   if (compact) {
     return (

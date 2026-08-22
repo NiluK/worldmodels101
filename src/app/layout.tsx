@@ -6,6 +6,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { headers } from "next/headers";
 import { LocaleProvider } from "@/components/locale-provider";
 import { localeFromPath, LOCALE_META } from "@/lib/i18n";
+import { getStars } from "@/lib/github";
+import { StarButton } from "@/components/star-cta";
 
 const instrument = Instrument_Serif({
   variable: "--font-instrument",
@@ -66,7 +68,8 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const pathname = (await headers()).get("x-pathname") ?? "/";
+  const [headerStore, stars] = await Promise.all([headers(), getStars()]);
+  const pathname = headerStore.get("x-pathname") ?? "/";
   const locale = localeFromPath(pathname);
   return (
     <html
@@ -75,11 +78,18 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${instrument.variable} ${newsreader.variable} ${plexMono.variable} ${notoSerifSC.variable} ${notoSansSC.variable} h-full`}
       suppressHydrationWarning
     >
-      <body className="relative min-h-full flex flex-col">
+      <body className="relative min-h-full flex flex-col pb-20 md:pb-0 print:pb-0">
         <LocaleProvider locale={locale}>
-          <SiteHeader />
+          <SiteHeader stars={stars} />
           <main className="relative z-10 flex-1">{children}</main>
           <SiteFooter />
+          <div
+            data-print-hide
+            className="pointer-events-none fixed inset-x-0 z-[70] flex justify-center px-4 md:hidden"
+            style={{ bottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+          >
+            <StarButton locale={locale} stars={stars} placement="mobile" />
+          </div>
         </LocaleProvider>
       </body>
     </html>
