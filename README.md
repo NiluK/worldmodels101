@@ -60,21 +60,6 @@ pnpm lint
 pnpm build
 ```
 
-## Narration
-
-Chapter audio is generated at build time rather than per request, so no API key
-reaches a browser and each recording is a static asset.
-
-```bash
-pnpm narrate --voices   # list the voices on the account
-pnpm narrate            # generate scripts whose content changed
-pnpm narrate --force    # regenerate every script
-```
-
-Narration needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`. A content-hashed
-manifest means editing one script only regenerates that chapter. The on-page
-player is currently hidden behind `SHOW_NARRATION` in `src/lib/flags.ts`.
-
 ## Print and PDF
 
 Every chapter has a print layout. Interactive controls disappear, quizzes become

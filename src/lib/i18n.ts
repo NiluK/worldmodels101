@@ -55,7 +55,7 @@ const en: Dict = {
   "site.meta": "{n} chapters · {time} · no signup",
   "home.contents": "Contents",
   "home.mapTitle": "Five things people mean",
-  "home.mapNote": "Start here if you arrived confused. It is the most common reason to.",
+  "home.mapNote": "If you are not sure which kind you have been reading about, start here.",
   "home.premise": "The premise",
   "home.audience": "Who this is for",
   "chapter.read": "{n} min read · interactive",
@@ -587,12 +587,12 @@ const zh: Dict = {
 
   "site.tagline": "免费的交互式入门读物",
   "site.deck":
-    "这个词至少指五种不同的东西，而使用它的人很少说清是哪一种。先看这张地图，再看底下的机制。",
+    "人们用「世界模型」指至少五种不同的东西。这份读物先把它们分开，再讲每一种是怎么工作的。",
   "site.begin": "从第 01 章开始",
   "site.meta": "共 {n} 章 · {time} · 无需注册",
   "home.contents": "目录",
   "home.mapTitle": "人们说的五种意思",
-  "home.mapNote": "如果你是带着困惑来的，从这里开始。多数人都是这样来的。",
+  "home.mapNote": "如果你不确定自己读到的是哪一种，从这里开始。",
   "home.premise": "前提",
   "home.audience": "写给谁看",
   "chapter.read": "阅读约 {n} 分钟 · 可交互",

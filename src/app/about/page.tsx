@@ -11,22 +11,22 @@ export const metadata: Metadata = {
 
 const READING = [
   {
-    label: "Craik, 1943",
+    label: "Kenneth Craik, 1943",
     title: "The Nature of Explanation",
     note: "Where the 'small-scale model' framing comes from. Short, and still the clearest statement of the premise.",
   },
   {
-    label: "Sutton, 1991",
+    label: "Richard Sutton, 1991",
     title: "Dyna: an integrated architecture for learning, planning and reacting",
     note: "Learning from real experience and imagined experience in the same loop.",
   },
   {
-    label: "Ha & Schmidhuber, 2018",
+    label: "David Ha & Jürgen Schmidhuber, 2018",
     title: "World Models",
     note: "The paper that gave the field its name in its current sense. Encoder, dynamics, controller.",
   },
   {
-    label: "LeCun, 2022",
+    label: "Yann LeCun, 2022",
     title: "A Path Towards Autonomous Machine Intelligence",
     note: "The position paper behind JEPA and the argument against pixel-space prediction.",
   },
@@ -40,8 +40,8 @@ export default function About() {
       <div className="prose mt-12">
         <p className="text-[1.25rem] leading-[1.5]">
           World Models 101 is a free primer on how machines learn to predict
-          what happens next. It exists because the literature on this is
-          excellent and almost entirely unreadable unless you already know it.
+          what happens next. It exists because the literature on this is good,
+          large, and written for people who are already inside the field.
         </p>
 
         <h2>The shape of it</h2>
@@ -50,8 +50,8 @@ export default function About() {
           manipulate rather than something you have to take on faith. Where a
           concept has an interactive form, it gets one; where it does not, it
           gets a figure and a paragraph that says what the figure means. The
-          order is pedagogical rather than chronological: ideas arrive
-          when you need them, not when they were published.
+          chapters are ordered by what you need to know first, not by
+          publication date.
         </p>
         <p>
           Chapters are released as they are finished. The{" "}
@@ -71,10 +71,10 @@ export default function About() {
 
         <h2>Corrections</h2>
         <p>
-          Technical writing on a moving field is wrong at a steady rate. If you
-          find an error (a misattributed idea, a broken derivation, a
-          demo that lies about what the underlying method does) the
-          correction is genuinely welcome and will be credited.{" "}
+          Parts of this are certainly wrong, because the field moves faster
+          than the writing. If you find an error, whether a misattributed idea,
+          a broken derivation, or a demo that lies about what the underlying
+          method does, the correction is welcome and will be credited.{" "}
           <a href={`${REPO_URL}/issues`} target="_blank" rel="noopener noreferrer">
             Open an issue
           </a>{" "}

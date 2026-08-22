@@ -41,7 +41,7 @@ const QUESTIONS_EN: Q[] = [
       "In neither, until the camera turns",
     ],
     answer: 1,
-    why: "Turning away does not delete furniture. The chair is part of what is actually there, and simply not part of what you can currently see. Every hard problem in this course lives in that gap.",
+    why: "Turning away does not delete furniture. The chair is part of what is there, just not part of what you can currently see. The gap between those two is where most of the hard problems in this course come from.",
   },
   {
     kind: "classify",
@@ -77,7 +77,7 @@ const QUESTIONS_EN: Q[] = [
       "It cancels out over enough steps",
     ],
     answer: 2,
-    why: "Each imagined state becomes the input to the next prediction, so mistakes are built on. Nothing dramatic happens at any single step, which is exactly what makes it hard to catch.",
+    why: "Each imagined state becomes the input to the next prediction, so mistakes are built on. Nothing dramatic happens at any single step, which is what makes it hard to catch.",
   },
   {
     kind: "classify",
@@ -101,7 +101,7 @@ const QUESTIONS_EN: Q[] = [
     kind: "classify",
     stem: "Given the current sensor reading and a motor command you are considering, it returns the sensor reading you would get next. A search loop calls it a few thousand times a second.",
     answer: "dynamics",
-    why: "Small, fast, and useful only because you can roll it forward under actions nobody has taken yet. Fidelity is beside the point; searchability is the whole point.",
+    why: "Small, fast, and useful only because you can roll it forward under actions nobody has taken yet. Fidelity is beside the point; what matters is that a search loop can call it.",
   },
   {
     kind: "choice",
@@ -113,7 +113,7 @@ const QUESTIONS_EN: Q[] = [
       "It only works on linear systems",
     ],
     answer: 2,
-    why: "It does half the job beautifully: work out a hidden state from noisy measurements. What it never does is answer what-if, and conditioning on actions is what makes the rest of these useful for choosing.",
+    why: "It does half the job well: work out a hidden state from noisy measurements. What it never does is answer what-if, and conditioning on actions is what makes the rest of these useful for choosing.",
   },
   {
     kind: "choice",
@@ -131,7 +131,7 @@ const QUESTIONS_EN: Q[] = [
     kind: "classify",
     stem: "A lab generates photorealistic video of motorway driving to train a self-driving stack. It is marketed for robotics.",
     answer: "renderer",
-    why: "The trap. Being aimed at robots suggests a Simulator, but the output is still video, with no geometry anyone can collide against. What a system is for is a weaker clue than what it hands you. Not a complete answer either: a large platform can ship several interfaces, so the real question is which one you are about to build against.",
+    why: "This is the trap. Being aimed at robots suggests a Simulator, but the output is still video, with no geometry anyone can collide against. What a system is for is a weaker clue than what it hands you. Even that is not a complete answer, because a large platform can ship several interfaces, so the question is which one you are about to build against.",
   },
   {
     kind: "choice",
@@ -143,7 +143,7 @@ const QUESTIONS_EN: Q[] = [
       "As irrelevant to the category",
     ],
     answer: 1,
-    why: "Not scepticism for its own sake. Some claims you can open and verify, like a mesh you can load; others you can only receive. Knowing which is which is part of reading this field.",
+    why: "This is not scepticism for its own sake. Some claims you can open and verify, like a mesh you can load; others you can only receive. Knowing which is which is part of reading this field.",
   },
 ];
 
@@ -459,7 +459,7 @@ const QUESTIONS_ZH: Q[] = [
       "两者都不在，直到摄像头转过去",
     ],
     answer: 1,
-    why: "转过身并不会让家具消失。椅子是实际存在的东西的一部分，只是不属于你此刻能看到的部分。这门课里所有困难的问题都住在这道缝隙里。",
+    why: "转过身并不会让家具消失。椅子是存在的东西的一部分，只是不属于你此刻能看到的部分。这门课里大多数难题，都来自这两者之间的那道缝隙。",
   },
   {
     kind: "classify",
@@ -495,7 +495,7 @@ const QUESTIONS_ZH: Q[] = [
       "步数够多以后会互相抵消",
     ],
     answer: 2,
-    why: "每一个想象出来的状态都会成为下一次预测的输入，于是错误被叠在错误上面。任何单独一步都没有出什么大事，而这正是它难以察觉的原因。",
+    why: "每一个想象出来的状态都会成为下一次预测的输入，于是错误被叠在错误上面。任何单独一步都没有出什么大事，这就是它难以察觉的原因。",
   },
   {
     kind: "classify",
@@ -519,7 +519,7 @@ const QUESTIONS_ZH: Q[] = [
     kind: "classify",
     stem: "给定当前的传感器读数和你正在考虑的一个电机指令，它返回你接下来会得到的传感器读数。一个搜索循环每秒调用它几千次。",
     answer: "dynamics",
-    why: "小、快，而且它有用只是因为你能在还没执行过的动作下把它往前推演。逼真与否无关紧要；能不能在里面搜索才是全部意义。",
+    why: "小、快，而且它有用只是因为你能在还没执行过的动作下把它往前推演。逼真与否无关紧要；要紧的是搜索循环能调用它。",
   },
   {
     kind: "choice",
@@ -531,7 +531,7 @@ const QUESTIONS_ZH: Q[] = [
       "它只适用于线性系统",
     ],
     answer: 2,
-    why: "它把一半的工作做得极漂亮：从带噪声的测量里推出隐藏状态。它从来不做的是回答「如果……会怎样」，而以动作为条件正是让其余几种模型可以用来做选择的关键。",
+    why: "它把一半的工作做得很好：从带噪声的测量里推出隐藏状态。它从来不做的是回答「如果……会怎样」，而以动作为条件正是让其余几种模型可以用来做选择的关键。",
   },
   {
     kind: "choice",
@@ -549,7 +549,7 @@ const QUESTIONS_ZH: Q[] = [
     kind: "classify",
     stem: "某个实验室生成高速公路驾驶的逼真视频，用来训练自动驾驶系统。它的宣传定位是机器人方向。",
     answer: "renderer",
-    why: "这是陷阱。面向机器人听起来像仿真器，但它的输出仍然是视频，没有任何人可以撞上去的几何结构。一个系统是给谁用的，比它交给你什么要弱得多的线索。也不是完整答案：一个大平台可以同时提供好几个接口，所以真正的问题是你即将对着哪一个接口开发。",
+    why: "这就是那个陷阱。面向机器人听起来像仿真器，但它的输出仍然是视频，没有任何人可以撞上去的几何结构。一个系统是给谁用的，是比它交给你什么更弱的线索。就连这条线索也不是完整答案，因为一个大平台可以同时提供好几个接口，所以问题是你即将对着哪一个接口开发。",
   },
   {
     kind: "choice",
@@ -591,7 +591,7 @@ const QUESTIONS_CH9: Q[] = [
       "The horizon has not been reached",
     ],
     answer: 1,
-    why: "This is the specific way the subject is easy to fool yourself about, and it is why demos are weaker evidence than they feel.",
+    why: "This is how the subject fools you, and it is why demos are weaker evidence than they feel.",
   },
   {
     kind: "choice",
@@ -680,7 +680,7 @@ const QUESTIONS_CH9_ZH: Q[] = [
     stem: "一段推演单看任何一帧都还完全没问题。这说明了什么？",
     options: ["它还能用", "说明不了多少。大部分像素是表面和光，而逐帧损失里没有任何东西在盯着物体有没有还是它自己", "模型学会了物理", "还没到时程上限"],
     answer: 1,
-    why: "这正是这个主题里最容易骗到自己的方式，也是为什么演示作为证据比它给人的感觉要弱。",
+    why: "这个主题就是这样骗到你的，也是为什么演示作为证据比它给人的感觉要弱。",
   },
   {
     kind: "choice",
@@ -1072,7 +1072,7 @@ const QUESTIONS_CH6: Q[] = [
     stem: "What does the second lap of the loop fix that the first cannot?",
     options: [
       "It makes the model smaller",
-      "A better policy visits new places, producing exactly the data the first model was missing",
+      "A better policy visits new places, producing the data the first model was missing",
       "It removes the need for a decoder",
       "It shortens the rollouts",
     ],
@@ -1159,7 +1159,7 @@ const QUESTIONS_CH6_ZH: Q[] = [
   {
     kind: "choice",
     stem: "循环的第二圈修好了第一圈修不了的什么？",
-    options: ["它把模型变小了", "更好的策略会去新的地方，产生的恰好就是第一个模型缺的那份数据", "它去掉了对解码器的需要", "它缩短了推演"],
+    options: ["它把模型变小了", "更好的策略会去新的地方，产生第一个模型缺的那份数据", "它去掉了对解码器的需要", "它缩短了推演"],
     answer: 1,
     why: "拟合在「未训练的智能体乱扑腾」之上的模型，只在那种智能体会去的地方管用。模型变好是因为策略变好，反过来也一样。",
   },
@@ -1259,7 +1259,7 @@ const QUESTIONS_CH5: Q[] = [
       "They are identical",
     ],
     answer: 2,
-    why: "Updating a summary costs the same whatever the length, so it only wins once the sequence is long. Below the crossover, looking at everything is genuinely the cheaper option.",
+    why: "Updating a summary costs the same whatever the length, so it only wins once the sequence is long. Below the crossover, looking at everything is the cheaper option.",
   },
   {
     kind: "choice",
@@ -1348,7 +1348,7 @@ const QUESTIONS_CH5_ZH: Q[] = [
     stem: "对一个短序列来说，哪一种每步更便宜？",
     options: ["永远是摘要", "永远是注意力", "注意力，直到序列长到越过交叉点为止", "两者一样"],
     answer: 2,
-    why: "更新一份摘要的开销不随长度变化，所以它只有在序列够长时才占优。在交叉点以下，全都看一遍确实是更便宜的那个选项。",
+    why: "更新一份摘要的开销不随长度变化，所以它只有在序列够长时才占优。在交叉点以下，全都看一遍是更便宜的那个选项。",
   },
   {
     kind: "choice",
@@ -1413,7 +1413,7 @@ const QUESTIONS_CH4: Q[] = [
       "An empty picture",
     ],
     answer: 1,
-    why: "This is what pixel-space blending actually does. It is the clearest reason to want a space where the point between two valid things is itself valid.",
+    why: "This is what pixel-space blending does. It is the clearest reason to want a space where the point between two valid things is itself valid.",
   },
   {
     kind: "choice",
@@ -1473,7 +1473,7 @@ const QUESTIONS_CH4: Q[] = [
       "It has to be chosen before training",
     ],
     answer: 1,
-    why: "The loss is not recoverable downstream. A part of the system with no idea what is coming quietly sets the ceiling on everything after it.",
+    why: "The loss is not recoverable downstream. A part of the system with no idea what is coming sets the ceiling on everything after it.",
   },
 ];
 
@@ -1507,7 +1507,7 @@ const QUESTIONS_CH4_ZH: Q[] = [
     stem: "把两个不同房间的两张画面平均一下。你会得到什么？",
     options: ["一个介于两者中间的房间", "两个房间同时淡淡地叠在一起，那不是房间", "第一个房间", "一张空白画面"],
     answer: 1,
-    why: "这就是像素空间里做混合的真实结果。它也是最能说明「为什么你想要一个『两个有效点之间也有效』的空间」的理由。",
+    why: "这就是像素空间里做混合得到的结果。它也是最能说明「为什么你想要一个『两个有效点之间也有效』的空间」的理由。",
   },
   {
     kind: "choice",
@@ -1547,7 +1547,7 @@ const QUESTIONS_CH4_ZH: Q[] = [
       "它必须在训练前定好",
     ],
     answer: 1,
-    why: "这个损失在下游补不回来。一个完全不知道接下来是什么任务的部件，悄悄给它后面的一切定了上限。",
+    why: "这个损失在下游补不回来。一个完全不知道接下来是什么任务的部件，给它后面的一切定了上限。",
   },
 ];
 
@@ -1562,7 +1562,7 @@ const QUESTIONS_CH3: Q[] = [
       "What colour it is",
     ],
     answer: 2,
-    why: "Direction and speed are not in any single frame. They exist in the relationship between frames, which is exactly the kind of thing a predictor has to build for itself.",
+    why: "Direction and speed are not in any single frame. They exist in the relationship between frames, which is the kind of thing a predictor has to build for itself.",
   },
   {
     kind: "choice",
@@ -1586,7 +1586,7 @@ const QUESTIONS_CH3: Q[] = [
       "It memorised the corpus",
     ],
     answer: 2,
-    why: "Nothing supplied the categories. Prediction rewards whatever makes the next thing less surprising, and grammatical category happens to be exactly that.",
+    why: "Nothing supplied the categories. Prediction rewards whatever makes the next thing less surprising, and for words that is grammatical category.",
   },
   {
     kind: "choice",
@@ -1598,7 +1598,7 @@ const QUESTIONS_CH3: Q[] = [
       "The board can be drawn as a picture",
     ],
     answer: 2,
-    why: "Accuracy alone could be a coincidence in the numbers. Intervening on the representation and watching behaviour follow is what shows the network is actually using it.",
+    why: "Accuracy alone could be a coincidence in the numbers. Intervening on the representation and watching behaviour follow is what shows the network is using it.",
   },
   {
     kind: "choice",
@@ -1610,7 +1610,7 @@ const QUESTIONS_CH3: Q[] = [
       "The receiver guesses it and does not need the message",
     ],
     answer: 1,
-    why: "Shannon made the price exact. High probability means a short code, which is why a better predictor is literally a better compressor.",
+    why: "Shannon made the price exact. High probability means a short code, which is why a better predictor is a better compressor.",
   },
   {
     kind: "choice",
@@ -1656,7 +1656,7 @@ const QUESTIONS_CH3_ZH: Q[] = [
     stem: "一张球在飞行中的照片。有什么是你从它推不出来的？",
     options: ["球在哪里", "球有多大", "它往哪个方向走、走得多快", "它是什么颜色"],
     answer: 2,
-    why: "方向和速度不在任何单独一帧里。它们存在于帧与帧之间的关系中，而这正是预测器不得不自己造出来的那类东西。",
+    why: "方向和速度不在任何单独一帧里。它们存在于帧与帧之间的关系中，而这是预测器不得不自己造出来的那类东西。",
   },
   {
     kind: "choice",
@@ -1680,7 +1680,7 @@ const QUESTIONS_CH3_ZH: Q[] = [
       "它把语料背了下来",
     ],
     answer: 2,
-    why: "没有任何东西提供过这些类别。预测奖励的是任何能让下一刻更不意外的东西，而语法类别恰好就是这样的东西。",
+    why: "没有任何东西提供过这些类别。预测奖励的是任何能让下一刻更不意外的东西，对词来说，那就是语法类别。",
   },
   {
     kind: "choice",
@@ -1692,7 +1692,7 @@ const QUESTIONS_CH3_ZH: Q[] = [
       "棋盘可以画成一张图",
     ],
     answer: 2,
-    why: "光是准，有可能只是数字里的巧合。对表征做干预、再看到行为跟着改变，才说明网络确实在用它。",
+    why: "光是准，有可能只是数字里的巧合。对表征做干预、再看到行为跟着改变，才说明网络在用它。",
   },
   {
     kind: "choice",
@@ -1704,7 +1704,7 @@ const QUESTIONS_CH3_ZH: Q[] = [
       "接收方自己猜就行，不需要消息",
     ],
     answer: 1,
-    why: "香农把这个价格写精确了。概率高就意味着码长短，这也是为什么更好的预测器字面意义上就是更好的压缩器。",
+    why: "香农把这个价格写精确了。概率高就意味着码长短，这也是为什么更好的预测器就是更好的压缩器。",
   },
   {
     kind: "choice",
@@ -1755,7 +1755,7 @@ const QUESTIONS_CH2: Q[] = [
       "Model-free systems cannot use velocity",
     ],
     answer: 1,
-    why: "The point is not that the model wins everywhere. Inside the range where a cached answer is still correct, recomputing it buys you nothing except the cost of recomputing it.",
+    why: "The model does not win everywhere. Inside the range where a cached answer is still correct, recomputing it buys you nothing except the cost of recomputing it.",
   },
   {
     kind: "choice",
@@ -1853,7 +1853,7 @@ const QUESTIONS_CH2_ZH: Q[] = [
       "无模型的系统用不了速度信息",
     ],
     answer: 1,
-    why: "重点不是模型到处都赢。在缓存下来的答案仍然正确的那个范围里，重算一遍除了重算的开销之外什么也换不来。",
+    why: "模型并不是到处都赢。在缓存下来的答案仍然正确的那个范围里，重算一遍除了重算的开销之外什么也换不来。",
   },
   {
     kind: "choice",

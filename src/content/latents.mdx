@@ -1,165 +1,201 @@
 Stand in a doorway and look into a room. Your eyes are taking in something like
-a hundred million measurements a second.
+a hundred million measurements a second. If you now decide whether to walk
+forward, you need almost none of them.
 
-Now decide whether to walk forward.
-
-You needed almost none of it. How far is the far wall. Is there a way through,
-and roughly where. That is two or three numbers, and everything else your eyes
-collected was, for this decision, decoration.
+How far is the far wall. Is there a way through, and roughly where. That is two or three numbers, and everything
+else your eyes collected was, for this decision, decoration. A camera and a
+decision want different things from the same room.
 
 <Figure
   n="4.1"
-  caption={<>Drag anywhere in the square on the right. Every point in it decodes to a room, and the room is computed from those two numbers rather than looked up. The picture is tens of thousands of numbers. The thing that produced it is two.</>}
+  caption={<>Drag anywhere in the square on the right. Every point in it decodes to a room, computed from those two numbers rather than looked up. Watch how little drag it takes to change what you would do. The picture is tens of thousands of numbers. The description that produced it is two.</>}
 >
   <LatentRoom />
 </Figure>
 
 Those two or three numbers have a name. They are the *latent*
-<Gloss>latent means hidden or not directly visible: the numbers are never shown
-to you, and nothing labels them, but the picture is what it is because of
-them</Gloss> description of the scene, and the gap between those two counts is
-what this chapter is about. Somewhere
-between the camera and the decision there has to be a squeeze. What comes out
-the other side is all the rest of the system ever gets.
+<Gloss>latent means hidden or not directly visible. The numbers are never shown
+to you and nothing labels them. The picture is what it is because of
+them</Gloss> description of the scene.
+
+Somewhere between the camera and the decision there has to be a squeeze.
+Whatever comes out the other side is all the rest of the system ever gets. That is the case for latents, and read backwards it is
+the case against them.
 
 ## The squeeze
 
-Put a narrow opening in the middle of a system and force everything through it.
+The architecture is a narrow opening in the middle of a system. One half turns
+the picture into a short list of numbers; the other takes the list and tries
+to rebuild the picture. Train the pair together and there is only one way to
+succeed: the short list has to carry what the picture was made of.
 
-That is the whole architecture. On one side, something that takes the picture
-and produces a short list of numbers. On the other, something that takes the
-short list and tries to rebuild the picture. Train the pair together, and the
-only way to succeed is for the short list to carry what the picture was
-actually made of.
+Geoffrey Hinton and Ruslan Salakhutdinov made that argument in 2006, in *Reducing the Dimensionality of
+Data with Neural Networks*. Hinton was a Toronto professor who had stuck with
+neural nets through the years when most of the field had moved on.
+Salakhutdinov was his student. The paper ran in *Science* rather than a machine
+learning journal, which tells you who they wanted to persuade.
 
 <MarginNote>
-The two halves have names that are worth knowing, because every paper uses
-them. The first is the *encoder*, the second the *decoder*, and the narrow bit
-in the middle is the *bottleneck*.
+The two halves have names, and every paper uses them. The one that takes the
+picture in is the *encoder*, and the one that rebuilds it is the *decoder*. The
+narrow bit between them is the *bottleneck*. The pair together is an
+*autoencoder*: it encodes its own input and decodes it again.
 </MarginNote>
 
-A bottleneck creates pressure; it does not name the answer. Many equally compact
-coordinate systems can rebuild the same pictures, and without a bias in the
-architecture, the data or the task, nothing guarantees that one coordinate will
-mean distance and another lighting. Locatello and colleagues proved the harder
-limit. Unsupervised disentanglement is impossible in general without such
-assumptions.
+Everything since has been that argument with better equipment. But a
+bottleneck creates pressure without naming the answer. Many equally compact
+coordinate systems can rebuild the same pictures, and nothing makes one
+coordinate mean distance and another mean lighting. You need a bias for that,
+in the architecture, the data or the task.
+
+Irina Higgins and colleagues at DeepMind, Google's London lab, made the case for such a bias in 2016,
+in *Early Visual Concept Learning with Unsupervised Deep Learning*. A good
+representation, they argued, is one whose directions each mean one thing: turn
+one number and only the lighting changes. They wrote it before the question
+had a crowd around it.
+
+Their *beta-VAE* a year later was that argument as a machine: an autoencoder of
+this shape with one dial added. The dial (the beta in the name) turns the
+pressure on the bottleneck up, and past one the axes start lining up with
+nameable things, the turn of a face or the size of a shape. The same paper
+shows the cost: press harder and the pictures go blurry.
+
+By 2018 the squeeze was inside a working agent. David Ha and Jürgen
+Schmidhuber published *World Models* that year, an agent that learned a driving
+game through a model of it. Every frame was crushed to thirty-two numbers, and
+the parts that predicted and chose never saw a pixel.
+
+The same year Danijar Hafner and colleagues built PlaNet, in *Learning Latent
+Dynamics for Planning from Pixels*, with Ha among the authors. It squeezed raw
+pixels the same way, then planned inside what came out, and never rebuilt a
+frame to decide anything. At decision time the short list was the world, which
+is the bolder of the two.
+
+Then in 2019 Francesco Locatello and colleagues closed the question Higgins had
+opened. Pulling the hidden factors apart, one per axis, is called
+disentanglement. With no labels and no built-in bias, they proved, it cannot be
+done. For any squeeze whose axes mean something, another draws the same
+pictures just as well with axes that mean nothing.
+
+They then trained thousands of models, and which axes you got came down mostly
+to the random seed. The paper, *Challenging Common Assumptions in the
+Unsupervised Learning of Disentangled Representations*, took the best paper
+award at the ICML conference that year. It closed an era, and a lot of latent-space writing
+has not caught up.
+
+Look at who was unaffected. Ha and Schmidhuber's agent never needed its
+thirty-two numbers to mean anything a person could name, and neither did PlaNet's
+planner. The squeeze carried on, because the agents built on it had only ever
+asked that it keep what the next step turns on. That is a different test.
 
 <Figure
   n="4.2"
-  caption={<>The scene here is generated from six numbers, and the squeeze keeps the first few. Slide it up from zero. Two numbers in and the decision is already settled; everything after that is gravel and sensor noise, which are real, and which change nothing about what you would do.</>}
+  caption={<>The scene is generated from six numbers and the squeeze keeps the first few. Slide the width up from zero and watch the readout. Two numbers in, the decision is settled; the rest is gravel and sensor noise, real but beside the point.</>}
 >
   <Bottleneck />
 </Figure>
 
-The figure is rigged so the task-relevant factors occupy its first two
-coordinates. A learned system does not get that ordering for free.
-Being narrow forces a trade; the loss function decides what gets bought first.
-A reconstruction loss may spend the budget on whatever is hardest to redraw,
-which need not be whatever the decision needs.
-
-This is not a thought experiment. Ha and Schmidhuber's world model put a
-squeeze of exactly this shape at the front. Every video frame from a driving
-game was crushed down to thirty-two numbers, with everything after that working
-only from those. PlaNet does the same job from raw pixels and then plans in
-what comes out, never rebuilding a frame to decide anything.
-
-Thirty-two numbers, for a picture that arrived as tens of thousands. That ratio
-is the point, and it is roughly the ratio between what a camera measures and
-what a decision turns on.
+The figure is rigged so the factors the task turns on sit in its first two
+coordinates. A learned system gets no such ordering for free, which is
+Locatello's result in one sentence.
 
 ## A place, not a list
 
-Here is the shift that takes a while to land.
+Those numbers are coordinates. In a latent space that training has shaped well,
+they name a point with useful neighbours, directions and distances. Nothing
+guarantees that; a plain autoencoder can learn a twisted lookup table instead.
+The geometry has to be earned.
 
-Those numbers are coordinates. In a well-regularised latent space they name a
-point with useful neighbours, directions and distances. A plain autoencoder can
-also learn a twisted lookup table; the geometry has to be earned.
-
-That means you can do things there that make no sense in pixels. You can ask
-what is nearby. You can move in a direction and watch the world change smoothly
-in some particular way. You can take two rooms and stand between them.
+Once it has been, you can do things there that make no sense in pixels. You can ask what is nearby. You can move in one
+direction and watch the world change smoothly in one way. You can
+take two rooms and stand between them.
 
 <Figure
   n="4.3"
-  caption={<>Both rows are honest for this constructed decoder. Averaging two pictures gives you both rooms at once, faintly. Averaging the two coordinates and decoding stays on the learned room manifold. A real latent space only earns this behaviour if training has made the region between examples meaningful.</>}
+  caption={<>Both rows are honest for this constructed decoder. Drag the blend slider. Averaging two pictures gives you both rooms at once, faintly. Averaging the two coordinates and decoding stays among the rooms the decoder has learned to draw. A real latent space only earns this if training has made the region between examples mean something.</>}
 >
   <LatentInterpolate />
 </Figure>
 
-That figure is the reason anyone bothers. Halfway between two pictures is a
-ghost. Halfway between two descriptions is a room.
-
-A space where the point between two valid things is itself a valid thing is
-worth a great deal. It is also exactly what pixels will not give you.
-Prediction, planning and search all involve moving somewhere you have not been.
-If every step lands on something meaningless, none of them work.
+Halfway between two pictures is a ghost. Halfway between two descriptions is a
+room. A space where the point between two valid things is itself valid is
+worth a great deal. Prediction, planning and search all move somewhere you have
+not been, and if every step lands on nonsense none of them work.
 
 <MarginNote>
-This is also why the noise in a *variational* autoencoder is not an accident.
-Deliberately blurring where each picture lands forces neighbouring points to
-decode to similar things, which is what makes the space navigable rather than
-a scatter of unrelated addresses.
+This is also why the noise in a *variational* autoencoder, the VAE that
+beta-VAE builds on, is not an accident. Diederik Kingma and Max Welling built
+it in 2013, in *Auto-Encoding Variational Bayes*; Kingma was Welling's
+doctoral student. It blurs where each picture lands, on purpose, so
+neighbouring points decode to similar things. That is what makes the space
+navigable, and why Ha and Schmidhuber used one as their agent's eyes five
+years later.
 </MarginNote>
 
 ## What makes one good
 
-Small is not the goal. A single number is very small and useless.
+Small is not the goal; a single number is very small and useless. What you want
+is that the things which matter are easy to get at, and the things that do not
+are gone.
 
-The property you want is that the things which matter are easy to get at, and
-the things that do not are gone. Three tests, roughly in order of how often
-they are the thing that is actually wrong:
+Yoshua Bengio, Aaron Courville and Pascal Vincent set that down in 2013, in a
+survey called *Representation Learning: A Review and New Perspectives*. The
+three were colleagues in Montreal. Bengio had kept a neural network lab going
+through the same lean years as Hinton, and would later share the Turing Award
+with Hinton and Yann LeCun.
 
-**Does it keep what the future turns on?** If two situations lead to different
-outcomes and land on the same point, nothing downstream can tell them apart.
-That is not recoverable later. Whatever the squeeze threw away is gone.
+It is still the best single statement of what a learned representation is
+for. Three tests, in rough order of how often they fail:
+
+**Does it keep what the future turns on?** Take two situations that lead to
+different outcomes and land on the same point: nothing downstream can tell
+them apart. This is the failure that shows least, because the reconstructions
+can look fine while it happens. Ha and Schmidhuber's thirty-two numbers were
+trained only to redraw frames, and the authors flagged the risk themselves.
 
 **Do nearby points mean nearby things?** A space where a small step can land
-anywhere is a lookup table with extra steps. Smoothness is what lets you move
-through it on purpose.
+anywhere is a lookup table with extra steps. Smoothness lets you move through
+it on purpose, and it is what the VAE's noise was built to buy.
 
 **Is it easy to predict forward?** A description can be perfectly faithful and
-still be a nightmare to run forward in time. That is already your problem. The
-point of compressing was to get something you could roll forward cheaply.
+still be a nightmare to run forward in time. The reason anyone compressed was
+to get something they could roll forward cheaply.
 
-## What it costs you
+## What the squeeze costs
 
-Rebuilding the picture is a proxy, and proxies drift.
+Rebuilding the picture is a proxy, and proxies drift. The test asks whether the
+short list can redraw what the camera saw; what you wanted to know is whether
+it kept what the decision turns on.
 
-The reconstruction test asks whether the short list can regenerate what the
-camera saw. What you wanted to know is whether it kept what the decision turns
-on. Those two come apart in a specific and annoying way. The things that occupy the
-most pixels are usually not the things that matter. So a description scored on
-rebuilding pixels spends itself on texture and weather, and quietly loses the
-small fast object you needed to avoid.
+The things that take up the most pixels are usually not the things that matter. A description scored on rebuilding
+pixels spends itself on texture and weather, and loses the small fast object
+you needed to avoid.
 
-There is a second cost, subtler. Anything the squeeze drops is unrecoverable
-from that point on. Everything after the bottleneck works from the short list
-and nothing else. So a choice made here, early, by a part of the system that
-has no idea what task is coming, quietly sets the ceiling on everything after
-it.
+The second cost is subtler, and I think more serious. Anything the squeeze
+drops is gone for good from that point on. Everything after the bottleneck
+works from the short list and nothing else.
 
-That is a strange place to put a decision that important. It is also why so
-much of the field's argument is about the middle of the pipe rather than either
-end.
+That choice is made early, by a part of the system that has no idea what task
+is coming, and it sets the ceiling on everything after it. That is a strange
+place to put a decision of that size.
+
+That is why the argument since has been about the middle of the pipe. PlaNet
+trained the squeeze together with the forward model, and LeCun's JEPA line
+(chapter 7) asks whether to rebuild pixels at all.
 
 ## Try it
 
 <Figure
   n="4.4"
-  caption={<>Eight questions on the squeeze and the space it produces. The last two are about the parts that are easy to agree with and hard to keep hold of.</>}
+  caption={<>Eight questions on the squeeze and the space it produces. The last two are about the parts that are easy to nod along to and hard to keep hold of.</>}
 >
   <Quiz chapter={4} />
 </Figure>
 
 ---
 
-Everything here has been one moment at a time. A picture goes in, a short
+Everything here has happened one moment at a time. A picture goes in, a short
 description comes out, and nothing has moved yet.
-
-Thanks for reading. Chapter 5 is about what happens when you start stepping
-that description forward. The machinery that turns a state and an action into
-the next state, and the error that creeps in every time you ask it to.
 
 ## Sources
 

@@ -1,177 +1,243 @@
-Here is a photograph of a ball in mid-air. Where is it a moment later?
+Take a photograph of a ball in mid-air. Ask where it will be a moment later,
+and you cannot say. Up, down, sideways, or barely moving at all, the picture
+looks the same. Everything the answer depends on is missing from a single
+frame.
 
-You cannot say. Up, down, sideways, or barely moving at all: the picture looks
-the same in every case. Everything you would need to answer is missing from it.
+Now take two photographs a fraction of a second apart. The answer arrives
+before you have finished asking. Both pictures were equally sharp, so detail is
+not what changed.
 
-Now take two photographs, a fraction of a second apart. The answer arrives
-before you have finished asking the question.
-
-What changed is not the amount of detail. Both pictures were equally sharp.
-What changed is that two frames hold something one frame cannot: a direction
-and a speed. Nobody drew those on the image. They are not in either picture.
-They exist only in the relationship between them, and you pulled them out
-without being told to.
+Two frames hold something one frame cannot: a direction and a speed. Neither is
+drawn on either picture. They live in the relationship between the two, and you
+pulled them out without being told to.
 
 <Figure
   n="3.1"
-  caption={<>The fan is every future still consistent with what has been seen. One frame rules out nothing. A second fixes the heading and the speed. A third settles whether the path is bending. Each extra frame is not more detail, it is one more thing you can work out that was never in any single picture.</>}
+  caption={<>The fan is every future still consistent with what has been seen. Add frames and watch it narrow. One frame rules out nothing. A second fixes the heading and the speed, and a third settles whether the path is bending. Each extra frame is one more quantity you can work out, and none of them was in any single picture.</>}
 >
   <FramesToState />
 </Figure>
 
-That is the trick this chapter is about. Ask something to predict what comes
-next, and it has no choice but to build the things the next moment depends on.
-Not because you asked for them. Because it cannot be right without them.
+Ask something to predict what comes next and it has no choice but to build
+whatever the next moment depends on. It was never asked for those things, and
+it cannot be right without them. Call them stowaways: the quantities a
+predictor is forced to carry that nobody put on the manifest. Direction and
+speed are the first two.
+
+People have been finding larger stowaways ever since, with better instruments
+each time. Claude Shannon went first, in 1948, with *A Mathematical Theory of
+Communication*. He showed that how well you can predict a message sets the
+price of sending it.
+
+Jeffrey Elman followed in 1990 with *Finding Structure in Time*. He found
+grammar inside a network asked only to guess the next word. Then in 2022
+Kenneth Li and colleagues wrote *Emergent World Representations*, and found a
+whole game board inside a network asked only to guess moves.
 
 ## Guess, check, adjust
 
-The loop is as small as it sounds.
+The loop is as small as it sounds. Look at what you have and say what you think
+is coming. Wait, then compare what arrived to what you said. Change yourself a
+little in the direction that would have been less wrong, and go again.
 
-Look at what you have. Say what you think is coming. Wait. Compare what
-arrived to what you said. Change yourself a little in the direction that would
-have been less wrong. Do it again.
-
-What makes it powerful is not the cleverness of any step. It is that the right
-answer is already there. Nobody has to label anything, because the thing you
-are trying to predict is the very next piece of the recording, and the
-recording already contains it.
+None of the steps is clever. The power is in what the loop does not need:
+nobody has to label anything, because the target is the next piece of the
+recording.
 
 <MarginNote>
-This is what *self-supervised* means. Supervised, in the sense that the model
-is told exactly how wrong it was. But told by the data itself, rather than by a
-person with a spreadsheet.
+This is all that *self-supervised* means. Supervised, because the model is
+told how wrong it was after every guess. Self, because the data did the
+telling rather than a person with a spreadsheet.
 </MarginNote>
 
-That sounds like a small administrative convenience. It is the whole reason
-this approach ate the field. Labelling is the expensive part of machine
-learning: somebody has to look at a million images and write down what is in
-them. Prediction skips it. Any recording of anything is already a training set,
-because every moment in it is the answer to the moment before.
+For most of the field's history a model learned from examples that somebody had
+labelled. A million images meant somebody writing down what was in each one.
+Labelling was the expensive part, and the size of a dataset was the size of
+somebody's budget. Prediction skips the bill, because any recording of anything
+is already a training set.
+
+The argument was still open in 2013, when Yoshua Bengio, Aaron Courville and
+Pascal Vincent wrote *Representation Learning: A Review and New Perspectives*,
+a survey that reads as a case still being made. A field does not argue for long
+against free data. That convenience, more than any single result, is why
+prediction ate the field.
 
 <Figure
   n="3.2"
-  caption={<>A predictor guessing the next number from the previous two, corrected a little after every guess. It starts at zero and knows nothing. Watch the dashed line climb onto the solid one, then look at what it learned: two numbers that nobody supplied, arrived at only by being wrong and adjusting.</>}
+  caption={<>A predictor guessing the next number from the previous two, corrected a little after every guess. It starts at zero and knows nothing. Watch the dashed line climb onto the solid one. Then look at what it learned: two numbers that nobody supplied, reached by being wrong and adjusting.</>}
 >
   <GuessCheckAdjust />
 </Figure>
 
-Nothing in that demonstration was told the rule. It was told, two hundred and
-twenty times, by how much it had just missed. Each time it nudged its own two
-numbers <Gloss>the *weights*: the adjustable numbers inside a model, and the
-only thing that learning ever changes</Gloss> a little way towards being right.
-That was enough.
+Nothing in that figure was told the rule. It was told, two hundred and twenty
+times, by how much it had just missed. Each time it nudged its own two numbers
+<Gloss>the *weights*: the adjustable numbers inside a model, and the only thing
+that learning ever changes</Gloss> a little way towards being right. That was
+enough.
 
 ## What guessing forces you to build
 
-Here is where it stops being a party trick.
+Elman was a cognitive scientist at the University of California, San Diego, who
+came to networks from the study of language. In 1990 he trained a small network
+on one job: read a word and predict the next word.
 
-To predict well, you have to carry whatever the next moment depends on. If the
-sequence is a ball, that is position and velocity. If the sequence is language,
-it is a great deal more, and none of it was ever asked for directly.
+Then he looked inside. The internal states had sorted themselves into groups.
+The groups were nouns and verbs, animate and inanimate, things that can eat and
+things that can be eaten.
 
-In 1990 Jeffrey Elman trained a small network on one job: read a word, predict
-the next word. Then he went looking inside it. The internal states had sorted
-themselves into groups, and the groups were nouns and verbs, animate and
-inanimate, things that can eat and things that can be eaten. Nobody had given
-it a single category. It arrived at them because a word's category is what its
-next word depends on.
+Nobody had given the network a single category. It reached them because a
+word's category is what its next word depends on. The title, *Finding Structure
+in Time*, is honest. The structure was found rather than installed.
 
-The modern version of that result is more startling. Take a network trained
-only to predict legal moves in Othello <Gloss>a board game where you flip your
-opponent's pieces by trapping them between two of yours</Gloss>, never shown a
-board, never told the rules. Probe its activations <Gloss>train a small separate classifier to read
-one specific fact out of a network's internal numbers</Gloss> and you find the
-state of the board in there. Then change that internal board and watch the moves
-it goes on to make change with it. That is what makes it a finding rather than
-a curiosity. The board is not sitting in the numbers by accident. It is what
-the network is using.
+For a long time that was where it stopped. The network was small and the
+grammar was a toy, and a toy is not a claim about the world. The finding waited
+thirty-two years for instruments that could make it one.
 
-The rule underneath both is worth saying plainly. Prediction does not reward
-description. It rewards whatever makes the next thing less surprising, and
-sometimes the cheapest way to be less surprised is to build the thing that is
-actually generating the data.
+In 2022 Li and colleagues, interpretability researchers (people who open
+networks up rather than train them), took a network since nicknamed
+Othello-GPT. It was trained only to predict legal moves in Othello <Gloss>a
+board game on an eight-by-eight grid. You flip your opponent's discs by
+trapping them between two of yours</Gloss>. It was never shown a board and
+never told the rules.
+
+They probed its activations <Gloss>train a small separate classifier to read
+one specific fact out of a network's internal numbers</Gloss>. The state of the
+board was in there, which on its own is a curiosity.
+
+The intervention is what made it a finding. Change that internal board, and the
+moves the network goes on to make change with it. So the board is there because
+the network is using it.
+
+Neel Nanda and colleagues studied the same network again in 2023, in
+*Othello-GPT has a linear emergent world representation*. Li's probe had been a
+small network of its own, because a straight line had failed. Nanda showed a
+straight line works once you ask the right question. The network stored each
+square as mine or theirs rather than black or white, and flipped its view every
+turn.
+
+The same rule is under both results, thirty-two years apart. Prediction rewards
+nothing except making the next moment less surprising. Sometimes the cheapest
+way to be less surprised is to build the process that is generating the data.
 
 <MarginNote>
-Sometimes. Not always, and not by magic. A predictor will happily settle for a
-shortcut that works on the data it saw, and much of the rest of this course is
-about telling the two apart.
+Sometimes is the right word. A predictor will settle for any shortcut that
+works on the data it saw. Telling the shortcut from the process it stands in
+for is most of the work.
 </MarginNote>
 
 ## Predict the next what?
 
 The loop says predict the next thing. It never says what counts as a thing, and
-that choice decides what you end up with.
+that silence is where the design decision hides.
 
 Predict the next pixel and you get a system that is very good at leaves. Leaves
-are genuinely hard to predict, and they are also most of the pixels, so that is
-where the capacity goes <Gloss>*capacity* is how much a model can hold. Spend
-it on one thing and it is not there for another</Gloss>. Predict the next word
-and you get grammar, and a surprising amount of knowledge about the world,
-because that is what the next word turns on. Predict the next state of some
-compact description and you get something a planner can use.
+are hard to predict and they are also most of the pixels, so that is where the
+capacity goes <Gloss>*capacity* is how much a model can hold. Spend it on one
+thing and it is not there for another</Gloss>. Call that the leaf problem,
+since chapter 4 is built around it.
 
-Same loop, three different machines. The only thing that changed is what was
-put on the right-hand side of the guess.
+Predict the next word and you get grammar and a surprising amount of knowledge
+about the world. That is what the next word turns on. In 2019 Alec Radford and
+colleagues at OpenAI showed how far it goes at scale, in *Language Models are
+Unsupervised Multitask Learners*.
 
-So *predict the next thing* is not one method. It is a family, and picking the
-target is the design decision that matters most.
+Their model was GPT-2. It was trained on nothing but next-word prediction over
+a large pile of web text. It came out able to answer questions, summarise, and
+translate a little, and nobody had trained it for any of those. OpenAI released
+it in stages, uneasy about what a fluent text machine might be used for.
+
+The model learned those tasks because the next word sometimes depends on them.
+That is the best evidence that the target decides the machine.
+
+Predict the next state of some compact description and you get something a
+planner can use.
+
+The same loop gives three different machines, and all that changed is what was
+put on the right-hand side of the guess. So *predict the next thing* is a
+family of methods rather than one. Picking the target is the design decision
+that matters most, and I have little patience for arguments about prediction
+that never say what is being predicted.
 
 ## Being right is the same as being brief
 
-There is a second way to look at the whole business, and it turns out to be the
-same way.
+There is a second way to look at the whole business. It is four decades older
+than Elman's result, and it turns out to be the same way.
 
-Suppose you have to send a message down a wire, and you are charged by the
-symbol. You and the receiver share a predictor. Before each symbol, both of you
-run it and get a list of what is likely next. Now you only need to send enough
-to pick out the right one from that list.
+Shannon was a mathematician at Bell Labs, the research arm of the American
+telephone company, whose business was pushing more calls down the same wire.
+Suppose you have to send a message down a wire and you are charged by the
+symbol. You and the receiver share a predictor.
 
-If the predictor was confident and correct, that costs almost nothing. If it
-was confident and wrong, it costs a lot. Shannon made this exact: a symbol you
-gave a probability of one in two costs one bit <Gloss>one bit is one yes or no
-answer, so eight bits can pick one option out of 256</Gloss>, one in four costs
-two, one in a thousand costs about ten.
+Before each symbol both of you run it and get a list of what is likely next, so
+you need only send enough to pick the right one. Confident and correct costs
+almost nothing. Confident and wrong costs a lot.
+
+Shannon made this exact in 1948. A symbol you gave a probability of one in two
+costs one bit <Gloss>one bit is one yes or no answer, so eight bits can pick
+one option out of 256</Gloss>. One in four costs two, and one in a thousand
+costs about ten. That paper started information theory, and the word "bit"
+first appeared in print there.
+
+Three years later he turned the argument on English itself. In *Prediction and
+Entropy of Printed English* he had people guess a passage one letter at a time.
+A language people can guess is cheap to send, and the experiment measured how
+cheap. That put a human being on the bottom row of Figure 3.3.
 
 <Figure
   n="3.3"
-  caption={<>The same sentence, written down by predictors of increasing quality. The bits per character are published estimates for English rather than anything this figure computed. The bottom row is roughly where Shannon put a person guessing English letter by letter, and where good language models sit today.</>}
+  caption={<>The same sentence, written down by predictors of increasing quality. Read it top to bottom and watch the price fall. The bits per character are published estimates for English rather than anything this figure computed. The bottom row is roughly where Shannon's 1951 experiment put a person guessing letter by letter. It is also where good language models sit today.</>}
 >
   <PredictionCompression />
 </Figure>
 
-So the length of the shortest message you can write is a measurement of how
-well you predicted. A better predictor is a better compressor, and the same
-thing read backwards: whatever compresses your data the hardest has understood
-the most about it.
+So the length of the shortest message you can write measures how well you
+predicted. That makes a better predictor a better compressor. Read backwards,
+whatever compresses your data the hardest has understood the most about it.
+That is not a metaphor, though it is nearly always quoted as one.
 
-That is not a metaphor. There is a long-running prize for compressing a
-snapshot of Wikipedia, on the argument that you cannot squeeze text much
-further without knowing what the text means. Every winner so far has been, in
+Marcus Hutter, a theorist of perfect learners in the abstract, took the reading
+literally. The Hutter Prize is a long-running cash prize for compressing a
+snapshot of Wikipedia. It runs on the argument that you cannot squeeze text
+much further without knowing what it means. Every winner to date has been, in
 effect, a language model.
 
-And it explains why prediction is worth so much more than it looks. You are not
-asking a system to memorise. Memorising is the expensive option: a lookup table
-of everything that ever happened is enormous and useless on anything new. The
-cheap option, the one that actually gets you a shorter message, is to work out
-the rule that produced the data and keep that instead.
+Jürgen Schmidhuber went a step further in 2010. Schmidhuber ran a lab in
+Switzerland, had co-invented the LSTM (a memory network that was the workhorse
+of speech recognition for years), and would in 2018 co-write the paper this
+course is named after. His 2010 paper was *Formal theory of creativity, fun,
+and intrinsic motivation*.
+
+He proposed rewarding a learner for compression progress. That is the discovery
+that it can now squeeze its data further than it could a moment ago. Getting
+better at compressing becomes a drive in its own right, a reason to go and look
+at new things.
+
+The same reading says why the stowaways were never optional. Memorising is the
+costly way. A lookup table of everything that ever happened is huge, and
+useless on anything new.
+
+The cheap option, the one that shortens the message, is to work out the rule
+that produced the data and keep that instead. The rule is the stowaway.
 
 ## Where it stops being enough
 
-Two honest limits, because the argument so far has been suspiciously tidy.
+There are two limits.
 
 **Predicting well is not the same as being useful.** A system can be excellent
-at continuing a recording and still hand you nothing you can act on. Saying what
-comes next is not the same as saying what would come next if you did something
-different. Only the second one supports a decision.
+at continuing a recording and still hand you nothing you can act on. Saying
+what comes next is a different question from saying what would come next if you
+did something different. Only the second supports a decision. Li's network
+carries a board and was still only ever asked which moves were legal.
 
 **Being unsurprised is not the same as being right.** A predictor that has only
-ever seen calm weather is not surprised by calm weather, and that tells you
-nothing about what it would do in a storm. Low error on what you happened to
-record is a weaker claim than it sounds.
+ever seen calm weather is not surprised by calm weather. That tells you nothing
+about what it would do in a storm. Low error on what you happened to record is
+a weaker claim than it sounds, and it is the claim most headline numbers make.
 
-None of that undoes the chapter. Prediction really is enough to pull structure
-out of raw experience, and it really is the cheapest signal anyone has found.
-It is just not free, and it does not aim itself.
+Neither limit undoes the argument. Prediction is enough to pull structure out
+of raw experience, and it is the cheapest signal anyone has found. The line
+from Shannon through Elman to Othello-GPT is people proving that with better
+instruments. It is not free, and it does not aim itself.
 
 ## Try it
 
@@ -184,13 +250,10 @@ It is just not free, and it does not aim itself.
 
 ---
 
-Everything here has quietly assumed the thing being predicted is small. Two
-numbers for a ball, one word at a time for language. A camera hands you two
-million numbers, thirty times a second, and almost all of them are the leaves.
-
-Thanks for reading. Chapter 4 is about the squeeze in the middle. How a system
-gets from what the world looks like to what state it is in, and why that narrow
-point does more work than the prediction on either side of it.
+Everything here has assumed that what is being predicted is small: two numbers
+for a ball, and one word at a time for language. A camera hands you two million
+numbers, thirty times a second, and almost all of them are the leaves. That is
+the leaf problem arriving at full size.
 
 ## Sources
 

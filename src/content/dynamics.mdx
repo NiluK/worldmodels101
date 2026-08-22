@@ -1,168 +1,220 @@
-A model that predicts one step ahead is easy to be impressed by.
+A dynamics paper leads with its one-step error, and it is the easiest number to
+be impressed by.
 
-Show it where things are, ask what happens next, compare its answer to what
-happened. Do that ten thousand times and read off the average error. The number
-will be small, and it will be honest, and it will not tell you what you want to
-know.
+Show the model where things are and ask what happens next. Compare its answer
+to what happened, then do that ten thousand times and read off the average. The
+result will be small and honest.
 
-Because you were never going to use it one step at a time. You were going to
-ask it for a hundred steps, and on step two it stops being given the truth and
-starts being given its own answer.
+It also measures a job the model will never be asked to do. You were going to
+ask it for a hundred steps. From step two it stops being handed the truth and
+starts being handed its own last answer.
+
+Call that the second-step problem. The field put a name to it in 2015, tried
+two rival cures within a year, and has not solved it since.
 
 <Figure
   n="5.1"
-  caption={<>One model, one bias, two ways of running it. The grey line is corrected at every step, the way it was during training, and it tracks the truth so closely that it mostly disappears underneath it. That is the result. The vermilion line is the same model left to consume its own output, the way it will actually be used.</>}
+  caption={<>One model, one bias, two ways of running it. The grey line is corrected at every step, the way it was during training, and mostly disappears underneath the truth. The vermilion line is the same model left to eat its own output, the way it will be run. Push the bias up and watch which line notices.</>}
 >
   <FreeRunning />
 </Figure>
 
-At four per cent error per step, corrected, it is still hugging the truth after
-thirty steps. Left alone, it ends up thirty-nine times further away. Same model.
-Same mistake. The only thing that changed is what it was handed at the start of
-each step.
+At four per cent error per step, the corrected line is still hugging the truth
+after thirty steps. The free-running line, same model, same bias, ends up
+thirty-nine times further away.
 
-## The mismatch
+## The inherited habit
 
-This has a name, and the name is unhelpfully technical for something so
-simple. During training, a sequence model is usually shown the true previous
-value at every step, because that is what the recording contains and it makes
-the training stable. That is called **teacher forcing**.
+The practice came with the first networks trained on sequences, decades before
+world models. During training a sequence model is shown the true previous value
+at every step. That is what the recording contains, and it keeps training
+stable. The field calls this **teacher forcing**.
 
-The trouble is that nobody teacher-forces you in production. At the moment of
-use the model gets its own last answer, which is slightly wrong, and it has
-never once been asked to recover from being slightly wrong.
+The cost is that nobody teacher-forces you in production. At the moment of use
+the model gets its own last answer, which is slightly wrong. It has never once
+been asked to recover from being slightly wrong.
+
+Samy Bengio and his co-authors named that gap in 2015, in *Scheduled Sampling
+for Sequence Prediction with Recurrent Neural Networks*. Bengio was at Google,
+working on networks that caption a photo one word at a time, each word fed back
+as the next input. That is a rollout, and the captions drifted the way the
+vermilion line drifts.
 
 <MarginNote>
-So it is not that the model is bad at long horizons. It is that it was trained
-on a distribution of inputs it will never see again the moment you start
-rolling it out, and nothing in the training loop noticed.
+Calling the model bad at long horizons misreads it. It was trained on a
+distribution of inputs it will never see again once you start rolling it out.
+Nothing in the training loop noticed.
 </MarginNote>
 
-Look at that figure again and notice what the grey line is really telling you.
-It is not a measure of how good the model is. It is a measure of how good the
-model is at a job it will never be asked to do.
+A paper that leads with the grey line is describing the wrong run.
 
-## What has to happen at each step
+## The memory wars, 1997 to 2023
 
-Strip the machinery away and a transition model does one thing: take what you
-know, take what you did, and produce what you know next.
+A transition model does one job. Take what you know, take what you did, and
+produce what you know next.
 
-The awkward part is the first of those. What you know is not just the last
-picture. It is everything relevant that has ever happened, folded into
-something small enough to carry. A ball behind a wall is still moving. A door
-you opened four rooms ago is still open.
+The awkward word is know, because it covers more than the last picture. It is
+everything that has happened and still matters, folded into something small
+enough to carry. A ball behind a wall is still moving. A door you opened four
+rooms ago is still open.
 
-So the real question is how the past gets carried, and there are two answers.
+The question is how the past gets carried. Since 1997 it has had two answers,
+which take turns being fashionable.
 
 **Carry a summary.** Keep one fixed block of numbers. Every time something new
 arrives, fold it in and throw the old block away. The work per step never
-changes, however long the sequence gets. This is what recurrent networks do
-<Gloss>a network with a loop in it: each step's output is handed back as part
-of the next step's input</Gloss>, and what the state-space models that have
-come back into fashion do too.
+changes however long the sequence gets.
 
-**Keep a window.** Store the steps that fit in the context, and when a new one
-arrives, look back over them to decide what is relevant. This is attention
-<Gloss>for each new step, score the available earlier steps for relevance, then
-read mostly from the ones that scored highest</Gloss>, and it is what
-transformers do. The context is finite. The weighted read also compresses the
-available past into what this prediction needs.
+This is what recurrent networks do <Gloss>a network with a loop in it. Each
+step's output feeds back into the next step's input</Gloss>. The summary camp's
+founding paper is *Long Short-Term Memory*, from Sepp Hochreiter and Jürgen
+Schmidhuber in 1997. Their LSTM was a loop built to hold a fact longer than
+training pressure wanted, and it ended up running speech recognition and
+translation until transformers arrived.
+
+**Keep a window.** Store the steps that fit in the context. When a new one
+arrives, look back over them to decide what matters. This is attention
+<Gloss>for each new step, score the earlier steps for how much they matter,
+then read mostly from the ones that scored highest</Gloss>.
+
+Transformers, the architecture under today's language models, have done it
+since 2017. That year Ashish Vaswani and colleagues at Google published
+*Attention Is All You Need*, and the title meant what it said: the loop went
+out. Within a few years the window had replaced the summary almost everywhere.
+
+Then the summary came back. The state-space models keep the fixed summary and
+add better machinery. S4 came from Albert Gu and colleagues at Stanford in
+2021, as *Efficiently Modeling Long Sequences with Structured State Spaces*.
+Mamba came from Gu and Tri Dao in 2023, as *Mamba: Linear-Time Sequence
+Modeling with Selective State Spaces*.
 
 <Figure
   n="5.2"
-  caption={<>Both columns use a state of the same width, so the only thing changing is how long the sequence has got. Neither column wins. In the second row, looking at everything is cheaper for short sequences and more expensive for long ones.</>}
+  caption={<>Both columns use a state of the same width, so the only thing that changes is the sequence length. Drag the length up and watch the second row. Neither column wins: looking at everything is cheaper for short sequences and dearer for long ones.</>}
 >
   <MemoryTrade />
 </Figure>
 
-The trade underneath is not only about speed. A fixed summary has to decide,
-at every step, what is worth keeping, and it has to decide without knowing what
-will be needed later. Attention postpones that decision until the read, at the
-cost of retaining a finite bank of earlier states.
+Speed is the half of the trade that gets benchmarked, and the duller half. A
+fixed summary has to decide at every step what is worth keeping, without
+knowing what will be needed later. Mamba gave a little ground: its summary
+decides what to keep based on what it is looking at. Attention puts off the
+decision until the read, and pays by keeping a finite bank of earlier states.
 
-It is the same tension as the squeeze between a camera and a decision, one
-level up. Something has to be thrown away, and the thing throwing it away does
-not know the future.
+This is the squeeze between a camera and a decision, one level up. Something has to be thrown away, and whatever is doing the throwing
+does not know the future. That is why twenty-six years of rivalry have no
+winner.
 
 ## Splitting the difference
 
-A useful trick, and one worth knowing because it shows up in the systems that
-work.
+The systems that work share one trick. It arrived in 2018 with PlaNet, from
+Danijar Hafner and colleagues: *Learning Latent Dynamics for Planning from
+Pixels*. It learned a model from raw pixels and planned inside it instead of in
+the pixels.
 
-Carry two things forward rather than one. One part is computed the same way
-every time, and holds whatever reliably follows from the last state. The other
-is sampled, and holds whatever could still go either way. A ball's motion goes
-in the first. Whether the door opens goes in the second.
+Carry two things forward rather than one. One part is deterministic: computed
+the same way every time, it holds whatever reliably follows from the last
+state. The other is stochastic: sampled, so it holds whatever could still go
+either way.
 
-Keep only the deterministic part and the model cannot represent genuine
-uncertainty, so it confidently invents one future. Keep only the stochastic
-part and it struggles to remember anything for long, because noise gets
-injected at every step. PlaNet's argument for carrying both is that each one
-fails alone in a different direction.
+A ball's motion goes in the first. Whether the door opens goes in the second.
+Keep only the deterministic part and the model has no way to say it is unsure,
+so it confidently invents one future. Keep only the stochastic part and it
+struggles to remember anything for long, because noise gets added at every
+step.
 
-## Living with it
+PlaNet ran the comparison and argued for carrying both, because each one fails
+alone in a different direction. Dreamer is what that argument bought. The same
+group published it a year later as *Dream to Control*, and let an agent learn
+to behave inside the model's imagined rollouts. The split state went into it,
+and into every Dreamer since, up to the *Nature* paper of 2025.
 
-Nobody has removed the mismatch. What the field has instead is four ways of
-not being destroyed by it.
+That is how a 2018 design choice became the spine of a seven-year dynasty: it
+is a state that can both remember and admit doubt.
 
-**Train it on its own output.** If the problem is that the model never
+## Four truces with the second step
+
+Nobody has removed the second-step problem, and I do not expect anyone to.
+Instead the field has four ways of not being destroyed by it.
+
+**Train it on its own output.** If the complaint is that the model never
 practised recovering from its own mistakes, let it make some during training.
-Feed it its own predictions part of the time, and raise that fraction as it
-improves. The usual name for this is *scheduled sampling*.
+Feed it its own predictions part of the time, and raise that share as it
+improves. This is Bengio's *scheduled sampling*, the most direct of the four.
 
 **Train the rollout, not the step.** Instead of scoring one-step accuracy,
-score a whole imagined stretch against a whole real one, so the thing being
-optimised is the thing you will actually use.
+score a whole imagined stretch against a whole real one. Then what gets
+optimised is what you will run. Marc'Aurelio Ranzato and colleagues at Facebook
+made that case in 2015 too, in *Sequence Level Training with Recurrent Neural
+Networks*. The two 2015 papers read as a pair: one fixes the input and the
+other the loss.
 
-**Do not go far.** Keep the rollouts short and start them from real states.
-Cheap, effective, and it gives up the part of the appeal that was infinite.
+**Do not go far.** Keep the rollouts short and start them from real states. It
+is cheap, it works, and it gives up the part of the appeal that was infinite.
+Michael Janner and colleagues made it a method in 2019, under a title that is
+also the question: *When to Trust Your Model*.
 
-**Look again.** Predict a few steps, act on one, take a fresh observation, and
-start over. This is most of robotics. A measurement can correct the observed
-part of the state; hidden-state error and model bias do not reset to zero.
+**Look again.** Predict a few steps, act on one, take a fresh observation and
+start over. This is most of robotics, and the oldest idea here: Rudolf Kalman's
+filter from the 1960s (the maths inside every GPS receiver) is this loop. A
+measurement corrects the part of the state you can see. Error in the part you
+cannot see, and the model's bias, do not reset to zero.
 
-None of these is a fix. Each admits that a learned transition model is
-trustworthy over a limited horizon. Part of the engineering is measuring how
-long that horizon is.
+None of these is a fix. A paper that sells one as a fix is overclaiming. Each
+admits that a learned transition model can be trusted over a limited horizon.
+Part of the engineering is measuring how long that horizon is.
 
 ## Recovery is a separate skill
 
-Two models can tie on the usual one-step test and behave oppositely in use. If
-both have only seen the demonstrated path, that test never asks which way they
-move after a small mistake. Training on perturbed or self-generated states asks
-whether the model can return to familiar ground.
+Two models can tie on the usual one-step test and behave in opposite ways when
+run. The test never asked what separates them. If both have only seen the
+demonstrated path, nothing in their scores says which way they move after a
+small mistake.
+
+Training on perturbed or self-generated states does ask it. The answer is a
+separate skill, and that is the claim I would most want a sceptic to take away.
 
 <Figure
   n="5.3"
-  caption={<>Both toy models are exact on the demonstrated path. Move the starting state off it. One has only learned what comes next on the line and drifts away; the other has practised nearby states and bends back. The arithmetic is illustrative. The distinction between matching one-step behaviour and matching free-running dynamics is the empirical point behind Professor Forcing.</>}
+  caption={<>Both toy models are exact on the demonstrated path. Drag the offset to start them off it. One has only learned what comes next on the line, and drifts away. The other has practised nearby states and bends back. The arithmetic is made up, but the distinction is real, and it is the finding behind Professor Forcing, described next.</>}
 >
   <RecoveryBasin />
 </Figure>
 
-Scheduled sampling is one way to expose a learner to its own states, but it
-guarantees nothing. The training target and the deployment distribution still
-change together. Professor Forcing attacks the same gap from another direction by
-making hidden-state trajectories under teacher forcing resemble trajectories
-produced while the model runs freely. The result that matters is common to both
-methods. Recovery has to appear somewhere in the training objective.
+Scheduled sampling shows a learner its own states and guarantees nothing,
+because those states keep changing as the model learns.
+
+Professor Forcing came a year later, as *Professor Forcing: A New Algorithm for
+Training Recurrent Networks*. It was the work of Alex Lamb and colleagues in
+Yoshua Bengio's lab in Montreal. The two Bengios are brothers, and two of the
+best-known attacks on the gap came one from each.
+
+It attacks the gap from the other side and leaves the input alone. Instead it
+trains the model until its internal states look the same whether it is
+teacher-forced or running free. The judge is a second network trained to tell
+the two kinds of run apart. The model has to fool it (the trick behind
+generative adversarial networks: one network forges, another spots forgeries).
+
+I think it is the more under-read of the two, perhaps because transformers
+arrived the next year and took the field's attention. The problem moved into
+world models, where every rollout is a free run.
+
+What the two papers share is that recovery has to appear somewhere in the
+training objective, or it does not appear at all.
 
 ## Try it
 
 <Figure
   n="5.4"
-  caption={<>Eight questions on the step and the mismatch. The first three are the ones that change how you read a paper's headline number.</>}
+  caption={<>Eight questions on the step and the second-step problem. The first three change how you read a paper's headline number.</>}
 >
   <Quiz chapter={5} />
 </Figure>
 
 ---
 
-So far every step has been paid for in reality. The model is trained on
-recorded experience, checked against recorded experience, and corrected by it.
-
-Thanks for reading. Chapter 6 is about what happens when you stop paying. The
-model gets good enough that an agent can do its learning inside it, and then
-you find out what the agent found in there.
+Everything above was paid for in reality. The model was trained on recorded
+experience, checked against it and corrected by it.
 
 ## Sources
 

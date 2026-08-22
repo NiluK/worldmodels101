@@ -3,8 +3,6 @@ import { notFound } from "next/navigation";
 import { CHAPTERS, chapterText } from "@/lib/chapters";
 import { contentFor } from "@/content/registry";
 import { ReadingProgress } from "@/components/reading-progress";
-import { Narration } from "@/components/narration";
-import { SHOW_NARRATION } from "@/lib/flags";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { localePath, translate, type Locale } from "@/lib/i18n";
@@ -21,13 +19,6 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
 
   const { default: Body } = await load();
   const stars = await getStars();
-
-  // Narration is optional: the player only appears once `pnpm narrate` has
-  // produced an MP3 for this chapter.
-  const audio = `/audio/${slug}.mp3`;
-  const hasAudio =
-    SHOW_NARRATION &&
-    existsSync(path.join(process.cwd(), "public", "audio", `${slug}.mp3`));
 
   // offered only where one has actually been generated
   // one PDF per locale; the English one is not an acceptable stand-in
@@ -78,12 +69,6 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
           <p className="mt-10 max-w-[46ch] border-l-2 border-actual pl-5 text-[1.15rem] leading-[1.5] text-ink-muted">
             {chapter.blurb}
           </p>
-
-          {hasAudio && (
-            <div className="mt-8 max-w-[30rem]">
-              <Narration src={audio} />
-            </div>
-          )}
         </div>
       </header>
 

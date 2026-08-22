@@ -41,8 +41,10 @@ export default async function Home() {
           className="rise mt-8 max-w-[36ch] text-[clamp(1.25rem,2.4vw,1.7rem)] leading-[1.4] text-ink md:max-w-[42ch]"
           style={{ animationDelay: "150ms" }}
         >
-          The phrase means at least five different things, and the people
-          using it rarely say which. Start with the map, then the machinery.
+          Since 2018, &ldquo;world model&rdquo; has meant at least five
+          different machines, and the people saying it rarely tell you which.
+          This primer pulls the five apart, then shows how each one works and
+          where it came from.
         </p>
 
         <div
@@ -74,7 +76,7 @@ export default async function Home() {
             Five things people mean
           </h2>
           <p className="label max-w-[34ch] sm:text-right">
-            Start here if you arrived confused. It is the most common reason to.
+            If you are not sure which kind you have been reading about, start here.
           </p>
         </div>
         <div className="mt-8">
@@ -88,33 +90,31 @@ export default async function Home() {
           <p className="label md:pt-3">The premise</p>
           <div className="prose">
             <p className="text-[1.3rem] leading-[1.55]">
-              Four labs will tell you they build world models and mean four
-              incompatible things. One generates video you can steer. One
-              produces 3-D geometry a robot can be trained inside. One learns a
-              compact simulator it can plan against. One predicts embeddings and
-              throws the prediction away.
+              Ask four labs what a world model is and you get four different
+              machines that do not fit together. Each has its own history.
+              Genie, from Google DeepMind, generates video you steer with the
+              arrow keys. Marble, from World Labs, builds 3-D geometry a robot
+              can be trained inside. Dreamer, from Danijar Hafner&rsquo;s
+              group, learns a small simulator and plans against it. V-JEPA,
+              from Meta, predicts embeddings and throws the prediction away.
             </p>
             <p>
-              A fifth group is not describing a system at all. When people argue
-              about whether a language model &ldquo;has a world model&rdquo;,
-              they are making a claim about structure found inside a network
-              trained for something else, answered with interpretability
-              evidence, not with anything you could run. Two people can agree on
-              every fact and still disagree, because one is asking whether a
-              system can simulate and the other is asking whether a network
-              contains something.
+              A fifth camp is not describing a machine at all. When people
+              argue about whether a language model &ldquo;has a world
+              model&rdquo;, they mean structure found inside a network that was
+              trained for something else. The evidence comes from
+              interpretability work, not from anything you could run. That is
+              why two people can agree on every fact and still argue. One is
+              asking whether a system can simulate. The other is asking whether
+              a network contains something.
             </p>
             <p>
-              Underneath the naming mess there is a real and old subject. It
-              runs from Kalman filters through Schmidhuber&rsquo;s 1990 papers
-              to Dreamer, JEPA, Genie, and Marble. The literature is enormous
-              and almost entirely written for people who have already read it.
-            </p>
-            <p>
-              So: nine chapters, built around things you can poke at. No
-              prerequisites past comfort with a gradient and a bit of linear
-              algebra. Chapter 1 is the field guide; everything after it is the
-              machinery, with the definition in use stated wherever it matters.
+              Under the naming mess is a real and old subject with a clear line
+              of descent. It starts in 1960 with the Kalman filter, the maths
+              that lets a radar track a plane from noisy blips. It passes
+              through 1990, when J&uuml;rgen Schmidhuber and Richard Sutton
+              first put a learned model of the world next to something that
+              used it to act. It arrives at the four machines above.
             </p>
           </div>
         </div>
@@ -190,7 +190,7 @@ export default async function Home() {
             {[
               [
                 "The engineer",
-                "You ship models but the RL-adjacent literature has always felt like a different country. You want the map, not the tour.",
+                "You ship models but the RL-adjacent literature has always felt like a different country. You want a map of it.",
               ],
               [
                 "The researcher next door",
