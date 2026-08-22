@@ -316,7 +316,7 @@ const TEXT: Record<Locale, Text> = {
     wmEq: "s, a → s′",
     wmBody: ["One square per move. Knows the walls, not the patches."],
     estEq: "z → ŝ",
-    estBody: ["Says where you are. Not what a move would do."],
+    estBody: ["Says where you are. Does not choose a move."],
     chBody: ["Plans the route inside the model. Takes its first step."],
     chOff: ["Nothing to ask."],
     corrections: (n) => (n === 1 ? "1 correction" : `${n} corrections`),
@@ -343,7 +343,7 @@ const TEXT: Record<Locale, Text> = {
     surprises: "Surprises this lap",
     correctionsLabel: "Corrections held",
     intro: "Point at an arrow to see where the model says you would land. Press it to go, or let the chooser run a lap.",
-    estimate: "An estimator tells you where you are. It does not tell you what a move would do.",
+    estimate: "An estimator tells you where you are. It does not learn what moves do, and it never weighs one against another.",
     match: (p) => `The model said ${p}, and that is where you landed.`,
     miss: (p, a, n, cause) =>
       `The model said ${p}. You ended at ${a}, ${n === 1 ? "1 square" : `${n} squares`} off.` +
@@ -383,7 +383,7 @@ const TEXT: Record<Locale, Text> = {
     wmEq: "s, a → s′",
     wmBody: ["每步一格。知道墙在哪里，不知道地面的异常。"],
     estEq: "z → ŝ",
-    estBody: ["只说你在哪里，不说一步会带来什么。"],
+    estBody: ["只说你在哪里，不替你选一步。"],
     chBody: ["在模型里规划路线，走出第一步。"],
     chOff: ["无可问。"],
     corrections: (n) => `已修正 ${n} 处`,
@@ -407,7 +407,7 @@ const TEXT: Record<Locale, Text> = {
     surprises: "本圈意外",
     correctionsLabel: "已持有的修正",
     intro: "把指针放到箭头上，看模型认为你会落在哪里。按下就走，或者让选择器跑一圈。",
-    estimate: "估计器告诉你你在哪里，却不告诉你一步会带来什么。",
+    estimate: "估计器告诉你你在哪里。它不去学一步会带来什么，也从不比较两步的好坏。",
     match: (p) => `模型说是 ${p}，你也正落在那里。`,
     miss: (p, a, n, cause) =>
       `模型说是 ${p}，你却停在了 ${a}，偏了 ${n} 格。` +

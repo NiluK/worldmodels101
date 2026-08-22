@@ -132,7 +132,7 @@ export function OutputGallery() {
   const still = useReducedMotion();
 
   return (
-    <div className="grid grid-cols-1 gap-px bg-rule sm:grid-cols-2 lg:grid-cols-5">
+    <div className="grid grid-cols-1 gap-px bg-rule sm:grid-cols-2 lg:grid-cols-5 print:grid-cols-5">
       {DEFINITIONS.map((d, i) => {
         const Art = ART[d.id];
         const text = definitionText(locale, d.id);

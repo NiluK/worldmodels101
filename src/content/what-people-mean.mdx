@@ -24,10 +24,11 @@ out side by side and said how they came to share a name. This chapter is that
 page, and if you are confused like I was, hopefully it helps.
 
 The good news is that the mess has a history, and the history is a lot tidier
-than the tabs. Between about 2018 and 2024, four fields arrived at the same two
-words from four directions. They were computer vision, reinforcement learning,
-robotics and interpretability, the study of what goes on inside a trained
-model. Each meant something real, and none of them had to check what the others
+than the tabs. Between about 2018 and 2024, four traditions arrived at the same two
+words from four directions. They were reinforcement learning and control, self-supervised representation
+learning (teaching networks to summarise images and video), generative video
+and spatial models, and interpretability, the study of what goes on inside a
+trained model. Each meant something real, and none of them had to check what the others
 meant.
 
 <Figure
@@ -115,15 +116,18 @@ time without ever waiting for the future.
 
 <Figure
   n="1.5"
-  caption={<>A plane flies along a smooth path, and a radar reports its position every couple of seconds with noise on top. A Kalman filter keeps a running guess of where the plane is and how fast it is going. Scrub the time or press play, and watch the band around the estimate tighten as the blips arrive. Turn the radar noise up, and the estimate still sits closer to the plane than the blips do. Drop the blips for a stretch and it coasts on its own dynamics while the band opens. The gain readout is the lean: near zero it trusts physics, near one it trusts the radar. The greyed-out control is the point I want you to notice: nothing here can ask what happens if the plane turns. Distances are illustrative.</>}
+  caption={<>A plane flies along a smooth path, and a radar reports its position every couple of seconds with noise on top. A Kalman filter keeps a running guess of where the plane is and how fast it is going. Scrub the time or press play, and watch the band around the estimate tighten as the blips arrive. Turn the radar noise up, and the estimate still sits closer to the plane than the blips do. Drop the blips for a stretch and it coasts on its own dynamics while the band opens. The gain readout is the lean: near zero it trusts physics, near one it trusts the radar. The greyed-out control is the point I want you to notice: the filter can propagate a turn you hand it, but nothing here learns the dynamics or weighs one turn against another. Distances are illustrative.</>}
 >
   <KalmanTracker />
 </Figure>
 
-So it never asks the other half of the question: what happens if I act? The
-dynamics in a Kalman filter, the rules for how the state moves, are written in
-by the engineer rather than learned. It never compares two actions either. That
-is why I call it an ancestor rather than a member.
+What it does not do is the other half. You can hand a Kalman filter a known
+control input, a turn you have decided on, and it will propagate it, so it can
+tell you where that turn would take the plane. But the rules for how the state
+moves are written in by the engineer rather than learned, and nothing in it
+compares two turns to pick one. It is an estimator, not a planner, and its
+dynamics are supplied rather than learned. That is why I call it an ancestor
+rather than a member.
 
 The other half took thirty years and a different field. By 1990 neural
 networks, programs that learn from examples rather than from rules someone
@@ -153,7 +157,7 @@ up. His paper was *Dyna: an Integrated Architecture for Learning, Planning and
 Reacting*.
 
 Sutton and Andrew Barto went on to write the textbook every reinforcement
-learning student still reads. In 2024 the two shared the Turing Award.
+learning student still reads. The two shared the 2024 Turing Award, announced the following spring.
 
 <Figure
   n="1.7"
@@ -301,12 +305,17 @@ Genie 3, from DeepMind, is reported to generate interactive video at 720p and
 scene hanging together as you move. It also takes plain-language instructions
 mid-session: change the weather, add a flock of birds.
 
+Sora belongs in this category too, but without the action input: it predicts
+observations you cannot steer. Keep that difference in mind, because whether
+actions change the prediction is one of the three questions at the end of
+this chapter.
+
 So persistence exists, meaning things stay where you left them. It is learned
 through generation, though, rather than guaranteed by stored geometry.
 
 <Figure
   n="1.14"
-  caption={<>The same five, this time drawn by what each one hands you. Vermilion marks the predicted object in every panel. Left to right is the same axis as the map above: a picture, then structure, then a compact state, then a summary, and finally something that is not an output at all.</>}
+  caption={<>The same five, this time drawn by what each one hands you. Vermilion, the orange-red, marks the predicted object in every panel. Left to right is the same axis as the map above: a picture, then structure, then a compact state, then a summary, and finally something that is not an output at all.</>}
 >
   <OutputGallery />
 </Figure>
@@ -445,7 +454,7 @@ only drawing pictures cannot. I call it the turn-around test.
 
 <Figure
   n="1.19"
-  caption={<>The turn-around test, made playable. With the switch off, press Turn away and back and look at where the vermilion post comes back. Then switch the world on and run it again. The panel on the right shows you what is stored in each case.</>}
+  caption={<>The turn-around test, made playable. With the switch off, press Turn away and back and look at where the vermilion (orange-red) post comes back. Then switch the world on and run it again. The panel on the right shows you what is stored in each case.</>}
 >
   <GeneratedLandscape mode="test" />
 </Figure>
@@ -454,7 +463,7 @@ It does not work, and the figure above shows why. Leave the switch off and
 press "Turn away and back". You should see that the post has drifted, because
 nothing behind the picture is holding it there.
 
-Now turn *hold the world* on and do it again. The post stays put, because a
+Now switch "Hold the world" on and do it again. The post stays put, because a
 stored coordinate is being read back. Excellent.
 
 So those are the two ways to pass the test. You can store the room and look it
@@ -596,7 +605,9 @@ options before choosing.
 
 A model that answers it is called action-conditioned <Gloss>it is told which
 action was taken, so it can answer what-if instead of only what-next</Gloss>.
-That is what control needs. As we saw earlier, Kalman's filter never had it.
+That is what control needs. As we saw earlier, Kalman's filter could propagate a
+control input you gave it, but it never learned the dynamics or weighed one
+action against another. The learning and the choosing came later.
 
 <Figure
   n="1.25"

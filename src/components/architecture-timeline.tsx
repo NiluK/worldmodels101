@@ -41,7 +41,7 @@ type Era = {
 };
 
 const ERAS_EN_NOTES = [
-  "Recover a hidden state from noisy measurements by running a forward model and correcting it against what you observe. The dynamics are supplied, not learned, and nothing here asks what happens if I act.",
+  "Recover a hidden state from noisy measurements by running a forward model and correcting it against what you observe. The dynamics are supplied, not learned, and nothing here learns them or chooses between actions.",
   "One network models the world, another chooses actions, and the first predicts what the second's choices will do. Dyna adds the other half: plan inside the learned model, not only in the world.",
   "An encoder squeezes each frame to a short list of numbers, a recurrent dynamics model predicts where those numbers go next, and a small controller is trained almost entirely inside the model's own rollouts.",
   "The dynamics move fully into latent space and are learned straight from pixels. Planning happens there too, and Dreamer trains behaviour across long imagined trajectories rather than single steps.",
@@ -62,7 +62,7 @@ const ERA_TEXT: Record<string, Record<string, { who: string; note: string }>> = 
   zh: {
     "1960": {
       who: "鲁道夫·卡尔曼",
-      note: "通过运行一个前向模型、并用观测到的结果去修正它，从带噪声的测量里恢复出隐藏状态。动力学是给定的，不是学出来的，而且这里没有任何东西会问「如果我采取行动会怎样」。",
+      note: "通过运行一个前向模型、并用观测到的结果去修正它，从带噪声的测量里恢复出隐藏状态。动力学是给定的，不是学出来的，而且这里没有任何东西会去学它，或者在动作之间做选择。",
     },
     "1990": {
       who: "Jürgen Schmidhuber · Richard Sutton",
@@ -130,6 +130,19 @@ const ERAS: Era[] = [
     note: "The decoder becomes the product. Scale it far enough and the output is no longer a predicted frame but an environment you can steer. That is where the word arrived at its newest and loudest meaning.",
   },
 ];
+
+/**
+ * Node labels are SVG text in viewBox units, and the compact mode enlarges
+ * type without enlarging the boxes. Long era labels ("Dynamics (given)") then
+ * spill into the neighbour. Shrink the label until it fits its box.
+ */
+function fitLabel(label: string, boxW: number, base: number) {
+  const cjk = /[\u3000-\u9fff]/.test(label);
+  const per = cjk ? 1.0 : 0.52;
+  const need = label.length * per * base;
+  const room = boxW - 12;
+  return need > room ? Math.max(9, (base * room) / need) : base;
+}
 
 export function ArchitectureTimeline() {
   const still = useReducedMotion();
@@ -202,7 +215,8 @@ export function ArchitectureTimeline() {
                   transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                 />
                 <text x={n.x + n.w / 2} y={n.y + 31} textAnchor="middle"
-                  fontFamily="var(--font-body)" fontSize={14.5 * k}
+                  fontFamily="var(--font-body)"
+                  fontSize={fitLabel(era.labels?.[id] ? t(era.labels[id]!) : t(n.key), n.w, 14.5 * k)}
                   fill={live ? "var(--ink)" : "var(--ink-faint)"}>
                   {era.labels?.[id] ? t(era.labels[id]!) : t(n.key)}
                 </text>

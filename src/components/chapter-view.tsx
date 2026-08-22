@@ -69,6 +69,9 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
           <p className="mt-10 max-w-[46ch] border-l-2 border-actual pl-5 text-[1.15rem] leading-[1.5] text-ink-muted">
             {chapter.blurb}
           </p>
+          <p className="mt-4 mb-8 hidden font-mono text-[0.78rem] text-ink-muted print:block">
+            {t("chapter.printNote", { url: `worldmodels101.com${localePath(locale, `/chapters/${slug}`)}` })}
+          </p>
         </div>
       </header>
 

@@ -48,7 +48,7 @@ export const DEFINITIONS: Definition[] = [
     name: "The Renderer",
     predicts: "Pixels",
     gloss:
-      "An action-conditioned generator of observations. You press a key, it produces the next frames. Persistence, where it exists, is learned through generation rather than guaranteed by explicit geometric state.",
+      "A generator of observations, usually conditioned on your actions. You press a key, it produces the next frames; Sora is the same contract without the key. Persistence, where it exists, is learned through generation rather than guaranteed by explicit geometric state.",
     test:
       "Ask what holds the room together. If the answer is that the model learned to keep producing it, rather than that there is geometry, you are looking at a renderer.",
     systems: ["Genie 3", "Sora", "GameNGen"],
@@ -162,7 +162,7 @@ export const DEFINITIONS_ZH: Record<string, LocalisedDefinition> = {
     name: "渲染器",
     predicts: "像素",
     gloss:
-      "一个以动作为条件的观测生成器。你按一个键，它就生成接下来的画面。就算画面能保持一致，那也是生成过程学出来的，而不是由某个明确的几何结构保证的。",
+      "一个观测生成器，通常以你的动作为条件。你按一个键，它就生成接下来的画面；Sora 是没有那个键的同一类契约。就算画面能保持一致，那也是生成过程学出来的，而不是由某个明确的几何结构保证的。",
     test:
       "问问是什么让这个房间保持原样。如果答案是「模型学会了一直把它画出来」，而不是「那里确实有几何结构」，那你看到的就是渲染器。",
     camp: "做生成式视频的实验室",
