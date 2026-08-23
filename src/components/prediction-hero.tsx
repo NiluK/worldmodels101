@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLocale } from "./locale-provider";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * The thesis, running live.
@@ -16,26 +18,74 @@ import { useEffect, useRef, useState } from "react";
 
 type Vec = { x: number; y: number };
 
-const TRUE_G = 0.055;
+const TRUE_G = 0.082;
 const TRUE_REST = 0.968;
 const TRUE_DRAG = 0.9992;
 
-// The model is *close*. Close is not the same as right.
-const MODEL_G = 0.048;
+/**
+ * The model is *close*. Close is not the same as right. Its constants keep the
+ * same ratio to the true ones as before, so the pace changed and the amount it
+ * is wrong by did not.
+ */
+const MODEL_G = 0.0716;
 const MODEL_REST = 0.992;
 const MODEL_DRAG = 0.9998;
 
-const BASE_VX = 2.6;
+const BASE_VX = 4.3;
 const ROLLOUT_STEPS = 220;
-const ROLLOUT_EVERY = 30;
-const GHOST_LIFE = 130;
-const TRAIL_MAX = 270;
+const ROLLOUT_EVERY = 20;
+const GHOST_LIFE = 100;
+const TRAIL_MAX = 200;
 
 type Ghost = { pts: Vec[]; age: number; birth: number };
 /** a mark left where the ball actually met the floor or ceiling */
 type Tick = { x: number; y: number; age: number };
 const TICK_LIFE = 90;
 const MONO = 'ui-monospace, SFMono-Regular, Menlo, monospace';
+
+type Strings = {
+  happened: string;
+  imagined: string;
+  invite: string;
+  /** one per knock, cycled, so the figure keeps answering you */
+  knocks: string[];
+  aria: string;
+};
+
+const TEXT: LocaleText<Strings> = {
+  en: {
+    happened: "What happened",
+    imagined: "What the model imagined",
+    invite: "Click to knock it off course",
+    knocks: [
+      "It did not see that coming",
+      "Nothing in the model knew about your hand",
+      "The old predictions carry on regardless",
+      "It is confidently wrong now, and will be for a while",
+      "No amount of training data covers this",
+      "Every arc since is drawn from a state already wrong",
+      "Knock it again, it will not learn",
+    ],
+    aria:
+      "An animation: a ball bounces along a path drawn in slate blue, while dashed vermilion arcs show where an internal model predicted it would go, and a label counts how far apart the two have grown.",
+  },
+  zh: {
+    happened: "实际发生的",
+    imagined: "模型想象的",
+    invite: "点一下，把它撞偏",
+    knocks: [
+      "这一下它没料到",
+      "模型里没有任何东西知道你会伸手",
+      "旧的那些预测照旧往前走",
+      "它现在自信地错着，而且还要错一阵子",
+      "再多的训练数据也覆盖不到这一下",
+      "从这里开始的每一条弧，都是从一个已经错了的状态画出来的",
+      "再撞一次，它也不会学乖",
+    ],
+    aria:
+      "一段动画：一个球沿着石板蓝的轨迹弹跳，朱红色的虚线弧显示内部模型预测它会去哪里，旁边的标签数着两者已经差了多远。",
+  },
+};
 
 function readPalette() {
   const s = getComputedStyle(document.documentElement);
@@ -50,7 +100,9 @@ function readPalette() {
 
 export function PredictionHero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [nudged, setNudged] = useState(false);
+  const [knocks, setKnocks] = useState(0);
+  const locale = useLocale();
+  const T = pickText(TEXT, locale);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -344,7 +396,7 @@ export function PredictionHero() {
       vel.y += (dy / d) * power;
       vel.x = Math.max(Math.min(vel.x, 9), -9);
       vel.y = Math.max(Math.min(vel.y, 9), -9);
-      setNudged(true);
+      setKnocks((n) => n + 1);
     }
 
     const ro = new ResizeObserver(resize);
@@ -379,13 +431,13 @@ export function PredictionHero() {
         ref={canvasRef}
         className="block h-[clamp(220px,30vh,330px)] w-full cursor-crosshair touch-none border-y border-rule"
         role="img"
-        aria-label="An animation: a ball bounces along a path drawn in slate blue, while dashed vermilion arcs show where an internal model predicted it would go. The predictions drift steadily away from the true path."
+        aria-label={T.aria}
       />
       <figcaption className="mx-auto flex max-w-[84rem] flex-wrap items-center gap-x-8 gap-y-2 px-6 pt-3 md:px-10">
-        <span className="key text-actual">What happened</span>
-        <span className="key text-imagine">What the model imagined</span>
-        <span className="ml-auto label">
-          {nudged ? "It did not see that coming" : "Click to knock it off course"}
+        <span className="key text-actual">{T.happened}</span>
+        <span className="key text-imagine">{T.imagined}</span>
+        <span className="ml-auto label" aria-live="polite">
+          {knocks === 0 ? T.invite : T.knocks[(knocks - 1) % T.knocks.length]}
         </span>
       </figcaption>
     </figure>
