@@ -234,8 +234,10 @@ export function TrustHorizon() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[min(18rem,100%)] flex-1 items-center gap-3">
-          <span className="label whitespace-nowrap">{T.trusted}</span>
+        <label className={compact
+          ? "flex basis-full flex-wrap items-center gap-x-3 gap-y-2"
+          : "flex min-w-[min(18rem,100%)] flex-1 items-center gap-3"}>
+          <span className={compact ? "label basis-full" : "label whitespace-nowrap"}>{T.trusted}</span>
           <input
             type="range"
             min={1}
@@ -245,7 +247,7 @@ export function TrustHorizon() {
               sweep.stop();
               setTrusted(Number(e.target.value));
             }}
-            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
+            className="h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-8 text-right !text-ink">{k}</span>
         </label>

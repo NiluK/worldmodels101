@@ -63,11 +63,13 @@ export function LatentInterpolate() {
       </div>
 
       <div data-print-hide className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[18rem] flex-1 items-center gap-3">
-          <span className="label whitespace-nowrap">{t("li.blend")}</span>
+        <label className={compact
+          ? "flex basis-full flex-wrap items-center gap-x-3 gap-y-2"
+          : "flex min-w-[min(18rem,100%)] flex-1 items-center gap-3"}>
+          <span className={compact ? "label basis-full" : "label whitespace-nowrap"}>{t("li.blend")}</span>
           <input type="range" min={0} max={100} value={pct}
             onChange={(e) => {setM(Number(e.target.value) / 100); }}
-            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
+            className="h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-12 text-right !text-ink">{pct}%</span>
         </label>
 

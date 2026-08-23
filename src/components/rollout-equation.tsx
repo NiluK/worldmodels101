@@ -126,7 +126,7 @@ export function RolloutEquation() {
         {...enter(6)}
         className="mx-auto mt-10 max-w-[54ch] text-center text-[1.05rem] leading-relaxed text-ink-muted"
       >
-        <span className="whitespace-pre">{t("roll.askFor")}</span>
+        <span className="whitespace-pre-wrap">{t("roll.askFor")}</span>
         {(["one", "many"] as Id[]).map((id, i) => (
           <span key={id}>
             <button
@@ -144,10 +144,10 @@ export function RolloutEquation() {
             >
               {t(KEY[id])}
             </button>
-            <span className="whitespace-pre">{i === 0 ? t("roll.insteadOf") : t("punct.comma")}</span>
+            <span className="whitespace-pre-wrap">{i === 0 ? t("roll.insteadOf") : t("punct.comma")}</span>
           </span>
         ))}
-        <span className="whitespace-pre">{t("roll.stillGet")}</span>
+        <span className="whitespace-pre-wrap">{t("roll.stillGet")}</span>
         {(["now", "plan"] as Id[]).map((id, i) => (
           <span key={id}>
             <button
@@ -165,7 +165,7 @@ export function RolloutEquation() {
             >
               {t(KEY[id])}
             </button>
-            <span className="whitespace-pre">{i === 0 ? t("roll.and") : t("punct.stop")}</span>
+            <span className="whitespace-pre-wrap">{i === 0 ? t("roll.and") : t("punct.stop")}</span>
           </span>
         ))}
       </motion.p>
