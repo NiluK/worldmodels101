@@ -3,18 +3,17 @@ times first. Every drop costs something real: wall-clock seconds, and wear on
 the joints. Someone nearby has to reset the scene when the arm knocks the bin
 over. At one attempt a second, that is a month of doing nothing else.
 
-The idea this chapter is about is simple enough to say in a sentence. Spend part of that month collecting
-experience, fit a model to it, and let the arm practise inside the model, where
-a drop costs only compute. Richard Sutton wrote that loop down in 1991 and
-called the agent Dyna. Sutton is a founder of reinforcement learning, where an
-agent learns by acting and being rewarded, and he co-wrote its standard
+The idea is simple enough to say in a sentence. Spend part of that month
+collecting experience, fit a model to it, and let the arm practise inside the
+model, where a drop costs only compute. Richard Sutton wrote that loop down in
+1991 and called the agent Dyna. Sutton is a founder of reinforcement learning,
+where an agent learns by acting and being rewarded, and he co-wrote its standard
 textbook.
 
 Dyna was tiny, a loop in a grid maze, and about thirty years early. Danijar
 Hafner's Dreamer, which runs the same loop with deep networks, arrived in 2019.
 The question in the title is whether the loop works, and the short answer is
-yes. The longer answer, which is what this chapter is for, is about what it
-costs.
+yes. The longer answer is about what it costs.
 
 <Figure
   n="6.1"
@@ -26,14 +25,7 @@ costs.
 At twenty imagined steps for every real one, you should see the ledger turn
 about a month into about a day and a half. That has been the sales pitch from
 Dyna to Dreamer, and the saving is real. It holds only while an imagined step
-stays useful enough to count. Most of this chapter is about when that stops
-being true.
-
-Two things before we go on. Firstly, I'm going to assume you have read
-chapter 1, or at least that you are happy with a world model meaning a learned
-model of what happens next. Secondly, I'll be leaning on the figures again.
-Each one is something you can press, and I'll tell you what to press and what
-you should expect to see.
+stays useful enough to count.
 
 ## The short answer is yes, and Dreamer is the evidence
 
@@ -273,10 +265,9 @@ be glad to hear from you.
 
 ---
 
-One last thing before you move on. Every system above takes for granted that
-the model should predict what things look like: frames, pixels, scenes, what
-you would see if you were there. The next chapter asks whether that is the
-right job.
+Every system above takes for granted that the model should predict what things
+look like: frames, pixels, scenes, what you would see if you were there. The
+next chapter asks whether that is the right job.
 
 ## Sources
 

@@ -1,27 +1,20 @@
 If you have read the last chapter, you have a state: a short list of numbers
-that stands in for what the camera saw. This chapter is about the next step,
-which is the step where that state moves. A dynamics model, also called a
-transition model, does one job. Take what you know, take what you did, and
-produce what you know next.
+that stands in for what the camera saw. The next step is the one where that
+state moves. A dynamics model, also called a transition model, does one job.
+Take what you know, take what you did, and produce what you know next.
 
-The awkward word there is know, and I want to flag it early, because it covers
-more than the last picture. It is everything that has happened and still
-matters, folded into something small enough to carry. A ball behind a wall is
-still moving. A door you opened four rooms ago is still open.
+The awkward word there is know, because it covers more than the last picture. It
+is everything that has happened and still matters, folded into something small
+enough to carry. A ball behind a wall is still moving. A door you opened four
+rooms ago is still open.
 
-I should say that what confused me for longest here was a number, and not the
-definition. A dynamics paper leads with its one-step error, and it is the
-easiest number to be impressed by. I was impressed by it for a good while, and
-part of this chapter is me explaining why I stopped.
-
-Two things before we start. Firstly, I'm going to assume you have read chapter
-1, or at least that you know a state is what is there and an observation is the
-part you can see. Secondly, I'll lean on the figures again, and tell you what
-to press and what you should see. Let's start with the job itself.
+A dynamics paper leads with its one-step error, and it is the easiest number to
+be impressed by. I was impressed by it for a good while, until I looked at what
+it measures. Let's start with the job itself.
 
 <Figure
   n="5.1"
-  caption={<>This is the one job, written down. The <em>s</em> on the right is what you know, the <em>a</em> is what you did, and the <em>s</em> on the left is what you know next. Hover a symbol and its plain-English reading lights up. Keep your eye on the left-hand <em>s</em>, because everything in this chapter comes from feeding it back in as the next right-hand <em>s</em>.</>}
+  caption={<>This is the one job, written down. The <em>s</em> on the right is what you know, the <em>a</em> is what you did, and the <em>s</em> on the left is what you know next. Hover a symbol and its plain-English reading lights up. Keep your eye on the left-hand <em>s</em>, because everything else comes from feeding it back in as the next right-hand <em>s</em>.</>}
 >
   <TransitionEquation />
 </Figure>
@@ -36,7 +29,7 @@ starts being handed its own last answer.
 
 I call that the second-step problem. The field put a name to it in 2015, tried
 two rival cures within a year, and has not solved it since. Let's look at what
-it does to one small model before we go into any of that.
+it does to one small model.
 
 <Figure
   n="5.2"
@@ -47,8 +40,7 @@ it does to one small model before we go into any of that.
 
 Judging from the readouts, at four per cent error per step the corrected line
 is still hugging the truth after thirty steps. The free-running line, same
-model, same bias, ends up thirty-nine times further away. That is the whole
-chapter in one picture, so keep it in mind as we go.
+model, same bias, ends up thirty-nine times further away. Keep that picture in mind.
 
 ## The inherited habit
 

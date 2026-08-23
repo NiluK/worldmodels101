@@ -1,7 +1,7 @@
 If you have watched any generated video lately, you'll have seen somebody walk
-through a scene with the arrow keys. Until 2024 a video model was something
-you watched. It chose its own future and you had no say. One extra input
-changed that, and this chapter is about what the input did and did not buy.
+through a scene with the arrow keys. Until 2024 a video model was something you
+watched. It chose its own future and you had no say. One extra input changed
+that.
 
 Take a model that predicts the next frame. Now tell it, along with the frames,
 which key is being held. From the same opening it can give you one
@@ -34,16 +34,9 @@ and 6) and video models built for audiences.
   <LatentActions />
 </Figure>
 
-Before we go on, two things. Firstly, I'm going to assume you have read chapter
-1, or at least seen a few of these clips, and that you know a world model is
-something that predicts what comes next. Anything more technical than that I
-will explain as we go, and there is less of it than you might fear.
-
-Secondly, here is my short answer to the title, so you know where we are
-going. A video model with an action input is somewhere you can be, and that is
-new. Whether it is a simulator, something that obeys your actions and holds the
-rules of the world, has to be measured, and the announcements tend to skip
-that. This chapter is about that measuring, and what it has found.
+A video model with an action input is somewhere you can be, and that is new.
+Whether it is a simulator, something that obeys your actions and holds the rules
+of the world, has to be measured, and the announcements tend to skip that.
 
 ## An action input is not control
 
@@ -229,8 +222,7 @@ state does the planning rather than the visible video.
 
 ## Where the seams are
 
-Let me finish with three seams I'd want you to carry out of this chapter.
-Each one is a place where a demo can mislead you.
+There are three seams where a demo can mislead you.
 
 **Consistency is learned, not enforced.** Nothing stops the room from changing.
 It usually does not. But usually is a statistical property of a trained system,

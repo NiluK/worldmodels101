@@ -21,26 +21,22 @@ make the decision one you can run.
   <GapDecision />
 </Figure>
 
-As you can see, nothing about the oncoming car changed between your forecast
-and the answer. What changed was only how good your forecast of it was, and
-that is the whole difference between getting across and getting hit.
-
-None of this means there is a physics engine behind your eyes, and I would be
-suspicious of anyone who said there was. What it shows is narrower. Past a
-certain speed, acting well depends on what has not happened yet.
+As you can see, nothing about the oncoming car changed between your forecast and
+the answer. What changed was only how good your forecast of it was, and that is
+the whole difference between getting across and getting hit. Past a certain
+speed, acting well depends on what has not happened yet.
 
 Take what you have, run it forward, and move for what comes next. That is a
 dynamics model. Of everything the phrase *world model* has since been stretched
 to cover, and chapter 1 counted five senses, it is the oldest and the one the
-term was coined for. The coining happened in 1990, and I'll come back to it at
-the end, because chapter 1 told that story properly.
+term was coined for. The coining happened in 1990, and chapter 1 told that
+story.
 
-One thing I want to settle before anything else is that the model does not act.
-It predicts what would happen. Something else reads those predictions and
-chooses, and that something else has its own name, the **policy** <Gloss>the
-part that chooses the action, by hard thinking or by pure reflex</Gloss>.
-Jürgen Schmidhuber's 1990 version kept the two as separate objects, and the
-split holds all the way through this chapter.
+The model itself does not act. It predicts what would happen. Something else
+reads those predictions and chooses, and that something else has its own name,
+the **policy** <Gloss>the part that chooses the action, by hard thinking or by
+pure reflex</Gloss>. Jürgen Schmidhuber's 1990 version kept the two as separate
+objects, and the split holds all the way through this chapter.
 
 <Figure
   n="2.2"
@@ -51,15 +47,7 @@ split holds all the way through this chapter.
 
 So when somebody tells you their system is a world model, ask which half they
 mean. Having the first half buys you a lot, and it also fails in a way nobody
-has engineered away. That is the chapter. What the model holds, what having one
-buys you, where it goes wrong, and what thirty years of people have done about
-it, in that order.
-
-Two things before we start. Firstly, I'm going to assume you have read chapter
-1, or at least that you know the phrase has five senses and this is the first of
-them. Secondly, I'll be leaning on the figures, the way I did there. Each one is
-something you can press or drag, and I'll tell you what to press and what you
-should expect to see.
+has engineered away.
 
 ## What the model holds, and what it can drop
 
@@ -377,8 +365,7 @@ measured. Control asks what happens once something starts hunting, on purpose,
 for the highest score it can find. That is a different test.
 
 The best plan in the model and the best plan in the world are only the same plan
-if the model is good *where the search goes looking*. Every fix in the rest of
-this chapter is an attempt to make that last clause true. Let me show you the
+if the model is good *where the search goes looking*. Every fix that follows is an attempt to make that last clause true. Let me show you the
 mismatch as a shape first.
 
 <Figure
