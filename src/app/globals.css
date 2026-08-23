@@ -208,6 +208,35 @@
   line-break: strict;
 }
 
+/* Indic scripts: taller line boxes, and the Latin display face has no glyphs
+   for them, so both scripts get their own serif rather than a silent swap. */
+:root[data-locale="hi"] {
+  --font-display: var(--font-noto-serif-devanagari), var(--font-instrument), serif;
+  --font-body:    var(--font-noto-serif-devanagari), var(--font-newsreader), serif;
+  --font-mono:    var(--font-plex-mono), var(--font-noto-serif-devanagari), ui-monospace, monospace;
+}
+
+:root[data-locale="ta"] {
+  --font-display: var(--font-noto-serif-tamil), var(--font-instrument), serif;
+  --font-body:    var(--font-noto-serif-tamil), var(--font-newsreader), serif;
+  --font-mono:    var(--font-plex-mono), var(--font-noto-serif-tamil), ui-monospace, monospace;
+}
+
+:root[data-locale="hi"] body,
+:root[data-locale="ta"] body {
+  line-height: 1.85;
+}
+
+:root[data-locale="hi"] .display,
+:root[data-locale="ta"] .display {
+  line-height: 1.3;
+}
+
+:root[data-locale="hi"] .label,
+:root[data-locale="ta"] .label {
+  letter-spacing: 0.05em;
+}
+
 /* ---------- base ---------- */
 
 * { border-color: var(--rule); }

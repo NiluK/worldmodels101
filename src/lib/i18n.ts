@@ -74,6 +74,30 @@ const en: Dict = {
     "Since 2018, \u201cworld model\u201d has meant at least five different machines, and the people saying it rarely tell you which. This primer pulls the five apart, then shows how each one works and where it came from.",
   "site.begin": "Begin Chapter 01",
   "site.meta": "{n} chapters · {time} · no signup",
+  "home.h1": "World Models",
+  "home.runtimeHm": "{h}h {m}m",
+  "home.runtimeM": "{m}m",
+  "home.chapterCount": "{n} chapters",
+  "home.premise.p1":
+    "Ask four labs what a world model is and you get four different machines that do not fit together. Each has its own history. Genie, from Google DeepMind, generates video you steer with the arrow keys. Marble, from World Labs, builds 3D geometry a robot can be trained inside. Dreamer, from Danijar Hafner's group, learns a small simulator and plans against it. V-JEPA, from Meta, predicts embeddings and throws the prediction away.",
+  "home.premise.p2":
+    "A fifth camp is not describing a machine at all. When people argue about whether a language model \u201chas a world model\u201d, they mean structure found inside a network that was trained for something else. The evidence comes from interpretability work, not from anything you could run. That is why two people can agree on every fact and still argue. One is asking whether a system can simulate. The other is asking whether a network contains something.",
+  "home.premise.p3":
+    "Under the naming mess is a real and old subject with a clear line of descent. It starts in 1960 with the Kalman filter, the maths that lets a radar track a plane from noisy blips. It passes through 1990, when J\u00fcrgen Schmidhuber and Richard Sutton first put a learned model of the world next to something that used it to act. It arrives at the four machines above.",
+  "home.who1.t": "The engineer",
+  "home.who1.b":
+    "You ship models but the RL-adjacent literature has always felt like a different country. You want a map of it.",
+  "home.who2.t": "The researcher next door",
+  "home.who2.b":
+    "You work in another subfield and need to know what people mean when they say a video model understands physics.",
+  "home.who3.t": "The student",
+  "home.who3.b":
+    "You have the maths and the time and want a path through the papers that is ordered rather than alphabetical.",
+  "home.who4.t": "The sceptic",
+  "home.who4.b":
+    "You suspect a lot of this is overclaimed. Chapter 9 is for you, and you are probably partly right.",
+  "home.metaDescription":
+    "A free interactive primer on world models. The phrase covers at least five different machines; this pulls them apart, then shows how each one works.",
   "home.contents": "Contents",
   "home.mapTitle": "Five things people mean",
   "home.mapNote": "If you are not sure which kind you have been reading about, start here.",
@@ -86,6 +110,8 @@ const en: Dict = {
   "chapter.next": "Next →",
   "chapter.start": "Start",
   "chapter.atBeginning": "You’re at the beginning",
+  "chapter.untranslated":
+    "This chapter is not in {lang} yet, so the text below is the English original.",
   "chapter.soon": "Soon",
   "chapter.drafting": "Drafting",
   "chapter.min": "{n} min",
@@ -606,6 +632,26 @@ const zh: Dict = {
     "自 2018 年起，「世界模型」这个词至少指过五种不同的机器，而说的人很少告诉你是哪一种。这份读物先把这五种分开，再讲每一种怎么工作、从哪里来。",
   "site.begin": "从第 01 章开始",
   "site.meta": "共 {n} 章 · {time} · 无需注册",
+  "home.h1": "世界模型",
+  "home.runtimeHm": "{h} 小时 {m} 分钟",
+  "home.runtimeM": "{m} 分钟",
+  "home.chapterCount": "共 {n} 章",
+  "home.premise.p1":
+    "问四家实验室什么是世界模型，你会得到四台互不相容的机器，每一台都有自己的来历。Google DeepMind 的 Genie 生成你可以用方向键操控的视频。World Labs 的 Marble 造出机器人可以在里面训练的三维几何。Danijar Hafner 团队的 Dreamer 学出一个小型仿真器，并在上面做规划。Meta 的 V-JEPA 预测嵌入向量，然后把预测扔掉。",
+  "home.premise.p2":
+    "第五拨人根本不是在描述一台机器。当人们争论一个语言模型「有没有世界模型」时，他们说的是在一个为别的任务训练出来的网络内部发现的结构。支持这个说法的证据来自可解释性研究，而不是任何你能运行的东西。所以两个人可以在每一个事实上都一致，却依然吵得起来：一个问的是系统能不能模拟，另一个问的是网络里面有没有某种东西。",
+  "home.premise.p3":
+    "命名的混乱底下，是一个真实而古老的题目，而且有一条清楚的传承线。它从 1960 年的卡尔曼滤波器开始，那是让雷达从带噪的回波里跟住一架飞机的数学。它经过 1990 年，那一年 Jürgen Schmidhuber 和 Richard Sutton 第一次把一个学出来的世界模型，摆在一个会拿它去行动的东西旁边。它一路走到上面那四台机器。",
+  "home.who1.t": "工程师",
+  "home.who1.b": "你在做模型，但强化学习那一带的文献一直像另一个国家。你想要一张它的地图。",
+  "home.who2.t": "隔壁方向的研究者",
+  "home.who2.b": "你做的是另一个子领域，需要知道别人说一个视频模型「懂物理」时，到底指的是什么。",
+  "home.who3.t": "学生",
+  "home.who3.b": "你有数学基础也有时间，想要一条按顺序走的论文路线，而不是一份按字母排的清单。",
+  "home.who4.t": "怀疑的人",
+  "home.who4.b": "你觉得这里面有不少是吹过头的。第 9 章是写给你的，而你多半有一部分是对的。",
+  "home.metaDescription":
+    "一份关于世界模型的免费交互式入门读物。这个词至少涵盖五种不同的机器，本站先把它们分开，再讲每一种怎么工作。",
   "home.contents": "目录",
   "home.mapTitle": "人们说的五种意思",
   "home.mapNote": "如果你不确定自己读到的是哪一种，从这里开始。",
@@ -618,6 +664,7 @@ const zh: Dict = {
   "chapter.next": "下一章 →",
   "chapter.start": "起点",
   "chapter.atBeginning": "这里就是开头",
+  "chapter.untranslated": "这一章还没有{lang}版本，下面的正文是英文原文。",
   "chapter.soon": "即将推出",
   "chapter.drafting": "撰写中",
   "chapter.min": "{n} 分钟",

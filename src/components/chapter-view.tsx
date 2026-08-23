@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CHAPTERS, chapterText } from "@/lib/chapters";
-import { contentFor } from "@/content/registry";
+import { contentFor, hasTranslation } from "@/content/registry";
 import { ReadingProgress } from "@/components/reading-progress";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { localePath, translate, type Locale } from "@/lib/i18n";
+import { localePath, LOCALE_META, translate, type Locale } from "@/lib/i18n";
 import { StarCta } from "@/components/star-cta";
 import { Byline } from "@/components/byline";
 import { getStars } from "@/lib/github";
@@ -16,6 +16,7 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
   const exists = CHAPTERS.some((c) => c.slug === slug);
   if (!exists || !load) notFound();
   const chapter = chapterText(locale, slug);
+  const translated = hasTranslation(locale, slug);
 
   const { default: Body } = await load();
   const stars = await getStars();
@@ -72,6 +73,11 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
           <p className="mt-4 mb-8 hidden font-mono text-[0.78rem] text-ink-muted print:block">
             {t("chapter.printNote", { url: `worldmodels101.com${localePath(locale, `/chapters/${slug}`)}` })}
           </p>
+          {!translated && (
+            <p className="mt-6 border-l-2 border-imagine py-1 pl-4 font-mono text-[0.78rem] leading-relaxed text-ink-muted">
+              {t("chapter.untranslated", { lang: LOCALE_META[locale].label })}
+            </p>
+          )}
         </div>
       </header>
 
