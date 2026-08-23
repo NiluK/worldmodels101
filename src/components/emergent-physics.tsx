@@ -92,14 +92,14 @@ export function EmergentPhysics() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
+        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[18rem]">
           <span className="label whitespace-nowrap">{t("ep.speed")}</span>
           <input type="range" min={V0} max={V1} value={v}
             onChange={(e) => setV(Number(e.target.value))}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-16 text-right !text-ink">{v} m/s</span>
         </label>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">
           {t(inBand ? "ep.inside" : "ep.outside")}
         </p>
       </div>

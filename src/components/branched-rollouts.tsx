@@ -4,6 +4,8 @@ import { useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { PlayButton } from "./play-button";
+import { useSweep } from "./use-sweep";
 
 /**
  * Short branches from many real states, or one long branch from one.
@@ -107,6 +109,7 @@ const TEXT: Record<string, Strings> = {
 export function BranchedRollouts() {
   const [len, setLen] = useState(3);
   const [every, setEvery] = useState(true);
+  const sweep = useSweep({ value: len, min: 1, max: MAX_LEN, step: 1, setValue: setLen });
   const locale = useLocale();
   const T = TEXT[locale] ?? TEXT.en;
   const still = useReducedMotion();
@@ -195,18 +198,22 @@ export function BranchedRollouts() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[16rem] flex-1 items-center gap-3">
+        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[18rem]">
           <span className="label whitespace-nowrap">{T.length}</span>
           <input
             type="range"
             min={1}
             max={MAX_LEN}
             value={len}
-            onChange={(e) => setLen(Number(e.target.value))}
+            onChange={(e) => {
+              sweep.stop();
+              setLen(Number(e.target.value));
+            }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-8 text-right !text-ink">{len}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
 
         <label className="flex cursor-pointer items-center gap-3">
           <span className="label">{every ? T.every : T.one}</span>
@@ -215,7 +222,10 @@ export function BranchedRollouts() {
             role="switch"
             aria-checked={every}
             aria-label={T.every}
-            onClick={() => setEvery((v) => !v)}
+            onClick={() => {
+              sweep.stop();
+              setEvery((v) => !v);
+            }}
             className={`relative h-6 w-11 shrink-0 border transition-colors ${
               every ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
             }`}
@@ -228,7 +238,7 @@ export function BranchedRollouts() {
           </button>
         </label>
 
-        <p className="label w-full !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-3">

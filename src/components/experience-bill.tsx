@@ -342,7 +342,7 @@ export function ExperienceBill() {
         </div>
 
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <label className="flex min-w-[16rem] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
+          <label className="flex min-w-[min(16rem,100%)] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
             <span className="label whitespace-nowrap">{s.budget}</span>
             <input
               type="range"
@@ -350,11 +350,13 @@ export function ExperienceBill() {
               max={BUDGET_MAX}
               step={0.02}
               value={budget}
-              onChange={(e) => setBudget(Number(e.target.value))}
+              onChange={(e) => {
+                setBudget(Number(e.target.value));
+              }}
               aria-valuetext={bill}
               className="h-1 min-w-[8rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
             />
-            <span className="label whitespace-nowrap !normal-case !tracking-normal !text-ink">{bill}</span>
+            <span className="label min-w-[11rem] whitespace-nowrap !normal-case !tracking-normal !text-ink">{bill}</span>
           </label>
           <label className="flex cursor-pointer items-center gap-3">
             <span className="label">{s.badModel}</span>

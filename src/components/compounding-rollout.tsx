@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { useT } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * The model eating its own output.
@@ -50,6 +52,7 @@ export function CompoundingRollout() {
   const fs = compact ? 17 : 10;
   const [h, setH] = useState(6);
   const [gain, setGain] = useState(1.22);
+  const hSweep = useSweep({ value: h, min: 1, max: MAX_H, step: 1, setValue: setH });
 
   // the chain always spans the figure, so the shape of the growth is readable
   // at every horizon rather than huddling in the left quarter.
@@ -108,18 +111,19 @@ export function CompoundingRollout() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
-          <span className="label whitespace-nowrap">{t("comp.horizon")}</span>
-          <input type="range" min={1} max={MAX_H} value={h}
-            onChange={(e) => setH(Number(e.target.value))}
-            className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
+        <label className="flex min-w-[min(18rem,100%)] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
+          <span className="label basis-full whitespace-nowrap sm:basis-auto">{t("comp.horizon")}</span>
+          <input type="range" min={1} max={MAX_H} step={1} value={h}
+            onChange={(e) => { hSweep.stop(); setH(Number(e.target.value)); }}
+            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-10 text-right !text-ink">{h}</span>
         </label>
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
-          <span className="label whitespace-nowrap">{t("comp.gain")}</span>
-          <input type="range" min={100} max={140} value={Math.round(gain * 100)}
-            onChange={(e) => setGain(Number(e.target.value) / 100)}
-            className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
+        <PlayButton playing={hSweep.playing} onClick={hSweep.toggle} />
+        <label className="flex min-w-[min(18rem,100%)] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
+          <span className="label basis-full whitespace-nowrap sm:basis-auto">{t("comp.gain")}</span>
+          <input type="range" min={100} max={140} step={1} value={Math.round(gain * 100)}
+            onChange={(e) => {setGain(Number(e.target.value) / 100); }}
+            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-14 text-right !text-ink">{gain.toFixed(2)}&times;</span>
         </label>
       </div>

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useT } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * Why a picture is not a state.
@@ -67,6 +69,7 @@ export function FramesToState() {
   const { ref, compact } = useCompact(520);
   const fs = compact ? 15 : 10;
   const [seen, setSeen] = useState(1);
+  const sweep = useSweep({ value: seen, min: 1, max: 3, step: 1, setValue: setSeen });
   const futures = fan(seen);
 
   return (
@@ -117,10 +120,14 @@ export function FramesToState() {
         <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
           <span className="label whitespace-nowrap">{t("fts.seen")}</span>
           <input type="range" min={1} max={3} value={seen}
-            onChange={(e) => setSeen(Number(e.target.value))}
+            onChange={(e) => {
+              sweep.stop();
+              setSeen(Number(e.target.value));
+            }}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-8 text-right !text-ink">{seen}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-2">

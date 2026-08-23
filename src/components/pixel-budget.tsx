@@ -176,7 +176,7 @@ export function PixelBudget() {
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-8 text-right !text-ink">{k}</span>
         </label>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-2">

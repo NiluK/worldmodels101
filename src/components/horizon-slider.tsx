@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useT } from "./locale-provider";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * Compounding error, made draggable.
@@ -46,6 +48,7 @@ const path = (pts: [number, number][]) =>
 
 export function HorizonSlider() {
   const [h, setH] = useState(1);
+  const sweep = useSweep({ value: h, min: 1, max: STEPS, step: 1, setValue: setH });
   const t = useT();
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.65 : 1;
@@ -131,13 +134,15 @@ export function HorizonSlider() {
             min={1}
             max={STEPS}
             value={h}
-            onChange={(e) => setH(Number(e.target.value))}
+            onChange={(e) => { sweep.stop(); setH(Number(e.target.value)); }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-12 text-right !text-ink">{h}</span>
         </label>
 
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
+
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">
           {worst < 0.4
             ? t("hz.v0")
             : worst < 1.5

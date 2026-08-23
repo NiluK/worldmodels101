@@ -109,7 +109,7 @@ export function Planner() {
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-12 text-right !text-ink">{n}</span>
         </label>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">
           {reached ? t("plan.found") : best?.hit ? t("plan.allHit") : t("plan.closest")}
         </p>
       </div>

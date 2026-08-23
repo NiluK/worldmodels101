@@ -28,7 +28,7 @@ export function FutureSampler() {
       <div className="px-5 pt-6 md:px-8">
         <div className="flex flex-wrap gap-2" data-print-hide>
           {(["mean", "samples"] as const).map((key) => (
-            <button key={key} onClick={() => setMode(key)} className={`border px-3 py-1.5 transition-colors ${mode === key ? "border-ink bg-ink" : "border-rule-strong hover:border-ink"}`}>
+            <button key={key} onClick={() => {setMode(key); }} className={`border px-3 py-1.5 transition-colors ${mode === key ? "border-ink bg-ink" : "border-rule-strong hover:border-ink"}`}>
               <span className={`label !text-[0.6rem] ${mode === key ? "!text-paper" : ""}`}>{t(`fs.${key}`)}</span>
             </button>
           ))}
@@ -52,7 +52,8 @@ export function FutureSampler() {
       <div data-print-hide className="mt-6 flex flex-wrap items-center gap-3 border-t border-rule px-5 py-4 md:px-8">
         <label className="flex min-w-[15rem] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{t("fs.leftChance")}</span>
-          <input type="range" min={5} max={95} value={probability} onChange={(e) => setProbability(Number(e.target.value))}
+          <input type="range" min={5} max={95} value={probability}
+            onChange={(e) => {setProbability(Number(e.target.value)); }}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-10 text-right !text-ink">{probability}%</span>
         </label>

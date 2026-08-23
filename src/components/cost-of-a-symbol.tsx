@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 
@@ -134,6 +134,7 @@ const TEXT = {
 
 export function CostOfASymbol() {
   const [i, setI] = useState(HALF);
+  const sliderId = useId();
   const locale = useLocale();
   const T = TEXT[locale] ?? TEXT.en;
   const still = useReducedMotion();
@@ -276,12 +277,13 @@ export function CostOfASymbol() {
       </div>
 
       <div data-print-hide className="mt-2 border-t border-rule px-5 py-4 md:px-8">
-        <label className="block">
-          <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-            <span className="label min-w-[12rem]">{T.slider}</span>
+        <div>
+          <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <label htmlFor={sliderId} className="label min-w-[12rem]">{T.slider}</label>
             <span className="label tnum ml-auto shrink-0 whitespace-nowrap !text-ink">{probText}</span>
           </span>
           <input
+            id={sliderId}
             type="range"
             min={0}
             max={STOPS.length - 1}
@@ -299,7 +301,7 @@ export function CostOfASymbol() {
               </span>
             ))}
           </span>
-        </label>
+        </div>
 
         <p className="label mt-4 !normal-case !tracking-normal !text-[0.8rem]">
           {verdict}{T.join}{T.tail}

@@ -86,7 +86,7 @@ export function PredictionCompression() {
             onChange={(e) => setLvl(Number(e.target.value))}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
         </label>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">{t(`pc.${level.key}.note`)}</p>
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">{t(`pc.${level.key}.note`)}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-3">

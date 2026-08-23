@@ -279,17 +279,19 @@ export function MemoriseOrRule() {
       </div>
 
       <div data-print-hide className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-0 flex-1 items-center gap-3">
+        <label className="flex min-w-[18rem] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{compact ? T.amountShort : T.amount}</span>
-          <input
-            type="range"
-            min={MIN}
-            max={MAX}
-            value={n}
-            onChange={(e) => setN(Number(e.target.value))}
-            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
-          />
-          <span className="label tnum w-10 text-right !text-ink">{n}</span>
+          <span className="flex min-w-[12rem] flex-1 items-center gap-3">
+            <input
+              type="range"
+              min={MIN}
+              max={MAX}
+              value={n}
+              onChange={(e) => {setN(Number(e.target.value)); }}
+              className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
+            />
+            <span className="label tnum w-10 text-right !text-ink">{n}</span>
+          </span>
         </label>
         <button
           type="button"

@@ -307,11 +307,11 @@ export function LeafLedger() {
           className="border border-rule-strong bg-paper px-4 py-1.5 text-ink transition-colors hover:border-ink">
           <span className="label !text-ink">{T.next}</span>
         </button>
-        <label className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-2">
+        <label className="flex min-w-[18rem] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label">{T.slider}</span>
-          <span className="flex min-w-[10rem] flex-1 items-center gap-3">
+          <span className="flex min-w-[12rem] flex-1 items-center gap-3">
             <input type="range" min={10} max={60} step={5} value={share}
-              onChange={(e) => setShare(Number(e.target.value))}
+              onChange={(e) => {setShare(Number(e.target.value)); }}
               className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
             <span className="label tnum w-10 text-right !text-ink">{share}%</span>
           </span>

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 import type { Locale } from "@/lib/i18n";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
@@ -211,6 +213,7 @@ export function SingleFrameAlibi() {
   const [horizon, setHorizon] = useState(MAX_STEP);
   const [hidden, setHidden] = useState(true);
   const [selected, setSelected] = useState(FRAMES - 1);
+  const sweep = useSweep({ value: horizon, min: 0, max: MAX_STEP, step: 1, setValue: setHorizon });
 
   const steps = Array.from({ length: FRAMES }, (_, i) => Math.round((i * horizon) / (FRAMES - 1)));
   const first = chairAt(0);
@@ -256,11 +259,12 @@ export function SingleFrameAlibi() {
             min={0}
             max={MAX_STEP}
             value={horizon}
-            onChange={(e) => setHorizon(Number(e.target.value))}
+            onChange={(e) => { sweep.stop(); setHorizon(Number(e.target.value)); }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-10 text-right !text-ink">{horizon}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{T.where}</span>
@@ -273,7 +277,7 @@ export function SingleFrameAlibi() {
                 key={String(v)}
                 type="button"
                 aria-pressed={hidden === v}
-                onClick={() => setHidden(v as boolean)}
+                onClick={() => { sweep.stop(); setHidden(v as boolean); }}
                 className={`label whitespace-nowrap border px-3 py-1.5 transition-colors ${
                   hidden === v
                     ? "border-imagine bg-imagine !text-paper"

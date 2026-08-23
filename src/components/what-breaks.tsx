@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useT } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * Rollouts do not fail all at once, and knowing the order is more useful than
@@ -33,6 +35,8 @@ export function WhatBreaks() {
   const t = useT();
   const { ref } = useCompact(520);
   const [n, setN] = useState(30);
+  // the slider moves one step at a time; the sweep takes twenty per tick so a full run is a few seconds, not two minutes
+  const sweep = useSweep({ value: n, min: 1, max: MAX, step: 20, setValue: setN });
   const broken = PROPS.filter((p) => n >= p.at).length;
 
   return (
@@ -72,13 +76,17 @@ export function WhatBreaks() {
       </div>
 
       <div data-print-hide className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
+        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[18rem]">
           <span className="label whitespace-nowrap">{t("wb.steps")}</span>
-          <input type="range" min={1} max={MAX} value={n}
-            onChange={(e) => setN(Number(e.target.value))}
+          <input type="range" min={1} max={MAX} step={1} value={n}
+            onChange={(e) => {
+              sweep.stop();
+              setN(Number(e.target.value));
+            }}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-14 text-right !text-ink">{n}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-2">

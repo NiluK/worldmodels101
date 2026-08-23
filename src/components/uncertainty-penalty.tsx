@@ -185,14 +185,16 @@ export function UncertaintyPenalty() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[18rem] flex-1 items-center gap-3">
+        <label className="flex min-w-[min(18rem,100%)] flex-1 items-center gap-3">
           <span className="label whitespace-nowrap">{s.penalty}</span>
           <input type="range" min={0} max={100} value={Math.round(p * 100)}
-            onChange={(e) => setP(Number(e.target.value) / 100)}
+            onChange={(e) => {
+              setP(Number(e.target.value) / 100);
+            }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-12 text-right !text-ink">{p.toFixed(2)}</span>
         </label>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-3">

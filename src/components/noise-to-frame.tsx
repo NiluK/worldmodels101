@@ -158,6 +158,7 @@ export function NoiseToFrame() {
     return () => window.clearInterval(id);
   }, [running, n]);
 
+
   const cleanUp = () => {
     if (still) { setS(n); setRunning(false); return; }
     setS(0);
@@ -247,12 +248,14 @@ export function NoiseToFrame() {
           className="label h-10 border border-rule-strong bg-paper px-4 !text-ink transition-colors hover:border-ink disabled:cursor-default disabled:opacity-60">
           {t.stepOnce}
         </button>
-        <label className="flex min-w-full flex-1 items-center gap-3 sm:min-w-[16rem]">
+        <label className="flex min-w-[18rem] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{t.stepsPerFrame}</span>
-          <input type="range" min={1} max={MAX_STEPS} value={n}
-            onChange={(e) => changeSteps(Number(e.target.value))}
-            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
-          <span className="label tnum w-8 text-right !text-ink">{n}</span>
+          <span className="flex min-w-[12rem] flex-1 items-center gap-3">
+            <input type="range" min={1} max={MAX_STEPS} value={n}
+              onChange={(e) => changeSteps(Number(e.target.value))}
+              className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
+            <span className="label tnum w-8 text-right !text-ink">{n}</span>
+          </span>
         </label>
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
       </div>

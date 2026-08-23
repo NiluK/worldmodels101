@@ -87,11 +87,11 @@ export function Bottleneck() {
       </div>
 
       <div data-print-hide className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
-          <span className="label whitespace-nowrap">{t("bn.width")}</span>
-          <input type="range" min={0} max={6} value={k}
-            onChange={(e) => setK(Number(e.target.value))}
-            className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
+        <label className="flex min-w-[min(18rem,100%)] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
+          <span className="label basis-full whitespace-nowrap sm:basis-auto">{t("bn.width")}</span>
+          <input type="range" min={0} max={6} step={1} value={k}
+            onChange={(e) => {setK(Number(e.target.value)); }}
+            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-8 text-right !text-ink">{k}</span>
         </label>
       </div>

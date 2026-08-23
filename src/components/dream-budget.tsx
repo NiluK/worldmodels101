@@ -71,11 +71,13 @@ export function DreamBudget() {
         <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
           <span className="label whitespace-nowrap">{t("db.ratio")}</span>
           <input type="range" min={0} max={200} value={ratio}
-            onChange={(e) => setRatio(Number(e.target.value))}
+            onChange={(e) => {
+              setRatio(Number(e.target.value));
+            }}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-12 text-right !text-ink">{ratio}:1</span>
         </label>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">
           {t(ratio === 0 ? "db.v.none" : ratio < 30 ? "db.v.some" : "db.v.lots")}
         </p>
       </div>

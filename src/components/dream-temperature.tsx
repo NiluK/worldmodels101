@@ -82,14 +82,14 @@ export function DreamTemperature() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
+        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[18rem]">
           <span className="label whitespace-nowrap">{t("dt.temp")}</span>
           <input type="range" min={0} max={100} value={temp}
             onChange={(e) => setTemp(Number(e.target.value))}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-12 text-right !text-ink">{x.toFixed(2)}</span>
         </label>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">{t(verdict)}</p>
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">{t(verdict)}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-3">

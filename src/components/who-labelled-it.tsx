@@ -270,7 +270,7 @@ export function WhoLabelledIt() {
       </div>
 
       <div data-print-hide className="flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[16rem] flex-1 items-center gap-3">
+        <label className="flex min-w-[min(18rem,100%)] flex-1 items-center gap-3">
           <span className="label whitespace-nowrap">{T.amount}</span>
           <input
             type="range"
@@ -278,11 +278,14 @@ export function WhoLabelledIt() {
             max={LEVELS}
             step={1}
             value={level}
-            onChange={(e) => setLevel(Number(e.target.value))}
+            onChange={(e) => {
+              setLevel(Number(e.target.value));
+            }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-12 text-right !normal-case !text-ink">{amount}</span>
         </label>
+
 
         <label className="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{T.whichSide}</span>

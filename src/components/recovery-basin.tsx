@@ -61,8 +61,8 @@ export function RecoveryBasin() {
         </svg>
       </div>
 
-      <div data-print-hide className="mt-2 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex flex-wrap items-center gap-x-3 gap-y-2">
+      <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
+        <label className="flex min-w-[14rem] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{t("rb.offset")}</span>
           <input
             type="range"

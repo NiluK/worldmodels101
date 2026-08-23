@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * When to trust your model, made playable.
@@ -158,7 +160,15 @@ export function TrustHorizon() {
     return () => window.clearTimeout(id);
   }, [shown, sim.steps]);
 
-  const run = () => setShown(still ? MAX_STEPS : 0);
+  const setTrusted = (v: number) => {
+    setK(v);
+    setShown(MAX_STEPS);
+  };
+  const sweep = useSweep({ value: k, min: 1, max: MAX_STEPS, step: 1, setValue: setTrusted });
+  const run = () => {
+    sweep.stop();
+    setShown(still ? MAX_STEPS : 0);
+  };
 
   const here = sim.real[visible];
   const replansShown = sim.segments.filter((s) => s.start > 0 && s.start <= visible).length;
@@ -224,7 +234,7 @@ export function TrustHorizon() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[16rem] flex-1 items-center gap-3">
+        <label className="flex min-w-[min(18rem,100%)] flex-1 items-center gap-3">
           <span className="label whitespace-nowrap">{T.trusted}</span>
           <input
             type="range"
@@ -232,13 +242,14 @@ export function TrustHorizon() {
             max={MAX_STEPS}
             value={k}
             onChange={(e) => {
-              setK(Number(e.target.value));
-              setShown(MAX_STEPS);
+              sweep.stop();
+              setTrusted(Number(e.target.value));
             }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-8 text-right !text-ink">{k}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
         <button
           type="button"
           onClick={run}

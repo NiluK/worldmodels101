@@ -83,15 +83,27 @@ export function ActionConditioned() {
       </div>
 
       <div data-print-hide className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <button
-          onClick={() => setOn((v) => !v)}
-          className={`border px-4 py-1.5 transition-colors ${on ? "border-ink bg-ink text-paper" : "border-rule-strong hover:border-ink"}`}
-        >
-          <span className={`label ${on ? "!text-paper" : ""}`}>
-            {t(on ? "ac.condOn" : "ac.condOff")}
-          </span>
-        </button>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">
+        <div role="group" aria-label={t("ac.action")} className="flex">
+          {[true, false].map((v) => {
+            const active = on === v;
+            return (
+              <button
+                key={String(v)}
+                type="button"
+                onClick={() => setOn(v)}
+                aria-pressed={active}
+                className={`label border px-3 py-1.5 transition-colors ${
+                  active
+                    ? "border-imagine bg-imagine !text-paper"
+                    : "border-rule-strong bg-paper !text-ink hover:border-ink"
+                } ${v ? "" : "-ml-px"}`}
+              >
+                {t(v ? "ac.condOn" : "ac.condOff")}
+              </button>
+            );
+          })}
+        </div>
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">
           {t(on ? "ac.note.on" : "ac.note.off")}
         </p>
       </div>

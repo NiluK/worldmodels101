@@ -203,7 +203,7 @@ export function MaskedRebuild() {
   }, [k]);
 
   const setMask = (p: number) => { setPct(p); setRebuilt(false); setTested(false); };
-  const rebuild = () => { setRebuilt(true); setTested(false); };
+  const rebuild = () => {setRebuilt(true); setTested(false); };
 
   /* ---------- layout: one row when wide, stacked when compact ---------- */
   const W = compact ? 460 : 900;
@@ -327,18 +327,20 @@ export function MaskedRebuild() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[16rem] flex-1 items-center gap-3">
+        <label className="flex min-w-[18rem] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{s.slider}</span>
-          <input
-            type="range"
-            min={25}
-            max={90}
-            step={5}
-            value={pct}
-            onChange={(e) => setMask(Number(e.target.value))}
-            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
-          />
-          <span className="label tnum w-12 text-right !text-ink">{pct}%</span>
+          <span className="flex min-w-[12rem] flex-1 items-center gap-3">
+            <input
+              type="range"
+              min={25}
+              max={90}
+              step={5}
+              value={pct}
+              onChange={(e) => {setMask(Number(e.target.value)); }}
+              className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
+            />
+            <span className="label tnum w-12 text-right !text-ink">{pct}%</span>
+          </span>
         </label>
         <button type="button" onClick={rebuild}
           className={`label h-9 border px-4 transition-colors ${
@@ -346,7 +348,7 @@ export function MaskedRebuild() {
           }`}>
           {s.rebuild}
         </button>
-        <button type="button" onClick={() => setTested(true)} disabled={!rebuilt}
+        <button type="button" onClick={() => {setTested(true); }} disabled={!rebuilt}
           className={`label h-9 border px-4 transition-colors ${
             tested
               ? "border-imagine bg-imagine !text-paper"

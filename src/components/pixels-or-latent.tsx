@@ -297,8 +297,8 @@ export function PixelsOrLatent() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex w-full min-w-0 items-center gap-3 sm:w-auto sm:min-w-[16rem] sm:flex-1">
-          <span className="label whitespace-nowrap">{T.slider}</span>
+        <label className="flex w-full min-w-0 flex-wrap items-center gap-3 sm:w-auto sm:min-w-[16rem] sm:flex-1">
+          <span className="label basis-full whitespace-nowrap sm:basis-auto">{T.slider}</span>
           <input
             type="range"
             min={1}

@@ -37,15 +37,15 @@ export function ImaginedData() {
 
       <div data-print-hide className="mt-6 grid grid-cols-1 gap-4 border-t border-rule px-5 py-4 md:grid-cols-2 md:px-8">
         <label className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span className="label whitespace-nowrap">{t("id.share")}</span>
-          <input type="range" min={0} max={98} value={share} onChange={(e) => setShare(Number(e.target.value))}
-            className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none bg-rule-strong accent-[var(--imagine)]" />
+          <span className="label basis-full whitespace-nowrap">{t("id.share")}</span>
+          <input type="range" min={0} max={98} value={share} onChange={(e) => {setShare(Number(e.target.value)); }}
+            className="h-1 min-w-[6rem] flex-1 cursor-pointer appearance-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-10 text-right !text-ink">{share}%</span>
         </label>
         <label className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span className="label whitespace-nowrap">{t("id.error")}</span>
-          <input type="range" min={0} max={18} value={error} onChange={(e) => setError(Number(e.target.value))}
-            className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none bg-rule-strong accent-[var(--imagine)]" />
+          <span className="label basis-full whitespace-nowrap">{t("id.error")}</span>
+          <input type="range" min={0} max={18} value={error} onChange={(e) => {setError(Number(e.target.value)); }}
+            className="h-1 min-w-[6rem] flex-1 cursor-pointer appearance-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-10 text-right !text-ink">{error}%</span>
         </label>
       </div>

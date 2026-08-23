@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * How one phrase was reached from four directions.
@@ -402,9 +404,11 @@ export function WordTravels() {
       if (left.length) setSel(left[left.length - 1].id);
     }
   };
+  const sweep = useSweep({ value: year, min: YEAR_MIN, max: YEAR_MAX, step: 1, setValue: changeYear });
   const step = (d: 1 | -1) => {
     const next = MILESTONES[selIdx + d];
     if (!next) return;
+    sweep.stop();
     setSel(next.id);
     const ny = Math.floor(next.year);
     if (ny > year) setYear(ny);
@@ -518,7 +522,7 @@ export function WordTravels() {
 
       {/* the scrubber */}
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[16rem] flex-1 items-center gap-3">
+        <label className="flex min-w-[min(18rem,100%)] flex-1 items-center gap-3">
           <span className="label whitespace-nowrap">{ui.year}</span>
           <input
             type="range"
@@ -526,11 +530,16 @@ export function WordTravels() {
             max={YEAR_MAX}
             step={1}
             value={year}
-            onChange={(e) => changeYear(Number(e.target.value))}
+            onChange={(e) => {
+              sweep.stop();
+              changeYear(Number(e.target.value));
+            }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-12 text-right !text-ink">{year}</span>
         </label>
+
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
 
         <div className="flex gap-px">
           <button
@@ -551,7 +560,7 @@ export function WordTravels() {
           </button>
         </div>
 
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">
           {verdict}
           <span className="ml-2 hidden text-ink-faint sm:inline">{ui.hint}</span>
         </p>

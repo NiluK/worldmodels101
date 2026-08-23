@@ -131,13 +131,13 @@ export function ArgmaxMismatch() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[18rem] flex-1 items-center gap-3">
-          <span className="label whitespace-nowrap">{t("am.pick")}</span>
-          <input type="range" min={0} max={1000} value={Math.round(a * 1000)}
-            onChange={(e) => setA(Number(e.target.value) / 1000)}
+        <label className="flex min-w-[min(18rem,100%)] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
+          <span className="label basis-full whitespace-nowrap sm:basis-auto">{t("am.pick")}</span>
+          <input type="range" min={0} max={1000} step={10} value={Math.round(a * 1000)}
+            onChange={(e) => {setA(Number(e.target.value) / 1000); }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
         </label>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">
           {gap > 0.12 ? t("am.diverged") : t("am.agree")}
         </p>
       </div>

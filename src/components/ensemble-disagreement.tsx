@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { PlayButton } from "./play-button";
+import { useSweep } from "./use-sweep";
 
 /**
  * Disagreement as a warning light, and the one way it fails.
@@ -85,6 +87,7 @@ export function EnsembleDisagreement() {
   const { ref, compact } = useCompact();
   const [step, setStep] = useState(10);
   const [blind, setBlind] = useState(false);
+  const sweep = useSweep({ value: step, min: 1, max: STEPS, step: 1, setValue: setStep });
   const fs = compact ? 17 : 10.5;
 
   // half-step samples so the curves bend instead of kink
@@ -171,18 +174,22 @@ export function EnsembleDisagreement() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[16rem] flex-1 items-center gap-3">
+        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[18rem]">
           <span className="label whitespace-nowrap">{T.horizon}</span>
           <input
             type="range"
             min={1}
             max={STEPS}
             value={step}
-            onChange={(e) => setStep(Number(e.target.value))}
+            onChange={(e) => {
+              sweep.stop();
+              setStep(Number(e.target.value));
+            }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-8 text-right !text-ink">{step}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
 
         <label className="flex cursor-pointer items-center gap-3">
           <span className="label">{T.blind}</span>
@@ -190,7 +197,10 @@ export function EnsembleDisagreement() {
             type="button"
             role="switch"
             aria-checked={blind}
-            onClick={() => setBlind((b) => !b)}
+            onClick={() => {
+              sweep.stop();
+              setBlind((b) => !b);
+            }}
             className={`relative h-6 w-11 border transition-colors ${
               blind ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
             }`}

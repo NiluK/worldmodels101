@@ -215,8 +215,10 @@ export function StateObservation() {
       </div>
 
       <div data-print-hide className="flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[12rem] flex-1 items-center gap-3">
-          <span className="label whitespace-nowrap">{s.turn}</span>
+        <label className={compact
+          ? "flex basis-full flex-wrap items-center gap-x-3 gap-y-2"
+          : "flex min-w-[12rem] flex-1 items-center gap-3"}>
+          <span className={compact ? "label basis-full" : "label whitespace-nowrap"}>{s.turn}</span>
           <input type="range" min={0} max={359} value={heading}
             onChange={(e) => turn(Number(e.target.value))}
             className="h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
@@ -226,7 +228,7 @@ export function StateObservation() {
           className="label border border-rule-strong bg-paper px-3 py-1.5 !text-ink hover:border-ink">
           {s.step}
         </button>
-        <p className="label !normal-case !tracking-normal !text-[0.8rem]">
+        <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">
           {moved ? s.moved : s.count[hidden]}
         </p>
       </div>

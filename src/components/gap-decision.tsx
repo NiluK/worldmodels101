@@ -8,7 +8,7 @@ import { useLocale } from "./locale-provider";
 /**
  * The junction. Chapter 2's opening figure.
  *
- * You are waiting to pull out and a car is coming from the right. The forecast
+ * You are waiting to turn right and a car is coming from the right. The forecast
  * is the model: it says when that car reaches the crossing, and you commit on
  * the forecast before anything has happened. An experienced driver forecasts
  * from the true speed. A learner reads the speed low, by a third here, and so
@@ -438,7 +438,9 @@ export function GapDecision() {
             max={D_MAX}
             step={1}
             value={d}
-            onChange={(e) => onD(Number(e.target.value))}
+            onChange={(e) => {
+              onD(Number(e.target.value));
+            }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-14 !normal-case text-right !text-ink">{d} m</span>
@@ -451,7 +453,9 @@ export function GapDecision() {
             max={V_MAX}
             step={1}
             value={vKmh}
-            onChange={(e) => onV(Number(e.target.value))}
+            onChange={(e) => {
+              onV(Number(e.target.value));
+            }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-[4.5rem] !normal-case text-right !text-ink">{vKmh} km/h</span>

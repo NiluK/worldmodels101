@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useT } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { PlayButton } from "./play-button";
+import { useSweep } from "./use-sweep";
 
 /**
  * The price of not predicting pixels.
@@ -89,6 +91,7 @@ export function Collapse() {
   const fs = compact ? 16 : 10;
   const [guard, setGuard] = useState(false);
   const [step, setStep] = useState(STEPS - 1);
+  const sweep = useSweep({ value: step, min: 0, max: STEPS - 1, step: 1, setValue: setStep, intervalMs: 20 });
   const run = guard ? RUNS.on : RUNS.off;
   const f = run[step];
 
@@ -117,20 +120,21 @@ export function Collapse() {
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
         <button
-          onClick={() => setGuard((v) => !v)}
+          onClick={() => { sweep.stop(); setGuard((v) => !v); }}
           className={`border px-4 py-1.5 transition-colors ${guard ? "border-ink bg-ink text-paper" : "border-rule-strong hover:border-ink"}`}
         >
           <span className={`label ${guard ? "!text-paper" : ""}`}>
             {t(guard ? "cl.guardOn" : "cl.guardOff")}
           </span>
         </button>
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[14rem]">
+        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[18rem]">
           <span className="label whitespace-nowrap">{t("cl.step")}</span>
           <input type="range" min={0} max={STEPS - 1} value={step}
-            onChange={(e) => setStep(Number(e.target.value))}
+            onChange={(e) => { sweep.stop(); setStep(Number(e.target.value)); }}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-10 text-right !text-ink">{step}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-3">

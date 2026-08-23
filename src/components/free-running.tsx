@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useT } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * The same model, run two ways.
@@ -73,6 +75,7 @@ export function FreeRunning() {
   const fs = compact ? 16 : 10;
   const [n, setN] = useState(30);
   const [bias, setBias] = useState(4);
+  const nSweep = useSweep({ value: n, min: 4, max: STEPS, step: 1, setValue: setN });
   const { real, forced, free, forcedGap, freeGap } = rollouts(n, bias);
   const k = fit([real, forced, free]);
 
@@ -110,17 +113,18 @@ export function FreeRunning() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[15rem]">
+        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[18rem]">
           <span className="label whitespace-nowrap">{t("fr.steps")}</span>
           <input type="range" min={4} max={STEPS} value={n}
-            onChange={(e) => setN(Number(e.target.value))}
+            onChange={(e) => { nSweep.stop(); setN(Number(e.target.value)); }}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-9 text-right !text-ink">{n}</span>
+          <PlayButton playing={nSweep.playing} onClick={nSweep.toggle} />
         </label>
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[15rem]">
+        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[18rem]">
           <span className="label whitespace-nowrap">{t("fr.bias")}</span>
           <input type="range" min={1} max={8} value={bias}
-            onChange={(e) => setBias(Number(e.target.value))}
+            onChange={(e) => {setBias(Number(e.target.value)); }}
             className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-10 text-right !text-ink">{bias}%</span>
         </label>

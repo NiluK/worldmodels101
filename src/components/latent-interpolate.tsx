@@ -39,6 +39,7 @@ export function LatentInterpolate() {
   const t = useT();
   const { ref, compact } = useCompact(520);
   const [m, setM] = useState(0.5);
+  const pct = Math.round(m * 100);
   const mid: [number, number] = [lerp(A[0], B[0], m), lerp(A[1], B[1], m)];
 
   return (
@@ -62,13 +63,14 @@ export function LatentInterpolate() {
       </div>
 
       <div data-print-hide className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
+        <label className="flex min-w-[18rem] flex-1 items-center gap-3">
           <span className="label whitespace-nowrap">{t("li.blend")}</span>
-          <input type="range" min={0} max={100} value={Math.round(m * 100)}
-            onChange={(e) => setM(Number(e.target.value) / 100)}
-            className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
-          <span className="label tnum w-12 text-right !text-ink">{Math.round(m * 100)}%</span>
+          <input type="range" min={0} max={100} value={pct}
+            onChange={(e) => {setM(Number(e.target.value) / 100); }}
+            className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
+          <span className="label tnum w-12 text-right !text-ink">{pct}%</span>
         </label>
+
       </div>
 
       <div className="grid grid-cols-1 gap-px border-t border-rule bg-rule sm:grid-cols-2">

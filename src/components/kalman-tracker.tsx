@@ -1,9 +1,11 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import { useEffect, useId, useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * The Kalman filter, 1960, doing the one half of the job it does.
@@ -288,39 +290,20 @@ export function KalmanTracker() {
   const [sigma, setSigma] = useState(25);
   const [shadow, setShadow] = useState(false);
   const [t, setT] = useState(N);
-  const [playing, setPlaying] = useState(false);
-
-  const steps = useMemo(() => simulate(sigma, shadow), [sigma, shadow]);
-
-  // Play advances one step per tick. It is a plain interval rather than rAF so
-  // a tick is a discrete event and the slider is always the same thing by hand.
-  useEffect(() => {
-    if (!playing) return;
-    const id = window.setInterval(() => {
-      setT((v) => {
-        if (v >= N) {
-          window.clearInterval(id);
-          setPlaying(false);
-          return v;
-        }
-        return v + 1;
-      });
-    }, 70);
-    return () => window.clearInterval(id);
-  }, [playing]);
-
+  // Play advances one step per tick, so a tick is a discrete event and the
+  // slider is always the same thing by hand. Under reduced motion it jumps
+  // to the end instead of sweeping.
+  const sweep = useSweep({ value: t, min: 0, max: N, step: 1, setValue: setT, intervalMs: 70 });
   const play = () => {
     if (still) {
+      sweep.stop();
       setT(N);
       return;
     }
-    if (playing) {
-      setPlaying(false);
-      return;
-    }
-    if (t >= N) setT(0);
-    setPlaying(true);
+    sweep.toggle();
   };
+
+  const steps = useMemo(() => simulate(sigma, shadow), [sigma, shadow]);
 
   const now = steps[t];
   const seen = steps.slice(0, t + 1);
@@ -481,22 +464,13 @@ export function KalmanTracker() {
             min={0}
             max={N}
             value={t}
-            onChange={(e) => { setPlaying(false); setT(Number(e.target.value)); }}
+            onChange={(e) => { sweep.stop(); setT(Number(e.target.value)); }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-10 text-right !text-ink">{t}</span>
         </label>
 
-        <button
-          onClick={play}
-          className={`border px-4 py-1.5 transition-colors ${
-            playing ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
-          }`}
-        >
-          <span className={`label ${playing ? "!text-paper" : ""}`}>
-            {still ? s.toEnd : playing ? s.pause : s.play}
-          </span>
-        </button>
+        <PlayButton playing={sweep.playing} onClick={play} />
 
         <label className="flex min-w-[16rem] flex-1 items-center gap-3">
           <span className="label whitespace-nowrap">{s.noise}</span>

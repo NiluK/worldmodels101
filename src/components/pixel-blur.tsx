@@ -69,12 +69,14 @@ export function PixelBlur() {
       </div>
 
       <div data-print-hide className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-full flex-1 flex-wrap items-center gap-x-3 gap-y-2 sm:min-w-[16rem]">
+        <label className="flex min-w-[18rem] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{t("pb.chance")}</span>
-          <input type="range" min={0} max={100} value={p}
-            onChange={(e) => setP(Number(e.target.value))}
-            className="h-1 min-w-[7rem] flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
-          <span className="label tnum w-12 text-right !text-ink">{p}%</span>
+          <span className="flex min-w-[12rem] flex-1 items-center gap-3">
+            <input type="range" min={0} max={100} value={p}
+              onChange={(e) => {setP(Number(e.target.value)); }}
+              className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
+            <span className="label tnum w-12 text-right !text-ink">{p}%</span>
+          </span>
         </label>
       </div>
 

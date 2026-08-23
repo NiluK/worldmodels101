@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * Where is the ball now?
@@ -112,6 +114,7 @@ export function BallBehindWall() {
   const k = compact ? 1.65 : 1;
   const [t, setT] = useState(30);
   const [stochastic, setStochastic] = useState(true);
+  const sweep = useSweep({ value: t, min: 0, max: T_MAX, step: 1, setValue: setT });
 
   const ball = truthX(t);
   const hidden = ball >= WALL_L && ball <= WALL_R;
@@ -171,18 +174,20 @@ export function BallBehindWall() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
-        <label className="flex min-w-[16rem] flex-1 items-center gap-3">
+        <label className="flex min-w-[min(18rem,100%)] flex-1 items-center gap-3">
           <span className="label whitespace-nowrap">{s.time}</span>
           <input
             type="range"
             min={0}
             max={T_MAX}
+            step={1}
             value={t}
-            onChange={(e) => setT(Number(e.target.value))}
+            onChange={(e) => { sweep.stop(); setT(Number(e.target.value)); }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-10 text-right !text-ink">{t}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
         <div className="flex flex-wrap items-center gap-2">
           <span className="label mr-1">{s.mode}</span>
           {([false, true] as const).map((on) => (
@@ -190,7 +195,7 @@ export function BallBehindWall() {
               key={String(on)}
               type="button"
               aria-pressed={stochastic === on}
-              onClick={() => setStochastic(on)}
+              onClick={() => { sweep.stop(); setStochastic(on); }}
               className={`label border px-3 py-1.5 transition-colors ${
                 stochastic === on ? "border-imagine bg-imagine !text-paper" : "border-rule-strong bg-paper !text-ink hover:border-ink"
               }`}

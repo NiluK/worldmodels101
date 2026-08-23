@@ -324,24 +324,24 @@ export function BrakingDemo() {
 
       <div className="flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-rule px-5 py-4">
         <button
-          onClick={running ? () => { runningRef.current = false; setRunning(false); } : run}
+          onClick={running ? () => {runningRef.current = false; setRunning(false); } : () => {run(); }}
           className="border border-ink bg-ink px-5 py-2 text-paper transition-colors hover:border-imagine hover:bg-imagine"
         >
           <span className="label !text-paper">{running ? "Pause" : "Run"}</span>
         </button>
-        <button onClick={reset} className="label hover:text-ink transition-colors">
+        <button onClick={() => {reset(); }} className="label hover:text-ink transition-colors">
           Reset
         </button>
 
-        <label className="flex flex-1 items-center gap-3 min-w-[16rem]">
-          <span className="label whitespace-nowrap">Approach speed</span>
+        <label className="flex min-w-[min(18rem,100%)] flex-1 flex-wrap items-center gap-x-3 gap-y-2">
+          <span className="label basis-full whitespace-nowrap sm:basis-auto">Approach speed</span>
           <input
             type="range"
             min={0.0025}
             max={0.013}
             step={0.0005}
             value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
+            onChange={(e) => {setSpeed(Number(e.target.value)); }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-14 text-right !text-ink">{kph}</span>
