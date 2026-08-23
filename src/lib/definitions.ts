@@ -1,4 +1,3 @@
-import { DEFINITION_TEXT_BY_LOCALE } from "./definition-text";
 export type Definition = {
   id: string;
   name: string;
@@ -138,17 +137,6 @@ export const DEFINITIONS: Definition[] = [
 
 export const getDefinition = (id: string) => DEFINITIONS.find((s) => s.id === id);
 
-/* ------------------------------------------------------------------------ */
-/* Simplified Chinese                                                        */
-/*                                                                           */
-/* The five names are neologisms in English, so their Chinese forms are      */
-/* choices rather than lookups. 仿真器 is used for Simulator instead of      */
-/* 模拟器, which in Chinese technical writing more often reads as            */
-/* "emulator"; 表征 is the standard rendering of "representation" in ML;     */
-/* 内隐 carries the "present but not put there on purpose" sense that        */
-/* Implicit needs. A native reviewer should sanity-check these first.        */
-/* ------------------------------------------------------------------------ */
-
 export type LocalisedDefinition = {
   name: string;
   predicts: string;
@@ -157,11 +145,8 @@ export type LocalisedDefinition = {
   camp: string;
 };
 
-/** Definition text for a locale, falling back to English. */
-export function definitionText(locale: string, id: string): LocalisedDefinition {
+export function definitionText(_locale: string, id: string): LocalisedDefinition {
   const base = DEFINITIONS.find((d) => d.id === id)!;
-  const translated = DEFINITION_TEXT_BY_LOCALE[locale]?.[id];
-  if (translated) return translated;
   return {
     name: base.name,
     predicts: base.predicts,

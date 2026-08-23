@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "motion/react";
-import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
 
 /**
@@ -67,30 +66,6 @@ const TEXT = {
     aria: (f: Footage, n: number) =>
       `Five training strips of a ball being dropped, ${f === "gravity" ? "speeding up as it falls" : "falling at a steady speed"}. A new strip with two frames given and ${n} of four continued by the model${n ? `, ${f === "gravity" ? "speeding up too" : "at a steady speed too"}` : ""}.`,
   },
-  zh: {
-    training: "训练片段",
-    gapsGrow: "帧间距一帧比一帧大",
-    gapsEqual: "帧间距保持相等",
-    newDrop: "一次新的下落",
-    given: "已给出",
-    continued: "模型续上的",
-    footage: "素材",
-    real: "真实重力",
-    steady: "编造的：匀速",
-    switchAria: "改用编造的素材，东西以匀速下落",
-    go: "续上",
-    reset: "重置",
-    eq: "提供的方程",
-    gaps: "帧间距",
-    matches: "与素材一致",
-    yes: "是",
-    notYet: "尚未",
-    v0: "哪里都没有方程。只有素材，和一次它没见过的下落。",
-    v1: "它在下落途中越来越快。素材如此，续上的部分也如此。",
-    v2: "现在它以匀速下落。规律跟着素材走，而不是跟着某条定律。",
-    aria: (f: Footage, n: number) =>
-      `五段训练片段，各是一个球被放下，${f === "gravity" ? "越落越快" : "匀速下落"}。一段新的片段给出了前两帧，模型续上了四帧中的 ${n} 帧${n ? `，${f === "gravity" ? "同样越落越快" : "同样匀速"}` : ""}。`,
-  },
 } as const;
 
 function Strip({ x, y, s, y0, bx, footage, filled, fs, label }: {
@@ -137,8 +112,7 @@ function Strip({ x, y, s, y0, bx, footage, filled, fs, label }: {
 }
 
 export function CopiedFromFootage() {
-  const locale = useLocale();
-  const T = TEXT[locale === "zh" ? "zh" : "en"];
+  const T = TEXT.en;
   const reduced = useReducedMotion();
   const { ref, compact } = useCompact(560);
   const [footage, setFootage] = useState<Footage>("gravity");

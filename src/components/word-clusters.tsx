@@ -18,33 +18,33 @@ import { useCompact } from "./use-compact";
  */
 
 type Group = "verb" | "human" | "animal" | "food" | "object";
-type Word = { w: string; zh: string; g: Group };
+type Word = { w: string; g: Group };
 
 const WORDS: Word[] = [
-  { w: "eat", zh: "吃", g: "verb" },
-  { w: "sleep", zh: "睡", g: "verb" },
-  { w: "break", zh: "打破", g: "verb" },
-  { w: "smash", zh: "砸碎", g: "verb" },
-  { w: "see", zh: "看见", g: "verb" },
-  { w: "chase", zh: "追", g: "verb" },
-  { w: "think", zh: "思考", g: "verb" },
-  { w: "exist", zh: "存在", g: "verb" },
-  { w: "man", zh: "男人", g: "human" },
-  { w: "woman", zh: "女人", g: "human" },
-  { w: "boy", zh: "男孩", g: "human" },
-  { w: "girl", zh: "女孩", g: "human" },
-  { w: "cat", zh: "猫", g: "animal" },
-  { w: "dog", zh: "狗", g: "animal" },
-  { w: "mouse", zh: "老鼠", g: "animal" },
-  { w: "lion", zh: "狮子", g: "animal" },
-  { w: "bread", zh: "面包", g: "food" },
-  { w: "cookie", zh: "饼干", g: "food" },
-  { w: "sandwich", zh: "三明治", g: "food" },
-  { w: "glass", zh: "玻璃杯", g: "object" },
-  { w: "plate", zh: "盘子", g: "object" },
-  { w: "rock", zh: "石头", g: "object" },
-  { w: "book", zh: "书", g: "object" },
-  { w: "car", zh: "汽车", g: "object" },
+  { w: "eat", g: "verb" },
+  { w: "sleep", g: "verb" },
+  { w: "break", g: "verb" },
+  { w: "smash", g: "verb" },
+  { w: "see", g: "verb" },
+  { w: "chase", g: "verb" },
+  { w: "think", g: "verb" },
+  { w: "exist", g: "verb" },
+  { w: "man", g: "human" },
+  { w: "woman", g: "human" },
+  { w: "boy", g: "human" },
+  { w: "girl", g: "human" },
+  { w: "cat", g: "animal" },
+  { w: "dog", g: "animal" },
+  { w: "mouse", g: "animal" },
+  { w: "lion", g: "animal" },
+  { w: "bread", g: "food" },
+  { w: "cookie", g: "food" },
+  { w: "sandwich", g: "food" },
+  { w: "glass", g: "object" },
+  { w: "plate", g: "object" },
+  { w: "rock", g: "object" },
+  { w: "book", g: "object" },
+  { w: "car", g: "object" },
 ];
 
 const VERBS = WORDS.map((x, i) => (x.g === "verb" ? i : -1)).filter((i) => i >= 0);
@@ -129,27 +129,6 @@ const TEXT = {
           : "Before training: the dots are scattered with no order."
       }${word ? ` Selected word: ${word}.` : ""}`,
   },
-  zh: {
-    before: "训练前",
-    after: "训练后",
-    switchLabel: "训练后",
-    hint: "悬停或点按一个点，或让图获得焦点后用方向键。",
-    groups: "你能看出的分组",
-    word: "词",
-    noWord: "还没有",
-    verbs: "动词",
-    nouns: "名词",
-    animate: "有生命",
-    inanimate: "无生命",
-    vBefore: "二十四个词，随机摆放。还没有什么可读。",
-    vAfter: "这些词自己排好了。圈住各组的标签是我加的；网络一个都没有得到。",
-    aria: (after: boolean, word: string | null) =>
-      `二十四个词画成点。${
-        after
-          ? "训练后：点分成了左边的动词和右边的名词，名词里有生命的又和无生命的分开。"
-          : "训练前：点散乱地摆着，没有次序。"
-      }${word ? `选中的词：「${word}」。` : ""}`,
-  },
 };
 
 export function WordClusters() {
@@ -189,8 +168,7 @@ export function WordClusters() {
     { id: "nouns", label: s.nouns, box: hull(NOUNS, inner + 26 * k) },
   ];
 
-  const wordOf = (i: number | null) =>
-    i === null ? null : locale === "zh" ? `${WORDS[i].w} ${WORDS[i].zh}` : WORDS[i].w;
+  const wordOf = (i: number | null) => i === null ? null : WORDS[i].w;
 
   const onKey = (e: RKeyboardEvent<SVGSVGElement>) => {
     const n = WORDS.length;

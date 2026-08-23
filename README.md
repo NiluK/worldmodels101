@@ -2,7 +2,7 @@
 
 A free, interactive course on how machines learn to predict, simulate, and plan.
 
-[Read the course](https://worldmodels101.com) · [简体中文](https://worldmodels101.com/zh) · [Star the repository](https://github.com/NiluK/worldmodels101)
+[Read the course](https://worldmodels101.com) · [Star the repository](https://github.com/NiluK/worldmodels101)
 
 [![The World Models 101 course homepage](public/readme-preview.png)](https://worldmodels101.com)
 
@@ -10,8 +10,8 @@ The phrase "world model" now describes at least five different classes of
 system, and the people using it rarely specify which. World Models 101 sorts
 that out first, then teaches the machinery.
 
-Nine chapters. About two hours. No signup. Every chapter has an interactive,
-a Simplified Chinese edition, and a printable PDF.
+Nine chapters. About two hours. No signup. Every chapter has an interactive and
+a printable PDF.
 
 ## What people mean by world model
 

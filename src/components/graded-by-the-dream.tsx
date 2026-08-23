@@ -82,27 +82,6 @@ const TEXT: LocaleText<Text> = {
     aria: (m, w) =>
       `A mark sheet for the policy, holding ${m} marks written by the model and ${w} written by the world.`,
   },
-  zh: {
-    train: "再训练一轮",
-    check: "拿到世界里检验",
-    clear: "清空成绩单",
-    modelRow: (n) => `第 ${n} 轮，模型打的分`,
-    modelRowShort: (n) => `第 ${n} 轮，模型`,
-    worldRow: "在世界里跑过",
-    worldRowShort: "世界",
-    byModel: "模型打的分数",
-    byWorld: "世界打的分数",
-    spent: "检验花掉的真实步数",
-    empty: "还没有分数",
-    v0: "一张空的成绩单。第一个分数决定了是谁在打分。",
-    vModel: (n) => `到现在 ${n} 个分数，全是被考的那一方自己打的。`,
-    vFirst:
-      "唯一不是模型打的那个分数是 34。它花掉了两千步真实经验，而它是唯一一次真正的检验。",
-    vMore:
-      "世界打的分数动了一点。它们离模型打的还差得远，而且它们仍然是唯一要花钱的。",
-    aria: (m, w) =>
-      `策略的一张成绩单，上面有模型打的 ${m} 个分数和世界打的 ${w} 个分数。`,
-  },
 };
 
 export function GradedByTheDream() {

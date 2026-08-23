@@ -35,7 +35,7 @@ export function StarButton({
 }) {
   const t = (k: string, v?: Record<string, string | number>) => translate(locale, k, v);
   const count = stars !== null && stars >= SHOW_COUNT_FROM
-    ? stars.toLocaleString(locale === "zh" ? "zh-CN" : "en-GB")
+    ? stars.toLocaleString("en-GB")
     : null;
   const size = placement === "mobile"
     ? "min-h-12 w-full max-w-[20rem] justify-center px-5 py-3"

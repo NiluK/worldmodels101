@@ -56,32 +56,6 @@ const TEXT = {
         s === 0 ? "pure noise" : s < n ? "partly cleaned" : "finished"
       }.`,
   },
-  zh: {
-    cleanUp: "去噪",
-    stepOnce: "走一步",
-    stepsPerFrame: "每帧步数",
-    conditioning: "条件",
-    before: "之前的几帧",
-    key: "按住的键",
-    forward: "前进",
-    thisFrame: "正在生成的这一帧",
-    steps: "步数",
-    of: "／",
-    time: "每帧耗时",
-    ms: "毫秒",
-    fps: "每秒帧数",
-    playable: "可玩",
-    line: "约每秒 20 帧",
-    lineNote: "可玩的界线，示意",
-    noisy: "从噪声开始。每一步都在之前几帧和按键的引导下，把它清理掉一点。",
-    play: "清晰到能看懂，也快到能玩。这就是从「观看」到「游玩」的那一步。",
-    slow: "更干净了，但这么多步太慢，来不及回应一次按键。你是在观看，不是在游玩。",
-    rough: "快，但粗糙。这些斑点就是步数少的代价。",
-    aria: (s: number, n: number) =>
-      `扩散模型正在根据之前三帧和按住的键生成一帧游戏画面。第 ${s}／${n} 步：${
-        s === 0 ? "纯噪声" : s < n ? "部分清理" : "完成"
-      }。`,
-  },
 };
 
 /** The picture the noise is pulled toward: a corridor, as ink density 0 to 1. */

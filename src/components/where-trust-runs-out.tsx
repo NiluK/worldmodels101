@@ -76,24 +76,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (tol, model, k, ten) =>
       `A chart of accumulated error against rollout length for three models. The selected model is ${model}. With a tolerance of ${tol} units it can be trusted for ${k} steps, against ${ten} steps for a model ten times better.`,
   },
-  zh: {
-    xAxis: "你要求的步数",
-    yAxis: "模型偏得有多远",
-    tolerance: "你愿意错到什么程度",
-    tolShort: "容忍度",
-    trusted: "你可以信任的那一段",
-    model: (k) => ({ asIs: "就是现在这样", twice: "好两倍", tenTimes: "好十倍" })[k],
-    steps: (n) => `${n} 步`,
-    units: (n) => `${n} 个单位`,
-    stepsYouGet: "你能拿到的步数",
-    atTen: "模型好十倍时能拿到的步数",
-    vBase: (k) => `在这个容忍度下，模型值得信任 ${k} 步。詹纳的这条休战协议，做出来就是这个数字。`,
-    vLoose: "容忍度翻倍并没有让可信的步数翻倍，因为误差是复利式累积的。",
-    vTen: (d) => `模型好十倍，只多买到 ${d} 步，而不是十倍的步数。这段可信区间是很慢才买得到的。`,
-    vTwice: (d) => `模型好两倍，多买到 ${d} 步。可以信任的那一段，增长得远比模型的进步要慢。`,
-    aria: (tol, model, k, ten) =>
-      `一张累积误差随展开步数变化的图，画了三个模型。当前选中的是「${model}」。在容忍度为 ${tol} 个单位时，它可以被信任 ${k} 步，而好十倍的模型是 ${ten} 步。`,
-  },
 };
 
 function layout(compact: boolean) {

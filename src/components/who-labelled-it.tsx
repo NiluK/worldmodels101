@@ -65,29 +65,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (side, n) =>
       `Two ways of training on ${n} examples. Labelled by a person: a person wrote ${n} labels. Labelled by the recording: the answer is the next frame, and a person wrote none. The ${side} side is training.`,
   },
-  zh: {
-    person: "由人标注",
-    recording: "由记录标注",
-    counter: (n) => `由人写下的标签：${n}`,
-    nextFrame: "答案就是下一帧",
-    bill: "标签账单",
-    amount: "数据量",
-    whichSide: "哪一边在训练",
-    sideName: { person: "人", recording: "记录" },
-    examples: "样本数",
-    labels: "人写下的标签",
-    paid: "谁付钱",
-    budget: "某人的预算",
-    nobody: "没有人",
-    verdict: {
-      person: "每个样本都让某人付出了一个标签。数据集有多大，预算就有多大。",
-      recording: "下一帧就是标签。任何东西的任何记录，本身已经是一个训练集。",
-    },
-    words: ["猫", "狗", "车"],
-    amounts: ["10", "100", "1千", "1万", "10万", "100万"],
-    aria: (side, n) =>
-      `两种训练方式，各有 ${n} 个样本。由人标注：一个人写下了 ${n} 个标签。由记录标注：答案就是下一帧，没有人写下任何标签。正在训练的是「${side}」这一边。`,
-  },
 };
 
 const W = 360;

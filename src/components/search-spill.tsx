@@ -1,7 +1,6 @@
 "use client";
 
 import { DefinitionGlyph } from "./definition-glyph";
-import { useLocale } from "./locale-provider";
 import { definitionText } from "@/lib/definitions";
 import { useT } from "./locale-provider";
 
@@ -45,18 +44,8 @@ const RESULTS = [
 ];
 
 
-/** The same five results, described in Simplified Chinese. */
-const WHAT_ZH: Record<string, string> = {
-  renderer: "一段 DeepMind 的演示，有人用方向键走过一片生成出来的风景。",
-  representation: "一篇 Meta 的论文，讲的是预测视频嵌入向量，而它从头到尾没给你看过一段视频。",
-  simulator: "一个可以直接加载进 Blender 的三维环境。",
-  dynamics: "2018 年的一个强化学习结果，讲的是赛车游戏里的一辆车。",
-  implicit: "一场主要靠嗓门进行的争论，争的是一个从没见过棋盘的语言模型是不是照样在内部有一个。",
-};
-
 export function SearchSpill() {
   const t = useT();
-  const locale = useLocale();
   return (
     <div className="border border-rule bg-paper-raised">
       <div className="flex items-center gap-3 border-b border-rule px-5 py-3">
@@ -82,7 +71,7 @@ export function SearchSpill() {
 
               <span className="min-w-0 flex-1">
                 <span className="block text-[1rem] leading-snug">
-                  {locale === "zh" ? WHAT_ZH[r.definition] : r.what}
+                  {r.what}
                 </span>
                 <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
                   <span className="font-mono text-[0.72rem] text-imagine underline decoration-imagine/40 underline-offset-2 group-hover:decoration-imagine">
@@ -95,7 +84,7 @@ export function SearchSpill() {
               <span data-spill-meta className="hidden shrink-0 pt-0.5 text-right sm:block">
                 <span className="label !text-[0.6rem]">{t("spill.turnsOut")}</span>
                 <span className="mt-1 block font-mono text-[0.72rem] text-ink-muted transition-colors group-hover:text-imagine">
-                  {definitionText(locale, r.definition).name}
+                  {definitionText("en", r.definition).name}
                 </span>
               </span>
             </a>

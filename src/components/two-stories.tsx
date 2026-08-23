@@ -52,26 +52,6 @@ const TEXT = {
     aria: (p: number, r: number, m: number, k: string) =>
       `Two bell curves on a position axis, physics centred at ${p} m and radar at ${r} m, and their product centred at ${m} m. Kalman gain ${k}.`,
   },
-  zh: {
-    physics: "物理",
-    radar: "雷达",
-    product: "新的信念",
-    axis: "位置（米）",
-    sure: "物理有多确定",
-    noise: "雷达噪声",
-    correct: "修正",
-    reset: "重置",
-    gain: "卡尔曼增益 K",
-    mean: "新的均值",
-    width: "新的宽度",
-    step: (n: number) => `第 ${n} 步：先修正，再向前预测`,
-    low: "雷达是更嘈杂的那个故事，所以滤波器基本保留物理预测。",
-    mid: "两个故事差不多同样可信，新的信念落在两者之间。",
-    high: "雷达很锐利，所以滤波器倚重这次读数。",
-    narrower: "乘积比两条母曲线都更窄。",
-    aria: (p: number, r: number, m: number, k: string) =>
-      `位置轴上的两条钟形曲线，物理以 ${p} 米为中心，雷达以 ${r} 米为中心，它们的乘积以 ${m} 米为中心。卡尔曼增益 ${k}。`,
-  },
 };
 
 const INITIAL = { step: 0, origin: 0, mp: 38, mr: 62, sp: 8, sr: 8 };
@@ -240,7 +220,7 @@ export function TwoStories() {
           )}
         </div>
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">
-          {verdict}{narrower ? `${locale === "zh" ? "" : " "}${T.narrower}` : ""}
+          {verdict}{narrower ? ` ${T.narrower}` : ""}
         </p>
       </div>
 

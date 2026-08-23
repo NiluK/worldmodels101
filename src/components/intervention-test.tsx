@@ -127,46 +127,6 @@ const TEXT: LocaleText<Strings> = {
           ? "Two wiring diagrams of the same network. A board has been read out of both, so both stories still stand."
           : "Two wiring diagrams of the same network. One square has been changed. In the first the next legal moves changed with it; in the second they did not, and that story is ruled out.",
   },
-  zh: {
-    laneA: "它靠一张棋盘落子",
-    laneAShort: "靠棋盘落子",
-    laneB: "棋盘是探针自己算出来的",
-    laneBShort: "探针自己算出来",
-    movesSoFar: "已下的棋步",
-    network: "网络",
-    nextMoves: "下一步的合法着点",
-    probe: "探针",
-    goesNowhere: "无处可去",
-    unchanged: "没有变化",
-    fits: "与所见相符",
-    ruledOut: "已被排除",
-    read: "读出棋盘",
-    change: "改动一格",
-    again: "重新开始",
-    observed: "观察到",
-    observedIdle: "还没有任何结果",
-    observedRead: "棋盘可以被读出来。",
-    observedChanged: "接下来的着点变了。",
-    source: "Li 等人，2022 年",
-    cTest: "测试",
-    cStanding: "还站得住的说法",
-    cRuled: "排除靠的是什么",
-    testIdle: "还没有做任何测试",
-    testRead: "读出棋盘",
-    testChanged: "改动一格",
-    ruledIdle: "还没有",
-    ruledRead: "没有，两种说法都相符",
-    ruledChanged: "着点变了",
-    vIdle: "同一个网络的两种说法。做一次测试，看它能不能把两者分开。",
-    vRead: "两种说法都认为棋盘可以被读出来，所以把棋盘读出来什么也分不开。",
-    vChanged: "只有一种说法让那张棋盘有一条通往下游的线。着点变了，所以剩下的就是这一种。",
-    aria: (s) =>
-      s === "idle"
-        ? "同一个网络的两张接线图，除一条线外完全相同。还没有做任何测试，两种说法都还站得住。"
-        : s === "read"
-          ? "同一个网络的两张接线图。两边都读出了一张棋盘，所以两种说法都还站得住。"
-          : "同一个网络的两张接线图。有一格被改动了。第一张里接下来的合法着点跟着变了，第二张里没有变，那种说法被排除。",
-  },
 };
 
 function Arrow({

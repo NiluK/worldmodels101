@@ -9,9 +9,7 @@ import { translate, type Locale } from "@/lib/i18n";
  * Most of that is now visible from the contents page or the chapters
  * themselves. What only this page can carry is who is making the claims, and
  * the corrections section that every chapter's sign-off points at, so both
- * survive. One component for both languages, as with the landing page: the
- * Chinese chapters sent readers here for corrections and the route did not
- * exist.
+ * survive.
  */
 const READING = [
   { key: "craik", label: "Kenneth Craik, 1943", title: "The Nature of Explanation" },

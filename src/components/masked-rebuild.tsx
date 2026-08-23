@@ -47,36 +47,6 @@ const TEXT = {
           : "The hidden patches are hatched and the pixel loss bar is full."
       }${tested ? " Below, the descriptions of 12 images form three clean clusters by shape. The encoder is kept and the decoder is crossed out." : ""}`,
   },
-  zh: {
-    image: (p: number) => `图像，遮住 ${p}%`,
-    encoder: "编码器",
-    decoder: "解码器",
-    rebuilt: "重建的图像",
-    pixelLoss: "像素损失",
-    keep: "训练后留下的",
-    thrown: "造了，然后扔掉",
-    plot: "12 张图像的描述，按形状分开",
-    illustrative: "全部为示意",
-    slider: "遮住多少",
-    rebuild: "重建",
-    test: "测试编码器",
-    cellHidden: "遮住",
-    cellLoss: "像素损失",
-    cellClusters: "编码器分开的簇",
-    ofImage: (p: number) => `图像的 ${p}%`,
-    notRebuilt: "尚未重建",
-    afterRebuild: "重建之后",
-    untested: "尚未测试",
-    threeOfThree: "3 个中的 3 个",
-    v0: (p: number) =>
-      `${p === 75 ? "遮住了四分之三" : `遮住了 ${p}%`}。按「重建」，解码器就得把它重新画出来。`,
-    v1: "它把像素大致重建了出来。这正是上一节称为浪费的那份活。",
-    v2: "编码器照样学得很好，而解码器被扔掉了。把这一点放在每一条 JEPA 主张旁边。",
-    aria: (p: number, rebuilt: boolean, tested: boolean) =>
-      `一张小图像，地平线上有一个圆盘，${p}% 的块被遮住，送进一个编码器和一个解码器。${
-        rebuilt ? "解码器已把被遮住的块重画成柔和、大致正确的样子，像素损失条缩短了。" : "被遮住的块画成斜线，像素损失条是满的。"
-      }${tested ? "下方，12 张图像的描述按形状聚成三个干净的簇。编码器留下，解码器被划掉。" : ""}`,
-  },
 };
 type Text = (typeof TEXT)["en"];
 

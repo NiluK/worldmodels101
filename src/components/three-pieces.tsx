@@ -198,56 +198,6 @@ const TEXT: LocaleText<Strings> = {
     aria: ({ mode, real, dream, piece }) =>
       `Three boxes in a loop: encoder, dynamics model, controller, with a real game feeding the encoder and the controller's action looping back. Running ${mode}. ${real} real steps, ${dream} imagined steps. ${piece} selected.`,
   },
-  zh: {
-    game: "真实游戏",
-    enc: ["编码器"],
-    dyn: ["动力学模型"],
-    ctl: ["控制器"],
-    action: "动作",
-    z: "32 个数",
-    zNext: "下一组 32 个",
-    fedBack: "喂回",
-    piece: "部件",
-    inLabel: "输入",
-    outLabel: "输出",
-    forLabel: "用途",
-    detail: {
-      enc: {
-        in: "一帧画面。",
-        out: "三十二个数。",
-        why: "把画面压成一小串数字，好让另外两块部件在上面工作。",
-      },
-      dyn: {
-        in: "这三十二个数，加上所采取的动作。",
-        out: "下一组三十二个数。",
-        why: "预测这些数字接下来往哪走。它是唯一能拿自己的输出继续跑的部件。",
-      },
-      ctl: {
-        in: "这些数字。",
-        out: "一个动作。",
-        why: "挑选动作。几乎完全在模型想象出来的推演里训练，然后搬回真实游戏。",
-      },
-    },
-    step: "走一步",
-    where: "它在哪里运行？",
-    real: "在真实游戏里",
-    dream: "在梦里",
-    realLine: "画面来自游戏。动力学模型只负责预测。",
-    dreamLine: "动力学模型把自己的输出喂回给自己。游戏不再被问到。",
-    question: "哪一块是世界模型？",
-    verdict: {
-      ctl: "不是。控制器恰恰是那块显然不是世界模型的部件；它是使用世界模型的那个东西。",
-      dyn: "是，而且 Ha 与 Schmidhuber 把这个名字用在编码器和动力学模型两者合起来的整体上。",
-      enc: "算一半。它造出模型赖以运行的状态。",
-    },
-    pick: "选一个。",
-    realSteps: "真实步数",
-    dreamSteps: "想象步数",
-    width: "潜在向量宽度",
-    widthNote: "Ha 与 Schmidhuber 的选择",
-    aria: ({ mode, real, dream, piece }) =>
-      `三个方框连成一个环：编码器、动力学模型、控制器，真实游戏喂给编码器，控制器的动作回流。当前${mode}。真实步数 ${real}，想象步数 ${dream}。已选中${piece}。`,
-  },
 };
 
 /* A small deterministic generator so server and client agree on every tick. */

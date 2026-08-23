@@ -124,43 +124,6 @@ const TEXT: LocaleText<Strings> = {
             : "Nothing was recorded and no other moment is much like it, so there is no answer."
       }`,
   },
-  zh: {
-    ballLabel: "球当时在哪里",
-    nudgeLabel: "记录到的推动",
-    moment: "时刻",
-    next: "接下来会怎样",
-    whatif: "如果我推它一下呢",
-    notRecorded: "没有记录",
-    answer: "答案",
-    recordedNext: "记录中的下一位置",
-    borrowedAnswer: "借来的答案",
-    nothingToGoOn: "没有任何依据",
-    fromN: (n) => `来自 ${n} 个时刻`,
-    cQuestion: "问题",
-    cSource: "答案从哪里来",
-    cSupport: "可供借鉴的时刻",
-    qNext: "接下来会怎样",
-    qWhatif: "如果我推它一下呢",
-    sRecording: "记录本身，往后一格",
-    sBorrowed: (n) => `从另外 ${n} 个时刻借来`,
-    sNowhere: "无处可借",
-    vNext: "答案本来就在记录里，往后一格就是。什么也不用推算。",
-    vNudged: "这一刻确实有人推了，所以你问的正是当时采取的动作。这仍然只是「接下来会怎样」。",
-    vBorrowed: (n) =>
-      `这一刻没有人推，所以没有哪一格可读。答案只能从另外 ${n} 个时刻借来：那些时刻球在差不多的位置，而且确实有人推了。`,
-    vNone: "这一刻没有人推，和它相像的地方也没有。一份「发生了什么」的记录，说不出「本来会怎样」。",
-    note: "记录仅为示意",
-    aria: (moment, mode, kind, n) =>
-      `一段球在桌上滚动的记录，共二十四个时刻，其中七个时刻记录到了推动。当前选中第 ${moment} 个时刻，问题是${
-        mode === "next" ? "接下来会怎样" : "如果推它一下会怎样"
-      }。${
-        kind === "recorded"
-          ? "答案直接从记录里往后读一格。"
-          : kind === "borrowed"
-            ? `记录里没有这一条，所以答案是从另外 ${n} 个时刻借来的：那些时刻球在差不多的位置，而且记录到了推动。`
-            : "记录里没有这一条，也没有哪个时刻与它相像，所以没有答案。"
-      }`,
-  },
 };
 
 export function NotInTheRecording() {

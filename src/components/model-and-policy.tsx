@@ -69,19 +69,6 @@ const TEXT = {
     aria: (p: Pt, on: boolean, v: string) =>
       `A five by five world with a dot at column ${p.x + 1}, row ${p.y + 1}, and a hollow goal mark at column ${GOAL.x + 1}, row ${GOAL.y + 1}. Beside it, a world model box and a policy box. The model is ${on ? "on" : "off"}. ${v}`,
   },
-  zh: {
-    ask: "问模型", act: "行动", reset: "重置", on: "模型开", off: "模型关",
-    model: "世界模型", policy: "策略", reflex: "反射", reads: "读三个假设",
-    state: "状态", whatIfs: "三个假设", action: "一个动作", goal: "终点", dim: "关",
-    calls: "模型调用", steps: "世界步数",
-    vIdle: "只有策略会碰到世界。",
-    vAsk: "模型回答了三个假设，什么都没碰。",
-    vActOn: "策略读了三个答案，选了一个，碰了世界一次。",
-    vActOff: "没有假设。策略凭反射行动，直接按它看到的来，仍然碰了世界一次。",
-    vGoal: "点到了终点，停在那里。按「重置」再来一次。",
-    aria: (p: Pt, on: boolean, v: string) =>
-      `一个五乘五的世界，点在第 ${p.x + 1} 列第 ${p.y + 1} 行，空心的终点标记在第 ${GOAL.x + 1} 列第 ${GOAL.y + 1} 行。旁边是一个世界模型框和一个策略框。模型${on ? "开着" : "关着"}。${v}`,
-  },
 } as const;
 
 export function ModelAndPolicy() {

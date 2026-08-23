@@ -98,53 +98,6 @@ const TEXT: LocaleText<Strings> = {
     ariaSelected: "Selected",
     ariaNone: "Nothing selected",
   },
-  zh: {
-    name: {
-      persistence: "持久性",
-      action: "动作",
-      horizon: "预测步长",
-      target: "训练目标",
-      verification: "可验证性",
-    },
-    question: {
-      persistence: "同一个物体离开视野再回来之后，还是它自己吗？",
-      action: "不同指令是否稳定地产生各自对应的不同未来？",
-      horizon: "它吃着自己的输出能跑多远，答案才不再足以支撑决策？",
-      target: "训练目标允许丢掉或塌缩哪些信息？",
-      verification: "什么观测能证明它声称拥有的内部模型其实并不存在？",
-    },
-    who: {
-      persistence: "做渲染器的人。这是演示里人人都会注意到的失败，第一章的回头测试就是为它设计的。",
-      action: "需要靠「如果这样做会怎样」来做决定的人，也就是控制与机器人学。",
-      horizon: "强化学习。相信坏模型的智能体会输，而输掉会直接体现在分数里。",
-      target: "表征学习。在那里，一个嵌入可以看上去很稳定，却已经丢掉了任务需要的那个变量。",
-      verification: "可解释性研究，也就是读网络内部的人。",
-    },
-    measured: {
-      persistence: "2026 年，PlayWorld，它给物体离开视野又回来之后的表现打分。",
-      action:
-        "2024 年，Kang 与同事测试了训练数据之内与之外的物理规律。2026 年，PlayWorld 给交互保真度打分：一个动作是否做了它该做的事。",
-      horizon:
-        "2019 年，Wang 与同事（Benchmarking Model-Based Reinforcement Learning）以及 Janner 与同事（When to Trust Your Model）。",
-      target: "未测量（在本章的来源里）。",
-      verification: "2022 年，Li 与同事（Emergent World Representations），用的是一个本可能什么都找不到的探针。",
-    },
-    verdict: {
-      none: "五个失败，五个社群。把日期从左读到右。",
-      persistence: "比预测步长晚了七年才被测量，而这两个恰恰是渲染器最先撞上的。",
-      action: "比预测步长晚了七年才被测量，而这两个恰恰是渲染器最先撞上的。",
-      horizon: "最早被测量，测量它的是那些必须按模型的话去行动的人。",
-      target: "本章的来源里没有任何东西测量它。",
-      verification: "用一个本可能什么都画不出来的探针去检验，这正是它算得上一次测试的原因。",
-    },
-    whoLabel: "谁最先撞上它",
-    measuredLabel: "最早测量",
-    pick: "点一张上面的卡片。",
-    notMeasured: "未测量",
-    ariaStrip: "每个失败最早被测量的年份，2019 至 2026。",
-    ariaSelected: "已选",
-    ariaNone: "未选择",
-  },
 };
 
 export function FiveFailures() {

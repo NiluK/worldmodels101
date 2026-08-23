@@ -374,66 +374,6 @@ const TEXT: LocaleText<Text> = {
       `Lap ${n} done in ${k} steps. The estimator knew where you were at every one of them, and nothing more.`,
     aria: (you, g, lap) => `A grid world, ${COLS} by ${ROWS}, lap ${lap}. You are at ${you}; the goal is at ${g}.`,
   },
-  zh: {
-    modePredict: "先预测，再行动",
-    modeEstimate: "只做估计",
-    worldModel: "世界模型",
-    estimator: "估计器",
-    chooser: "选择器",
-    wmEq: "s, a → s′",
-    wmBody: ["每步一格。知道墙在哪里，不知道地面的异常。"],
-    estEq: "z → ŝ",
-    estBody: ["只说你在哪里，不替你选一步。"],
-    chBody: ["在模型里规划路线，走出第一步。"],
-    chOff: ["无可问。"],
-    corrections: (n) => `已修正 ${n} 处`,
-    dir: { up: "上", down: "下", left: "左", right: "右" },
-    decide: "让选择器来决定",
-    runLap: "跑一圈",
-    finishNow: "立刻跑完这一圈",
-    learn: "从错误中学习",
-    showMap: "模型的地图",
-    forget: "遗忘",
-    reset: "重置",
-    goal: "目标",
-    startLabel: "起点",
-    patch: { ice: "冰", drift: "下沉", lift: "上托" },
-    fieldHelp: "方向键预览一步；再按一次同一方向键或回车，就走这一步。",
-    lapN: (n) => `第 ${n} 圈`,
-    lapCell: (m, k, capped) => (capped ? `${k} 步后中止` : `${m} 次意外，${k} 步`),
-    lapLogEmpty: "还没有跑完一圈。抵达目标即完成一圈，圆点回到起点。",
-    lap: "圈数",
-    steps: "本圈步数",
-    surprises: "本圈意外",
-    correctionsLabel: "已持有的修正",
-    intro: "把指针放到箭头上，看模型认为你会落在哪里。按下就走，或者让选择器跑一圈。",
-    estimate: "估计器告诉你你在哪里。它不去学一步会带来什么，也从不比较两步的好坏。",
-    match: (p) => `模型说是 ${p}，你也正落在那里。`,
-    miss: (p, a, n, cause) =>
-      `模型说是 ${p}，你却停在了 ${a}，偏了 ${n} 格。` +
-      (cause === "ice"
-        ? "冰把你继续带了下去。"
-        : cause === "drift"
-          ? "下沉把你推低了一行。"
-          : cause === "lift"
-            ? "上托把你推高了一行。"
-            : ""),
-    noted: "模型已经把这次修正记下了。",
-    blocked: "一堵墙。什么都没动，模型也说不会动。",
-    chose: (dir) => `选择器在模型里规划了路线，选了「${dir}」。`,
-    lapFirst: (m, k) => `第一圈跑完：${m} 次意外，${k} 步。再跑一圈，对比一下。`,
-    lapClean: (n) => `第 ${n} 圈，零意外：模型已经认识这条路线上的每一块异常地面。`,
-    lapDown: (n, m, prev) => `第 ${n} 圈：${m} 次意外，比上一圈的 ${prev} 次少。模型正在学会这条路。`,
-    lapNewRoute: (n, m) => `第 ${n} 圈：${m} 次意外。模型改了路线，遇到了没见过的地面。`,
-    lapSame: (n, m) => `第 ${n} 圈：${m} 次意外，和上一圈一样。`,
-    lapOff: (n, m, m1) =>
-      m === m1
-        ? `学习已关闭，所以第 ${n} 圈和第一圈一样意外。`
-        : `学习已关闭。第 ${n} 圈 ${m} 次意外，第一圈 ${m1} 次；两圈之间什么都没留下。`,
-    lapCapped: (n) => `第 ${n} 圈在 ${LAP_CAP} 步后中止，没有抵达目标。`,
-    lapEst: (n, k) => `第 ${n} 圈用了 ${k} 步。估计器每一步都知道你在哪里，仅此而已。`,
-    aria: (you, g, lap) => `一个 ${COLS} 乘 ${ROWS} 的网格世界，第 ${lap} 圈。你在 ${you}，目标在 ${g}。`,
-  },
 };
 
 /** the two boxes, stacked: beside the field when there is room, beneath it when not */

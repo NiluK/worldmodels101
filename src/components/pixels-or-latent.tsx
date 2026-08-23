@@ -65,32 +65,6 @@ const TEXT = {
     aria: (n: number, p: number, l: number, off: boolean) =>
       `Two planners scoring ${n} action sequences of eight steps. Planning in pixels renders every frame and costs ${fmt(p)} units${off ? ", off the chart" : ""}. Planning in a latent scores a short code per step, draws only the chosen sequence, and costs ${fmt(l)} units.`,
   },
-  zh: {
-    oneSeq: "一条动作序列，八步",
-    pixels: "在像素里规划",
-    latent: "在潜变量里规划",
-    chosen: "选中的那条",
-    chosenSub: "选定之后只画一次",
-    off: "超出图表",
-    units: (n: number) => `${fmt(n)} 单位`,
-    copies: (n: number) => `×${n}`,
-    slider: "要打分的序列数",
-    show: "画出选中的那条",
-    rSeq: "序列数",
-    rFrames: "渲染的帧数，像素",
-    rCodes: "打分的编码数，潜变量",
-    rDrawn: "画出的帧数，潜变量",
-    rCostP: "开销，像素",
-    rCostL: "开销，潜变量",
-    times: (n: number, m: number) => `${n} × ${m} = ${fmt(n * m)}`,
-    v1: "一条序列，两张账单相差不多。只渲染一条还算便宜。",
-    v2: "几条序列，像素的账单就已经拉开了。潜变量规划器只付了零头，只画了一条。",
-    v3: (n: number) => `${n} 条序列，像素的账单已占去图表的大半。潜变量规划器只付了零头，只画了一条。`,
-    v4: (n: number) => `${n} 条序列，像素的账单已经超出图表。潜变量规划器给全部打了分，只画了赢的那条。`,
-    v5: "一百条序列。逐条渲染正是像素规划器破产的地方；潜变量规划器给一百条都打了分，只画了赢的那条。",
-    aria: (n: number, p: number, l: number, off: boolean) =>
-      `两个规划器给 ${n} 条八步的动作序列打分。在像素里规划要渲染每一帧，开销 ${fmt(p)} 单位${off ? "，已超出图表" : ""}。在潜变量里规划每步只打分一个短编码，只画选中的那条，开销 ${fmt(l)} 单位。`,
-  },
 } as const;
 
 /** a deterministic grey pattern so each step's frame looks like a different picture */

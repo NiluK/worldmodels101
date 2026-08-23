@@ -51,24 +51,6 @@ const TEXT = {
     v0: "Press Retrain. Watch the rooms on the right and the arrows on the left.",
     v1: "Same pictures, different axes. Nothing in the pictures told the trainer which axes to pick.",
   },
-  zh: {
-    aria: (seed: number, meaning: string) =>
-      `方块里有九个点和两支轴箭头，旁边是由它们解码出的九个小房间。种子 ${seed}。轴 1 的含义是${meaning}。九个房间与之前完全相同。`,
-    axis1: "轴 1",
-    axis2: "轴 2",
-    seed: (n: number) => `种子 ${n}`,
-    pad: "房间作为点，以及这次种子的轴",
-    rooms: "解码出的九个房间",
-    retrain: "重新训练（新种子）",
-    redrawQ: "九个房间的重绘",
-    redrawA: "每次都一样",
-    meaningQ: "轴 1 的含义",
-    depth: "墙有多远",
-    gap: "缺口在哪里",
-    mix: "两者的混合",
-    v0: "按下「重新训练」。看右边的房间，也看左边的箭头。",
-    v1: "同样的图，不同的轴。图里没有任何东西告诉训练器该选哪一组轴。",
-  },
 };
 
 /** small deterministic generator, so seed n always hands out the same axes */

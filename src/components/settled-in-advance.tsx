@@ -94,30 +94,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (k, s, u, w) =>
       `An illustrative road of twenty situations, two of them not like the others. Settled in advance: ${s}. ${k} of twenty driven, ${u} thinking units spent, ${w} handled wrongly.`,
   },
-  zh: {
-    road: "一条路上的二十个情形",
-    control: "有多少是提前定好的",
-    settings: { nothing: "不提前定", some: "定一部分", most: "大部分提前定" },
-    captions: {
-      nothing: "每一步都搜索，像 MuZero 那样",
-      some: "两边各来一点，像 Dyna 那样",
-      most: "靠反射行动，像 Dreamer 那样",
-    },
-    drive: "开",
-    driveEnd: "一直开到底",
-    again: "重新开",
-    odd: "跟别的不一样",
-    onTheSpot: "当场现算的情形",
-    units: "花掉的思考单位",
-    wrongLabel: "处理错了的",
-    settledLabel: "提前定好的程度",
-    vNothing: (u) => `二十个它都想过，二十个都对。为一条大体上很普通的路，花了 ${u} 个单位。`,
-    vMost: "十八个当场就答上了，另外两个拿到的是为别的问题准备的答案。这里面没有任何东西知道自己在猜。",
-    vSome: (u) => `它只在那两个不普通的地方停下来想过。${u} 个单位，没有一个处理错。`,
-    vMid: (k) => `二十个里走了 ${k} 个。按「开」。`,
-    aria: (k, s, u, w) =>
-      `一条示意性的路，上面有二十个情形，其中两个跟别的不一样。提前定好的程度：${s}。二十个里已走过 ${k} 个，花掉 ${u} 个思考单位，${w} 个处理错了。`,
-  },
 };
 
 export function SettledInAdvance() {

@@ -97,43 +97,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (verdict) =>
       `One bar, 38 days of play, with a tick at 2 hours for the human tester. Those two figures are published; the conversions to wall clock are illustrative. ${verdict}`,
   },
-  zh: {
-    head1: "38 天的游玩",
-    head2: "公开数字：每个游戏约五千万帧",
-    head2Short: "公开数字：约五千万帧",
-    human: "人类测试员拿到的是 2 小时，公开数字",
-    humanShort: "测试员拿到 2 小时",
-    realLabel: "真实接触",
-    imaginedLabel: "在模型里玩掉的",
-    computing: (p) => `${p}的计算时间`,
-    clockLabel: "放在这里的话，墙上的钟",
-    whereLabel: "这些游玩发生在哪里",
-    places: ["模拟器", "机械臂", "路口"],
-    notes: [
-      "大约比真实时间快 300 倍，而且什么都不会磨损",
-      "就是真实时间，还得有人去把它扶起来，而且有东西会磨损",
-      "真实时间，而且预测错了就是一次撞车，你没法撤销",
-    ],
-    carry: "带一个模型",
-    mistakes: ["什么都不算", "一次复位", "一次撞车"],
-    reads: ["需要的游玩量", "真实接触", "放在这里的墙上钟", "错一次的代价"],
-    days: (n) => `${n} 天`,
-    aboutDays: (n) => `约 ${n} 天`,
-    hours: (n) => `约 ${n} 小时`,
-    minutes: (n) => `约 ${n} 分钟`,
-    months: (n) => `约 ${n} 个月`,
-    noJunction: (d) => `这样的日子，你拿不到 ${d} 天`,
-    split: (r, i) => `真实 ${r} 天，想象 ${i} 天`,
-    v: [
-      "在模拟器里，38 天的游玩就是一个下午。这就是 Atari 那批结果为什么发生在模拟器里。",
-      "放在机械臂上，38 天的游玩是四分之一年，外加一张维护排期表。",
-      "没有人能有 38 天去误判路口。这笔账没法用这种货币来付。",
-    ],
-    vModel: "四天真实接触，其余都是想象出来的。想象的那一部分依然要花计算时间。",
-    join: "",
-    aria: (verdict) =>
-      `一条柱子，代表 38 天的游玩，左端有一个 2 小时的刻度，那是人类测试员拿到的。这两个数字是公开的；换算成墙上钟的部分仅作示意。${verdict}`,
-  },
 };
 
 /** wall clock hours for a given place and a given amount of real play */

@@ -50,23 +50,6 @@ const TEXT: LocaleText<Text> = {
     ariaNone: "Nothing pressed yet.", ariaOne: "Only one corridor has been pressed so far.",
     ariaSame: "A and B land on the same point.", ariaApart: "A and B land on two separate points.",
   },
-  zh: {
-    sceneA: "走廊 A", sceneB: "走廊 B", pad: "它落在哪里",
-    redraw: "重画", redrawFine: "重画：没问题",
-    pressA: "按下 A", pressB: "按下 B",
-    scoredOn: "评分依据", onRedraw: "重画这一帧", onPredict: "预测下一帧",
-    question: "球会往哪边滚？",
-    cannotTell: "从这里看不出来", left: "向左", right: "向右", pressFirst: "先按下一条走廊",
-    land: "两者落在哪里", samePoint: "同一个点", twoPoints: "两个分开的点",
-    pressBoth: "两条都按下后可见",
-    vBefore: "先按 A，再按 B，看着方格。",
-    vRedraw: "两种未来，一个点。挤压之后没有什么能把它们分开，而重画看起来没问题。",
-    vPredict: "按接下来发生的事评分，挤压就不得不留下方向，两者于是落在不同的地方。",
-    aria: (pressed, scoring, landing) =>
-      `两条走廊 A 和 B，唯一的区别是 A 里的球向左滚，B 里的球向右滚。${pressed}评分依据：${scoring}。${landing}`,
-    ariaNone: "还没有按下任何一条。", ariaOne: "目前只按下了一条走廊。",
-    ariaSame: "A 和 B 落在同一个点上。", ariaApart: "A 和 B 落在两个分开的点上。",
-  },
 };
 
 /** the corridor both scenes share */
@@ -122,7 +105,7 @@ export function SamePointTwoFutures() {
   const verdict = !both ? T.vBefore : score === "redraw" ? T.vRedraw : T.vPredict;
 
   const ariaPressed = pressed
-    ? (locale === "zh" ? `已按下走廊 ${pressed}。` : `Corridor ${pressed} is pressed.`)
+    ? `Corridor ${pressed} is pressed.`
     : T.ariaNone;
   const ariaLanding = !both ? (pressed ? T.ariaOne : "") : score === "redraw" ? T.ariaSame : T.ariaApart;
   const aria = T.aria(ariaPressed, score === "redraw" ? T.onRedraw : T.onPredict, ariaLanding);

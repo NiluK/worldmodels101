@@ -76,7 +76,7 @@ type Strings = {
   vShift: string;
   vCar: string;
   vBoth: string;
-  /** what goes between the change line and the closing one; zh needs nothing */
+  /** What goes between the change line and the closing one. */
   sep: string;
   note: string;
   aria: (name: string, amount: number, px: number, ds: number) => string;
@@ -106,30 +106,6 @@ const TEXT: LocaleText<Strings> = {
     note: "both scales are illustrative",
     aria: (name, amount, px, ds) =>
       `Two road frames, what happened and what the model said. The change is ${name}, at ${amount} out of 10. Pixel error ${px} of 100, description distance ${ds} of 100, both illustrative.`,
-  },
-  zh: {
-    happened: "实际发生的",
-    said: "模型说的",
-    pixel: "像素误差",
-    description: "描述距离",
-    howMuch: "改动幅度",
-    bLeaves: "叶子落到了别处",
-    bShift: "整幅画面横移",
-    bCar: "前车并进你的车道",
-    cChange: "改动",
-    nLeaves: "叶子",
-    nShift: "画面横移",
-    nCar: "前车",
-    vZero: "两帧完全一样，两把尺子都读作零。",
-    vLeaves:
-      "每一片叶子都落在了别处。谁也说不准它们会落到哪里，你在这条路上的任何做法都不取决于此，而像素这把尺子恰恰为它收费最多。",
-    vShift: "整幅画面横移了。每一个像素都错了，而这条路上没有任何东西错。",
-    vCar: "前车并进了你的车道。变的不过几百个像素，你要做的事却完全变了，而像素这把尺子几乎没有反应。",
-    vBoth: "这两把尺子量的根本不是同一件事。",
-    sep: "",
-    note: "两把尺子都仅为示意",
-    aria: (name, amount, px, ds) =>
-      `两帧道路画面：实际发生的，和模型说的。改动是${name}，幅度为 10 里的 ${amount}。像素误差 100 里的 ${px}，描述距离 100 里的 ${ds}，两者都仅为示意。`,
   },
 };
 

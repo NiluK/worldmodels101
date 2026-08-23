@@ -145,50 +145,6 @@ const TEXT: Record<string, Text> = {
                 : "You waited, it passed, and you crossed behind it."
       }`,
   },
-  zh: {
-    distance: "它离你多远",
-    speed: "它开得多快",
-    whose: "谁在预测",
-    learner: "新手司机",
-    experienced: "有经验的司机",
-    go: "走",
-    reset: "重置",
-    forecast: (arr, need, spare, go) =>
-      `预测：它 ${arr} 秒后到达。你需要 ${need} 秒，外加 ${spare} 秒余量。${go ? "走" : "等"}。`,
-    pressSee: "预测说可以走。按下「走」看看。",
-    press: (go) => (go ? "预测说可以走。按下「走」。" : "预测说要等。按下「走」。"),
-    clear: (x) => `提前 ${x} 秒过去了。这个预测够用了。`,
-    hit: (x, y) => `你还没过完，它就早到了 ${x} 秒。预测错了 ${y} 秒，错的那部分是速度。`,
-    waited: (x) => `你等了。它 ${x} 秒后驶过，你跟在它后面过去了。`,
-    better: "更好的模型，同一个路口。",
-    cForecast: "预测到达",
-    cReal: "实际到达",
-    cOff: "预测偏差",
-    cOutcome: "结果",
-    sec: (n) => `${n} 秒`,
-    spotOn: (n) => `${n} 秒，分毫不差`,
-    generous: (n) => `多给了 ${n} 秒`,
-    outClear: "过去了",
-    outHit: "撞上了",
-    outWaited: "等了它",
-    pending: "还没有",
-    afterGo: "按下「走」之后",
-    you: "你",
-    oncoming: "来车",
-    crossing: "路口",
-    aria: (d, v, who, go, stage, outcome) =>
-      `示意图：俯视一个丁字路口。你的车在支路上等候。一辆车在 ${d} 米外、以 ${v} 公里每小时的速度从右侧沿主路驶来。${who}的预测说${go ? "可以走" : "要等"}。${
-        stage === "ready"
-          ? "还什么都没发生。"
-          : stage === "playing"
-            ? "场景正按真实速度播放。"
-            : outcome === "clear"
-              ? "你在它到达之前过去了。"
-              : outcome === "hit"
-                ? "它在你过完之前到了，两车在路口相遇。"
-                : "你等了，它驶过，你跟在后面过去了。"
-      }`,
-  },
 };
 
 /** Everything the figure needs to know, from the three controls. */

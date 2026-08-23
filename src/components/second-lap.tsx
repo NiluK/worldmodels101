@@ -54,25 +54,6 @@ const TEXT = {
     aria: (lap: number, n: number, total: number, hit: boolean) =>
       `A ${COLS} by ${ROWS} grid world with the start bottom left and the target top right. ${lap} ${lap === 1 ? "lap" : "laps"} run, the model has seen ${n} of ${total} cells, target ${hit ? "covered" : "not covered"}.`,
   },
-  zh: {
-    run: "跑一圈",
-    reset: "重置",
-    improve: "改进策略",
-    phases: { act: "在世界中行动", fit: "拟合模型", train: "在模型中训练策略", out: "把行为带回世界" },
-    lap: "圈数",
-    seen: "模型见过的格子",
-    seenVal: (n: number, total: number) => `${total} 格中的 ${n} 格`,
-    covered: "目标已覆盖",
-    yes: "是",
-    no: "否",
-    start: "起点",
-    target: "目标",
-    before: "模型只知道智能体去过的地方，所以在它里面训练出的策略还找不到目标。",
-    after: (n: number) => `第 ${n} 圈：更好的策略走得更远，模型现在覆盖了目标。`,
-    same: "每一圈都是同一个策略，带回的是同样的数据，所以模型永远学不到世界的其余部分。",
-    aria: (lap: number, n: number, total: number, hit: boolean) =>
-      `一个 ${COLS} 乘 ${ROWS} 的网格世界，起点在左下，目标在右上。已跑 ${lap} 圈，模型见过 ${total} 格中的 ${n} 格，目标${hit ? "已" : "未"}覆盖。`,
-  },
 } as const;
 
 type Phase = keyof typeof TEXT.en.phases;

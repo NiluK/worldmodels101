@@ -44,25 +44,6 @@ const TEXT: LocaleText<Text> = {
     ariaUse: "Five steps. Only the first model cell is fed by the truth; each later one is fed by the model's own previous output, so the miss grows step by step.",
     ariaStepped: "Stepped to t={n} of 5.",
   },
-  zh: {
-    truthRow: "记录下来的真值",
-    modelRow: ["模型的", "输出"],
-    training: "训练",
-    inUse: "使用中",
-    step: "走一步",
-    reset: "重置",
-    rMiss: "t=5 时的偏差",
-    rFrom: "每一步的输入来自哪里",
-    fromRecording: "记录",
-    fromModel: "模型上一步的答案",
-    vTrain0: "每一步的输入都是记录下来的真值。",
-    vTrain5: "每一步都有一点偏差，但没有一点会被带下去。被打分的就是这一趟。",
-    vUse0: "只有第一个输入是真值。之后模型吃的都是自己的输出。",
-    vUse5: "第一个小偏差被带进了之后的每一步。被部署的就是这一趟。",
-    ariaTrain: "五步。每个模型格子的输入都来自前一步记录下来的真值，所以每一步的偏差都很小。",
-    ariaUse: "五步。只有第一个模型格子的输入来自真值，之后每个格子的输入都是模型自己上一步的输出，所以偏差一步步变大。",
-    ariaStepped: "已走到 t={n}，共 5 步。",
-  },
 };
 
 /** the recording: a plain rising value, t = 0 to 5 */

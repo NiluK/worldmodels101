@@ -153,30 +153,6 @@ const TEXT = {
     aria: (t: number, d: string, l: string) =>
       `A coarse road scene drawn twice, as the model predicted it and as it happened, with a third panel tinting each cell by its squared error. At second ${t}, ${d} of the error is on the car and road edge and ${l} is on leaves and water.`,
   },
-  zh: {
-    predicted: "模型预测的画面",
-    happened: "下一秒实际的画面",
-    error: "误差落在哪里",
-    errorSub: "每格按平方误差着色",
-    driverRow: "司机在意的像素",
-    driverSub: "前车、路缘",
-    noiseRow: "没有任何决定依赖的像素",
-    noiseSub: "树叶、水洼、光影",
-    ofError: (n: string) => `占误差的 ${n}`,
-    ofFrame: (n: string) => `占画面的 ${n}`,
-    next: "下一秒",
-    slider: "画面里的树叶和水",
-    second: "第几秒",
-    rdDriver: "落在前车和路缘上的误差份额",
-    rdNoise: "落在树叶和水上的份额",
-    vLow: "大部分误差，也就是对权重的大部分推力，都落在没有任何决定依赖的像素上。",
-    vHigh: "把滑块往上推。画面里树叶和水越多，损失就越是关于树叶和水。",
-    under: "不到 5%",
-    over: "超过 95%",
-    illustrative: "色调、误差和份额均为示意",
-    aria: (t: number, d: string, l: string) =>
-      `一幅粗略的道路场景画了两次：模型的预测与实际发生的情况，第三格把每个单元按平方误差着色。第 ${t} 秒，${d} 的误差落在前车和路缘上，${l} 落在树叶和水上。`,
-  },
 };
 
 const TERRAIN = ["var(--terrain-1)", "var(--terrain-2)", "var(--terrain-3)", "var(--terrain-4)"];

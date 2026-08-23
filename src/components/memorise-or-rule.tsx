@@ -110,37 +110,6 @@ const TEXT: Record<
         ? ` Twenty new values sit off the right end, and the rule's continuation lands on every one of them.`
         : ""),
   },
-  zh: {
-    table: "表",
-    rule: "规则",
-    ruleLabel: "规则：两个数",
-    illustrative: "示意",
-    formula: "下一个 = a × 上一个 + b × 再上一个",
-    storesValues: (n) => `存储：${n} 个值`,
-    storesNumbers: "存储：2 个数",
-    andMore: (n) => `……还有 ${n} 个`,
-    noEntry: "没有条目",
-    continues: "继续",
-    amount: "已见数据量",
-    amountShort: "数据量",
-    newData: "新数据",
-    hideNew: "收起新数据",
-    seen: "目前所见",
-    newRegion: "新数据",
-    rValues: "已见的值",
-    rTable: "表存储",
-    rRule: "规则存储",
-    rNew: "遇到新数据",
-    nValues: (n) => `${n} 个值`,
-    twoNumbers: "2 个数",
-    onNewBefore: "还没有新数据",
-    onNewAfter: "表：无 / 规则：继续",
-    verdictBefore: "表和数据一样大。规则只是两个数，数据再多也一样。",
-    verdictAfter: "表里没有任何新东西的条目。规则照样往下走。这就是为什么规则才是偷渡客。",
-    aria: (n, revealed) =>
-      `一张折线图，画着由一条两个数的规则产生的 ${n} 个值。` +
-      (revealed ? "右端之外有二十个新值，规则的延续正好落在每一个上。" : ""),
-  },
 };
 
 function Tick() {

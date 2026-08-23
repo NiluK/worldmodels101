@@ -4,7 +4,7 @@ import { chapterText } from "@/lib/chapters";
 import { translatedSlugs } from "@/content/registry";
 
 export function generateStaticParams() {
-  return translatedSlugs("en").map((slug) => ({ slug }));
+  return translatedSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata(props: PageProps<"/chapters/[slug]">): Promise<Metadata> {
@@ -16,7 +16,7 @@ export async function generateMetadata(props: PageProps<"/chapters/[slug]">): Pr
     description: c.blurb,
     alternates: {
       canonical: `/chapters/${slug}`,
-      languages: { en: `/chapters/${slug}`, "zh-Hans": `/zh/chapters/${slug}` },
+      languages: { en: `/chapters/${slug}` },
     },
     openGraph: {
       title: `${c.title} · World Models 101`,

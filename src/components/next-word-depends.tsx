@@ -2,7 +2,6 @@
 
 import { useState, type KeyboardEvent } from "react";
 import { useCompact } from "./use-compact";
-import { useLocale } from "./locale-provider";
 
 /**
  * Five sentences, one blank each. The reader guesses, then presses Reveal.
@@ -41,7 +40,7 @@ type Strings = {
   ariaShown: (tag: string) => string;
 };
 
-const TEXT: Record<"en" | "zh", Strings> = {
+const TEXT: Record<"en", Strings> = {
   en: {
     items: [
       { before: "The capital of France is", answer: "Paris", after: ".", tag: "a fact about the world" },
@@ -73,43 +72,12 @@ const TEXT: Record<"en" | "zh", Strings> = {
     ariaHidden: "Not yet revealed. Press Enter to reveal.",
     ariaShown: (tag) => `The next word depended on ${tag}.`,
   },
-  zh: {
-    items: [
-      { before: "法国的首都是", answer: "巴黎", after: "。", tag: "一个关于世界的事实" },
-      { before: "法语里，谢谢是", answer: "merci", after: "。", tag: "一次翻译" },
-      { before: "她把玻璃杯掉在地上，杯子", answer: "碎了", after: "。", tag: "事物的行为方式" },
-      {
-        setup: "今年销售额下降了三分之一。",
-        before: "他读完了整份报告，一句话概括就是：销售额",
-        answer: "下降了",
-        after: "。",
-        tag: "对前文的概括",
-      },
-      { before: "二加二等于", answer: "四", after: "。", tag: "算术" },
-    ],
-    prev: "上一句",
-    next: "下一句",
-    reveal: "揭晓",
-    revealed: "已揭晓",
-    goTo: (n) => `第 ${n} 句`,
-    sentence: "句子",
-    ofN: (n, total) => `第 ${n} 句，共 ${total} 句`,
-    dependedOn: "下一个词取决于什么",
-    tryFirst: "先自己试试",
-    verdictBefore: "先在心里把空填上，再按「揭晓」。",
-    verdictAfter: (tag) => `没有人把这设成一项任务。下一个词取决于${tag}，所以预测器不得不掌握它。`,
-    note: "GPT-2 只被训练做一件事：预测下一个词。",
-    ariaBlank: "空白",
-    ariaHidden: "尚未揭晓。按回车键揭晓。",
-    ariaShown: (tag) => `下一个词取决于${tag}。`,
-  },
 };
 
 const COUNT = TEXT.en.items.length;
 
 export function NextWordDepends() {
-  const locale = useLocale();
-  const T = TEXT[locale === "zh" ? "zh" : "en"];
+  const T = TEXT.en;
   const { ref, compact } = useCompact(520);
   const [i, setI] = useState(0);
   const [shown, setShown] = useState<boolean[]>(() => Array(COUNT).fill(false));

@@ -63,22 +63,6 @@ const TEXT = {
     aria: (step: number, d: string, err: string, v: string) =>
       `Five model predictions against a truth curve, drawn to step ${step} of ${STEPS}. Disagreement ${d}, error ${err}, illustrative units. ${v}`,
   },
-  zh: {
-    data: "数据覆盖的范围",
-    gap: "盲区",
-    truth: "真实",
-    models: "五个模型",
-    axis: "计划走到第几步",
-    horizon: "计划走多远",
-    blind: "共同盲区",
-    disagree: "标记处的分歧",
-    error: "标记处的误差",
-    vIn: "在数据之内，五个模型意见一致，而且是对的。",
-    vPast: "出了数据范围，五个模型各自散开。散开的幅度就是警报，规划器可以为此扣分。",
-    vGap: "在盲区里，五个模型意见一致、靠得很紧，却一起错了。分歧只是提示，不是裁决。",
-    aria: (step: number, d: string, err: string, v: string) =>
-      `五条模型预测曲线与一条真实曲线，画到第${step}步，共${STEPS}步。分歧${d}，误差${err}，示意单位。${v}`,
-  },
 } as const;
 
 export function EnsembleDisagreement() {

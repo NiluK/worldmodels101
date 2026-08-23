@@ -109,28 +109,6 @@ const TEXT = {
     aria: (p: string, c: string) =>
       `A sender, a wire and a receiver, with a bar chart of what the shared predictor expected next. The predictor gave the symbol that arrived a probability of ${p}, so it costs ${c} to send.`,
   },
-  zh: {
-    title: "共享预测器认为接下来可能出现的符号",
-    title1: "共享预测器认为",
-    title2: "接下来可能出现的符号",
-    arrived: "实际到达的那个",
-    sender: "发送方",
-    receiver: "接收方",
-    cost: "成本",
-    slider: "预测器给它的概率",
-    probLabel: "给出的概率",
-    costLabel: "发送成本",
-    prob: (m: number, n: number) => `${n} 分之 ${m}`,
-    bits: (s: string) => `${s} 比特`,
-    under: "不到 0.1 比特",
-    v0: "有把握，而且对了。几乎不用发什么。",
-    v1: "差不多是掷硬币。一两个比特。",
-    v2: "有把握，却错了。罕见的符号才是贵的。",
-    tail: "一个符号的价钱，就是你给它的概率。",
-    join: "",
-    aria: (p: string, c: string) =>
-      `发送方、导线、接收方，上方是共享预测器对下一个符号的预期。预测器给实际到达的符号的概率是${p}，所以发送它要花${c}。`,
-  },
 } as const;
 
 export function CostOfASymbol() {

@@ -2,7 +2,6 @@
 
 import { useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
-import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
 
 /**
@@ -60,37 +59,10 @@ const TEXT = {
         ? "A cache of three braking distances for 30, 40 and 50 km/h, and a recipe that squares the speed and divides by a constant. No speed pressed yet. Illustrative numbers, roughly quadratic."
         : `At ${v} km/h the cache answers ${c} m${unseen ? `, from its nearest entry at ${near} km/h` : ""}, and the recipe ${r === null ? "is still working" : `works out ${r} m`}. Illustrative numbers, roughly quadratic.`,
   },
-  zh: {
-    speeds: "车速，公里/小时",
-    seen: "训练时见过",
-    cache: "缓存",
-    recipe: "算法",
-    nearestTag: "最近的条目",
-    answer: "答案",
-    working: "推算",
-    cacheAnswer: "缓存答案",
-    cacheTime: "缓存耗时",
-    recipeAnswer: "算法答案",
-    recipeTime: "算法耗时",
-    difference: "相差",
-    oneStep: "1 步",
-    nSteps: `${RECIPE_STEPS} 步`,
-    idle: "按一个车速。",
-    busy: "缓存已经作答。算法还在推算。",
-    seenVerdict: "两者一致，而缓存先到。",
-    unseenVerdict: (v: number, near: number) =>
-      `缓存交回了它为 ${near} 存的条目。算法算出了 ${v} 的答案。只有一个知道问题已经变了。`,
-    speedButton: (v: number, seen: boolean) => `${v} 公里/小时${seen ? "，训练时见过" : ""}`,
-    aria: (v: Speed | null, c: number | null, r: number | null, unseen: boolean, near: number) =>
-      v === null
-        ? "一份存着 30、40、50 公里/小时三条刹车距离的缓存，和一个把车速平方、再除以一个常数的算法。还没有按下车速。数字均为示意，大致按平方增长。"
-        : `在 ${v} 公里/小时，缓存答 ${c} 米${unseen ? `，取自它最近的条目 ${near} 公里/小时` : ""}，算法${r === null ? "还在推算" : `算出 ${r} 米`}。数字均为示意，大致按平方增长。`,
-  },
 };
 
 export function CacheOrRecipe() {
-  const locale = useLocale();
-  const T = locale === "zh" ? TEXT.zh : TEXT.en;
+  const T = TEXT.en;
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
 

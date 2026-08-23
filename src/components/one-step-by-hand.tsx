@@ -95,35 +95,6 @@ const TEXT: LocaleText<Strings> = {
         ? "The true next position is not shown yet."
         : `The true next position is ${a.truth} metres, so you are off by ${a.miss} metres.`),
   },
-  zh: {
-    know: "你知道的",
-    did: "你做的",
-    next: "你接下来知道的",
-    position: "位置",
-    speed: "速度",
-    unit: "米",
-    metres: (n) => `${n} 米`,
-    perStep: (n) => `${n} 米/步`,
-    action: (a) => ({ push: "推", coast: "滑行", brake: "刹车" })[a],
-    answer: "你的答案",
-    check: "检查",
-    nextStep: "下一步",
-    startOver: "重新开始",
-    step: "步",
-    stepOf: (n) => `第 ${n} 步，共 5 步`,
-    missNow: "这一步的偏差",
-    average: "平均偏差",
-    none: "-",
-    v0: "状态和动作都给你了。说出它接下来到哪里。",
-    vClose: (x) => `偏了 ${x} 米。当真实状态被直接递到手上时，走一步是件容易的事。`,
-    vFar: (x) => `偏了 ${x} 米。仍然是件容易的事，而被报告出来的正是这个平均值。`,
-    vDone: (x) => `五步，平均偏差 ${x} 米。这就是论文开头写的那个数字，而这五步每一步都是从真值出发的。`,
-    aria: (a) =>
-      `一条 0 到 12 米的轨道，第 ${a.n} 步，共 5 步。球在 ${a.pos} 米处，速度为每步 ${a.speed} 米，动作是${a.action}。你的答案落在 ${a.answer} 米。` +
-      (a.truth === null
-        ? "真实的下一个位置还没有显示。"
-        : `真实的下一个位置是 ${a.truth} 米，你偏了 ${a.miss} 米。`),
-  },
 };
 
 function layout(compact: boolean) {

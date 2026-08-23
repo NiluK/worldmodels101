@@ -115,29 +115,6 @@ const TEXT = {
     ariaMiss: (d: string) => `The real path ended ${d} steps from the goal.`,
     ariaRunning: "Running.",
   },
-  zh: {
-    trusted: "重新规划前信任的步数",
-    run: "运行",
-    stepsTrusted: "信任步数",
-    replans: "重新规划次数",
-    distance: "结束时与目标的距离",
-    reached: "已到达",
-    units: (n: string) => `${n} 步`,
-    real: "真实",
-    imagined: "想象",
-    start: "起点",
-    goal: "目标",
-    v1: "只信任几步，并从真实状态重新规划，误差没有机会累积。",
-    v2: "模型被信任得更久，每次重新规划之前，想象与真实之间的差距都会张开。",
-    v3: "信任这么久，想象的路径已经离开了真实的路径，这个计划是为一个并不存在的世界做的。",
-    hit: "它到达了目标。",
-    miss: "它错过了。",
-    aria: (k: number, r: number, end: string) =>
-      `俯视的场地，起点在左，目标在右。实线的石板蓝路径是真实发生的事。虚线的朱红段是模型在每段 ${k} 步的信任区间内想象的路径，每段都从真实状态重新开始。重新规划 ${r} 次。${end}`,
-    ariaHit: "真实路径到达了目标。",
-    ariaMiss: (d: string) => `真实路径在距目标 ${d} 步处结束。`,
-    ariaRunning: "运行中。",
-  },
 } as const;
 
 export function TrustHorizon() {

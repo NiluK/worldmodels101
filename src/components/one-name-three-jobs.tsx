@@ -64,27 +64,6 @@ const TEXT: LocaleText<Strings> = {
     vNow: "Three jobs then, the same three jobs now. Nobody has added a fourth.",
     join: " ",
   },
-  zh: {
-    who: ["Schmidhuber，1990", "Thrun、Möller 与 Linden，1990", "Sutton，1991"],
-    short: ["Schmidhuber", "Thrun", "Sutton"],
-    jobs: ["把梯度推过去", "在里面搜索", "从它那里造出经验"],
-    jobsVerdict: ["把梯度推过去", "在里面搜索", "从它那里造出经验"],
-    said: [
-      "一个网络预测另一个网络选出的动作会导向什么，而做选择的那个，正是拿这份预测来改进的。",
-      "这个系统靠亲自去试，学会自己的动作会带来什么，再把这份知识往前推演，挑出更好的动作。",
-      "模型编出经验来，智能体既从编出来的经验里学，也从真实的那一种里学。",
-    ],
-    nowLabel: "现在",
-    showNow: "现在谁在做这件事",
-    hideNow: "收起",
-    groupLabel: "1990 与 1991 年的三篇论文，同一个说法在每篇里做的是不同的活。",
-    reads: ["论文", "相隔年数", "一个说法的用法", "已选"],
-    none: "无",
-    vNone: "一个说法，印在相隔不到一年的三篇论文上。",
-    vSelected: (author, job) => `${author} 的模型，是拿来${job}的。`,
-    vNow: "当年是这三种用法，如今还是这三种。没有人加出第四种。",
-    join: "",
-  },
 };
 
 export function OneNameThreeJobs() {

@@ -142,47 +142,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (bill, steps, mf, mb, verdict) =>
       `Two illustrative learning curves against environment steps, model-free and model-based. With ${bill} you can afford ${steps} steps. At that budget the model-free agent scores ${mf} and the model-based agent ${mb}, out of 1. ${verdict}`,
   },
-  zh: {
-    cost: "每一步的代价",
-    stops: [
-      { name: "模拟帧", price: "每秒数千步", bill: "模拟器时间" },
-      { name: "真人速度的游戏", price: "每秒约十五步", bill: "游戏时间" },
-      { name: "机械臂", price: "每步几秒，还要复位", bill: "机械臂时间" },
-      { name: "实验室实验", price: "每步约一小时", bill: "实验室时间" },
-    ],
-    budget: "预算",
-    bill: (dur, bill) => `${dur}的${bill}`,
-    badModel: "显示一个差模型",
-    legend: ["无模型", "基于模型", "基于模型，差模型"],
-    score: "任务得分",
-    steps: "经验，按环境步数计",
-    stepsShort: "步数",
-    cross: "交叉点",
-    budgetMark: "预算",
-    ticks: ["百", "千", "万", "十万", "百万", "千万", "亿", "十亿"],
-    read: ["付得起的步数", "预算用尽时的无模型得分", "预算用尽时的基于模型得分"],
-    beyond: "，超出图表右缘",
-    join: "",
-    verdict: {
-      free: "这个价位上你付得起无模型的路线。多玩一会儿就胜过一个模型，而模型的天花板也开始显露。",
-      model: "预算在无模型曲线爬起来之前就用完了。这就是要一个模型的理由。",
-      starved: "预算用完时两边几乎什么都没学到。模型领先，但两条曲线都贴着地板。",
-      even: "在交叉点附近，两种设计谁也占不到多少便宜。",
-      bad: "模型若是差的，起步虽快却早早停在低处。模型只有在你要去的地方足够准，才算划算。",
-    },
-    one: (n, unit) => {
-      const single = { hour: "一小时", day: "一天", week: "一周", month: "一个月", year: "一年" }[unit];
-      const word = { hour: "小时", day: "天", week: "周", month: "个月", year: "年" }[unit];
-      return n === 1 ? single : `${n} ${word}`;
-    },
-    count: (n) => {
-      if (n < 1e4) return `约 ${Math.round(n).toLocaleString("zh-CN")}`;
-      const [v, unit] = n < 1e8 ? [n / 1e4, "万"] : [n / 1e8, "亿"];
-      return `约 ${Number(v.toPrecision(2))} ${unit}`;
-    },
-    aria: (bill, steps, mf, mb, verdict) =>
-      `两条示意性的学习曲线，横轴是环境步数，一条无模型，一条基于模型。用${bill}可以买到${steps}步。在这个预算下，无模型智能体得分 ${mf}，基于模型的得分 ${mb}，满分为 1。${verdict}`,
-  },
 };
 
 /** seconds to a rounded phrase: "a day", "3 weeks", "a year" */

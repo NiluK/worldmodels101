@@ -1,4 +1,3 @@
-import { CHAPTER_TEXT_BY_LOCALE } from "./chapter-text";
 export type Chapter = {
   n: number;
   slug: string;
@@ -97,10 +96,6 @@ export const CHAPTERS: Chapter[] = [
 export const READY = CHAPTERS.filter((c) => c.status === "ready");
 export const getChapter = (slug: string) => CHAPTERS.find((c) => c.slug === slug);
 
-/** Chapter titles and blurbs in Simplified Chinese. */
-
-export function chapterText(locale: string, slug: string) {
-  const base = CHAPTERS.find((c) => c.slug === slug)!;
-  const translated = CHAPTER_TEXT_BY_LOCALE[locale]?.[slug];
-  return translated ? { ...base, ...translated } : base;
+export function chapterText(_locale: string, slug: string) {
+  return CHAPTERS.find((c) => c.slug === slug)!;
 }

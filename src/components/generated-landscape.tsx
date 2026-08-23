@@ -117,37 +117,6 @@ const TEXT = {
     heroAria: (hdg: number) =>
       `A generated first-person landscape seen from heading ${hdg} degrees. Nothing is stored behind the picture.`,
   },
-  zh: {
-    hint: "拖动画面环顾四周，或点击画面后用方向键。",
-    keys: "按键已启用。方向键或 WASD 可以转向和行走。",
-    test: "转开再转回",
-    away: "正在转开",
-    back: "正在转回",
-    hold: "保持世界不变",
-    stored: "存着什么",
-    nothing: "什么都没有。每一帧都是从朝向画出来的",
-    left: "向左转",
-    right: "向右转",
-    fwd: "向前走",
-    backStep: "向后退",
-    heading: "朝向",
-    fromStart: "离起点",
-    landmark: "标记",
-    strides: (n: string) => `${n} 步`,
-    notInView: "不在视野内",
-    ahead: (d: string) => `正前方，${d} 步`,
-    bearing: (deg: number, side: "left" | "right", d: string) => `${side === "left" ? "左" : "右"} ${deg}°，${d} 步`,
-    moved: (deg: number, side: "left" | "right") =>
-      `标记向${side === "left" ? "左" : "右"}移了 ${deg} 度。画面背后没有任何东西在撑着它。`,
-    chance: "标记碰巧回到了原处一度之内。画面背后没有任何东西在撑着它。",
-    gone: "标记不见了。画面背后没有任何东西在撑着它。",
-    stayed: "标记还在原处。读回的是一条存下来的坐标。",
-    mapAria: (n: number) => `俯视地图：你的位置和朝向，以及 ${n} 个存下来的标记位置。`,
-    aria: (hdg: number, lm: string, on: boolean) =>
-      `一片生成出来的第一人称风景，朝向 ${hdg} 度。标记${lm}。「保持世界不变」${on ? "已开启" : "已关闭"}。`,
-    heroAria: (hdg: number) =>
-      `一片生成出来的第一人称风景，朝向 ${hdg} 度。画面背后什么都没有存着。`,
-  },
 };
 
 function hash(n: number) {

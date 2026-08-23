@@ -85,50 +85,6 @@ const TEXT: Record<
     openRow: (who) => `Open the hold for ${who}`,
     closeRow: (who) => `Close the hold for ${who}`,
   },
-  zh: {
-    colWho: "年份与人",
-    colAsked: "被要求做",
-    colInstrument: "仪器",
-    colCarried: "不得不携带",
-    rows: [
-      {
-        who: "开篇：那只球",
-        asked: "说出球会在哪里",
-        instrument: "两张照片",
-        carried: "方向和速度",
-      },
-      {
-        who: "1948，克劳德·香农",
-        asked: "便宜地发出一条消息",
-        instrument: "一支铅笔和一些概率（信息的数学）",
-        carried: "每个下一个符号有多大可能",
-      },
-      {
-        who: "1990，杰弗里·埃尔曼",
-        asked: "猜下一个词",
-        instrument: "查看网络的内部状态，并把它们分组",
-        carried: "语法（名词与动词，有生命与无生命）",
-      },
-      {
-        who: "2022，Kenneth Li 及同事",
-        asked: "猜下一步合法的黑白棋落子",
-        instrument: "一个训练来从激活里读出一条事实的探针",
-        carried: "整张棋盘",
-      },
-    ],
-    inHold: "在货舱里",
-    open: "打开货舱",
-    close: "关上货舱",
-    rowsOpen: "已打开的行",
-    nOf: (n) => `${ROWS} 行中的 ${n} 行`,
-    verdictClosed: "货单上列的是每一个被要求做的事。别的什么都没写。",
-    verdictPart: "把其余的也打开。",
-    verdictFull: "这些没有一个是被要求的。没有它们，这些活一个也干不成。",
-    aria: (n) =>
-      `一张四行的账本：每个系统被要求做什么、用什么仪器去看、以及它不得不携带什么。「不得不携带」一列已打开 ${n} 行，共 ${ROWS} 行。`,
-    openRow: (who) => `打开「${who}」的货舱`,
-    closeRow: (who) => `关上「${who}」的货舱`,
-  },
 };
 
 /** Hairline hatch in --rule: the cover over the hold. */

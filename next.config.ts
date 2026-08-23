@@ -31,18 +31,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/zh/chapters/what-people-mean",
-        destination: "/zh/chapters/what-is-a-world-model",
-        permanent: true,
-      },
-      {
         source: "/chapters/the-idea",
         destination: "/chapters/how-do-world-models-work",
-        permanent: true,
-      },
-      {
-        source: "/zh/chapters/the-idea",
-        destination: "/zh/chapters/how-do-world-models-work",
         permanent: true,
       },
       {
@@ -51,18 +41,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/zh/chapters/prediction",
-        destination: "/zh/chapters/why-prediction-is-learning",
-        permanent: true,
-      },
-      {
         source: "/chapters/latents",
         destination: "/chapters/what-is-latent-space",
-        permanent: true,
-      },
-      {
-        source: "/zh/chapters/latents",
-        destination: "/zh/chapters/what-is-latent-space",
         permanent: true,
       },
       {
@@ -71,18 +51,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/zh/chapters/dynamics",
-        destination: "/zh/chapters/what-is-a-dynamics-model",
-        permanent: true,
-      },
-      {
         source: "/chapters/dreaming",
         destination: "/chapters/can-ai-learn-inside-a-world-model",
-        permanent: true,
-      },
-      {
-        source: "/zh/chapters/dreaming",
-        destination: "/zh/chapters/can-ai-learn-inside-a-world-model",
         permanent: true,
       },
       {
@@ -91,28 +61,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/zh/chapters/jepa",
-        destination: "/zh/chapters/what-is-jepa",
-        permanent: true,
-      },
-      {
         source: "/chapters/video-worlds",
         destination: "/chapters/are-video-models-world-simulators",
         permanent: true,
       },
       {
-        source: "/zh/chapters/video-worlds",
-        destination: "/zh/chapters/are-video-models-world-simulators",
-        permanent: true,
-      },
-      {
         source: "/chapters/whats-broken",
         destination: "/chapters/what-is-still-broken",
-        permanent: true,
-      },
-      {
-        source: "/zh/chapters/whats-broken",
-        destination: "/zh/chapters/what-is-still-broken",
         permanent: true,
       },
     ];

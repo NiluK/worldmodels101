@@ -62,30 +62,6 @@ const TEXT = {
     aria: (k: number, names: string, cyclist: boolean) =>
       `A street scene rebuilt from ${k} of 5 factors: ${names}. The cyclist is ${cyclist ? "kept" : "gone"}.`,
   },
-  zh: {
-    wall: "墙",
-    sky: "天空",
-    light: "光线",
-    gravel: "碎石",
-    cyclist: "骑车的人",
-    width: "放行的数字个数",
-    score: "重绘得分",
-    s0: "没有",
-    s1: "大半",
-    s2: "几乎全部",
-    s3: "全部",
-    cyclistCell: "那个骑车的人",
-    gone: "丢了",
-    kept: "留下了",
-    v0: "什么都没过来。",
-    v1: "墙和天空回来了，重绘已经得分不低。",
-    v2: "光线和碎石也回来了。重绘几乎完美，而你本来需要避开的那一样东西仍然不在。",
-    v3: "骑车的人最后才到，因为他只占一小撮像素，而得分从没要求过更多。",
-    note: "图 4.2 先留下了决策所依赖的两个因素。重绘得分先留下最大的。",
-    none: "什么都没有",
-    aria: (k: number, names: string, cyclist: boolean) =>
-      `一幅街景，由五个因素中的 ${k} 个重建：${names}。骑车的人${cyclist ? "留下了" : "丢了"}。`,
-  },
 };
 
 export function PixelBudget() {
@@ -99,7 +75,7 @@ export function PixelBudget() {
   const score = FACTORS.filter(kept).reduce((sum, f) => sum + SHARE[f], 0);
   const scoreWord = k === 0 ? s.s0 : k <= 2 ? s.s1 : k <= 4 ? s.s2 : s.s3;
   const verdict = k === 0 ? s.v0 : k <= 2 ? s.v1 : k <= 4 ? s.v2 : s.v3;
-  const names = k === 0 ? s.none : FACTORS.filter(kept).map((f) => s[f]).join(locale === "zh" ? "、" : ", ");
+  const names = k === 0 ? s.none : FACTORS.filter(kept).map((f) => s[f]).join(", ");
 
   return (
     <div>

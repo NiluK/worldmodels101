@@ -133,40 +133,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (carried, total, rec) =>
       `An illustrative nine by nine Go position beside four things a model could carry. It carries ${carried} of the four, costing ${total} illustrative units. ${rec}`,
   },
-  zh: {
-    position: "局面",
-    columnTitle: "它可以带上的东西",
-    recTitle: "它推荐的一手",
-    items: {
-      picture: "下一个棋盘的图",
-      stones: "每颗子在哪儿",
-      value: "这有多好",
-      policy: "该试什么",
-    },
-    short: {
-      picture: "那张图",
-      stones: "那些子",
-      value: "这有多好",
-      policy: "该试什么",
-    },
-    drop: (s) => `丢掉${s}`,
-    carry: (s) => `带上${s}`,
-    carryAll: "四样都带上",
-    moves: { topRight: "下在右上", centre: "下在天元" },
-    noRec: "没有可推荐的一手",
-    totalLabel: "它带着的东西",
-    units: (n) => `${n} 单位`,
-    droppedLabel: "已丢掉",
-    ofFour: (n) => `4 样里的 ${n} 样`,
-    none: "无",
-    vAll: "四样全带着。右上那一手以 0.09 领先。",
-    vLooked: "凡是能看的你都丢掉了，那一手却没有动。",
-    vNumber: "两个数丢掉任何一个，就没有可推荐的一手了。当初的决定就落在这两样上。",
-    vMixed: (n) => `它带着四样里的 ${n} 样。`,
-    estimates: "这两个数都是估计出来的。",
-    aria: (carried, total, rec) =>
-      `左边是一个示意性的 9 路围棋局面，旁边是模型可以带上的四样东西。它带着四样里的 ${carried} 样，代价是 ${total} 个示意单位。${rec}`,
-  },
 };
 
 export function DropTheBoard() {

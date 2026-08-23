@@ -155,49 +155,6 @@ const TEXT: LocaleText<Strings> = {
       }`;
     },
   },
-  zh: {
-    frameLabel: "画面",
-    numbersLabel: "三十二个数字",
-    steeringLabel: "转向",
-    bend: "把弯道挪一挪",
-    car: "让车靠近路缘",
-    gravel: "把碎石重新铺一遍",
-    cloud: "换一个云的形状",
-    putBack: "放回原样",
-    ofN: (n) => `32 个里的 ${n} 个`,
-    cChange: "改动",
-    cMoved: "动了的数字",
-    cSteering: "转向",
-    nameNone: "没有改动",
-    nameBend: "弯道",
-    nameCar: "车",
-    nameGravel: "碎石",
-    nameCloud: "云",
-    unchanged: "没有变化",
-    vNone: "这是记录下来的那一帧。挑一个改动，看那三十二个数字。",
-    vBend: "弯道挪了。三十二个数字里有五个跟着动了，转向也跟着动。",
-    vCar: "车更靠近路缘了。三个数字动了，转向也跟着动。",
-    vGravel:
-      "每一粒碎石都换了地方，画面明显不一样了。三十二个数字一个也没动，所以挤压之后的任何东西都看不出来。",
-    vCloud: "云换了形状。一个数字也没动，转向根本没听说这回事。",
-    note: "数字仅为示意",
-    aria: (c) => {
-      const scene =
-        c === "bend"
-          ? "远处的弯道拐向了另一边"
-          : c === "car"
-            ? "车靠近了路缘"
-            : c === "gravel"
-              ? "碎石重新铺过"
-              : c === "cloud"
-                ? "云换了形状"
-                : "保持记录时的原样";
-      const n = Object.keys(MOVES[c]).length;
-      return `一帧驾驶画面，${scene}。${
-        n === 0 ? "三十二个数字一个也没动，转向没有变化。" : `三十二个数字里有 ${n} 个动了，转向也跟着动。`
-      }`;
-    },
-  },
 };
 
 /** the recorded view: road, markings, bonnet, verge, one cloud */

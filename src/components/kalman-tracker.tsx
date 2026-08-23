@@ -211,7 +211,7 @@ type Text = Record<
   string
 >;
 
-const TEXT: Record<"en" | "zh", Text> = {
+const TEXT: Record<"en", Text> = {
   en: {
     truePath: "true path",
     blips: "radar blips",
@@ -242,37 +242,6 @@ const TEXT: Record<"en" | "zh", Text> = {
     vBetter: "The band is tighter than the radar's scatter: the filter trusts its own dynamics as much as the radar, and it carries a speed it never measured.",
     vEarly: "Early yet: the filter is still working out a velocity from the first few blips.",
     aria: "A plane on a smooth path with noisy radar blips scattered around it. At step {t} the Kalman estimate is {e} m from the plane and the latest blip is {b} m off.",
-  },
-  zh: {
-    truePath: "真实航迹",
-    blips: "雷达回波",
-    estimate: "估计",
-    band: "95% 不确定带",
-    shadow: "雷达盲区",
-    time: "时间",
-    noise: "雷达噪声",
-    dropBlips: "中途停掉一段回波",
-    play: "播放",
-    pause: "暂停",
-    toEnd: "显示整段",
-    whatIf: "如果我向左转呢？",
-    whatIfNote: "卡尔曼滤波器可以把你给它的一个转向往前推演，但它既不会学习动力学，也不会比较两个动作。它只做估计，不做规划。",
-    rBlip: "最新回波偏差",
-    rEst: "估计偏差",
-    rBand: "不确定带，95%",
-    rSpeed: "速度：估计 / 真实",
-    rGain: "增益：0 信物理，1 信雷达",
-    units: "{n} 米",
-    pm: "±{n} 米",
-    speed: "{a} / {b} 米每秒",
-    none: "还没有回波",
-    v0: "目前只有一个回波：滤波器大致知道飞机在哪，对它的速度一无所知。",
-    vCoast: "有一阵子没有回波了：估计只靠动力学在滑行，不确定带正在张开。",
-    vBack: "回波回来了，不确定带又在收拢。",
-    vExact: "雷达几乎精确，滤波器没什么可补的，基本上只是复述它。",
-    vBetter: "不确定带比雷达的散布更窄：滤波器对自己的动力学和对雷达一样信任，而且它带着一个从未测量过的速度。",
-    vEarly: "还早：滤波器还在从最初几个回波里算出一个速度。",
-    aria: "一架飞机沿平滑航迹飞行，周围散布着带噪声的雷达回波。第 {t} 步时，卡尔曼估计距飞机 {e} 米，最新回波偏差 {b} 米。",
   },
 };
 

@@ -141,31 +141,8 @@ const EN = {
 
 type Strings = typeof EN;
 
-const TEXT: Record<"en" | "zh", Strings> = {
+const TEXT: Record<"en", Strings> = {
   en: EN,
-  zh: {
-    dream: "梦里",
-    real: "真实游戏",
-    policy: "策略",
-    policies: ["躲避", "躲避，偏向左边", "大多待在最左", "停在最左列"],
-    round: (r: number) => `第 ${r} 轮，共 ${ROUNDS_LEFT.length} 轮`,
-    tick: (t: number) => `第 ${t} 步，共 ${TICKS} 步`,
-    hit: "被击中",
-    notRun: "尚未运行",
-    train: "在梦里训练",
-    run: "在真实游戏里运行",
-    reset: "重置",
-    scoreDream: "梦里的得分",
-    scoreReal: "真实游戏的得分",
-    spawned: "生成的火球：梦 / 真实",
-    v0: "未训练的策略。在两边都躲得很差。",
-    vTraining: "正在训练。每一轮，策略都会留下在梦里得分高的动作。",
-    v1: "在梦里，智能体找到了一种让火球不再出现的走法。在里面表现极好。",
-    v2: "同样的动作，放到真实游戏里：火球照样来，因为游戏从没答应过停火。",
-    aria: (where: string, pol: string, f: Frame) =>
-      `${where}。策略：${pol}。第 ${f.tick} 步，共 ${TICKS} 步，得分 ${f.score} / ${TICKS}，生成了 ${f.spawned} 个火球${f.hit ? "，智能体被击中" : ""}。`,
-    ariaIdle: (where: string) => `${where}。尚未运行。`,
-  },
 };
 
 const finalDream = (): DreamRun => ({ round: 0, frames: DREAM_ROUNDS[0], i: DREAM_ROUNDS[0].length - 1 });

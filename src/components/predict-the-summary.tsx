@@ -49,36 +49,6 @@ const TEXT = {
     ariaSummary: (n: number) =>
       `A small image with one block hidden. The encoder predicts a short bar of eight numbers, ${n} of 8 filled in, compared with the target summary. The loss is the distance between two summaries. No decoder is built.`,
   },
-  zh: {
-    target: "预测目标",
-    pixels: "像素",
-    summary: "摘要",
-    predict: "预测",
-    image: "图像，遮住一块",
-    encoder: "编码器",
-    decoder: "解码器",
-    prediction: "预测",
-    reference: "目标",
-    lossPixels: "损失：像素误差",
-    lossSummary: "损失：两份摘要之间的距离",
-    keep: "训练后留下的",
-    thrown: "造了，然后扔掉",
-    never: "从未建造",
-    promptPixels: "有一块被遮住了。预测它的像素。",
-    promptSummary: "有一块被遮住了。预测它的摘要。",
-    verdict: "同一个编码器，不同的目标。其中一个从来不需要解码器。",
-    cellTarget: "预测目标",
-    cellLoss: "损失",
-    cellDecoder: "解码器",
-    pixelsTarget: "缺失的像素",
-    summaryTarget: "缺失那块的一份摘要",
-    pixelError: "像素误差",
-    distance: "两份摘要之间的距离",
-    ariaPixels: (n: number) =>
-      `一张小图像，遮住了一块。编码器接到解码器，解码器把那块重画成一片模糊的色块，9 格中已填入 ${n} 格。损失是像素误差。解码器为训练而建，然后被扔掉。`,
-    ariaSummary: (n: number) =>
-      `一张小图像，遮住了一块。编码器预测出一条八个数字的短条，8 个中已填入 ${n} 个，与目标摘要比较。损失是两份摘要之间的距离。没有建造解码器。`,
-  },
 };
 type Text = (typeof TEXT)["en"];
 

@@ -111,32 +111,6 @@ const TEXT: LocaleText<Text> = {
     aria: (n, k, cap) =>
       `A room with a door and a window. The door as it was left is drawn in slate and the door as it came back in vermilion. ${n} runs, ${k} of them came back the same. ${cap}`,
   },
-  zh: {
-    goOne: "走开再走回来",
-    goMany: "做二十次",
-    reset: "重来",
-    holdLabel: "是什么把门固定在那里",
-    learned: "学出来的",
-    engine: "引擎的场景图",
-    capNone: "还没有运行过",
-    capHeld: (n) => `第 ${n} 次：门回到了原来的位置`,
-    capMoved: (n) => `第 ${n} 次：门回来时换了地方`,
-    capGone: (n) => `第 ${n} 次：门根本就不在了`,
-    tally: "一次运行一个标记",
-    rRuns: "运行次数",
-    rHeld: "守住",
-    rGuarantee: "保证",
-    guarNo: "没有，这只是一个比例",
-    guarYes: "有，它是从存储里读回来的",
-    ofN: (a, b) => `${a} / ${b}`,
-    v0: "这里没有任何东西把门固定住。按一下，看看它有多常还是回到原处。",
-    vAll: (n) => `${n} 比 ${n}。这是一个比例，而比例不是承诺。`,
-    vJust: (n) => `第 ${n} 次回来时门换了地方。没有东西固定它，所以它也不必固定。`,
-    vSome: (n, k) => `${n} 次运行，其中 ${k} 次不对。「通常」正是这个意思。`,
-    vEngine: "这里没有什么可出错的。门是从存储里读回来的，所以每一次运行都是同一次。",
-    aria: (n, k, cap) =>
-      `一个房间，有一扇门和一扇窗。离开时的门画成青灰色，回来时的门画成朱红色。共 ${n} 次运行，其中 ${k} 次回来时一样。${cap}`,
-  },
 };
 
 export function UsuallyNotAlways() {
