@@ -27,7 +27,7 @@ export const CHAPTERS: Chapter[] = [
     title: "How Do World Models Work?",
     blurb:
       "A model you can run forward lets you try an action before paying for it. That is the oldest idea in the field and still the best one. The trouble is that a search good enough to find the best plan is also good enough to find the places where the model is wrong. Nobody has engineered that away.",
-    demo: "Half a second to return a serve, two cars and a wall, and a planner that gets worse the harder it searches.",
+    demo: "A gap in traffic, two cars and a wall, and a planner that gets worse the harder it searches.",
     minutes: 25,
     status: "ready",
   },
@@ -118,7 +118,7 @@ export const CHAPTERS_ZH: Record<string, { title: string; blurb: string; demo: s
   "the-idea": {
     title: "世界模型是怎么工作的？",
     blurb: "一个能往前推演的模型，让你在真的付出代价之前先把一个动作试一遍。麻烦在于，一个强到能找出最佳方案的搜索，也强到能找出模型出错的地方。",
-    demo: "半秒钟接一记发球，两辆车和一堵墙，还有一个搜索越卖力、结果越差的规划器。",
+    demo: "车流里的一个空档，两辆车和一堵墙，还有一个搜索越卖力、结果越差的规划器。",
   },
   prediction: {
     title: "为什么预测就是学习？",

@@ -93,6 +93,7 @@ import { TwoZeroLosses } from "@/components/two-zero-losses";
 import { UncertaintyPenalty } from "@/components/uncertainty-penalty";
 import { WhoLabelledIt } from "@/components/who-labelled-it";
 import { WordClusters } from "@/components/word-clusters";
+import { GapDecision } from "@/components/gap-decision";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -179,6 +180,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     UncertaintyPenalty,
     WhoLabelledIt,
     WordClusters,
+    GapDecision,
     HorizonSlider,
     RolloutEquation,
     Quiz,

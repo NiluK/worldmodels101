@@ -33,8 +33,6 @@ const SOURCES_CH2 = [
   { t: "Benchmarking Model-Based Reinforcement Learning", a: "Wang et al., 2019", u: "https://arxiv.org/abs/1907.02057", n: "Where model-based methods actually win and lose, and where the planning horizon dilemma gets named and measured." },
   { t: "Calibrated Model-Based Deep Reinforcement Learning", a: "Malik et al., 2019", u: "https://arxiv.org/abs/1906.08312", n: "The warning underneath every uncertainty method: the uncertainty estimate can itself be wrong, and calibrating it changes planning results." },
   { t: "MOPO: Model-based Offline Policy Optimization", a: "Yu et al., 2020", u: "https://arxiv.org/abs/2005.13239", n: "Pessimism made explicit. Penalise predicted reward by model uncertainty, so an unfamiliar shortcut has to pay for being unfamiliar." },
-  { t: "Quantifying the nature of anticipation in professional tennis", a: "Triolet et al., 2013", u: "https://doi.org/10.1080/02640414.2012.759658", n: "Match analysis placing the earliest possible reaction to the ball around 140 to 160 ms after contact. Paywalled." },
-  { t: "The spatiotemporal control of expert tennis players when returning first serves", a: "Navia et al., 2021", u: "https://doi.org/10.1080/02640414.2021.1976484", n: "Where the 177 ms figure in the opening comes from, measured rather than estimated. Paywalled." },
 ];
 
 /**
@@ -103,8 +101,6 @@ const NOTES_ZH: Record<string, string> = {
   "http://prize.hutter1.net/": "一项压缩维基百科快照的现金悬赏，理由是：不建模文本的含义，你就压不动它。",
   "https://arxiv.org/abs/1206.5538": "这篇综述梳理了「一个好的学出来的表征是拿来干什么的」，写在预测彻底赢下这场争论之前。",
   "https://people.idsia.ch/~juergen/creativity.html": "把压缩进展本身当作一种驱动力：它不只是衡量模型的尺子，也是跑去看点什么的理由。",
-  "https://doi.org/10.1080/02640414.2012.759658": "比赛分析，把「最早可能是对球做出的反应」定在击球后大约 140 到 160 毫秒。需付费。",
-  "https://doi.org/10.1080/02640414.2021.1976484": "开头那个 177 毫秒的出处，是测出来的，不是估出来的。需付费。",
 };
 
 const SOURCES_CH3 = [
