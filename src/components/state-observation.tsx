@@ -53,25 +53,6 @@ const TEXT = {
     aria: "A room seen from above with a chair, a rolling ball, a cupboard and a table. The camera points at {deg} degrees and can see: {seen}.",
     nothing: "nothing",
   },
-  zh: {
-    chair: "椅子", ball: "球", cupboard: "橱柜", table: "桌子",
-    chairFact: "在这里", tableFact: "在这里",
-    cupboardFact: "开着",
-    ballLeft: "向左滚动，位于 {m} 米处", ballRight: "向右滚动，位于 {m} 米处",
-    unknown: "？",
-    state: "状态", stateNote: "实际存在的东西",
-    obs: "观测", obsNote: "摄像机此刻看到的东西",
-    turn: "转动摄像机", step: "时间前进一步",
-    heading: "朝向", inView: "在视野内", time: "时间步",
-    ofFour: "{n} / 4",
-    count: ["四件东西都在视野里。", "四件东西中有一件不在视野里。它仍然在那里。",
-      "四件东西中有两件不在视野里。它们仍然在那里。",
-      "四件东西中有三件不在视野里。它们仍然在那里。",
-      "四件东西都不在视野里。它们仍然在那里。"],
-    moved: "你转开的时候球动了。状态变了，你上一次的观测没有变。",
-    aria: "从上方俯视的房间，里面有椅子、一个滚动的球、橱柜和桌子。摄像机朝向 {deg} 度，能看到：{seen}。",
-    nothing: "什么都看不到",
-  },
 };
 
 const pol = (deg: number, r: number) => ({

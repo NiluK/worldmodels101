@@ -97,35 +97,6 @@ const TEXT: LocaleText<Strings> = {
         flagged ? "A warning says the question is outside the training data." : "There is no warning."
       }`,
   },
-  zh: {
-    question: "问题",
-    answer: "答案",
-    qName: ["素材里出现过的速度", "刚刚越过素材的速度", "和素材毫不相干的速度"],
-    ask: (v) => `如果它以 ${v} 米每秒撞过来，会怎么样`,
-    worldDoes: "世界实际做的事",
-    confidence: "模型自称的把握",
-    banner: "这样的东西我从没见过",
-    flag: "系统会说出自己何时越出了数据",
-    answerCell: "答案",
-    answerValue: "已给出",
-    confCell: "模型自称的把握",
-    confValue: "很高",
-    warnCell: "警告",
-    warnNone: "没有",
-    warnOut: "越出了我的数据",
-    verdict: [
-      "在素材之内，答得也对。卡片上没有任何东西告诉你这一点。",
-      "刚越过素材一点点，也就错了一点点。卡片看上去一模一样。",
-      "和素材毫不相干，答案是错的。同样的卡片，同样的把握，没有警告。",
-    ],
-    flagLine: "旗标打开时，你就会知道别按这个答案去行动。可是没有人会因为做出这个旗标而得到奖励。",
-    hint: "三个问题。左右方向键可以切换。",
-    ariaQ: (v) => `两个球，其中一个以每秒 ${v} 米的速度撞向另一个。`,
-    ariaA: (name, flagged) =>
-      `模型对「${name}」的回答，用朱红画出，下方用青灰画出世界实际做的事。${
-        flagged ? "一条警告说这个问题越出了训练数据。" : "没有任何警告。"
-      }`,
-  },
 };
 
 function Ball({

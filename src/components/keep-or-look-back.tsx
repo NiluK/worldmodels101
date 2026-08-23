@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
-import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
 
 /**
@@ -58,42 +57,10 @@ const TEXT = {
     aria: (mode: string, n: number, verdict: string) =>
       `Six facts arrive one at a time, ${n} so far, ${mode}. ${verdict}`,
   },
-  zh: {
-    facts: ["门开着", "球在滚", "钥匙是红的", "灯关了", "箱子很重", "狗在外面"],
-    questions: ["门开着吗？", "钥匙是什么颜色？", "狗在外面吗？"],
-    stream: "事实，按到来顺序",
-    questionSoon: "问题，最后到来",
-    summaryTitle: "摘要，只放得下三条",
-    rule: "规则：丢掉最旧的",
-    windowTitle: "窗口，六条全留",
-    lookBack: "回看",
-    modeSummary: "带着摘要",
-    modeWindow: "保留窗口",
-    question: "问题",
-    play: "播放",
-    step: "单步",
-    reset: "重置",
-    kept: "保留",
-    keptSummary: "六条里的三条",
-    keptWindow: "六条全部",
-    work: "每步的工作量",
-    workSummary: "每一步都一样",
-    workWindow: "随长度增长",
-    before: "先选一个问题，再按播放。",
-    midSummary: (n: number) =>
-      n <= ROOM ? `六条到了 ${n} 条。摘要还有空位。` : `六条到了 ${n} 条。没有空位，最旧的那条出去了。`,
-    midWindow: (n: number) => `六条到了 ${n} 条。窗口每一条都留着。`,
-    hit: "那条事实还在摘要里。这一次它留对了三条。",
-    miss: (n: number) => `第 ${n} 条到来时，摘要丢掉了那条事实。它无从知道你会问这个。`,
-    window: "窗口回头看了一眼，找到了。代价是六条全留着。",
-    aria: (mode: string, n: number, verdict: string) =>
-      `六条事实依次到来，目前到了 ${n} 条，${mode}。${verdict}`,
-  },
 };
 
 export function KeepOrLookBack() {
-  const locale = useLocale();
-  const T = locale === "zh" ? TEXT.zh : TEXT.en;
+  const T = TEXT.en;
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
 

@@ -69,22 +69,6 @@ const TEXT: LocaleText<Text> = {
     aria: (k, rows, worth) =>
       `A falling curve of the average worth of a row against the size of the batch. At a rollout length of ${k} steps the batch holds ${rows} transitions and the average row is worth ${worth}.`,
   },
-  zh: {
-    xAxis: "批量里的转移条数",
-    xAxisShort: "转移条数",
-    yAxis: "每条的平均价值",
-    yAxisShort: "价值",
-    band: "MBPO 工作的地方",
-    slider: "推演长度",
-    rows: "批量里的转移条数",
-    worth: "每条的平均价值",
-    effective: "有效转移条数",
-    v1: "从每一个真实状态往外只走几步。批量里几乎每一条都还紧挨着真的发生过的事。",
-    v2: "批量长得比学到的东西快。这里有一半的条目已经离任何证据好几步远了。",
-    v3: "从往外五步走到二十步，批量大了四倍，而学习者拿到的还不到原来的两倍。",
-    aria: (k, rows, worth) =>
-      `一条随批量增大而下降的曲线，画的是每条的平均价值。推演长度为 ${k} 步时，批量里有 ${rows} 条转移，每条的平均价值是 ${worth}。`,
-  },
 };
 
 export function VolumeOrTrust() {

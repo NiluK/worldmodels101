@@ -137,28 +137,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (n, c, best) =>
       `An illustrative field with a goal behind a wall. ${n} runs of eight actions have been written and binned, ${c} first actions have been committed to the world. Best score so far: ${best}.`,
   },
-  zh: {
-    start: "起点",
-    goal: "目标",
-    bestSoFar: "目前最好的",
-    justWritten: "刚写下的",
-    binned: "废纸篓",
-    tryOne: "试一条",
-    tryTwenty: "试二十条",
-    commit: "执行",
-    reset: "清空",
-    runsWritten: "写下的方案",
-    imagined: "想象出来的步数",
-    real: "真实走出的步数",
-    bestScore: "最好的分数",
-    none: "无",
-    v0: "规划器还什么都没写。按「试一条」。",
-    v1: (n) => `写下了 ${n} 条，也扔掉了 ${n} 条。这里面没有一步碰到过世界。`,
-    v2: (i, r) => `${i} 个想象出来的步，换来 ${r} 个真实的步。赢家的八分之七，也跟着一起进了废纸篓。`,
-    v3: "只有一条的时候它是在猜。到了这个数量，它是在挑。",
-    aria: (n, c, best) =>
-      `一片示意性的场地，目标在障碍后面。已经写下并扔掉了 ${n} 条八个动作的方案，有 ${c} 个第一步交给了世界。目前最好的分数：${best}。`,
-  },
 };
 
 export function ThrownAwayPlans() {

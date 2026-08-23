@@ -105,37 +105,6 @@ const TEXT: LocaleText<Strings> = {
     ariaAverage: `Two report cards, model A and model B. Each holds one number, an average error of ${AVG} over ${RUN} steps, and nothing else.`,
     ariaHorizon: (card, list) => `${card}, a ruler of ${RUN} steps. ${list}.`,
   },
-  zh: {
-    modelA: "模型 A",
-    modelB: "模型 B",
-    reportLabel: "报告方式",
-    modeAverage: "一个平均数",
-    modeHorizon: "每项属性一个步长",
-    avgLong: "一千步上的平均误差",
-    avgShort: "平均误差",
-    stepsAxis: "步",
-    name: {
-      identity: "身份",
-      physics: "物理",
-      action: "动作保真度",
-      layout: "布局",
-      texture: "纹理",
-      colour: "颜色",
-    },
-    avgCell: "两个模型的平均误差",
-    differCell: "两者表现不同的属性",
-    differValue: "6 项，共 6 项",
-    toldCell: "平均数告诉了你什么",
-    toldValue: "关于该在哪一个里面做规划，它什么都没说",
-    verdictAverage: "各一个数，而且是同一个数。这里没有任何东西告诉你该在哪一个里面做规划。",
-    verdictNone: "同样的平均数，两台不同的机器。挑一项属性看看。",
-    verdictIdentity: "身份：A 撑了 400 步，B 只撑了 45 步。平均数说它们一样。",
-    verdictPhysics: "物理：B 撑了 520 步，A 只撑了 60 步。平均数也是这么说的。",
-    verdictOther: (name, a, b, longer) =>
-      `${name}：A 撑了 ${a} 步，B 撑了 ${b} 步。${longer} 撑得更久。`,
-    ariaAverage: `两张报告卡，模型 A 与模型 B。每张只有一个数：一千步上的平均误差 ${AVG}，再没有别的。`,
-    ariaHorizon: (card, list) => `${card}，一把一千步的标尺。${list}。`,
-  },
 };
 
 export function WhatTheAverageHides() {

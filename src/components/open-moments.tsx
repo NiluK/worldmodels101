@@ -117,33 +117,6 @@ const TEXT: LocaleText<Text> = {
         ? `A route with a T junction, six moments marked along it, moment ${n} selected. Moment ${n} is the junction: the two commands should have come out far apart and came out on top of each other.`
         : `A route with a T junction, six moments marked along it, moment ${n} selected. Moment ${n} is in a corridor: the two commands should have come out close together and did.`,
   },
-  zh: {
-    ghosts: "显示应有的走向",
-    on: "开",
-    off: "关",
-    given: "已给出",
-    askedLeft: "要求向左",
-    askedRight: "要求向右",
-    shouldBar: "两者本该差多远",
-    didBar: "两者实际差多远",
-    strip: "每个时刻的两根柱",
-    rMoment: "时刻",
-    rStake: "这里的利害",
-    rObeyed: "是否服从",
-    stakeNone: "几乎没有",
-    stakeAll: "整条路线",
-    obeyYes: "服从了，但无关紧要",
-    obeyNo: "没有",
-    ofN: (a, b) => `${a} / ${b}`,
-    momentN: (n) => `时刻 ${n}`,
-    vCorridor: "它在这里是服从的。两条指令都停在同一条走廊里，所以服从没有任何代价。",
-    vJunction: "这才是值得操控的时刻，而两条指令叠在了一起。这项测试最难通过的地方，正是通过它最要紧的地方。",
-    keyHelp: "这条路线。左右方向键在各个时刻之间移动。",
-    aria: (n) =>
-      n === JUNCTION + 1
-        ? `一条带 T 形路口的路线，上面标了六个时刻，当前选中时刻 ${n}。时刻 ${n} 就在路口：两条指令本该相距很远，结果却叠在一起。`
-        : `一条带 T 形路口的路线，上面标了六个时刻，当前选中时刻 ${n}。时刻 ${n} 在走廊里：两条指令本该相距很近，实际也是如此。`,
-  },
 };
 
 export function OpenMoments() {

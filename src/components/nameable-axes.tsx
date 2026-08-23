@@ -43,29 +43,6 @@ const TEXT = {
     aria: (p: string, a1: string, s: string) =>
       `A room drawn from two numbers. Pressure ${p}. Axis 1 changes ${a1}. The room is ${s}.`,
   },
-  zh: {
-    axis1: "轴 1",
-    axis2: "轴 2",
-    depth: "深度",
-    light: "亮度",
-    room: "由两个数重新画出的房间",
-    pad: "拖动这个点，或用方向键",
-    pressure: "压力（beta）",
-    whatAxis1: "轴 1 改变什么",
-    a1Tangled: "深度和亮度",
-    a1Mostly: "主要是深度",
-    a1Only: "只有深度",
-    sharpness: "清晰度",
-    sharp: "清晰",
-    softer: "稍软",
-    soft: "模糊",
-    vTangled: "转动一个数，两样东西一起变。两条轴都还没有名字。",
-    vMiddle: "两条轴正在对齐，房间也开始变软。",
-    vHigh: "一个数，一样东西。现在可以给轴起名字了，代价是清晰度。",
-    padAria: "两个潜变量。用方向键移动这个点。",
-    aria: (p: string, a1: string, s: string) =>
-      `由两个数画出的房间。压力 ${p}。轴 1 改变${a1}。房间${s}。`,
-  },
 } as const;
 
 const MAX_P = 4;

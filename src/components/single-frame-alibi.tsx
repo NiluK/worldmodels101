@@ -116,32 +116,6 @@ const TEXT: LocaleText<
         ? `Six frames from step 0 to step ${h}, identity in hidden state. The chair drifts a little from frame to frame.`
         : `Six frames from step 0 to step ${h}, identity in an object store. Every frame shows the same chair.`,
   },
-  zh: {
-    horizon: "预测步长",
-    where: "身份存放在哪里",
-    hidden: "隐状态",
-    store: "对象存储",
-    step: (n) => `第 ${n} 步`,
-    frame: (i, s) => `第 ${i} 帧，第 ${s} 步`,
-    selected: "选中的帧",
-    onItsOwn: "单看这一帧",
-    looksFine: "看起来没问题",
-    sameQ: "和第一帧是同一把椅子吗？",
-    yes: "是",
-    no: "否",
-    horizonCell: "预测步长",
-    steps: (n) => `${n} 步`,
-    fineCell: "单看没问题的帧",
-    sameCell: "与第一帧是同一把椅子的帧",
-    ofSix: (n) => `6 帧中的 ${n} 帧`,
-    v0: "每一帧都看起来没问题，而且到目前为止它们彼此一致。",
-    v1: "每一帧都看起来没问题。错的只有整条胶片：椅子变成了另一把椅子，却没有哪一帧是那个错误。",
-    v2: "每一帧都看起来没问题，而且每一帧都是同一把椅子。被读回的是一个存起来的对象。",
-    strip: (h, hidden) =>
-      hidden
-        ? `从第 0 步到第 ${h} 步的六帧，身份放在隐状态里。椅子一帧一帧地慢慢变样。`
-        : `从第 0 步到第 ${h} 步的六帧，身份放在对象存储里。每一帧都是同一把椅子。`,
-  },
 };
 
 function ChairFrame({ chair, step, label, compact }: { chair: Chair; step: number; label: string; compact: boolean }) {

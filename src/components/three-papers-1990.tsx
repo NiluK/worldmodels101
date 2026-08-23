@@ -146,38 +146,6 @@ const TEXT: LocaleText<Text> = {
     vPicked: "One of the three. The switch shows what they share.",
     aria: (who, user) => `${who}: a loop of world, learned model and ${user}, drawn as boxes and arrows.`,
   },
-  zh: {
-    who: {
-      schmidhuber: "Jürgen Schmidhuber",
-      sutton: "Richard Sutton",
-      thrun: "Sebastian Thrun、Knut Möller 与 Alexander Linden",
-    },
-    when: { schmidhuber: "1990", sutton: "1991", thrun: "1990" },
-    title: {
-      schmidhuber: "Making the World Differentiable (technical report FKI-126-90)",
-      sutton: "Dyna, an Integrated Architecture for Learning, Planning and Reacting",
-      thrun: "Planning with an Adaptive World Model",
-    },
-    box: { world: "世界", model: "模型", chooser: "选择器", learner: "学习者", planner: "规划器" },
-    arrow: { real: "真实经验", imagined: "想象的\n经验", predict: "预测", act: "行动", choice: "选择" },
-    does: {
-      schmidhuber: "一个网络学着预测世界接下来会做什么。",
-      sutton: "它在真实经验之外，自己编出经验来。",
-      thrun: "它学会自己的动作会带来什么，并且随经验不断调整。",
-    },
-    uses: {
-      schmidhuber: "第二个网络负责选动作。第一个告诉它每个选择会导向什么。",
-      sutton: "一个学习的智能体，一部分靠真实经验练习，一部分靠模型编出来的经验练习。",
-      thrun: "一个规划器。它把模型往前推演，以选出更好的动作。",
-    },
-    doesHead: "模型做什么",
-    usesHead: "谁使用它",
-    toggle: "显示共同的形状",
-    vOn: "三篇论文，一个形状：一个学出来的模型，加上另一个使用它的东西。",
-    vOff: "同一时期的三个不同系统。挑一个。",
-    vPicked: "三个之一。打开开关，看它们共有的部分。",
-    aria: (who, user) => `${who}：由世界、学出来的模型和${user}组成的一个环，画成方框和箭头。`,
-  },
 };
 
 function Schematic({ card, T, shared, big, k }: { card: Card; T: Text; shared: boolean; big: boolean; k: number }) {

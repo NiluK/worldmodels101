@@ -79,26 +79,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (dist, speed, verdict) =>
       `A car ${dist} metres from the line at ${speed} km per hour, and three actions the model has already answered. Illustrative. ${verdict}`,
   },
-  zh: {
-    actions: ["现在刹车", "保持这个速度", "继续往前开"],
-    take: (a) => `执行「${a}」`,
-    start: "你现在在哪里",
-    toLine: (m) => `离停车线 ${m} 米`,
-    speed: (v) => `时速 ${v} 公里`,
-    past: (m) => `越过停车线 ${m} 米`,
-    never: "没有人会知道",
-    next: "换一个情形",
-    reasons: ["一摊油", "一阵风", "一道湿滑的白线", "前面有人刹车"],
-    reads: ["已经验证", "永远不会验证", "你执行的那个偏了", "见过的情形"],
-    blank: "还没有",
-    metres: (m) => `${m} 米`,
-    vBefore: "三个答案，一个都没有被验证。模型白送你全部三个。",
-    vTaken: (x, reason) => `你执行了其中一个。结果偏了 ${x} 米，原因是${reason}。另外两个只是模型的说法，仅此而已。`,
-    vGone: "那个情形已经过去了。另外两个你永远没有机会跑。",
-    join: "",
-    aria: (dist, speed, verdict) =>
-      `一辆车离停车线 ${dist} 米，时速 ${speed} 公里，三个动作模型都已经给了答案。数字仅作示意。${verdict}`,
-  },
 };
 
 export function OnlyOneGetsTaken() {

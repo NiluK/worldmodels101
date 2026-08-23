@@ -78,19 +78,6 @@ const TEXT: LocaleText<Text> = {
     aria: (t, a, b, c) =>
       `Twenty runs of the same trick at temperature ${t}. The trick paid in ${a}, the fireball came anyway in ${b}, and the dream made no sense in ${c}.`,
   },
-  zh: {
-    temperature: "温度",
-    again: "再掷一次",
-    trick: "这招灵了",
-    fireball: "火球照样来了",
-    nonsense: "梦讲不通了",
-    ofRuns: (n) => `20 次里 ${n} 次`,
-    v1: "这招几乎每一次都灵，所以策略可以把整个分数都押在上面。",
-    v2: "这招偶尔才灵。这还不够可靠，不足以拿来搭东西，而里面仍然有一个游戏可以学。",
-    v3: "现在什么都不可靠了，火球也一样，于是里面已经没有任务可学。",
-    aria: (t, a, b, c) =>
-      `同一个把戏在温度 ${t} 下跑二十次。这招灵了 ${a} 次，火球照样来了 ${b} 次，梦讲不通了 ${c} 次。`,
-  },
 };
 
 export function TwentyDreams() {

@@ -90,27 +90,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (verdict) =>
       `Two tallies of practice attempts at the same right turn, one in the dream and one at the junction. Each bar is the gap that attempt offered; solid bars are the gap being practised. Illustrative. ${verdict}`,
   },
-  zh: {
-    target: "你想练的那个间隙",
-    targetValue: "60 米，来车时速 60 公里",
-    dream: "在梦里",
-    junction: "在路口",
-    switchLabel: "改在路口练",
-    try1: "试一次",
-    try20: "试二十次",
-    again: "重新开始",
-    empty: "还没有尝试",
-    reads: ["尝试次数", "落在想练的那个间隙上的次数", "花掉的时间", "险些出事"],
-    minutes: (m) => `${m} 分钟`,
-    vNone: "按「试一次」。",
-    vDream: (n) => `同一个间隙练了 ${n} 次，不花时间，也没有任何风险。`,
-    vJunction: (n, k, m, c) =>
-      `${n} 次尝试，其中 ${k} 次落在你想练的那个间隙上，用掉 ${m} 分钟，${c} 次险些出事。`,
-    vBoth: "同样的练习，两种价钱。在梦里，你可以在同一个瞬间一次又一次地失败。",
-    join: "",
-    aria: (verdict) =>
-      `两排练习同一个右转的尝试记录，一排在梦里，一排在路口。每根竖条是那次尝试给出的间隙，实心的是正在练的那个间隙。数字仅作示意。${verdict}`,
-  },
 };
 
 /** bar geometry: bars narrow as the tally fills, then wrap onto another row */

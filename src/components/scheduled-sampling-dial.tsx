@@ -59,27 +59,6 @@ const TEXT: LocaleText<{
     aria: (truth, own, share) =>
       `Ten training inputs. ${truth} from the recorded truth, ${own} from the model's own last answer. Share ${share} percent.`,
   },
-  zh: {
-    inputs: "输入",
-    outputs: "模型的输出",
-    fromTruth: "来自记录的真值",
-    fromModel: "模型自己的上一个答案",
-    truthLine: "真值",
-    share: "自己答案的占比",
-    run: "运行计划",
-    next: "下一轮",
-    reset: "重置",
-    round: (n, of) => `第 ${n} 轮，共 ${of} 轮`,
-    read: ["来自真值的输入", "来自模型的输入", "模型练过什么"],
-    ofTen: (n) => `${N} 个中的 ${n} 个`,
-    practised: ["从未练过恢复", "练过一点恢复", "经常练习恢复"],
-    v0: "这就是教师强制。模型从来没有被递过一次自己的错误。",
-    v1: "一部分输入现在是它自己的答案，于是它是在将来会被要求跑的那种运行上练习。",
-    v2: "大多数输入都是它自己的答案。它训练时的运行，现在看起来像部署时的运行了。",
-    vRun: "随着训练推进逐步提高这个占比，就是计划采样里的「计划」。",
-    aria: (truth, own, share) =>
-      `十个训练输入。${truth} 个来自记录的真值，${own} 个来自模型自己的上一个答案。占比 ${share}%。`,
-  },
 };
 
 /** Two layouts: a wide box for the column, a narrower one for phones with larger type. */
@@ -156,7 +135,7 @@ export function ScheduledSamplingDial() {
               { fill: "var(--actual)", text: s.fromTruth },
               { fill: "var(--imagine)", text: s.fromModel },
             ];
-            const est = (t: string) => t.length * L.fs * (locale === "zh" ? 1.05 : 0.62) + L.fs * 1.4 + 22;
+            const est = (t: string) => t.length * L.fs * 0.62 + L.fs * 1.4 + 22;
             let x = compact ? L.pad : L.W - L.pad - items.reduce((a, it) => a + est(it.text), 0);
             return items.map((it, i) => {
               const gx = x;
@@ -190,8 +169,8 @@ export function ScheduledSamplingDial() {
             stroke="var(--ink-faint)" strokeWidth="1" strokeDasharray="3 4" />
           <g transform={`translate(${L.W - L.pad}, ${L.outLabelY})`}>
             <text x={0} y={0} textAnchor="end" className="font-mono" fontSize={L.fs} fill="var(--ink-faint)">{s.truthLine}</text>
-            <line x1={-(s.truthLine.length * L.fs * (locale === "zh" ? 1.05 : 0.62) + 8)} y1={-L.fs * 0.35}
-              x2={-(s.truthLine.length * L.fs * (locale === "zh" ? 1.05 : 0.62) + 30)} y2={-L.fs * 0.35}
+            <line x1={-(s.truthLine.length * L.fs * 0.62 + 8)} y1={-L.fs * 0.35}
+              x2={-(s.truthLine.length * L.fs * 0.62 + 30)} y2={-L.fs * 0.35}
               stroke="var(--ink-faint)" strokeWidth="1" strokeDasharray="3 4" />
           </g>
           {Array.from({ length: N }, (_, i) => (

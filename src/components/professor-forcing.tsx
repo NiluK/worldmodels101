@@ -40,23 +40,6 @@ const TEXT: LocaleText<Text> = {
     v2: "The judge cannot tell the two runs apart, so the model behaves the same either way. That is the training objective doing the work.",
     aria: "Two trails of twelve hidden states, one teacher-forced and one free. After {n} rounds the gap between them is {g} and the judge reads {w}.",
   },
-  zh: {
-    forced: "教师强制的那一趟",
-    free: "自由运行的那一趟",
-    judge: "裁判",
-    guessing: "在猜",
-    mostly: "大致分得清",
-    certain: "确定",
-    inputs: "输入：没有动过",
-    train: "训练一轮",
-    reset: "重置",
-    rRounds: "已训练的轮数",
-    rGap: "两条轨迹之间的差距",
-    v0: "裁判一眼就能把自由运行和教师强制的那一趟分开。",
-    v1: "自由运行的轨迹正被拉向教师强制的那条。输入没有变。",
-    v2: "裁判已经分不出这两趟，于是模型在两种情况下表现一样。这是训练目标在起作用。",
-    aria: "两条各十二个隐藏状态的轨迹，一条是教师强制，一条是自由运行。训练 {n} 轮后，两条轨迹的差距是 {g}，裁判的读数是「{w}」。",
-  },
 };
 
 const N = 12;

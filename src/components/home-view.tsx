@@ -10,20 +10,11 @@ import { getStars } from "@/lib/github";
 import { localePath, translate, type Locale } from "@/lib/i18n";
 
 /**
- * The landing page, one component for every language.
- *
- * There used to be an English page and a hand-maintained Chinese copy, which
- * drifted: the Chinese one linked only chapter 1 long after the other eight
- * shipped. Every string now comes from the dictionary, so a new locale is a
- * dictionary away from a complete home page rather than a new file to keep in
- * step.
+ * The landing page.
  */
 export async function HomeView({ locale }: { locale: Locale }) {
   const stars = await getStars();
-  // Offered only where one has been generated: the book is rendered per locale
-  // and a language without its own is not served the English one by mistake.
-  const bookName =
-    locale === "en" ? "world-models-101.pdf" : `world-models-101-${locale}.pdf`;
+  const bookName = "world-models-101.pdf";
   const hasBook = existsSync(join(process.cwd(), "public", "pdf", bookName));
   const t = (k: string, v?: Record<string, string | number>) => translate(locale, k, v);
   const path = (p: string) => localePath(locale, p);

@@ -79,30 +79,6 @@ const TEXT: LocaleText<Strings> = {
     ariaSpread:
       "Twenty possible resting places for a ball hidden behind a wall. Instead of one answer the model hands back a spread with two lobes, a smaller one over the eight worlds at the kerb and a larger one over the twelve that rolled on.",
   },
-  zh: {
-    behind: "墙后面",
-    kerb: "停在路缘，8 个",
-    rolled: "继续滚走，12 个",
-    kerbShort: "8",
-    rolledShort: "12",
-    answerLabel: "唯一的那个答案",
-    spreadLabel: "改为交回整个分布",
-    metres: (n) => `${n} 米`,
-    unit: "米",
-    typical: "典型偏差",
-    notOne: "不是一个数",
-    right: "你说对的世界",
-    ofTwenty: (n) => `20 个中的 ${n} 个`,
-    within: "半米以内",
-    vBest: "这是典型偏差最小的答案，而球从来不在那里。平方损失会把模型正好放在这里。",
-    vNear: (n) => `在二十个世界里说对了 ${n} 个，其余都错得很离谱。一个数说不出是哪一种。`,
-    vNowhere: "二十个世界全错，而这个答案本身对此只字未提。",
-    vSpread: "这个分布覆盖了两种结局，并说出哪一种更可能。这正是确定性那一半装不下的状态。",
-    ariaOne: (a, miss, n) =>
-      `一个球藏在墙后，有二十个可能的停留位置，八个在 2 米附近，十二个在 6.5 米附近。模型给出的唯一答案落在 ${a} 米，典型偏差 ${miss} 米，在二十个世界中说对了 ${n} 个。`,
-    ariaSpread:
-      "一个球藏在墙后，有二十个可能的停留位置。模型交回的不是一个数，而是一个有两个峰的分布：较小的峰覆盖路缘边的八个世界，较大的峰覆盖继续滚走的十二个。",
-  },
 };
 
 function layout(compact: boolean) {

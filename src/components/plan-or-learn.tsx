@@ -57,32 +57,6 @@ const TEXT = {
     ariaRight: (trained: boolean, d: number) =>
       `Dreamer panel: the same dot, wall and goal. ${trained ? `Trained on ${TRAIN_TOTAL} imagined steps; ${d} reflex decisions since, each costing no model calls.` : "Not yet trained; the dot has not moved."}`,
   },
-  zh: {
-    left: "PlaNet：靠搜索来规划",
-    right: "Dreamer：学会行为",
-    decide: "决定",
-    train: "在想象中训练",
-    training: "训练中",
-    trained: "已训练",
-    reset: "重置",
-    goal: "目标",
-    callsLeft: `这一步决定调用模型：${CANDS} 条序列 × ${HORIZON} 步 = ${CANDS * HORIZON} 次`,
-    callsLeftIdle: "这一步决定调用模型：按「决定」",
-    callsRightNone: "这一步决定调用模型：先训练",
-    callsRight: "这一步决定调用模型：0 次",
-    imagined: "想象步数",
-    atGoal: "已到目标",
-    decisions: "已做决定",
-    calls: "模型调用总数",
-    v0: "同一个世界，画了两遍。左边按「决定」；右边先训练。",
-    v1: `左边每做一次决定，模型先跑 ${CANDS * HORIZON} 次，点才动一步。`,
-    v2: `训练花掉了 ${TRAIN_TOTAL.toLocaleString("zh-CN")} 个想象步。还什么都没动。`,
-    v3: "搜索在每次决定时付费，次次如此。Dreamer 提前一次付清。",
-    ariaLeft: (d: number, c: number) =>
-      `PlaNet 面板：一个点、一堵墙、一个目标。已做 ${d} 次决定，调用模型 ${c} 次。每次决定展开 ${CANDS} 条想象序列，走最好一条的第一步。`,
-    ariaRight: (trained: boolean, d: number) =>
-      `Dreamer 面板：同样的点、墙和目标。${trained ? `已用 ${TRAIN_TOTAL} 个想象步训练；此后做了 ${d} 次反射式决定，每次不调用模型。` : "尚未训练；点还没动。"}`,
-  },
 };
 
 const rand = (seed: number) => {
@@ -202,7 +176,7 @@ export function PlanOrLearn() {
   const { ref, compact: stacked } = useCompact(560);
   const { ref: panelRef, compact: tiny } = useCompact(420);
   const k = tiny ? 1.65 : 1;
-  const fmt = (n: number) => n.toLocaleString(locale === "zh" ? "zh-CN" : "en");
+  const fmt = (n: number) => n.toLocaleString("en");
 
   // left: every decision is a search
   const [lTrail, setLTrail] = useState<Pt[]>([START]);

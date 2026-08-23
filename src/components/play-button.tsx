@@ -1,6 +1,5 @@
 "use client";
 
-import { useLocale } from "./locale-provider";
 
 /**
  * The Play / Pause button that sits next to a figure's slider. Pairs with
@@ -16,8 +15,7 @@ export function PlayButton({
   onClick: () => void;
   className?: string;
 }) {
-  const locale = useLocale();
-  const label = playing ? (locale === "zh" ? "暂停" : "Pause") : locale === "zh" ? "播放" : "Play";
+  const label = playing ? "Pause" : "Play";
   return (
     <button
       type="button"

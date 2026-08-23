@@ -42,33 +42,6 @@ const TEXT = {
     aria: (mode: string, n: number, b: number) =>
       `A Go position feeds MuZero's model, which outputs reward, value and policy. Mode: ${mode}. The search tree has visited ${n} nodes and drawn ${b} boards.`,
   },
-  zh: {
-    position: "当前局面",
-    model: "MuZero 的模型",
-    nextBoard: "下一个棋盘",
-    neverDrawn: "从未画出",
-    readOff: "读出",
-    reward: "奖励",
-    value: "价值",
-    policy: "策略",
-    lose: "输",
-    win: "赢",
-    predicts: "模型预测的是什么",
-    three: "三个数",
-    board: "下一个棋盘",
-    search: "搜索",
-    reset: "重置",
-    tree: "搜索树",
-    idleThree: "模型用三个数作答。按「搜索」逐步展开搜索树。",
-    idleBoard: "模型画出整张棋盘，再从上面读出三个数。按「搜索」逐步展开搜索树。",
-    vThree: "搜索在每个节点只读三个数，从未要过一张图。规划需要的正是这些。",
-    vBoard: "在每个节点画出棋盘代价更高，而搜索一点也不读它。",
-    nodes: "访问的节点",
-    numbers: "读出的数",
-    boards: "画出的棋盘",
-    aria: (mode: string, n: number, b: number) =>
-      `一个围棋局面输入 MuZero 的模型，模型输出奖励、价值和策略。模式：${mode}。搜索树已访问 ${n} 个节点，画出 ${b} 张棋盘。`,
-  },
 } as const;
 
 const N = 9;

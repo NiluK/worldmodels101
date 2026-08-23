@@ -75,35 +75,6 @@ const TEXT = {
     ariaWorld: (n: number, st: string) =>
       `Top-down view of a generated world, the same table, boxes, arm and light, drawn in vermilion with the lighting, the clutter and the camera moved. ${n} versions so far, status ${st}.`,
   },
-  zh: {
-    stage: "一个真实的布景",
-    world: "一个生成的世界",
-    stageShort: "布景",
-    worldShort: "生成",
-    soFar: "到目前为止的版本",
-    more: (n: number) => `还有 ${n} 个`,
-    another: "再来一个",
-    reset: "重置",
-    plusDay: "+1 天",
-    plusBatch: `一次 +${BATCH}`,
-    versions: "版本",
-    time: "花费的时间",
-    contacts: "接触真实环境",
-    status: "状态",
-    days: (n: number) => `${n} 天`,
-    frames: (n: number) => `${n} 帧 GPU 时间`,
-    ready: "就绪",
-    staging: "布置中",
-    resetting: "重置中",
-    paused: "稍候即可就绪",
-    vStart: "两边是同一个场景。按「再来一个」。",
-    vMany: "左边一天一个版本；右边一按一批，用 GPU 时间来付账。",
-    vReset: "布景要花一阵子才能放回原样。生成的世界在你松开按钮之前就已经就绪。",
-    ariaStage: (n: number, d: number, st: string) =>
-      `真实布景的俯视图：一张桌子、两个箱子、一只机械臂和一盏灯。到目前为止 ${n} 个版本，花费 ${d} 天，状态：${st}。`,
-    ariaWorld: (n: number, st: string) =>
-      `生成世界的俯视图：同样的桌子、箱子、机械臂和灯，用朱红色画出，光照、杂物和相机都变了。到目前为止 ${n} 个版本，状态：${st}。`,
-  },
 };
 
 function Scene({ v, stroke }: { v: Variant; stroke: string }) {

@@ -89,43 +89,6 @@ const TEXT: LocaleText<Strings> = {
     ariaNone: "Nothing selected.",
     ariaSelected: (name) => `Selected: ${name}.`,
   },
-  zh: {
-    headReported: "它被报告得有多频繁",
-    headReportedShort: "被报告",
-    headNeeded: "智能体有多需要它",
-    headNeededShort: "被需要",
-    name: {
-      frame: "画面质量",
-      holds: "一千步内是否还撑得住",
-      action: "动作保真度",
-      cost: "成本",
-    },
-    shortName: {
-      frame: "画面质量",
-      holds: "是否还撑得住",
-      action: "动作保真度",
-      cost: "成本",
-    },
-    adverb: { frame: "总是", holds: "有时", action: "几乎从不", cost: "最少" },
-    need: { frame: "最不需要", holds: "最需要", action: "第二需要", cost: "第三需要" },
-    rank: ["第一", "第二", "第三", "第四"],
-    reportedCell: "报告频率",
-    neededCell: "智能体的需要",
-    gapCell: "这中间的落差",
-    gapValue: (reported, needed) => `报告排${reported}，需要排${needed}`,
-    pick: "按一项指标看看。",
-    verdict: {
-      none: "四项指标，两种排序，几乎每一条线都交叉。",
-      frame: "总是被报告，却最不被需要。它好测量，也正是演示的材料。",
-      holds: "智能体最需要的东西，而没有哪个演示长到足以显示它。",
-      action: "正是它把世界模型和视频生成器分开，而它几乎从不被报告。",
-      cost: "报告得最少的一项，它却决定了你究竟跑不跑得起这东西。",
-    },
-    aria: (pairs, selected) =>
-      `一张斜率图。四项指标各按「被报告的频繁程度」和「智能体的需要程度」排了一次序。${pairs}。${selected}`,
-    ariaNone: "未选择。",
-    ariaSelected: (name) => `已选：${name}。`,
-  },
 };
 
 export function MeasuredInReverse() {

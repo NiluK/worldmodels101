@@ -125,32 +125,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (h, made, d) =>
       `An illustrative braking car on a road in metres. The plan is ${h} steps long; the model has produced ${made} imagined states, reaching ${d} metres.`,
   },
-  zh: {
-    actions: { coast: "滑行", brake: "刹车", pressOn: "继续加速" },
-    step: (n, a) => `第 ${n} 步，${a}，按一下可以改`,
-    beyond: (n) => `第 ${n} 步，在视野之外`,
-    horizon: "视野",
-    run: "跑一遍",
-    reset: "重来",
-    keep: "留下",
-    pinned: "钉住的一次",
-    model: "模型",
-    realIn: "一个真实状态进去，50 公里每小时",
-    readsBack: "把自己的答案读回去",
-    metres: "米",
-    given: "别人给它的状态",
-    made: "模型自己造出的状态",
-    distance: "走过的距离",
-    endSpeed: "末了的速度",
-    m: (n) => `${n} 米`,
-    kmh: (n) => `${n} 公里每小时`,
-    v0: "这一串没有人跑过。按「跑一遍」。",
-    v1: (h) => `一个真实状态进去，${h} 个想象出来的出来。第一步之后的每一步，读的都是上一步。`,
-    v2: "两次运行，哪一次都没有人跑过。模型是从同一个起点回答这两次的。",
-    v3: "跑得越长，其中就有越多是模型在读自己的字迹。",
-    aria: (h, made, d) =>
-      `一辆示意性的刹车中的车，走在以米为刻度的路上。这串动作有 ${h} 步；模型已经造出 ${made} 个想象的状态，走到 ${d} 米。`,
-  },
 };
 
 export function UntakenRollout() {

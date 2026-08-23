@@ -93,39 +93,6 @@ const TEXT: LocaleText<Strings> = {
           : "The prediction is the average picture, both futures drawn at half strength."
       }${drop ? " Light and weather are dropped as irrelevant." : ""}`,
   },
-  zh: {
-    left: "向左转",
-    right: "向右转",
-    ghost: "平均图像，它从不会发生",
-    predicted: "预测出的描述",
-    outright: "直接预测出来",
-    open: "仍未定：左或右",
-    what: "预测的是什么",
-    pixels: "像素",
-    description: "描述",
-    switchAria: "预测描述而不是像素",
-    drop: "丢掉决策用不到的",
-    dropAria: "丢掉没有任何决策依赖的条目",
-    share: "两个未来共有的条目",
-    shareN: "8 个里的 7 个",
-    openLabel: "仍未定的条目",
-    openN: "8 个里的 1 个，明确保留",
-    dropped: "作为无关项丢掉",
-    none: "无",
-    droppedN: "8 个里的 2 个：光线、天气",
-    vPixels: "把两张图平均，得到的是一张谁也不是的图。",
-    vDesc: "两份描述在七个条目上一致，所以这七个被直接预测出来。第八个仍未定，描述也不假装它已定。",
-    vDrop: "七个条目直接预测出来，一个保持未定，两个决策用不到的被丢掉。下游没有任何东西会按它们打分。",
-    note: "列表仅为示意",
-    entries: {
-      road: "路面", speed: "速度", junction: "路口", car: "车",
-      lane: "车道", light: "光线", weather: "天气", turn: "转向",
-    },
-    aria: (desc, drop) =>
-      `路口处的两个未来，一辆车向左转，一辆车向右转，各自写成一份八个条目的描述。七个条目一致，只有转向这一项不同。${
-        desc ? "预测的是一份描述：七个条目直接预测出来，转向一项保持未定。" : "预测的是平均图像，两个未来各以一半强度画出。"
-      }${drop ? "光线和天气作为无关项被丢掉。" : ""}`,
-  },
 };
 
 /** The junction from PixelBlur: a road, a fork, and the car gone one way. */

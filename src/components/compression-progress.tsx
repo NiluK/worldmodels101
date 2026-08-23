@@ -81,28 +81,6 @@ const TEXT = {
     aria: (tile: string, n: number, size: number, reward: number) =>
       `Looking at ${tile}. Step ${n} of ${STEPS}. The learner can write down what it has seen in ${size} of 100 units. Reward this step: ${reward}.`,
   },
-  zh: {
-    static: "静态噪声",
-    known: "它已认识的图案",
-    learning: "它正在学的图案",
-    watch: "观看",
-    watchAgain: "再看一次",
-    step: "走一步",
-    barLabel: "它能写得多短",
-    rewardLabel: "这一步的奖励",
-    stepOf: "步数",
-    stepVal: (n: number) => `第 ${n} 步，共 ${STEPS} 步`,
-    size: "压缩后的大小",
-    sizeVal: (n: number) => `${n} / 100`,
-    reward: "这一步的奖励",
-    v0: "按下「观看」，学习者会看十二次。",
-    vStatic: "它从不会变短。没有什么可学，也就没有什么值得好奇。",
-    vKnown: "本来就很短。这里也没有什么可学的了。",
-    vLearning: "比刚才短了一点。那一段下降就是奖励。",
-    vDone: "曲线已经走平。奖励用尽了，该去别处看看了。",
-    aria: (tile: string, n: number, size: number, reward: number) =>
-      `正在看${tile}。第 ${n} 步，共 ${STEPS} 步。学习者能把看到的东西写成 100 中的 ${size}。这一步的奖励：${reward}。`,
-  },
 } as const;
 
 function Thumb({ tile }: { tile: Tile }) {

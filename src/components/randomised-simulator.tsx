@@ -69,30 +69,6 @@ const TEXT: LocaleText<Strings> = {
         ? ` The trained policy can handle ${t.a} to ${t.b}, and the real scene is ${t.inside ? "inside" : "outside"} that range.`
         : " Not trained yet."),
   },
-  zh: {
-    sim: "模拟器",
-    real: "真实世界",
-    realTick: "真实",
-    axis: "场景变化",
-    bracket: "策略能应付的范围",
-    vary: "模拟器变化多大",
-    train: "训练",
-    widen: "边学边放宽",
-    rRange: "模拟器范围",
-    rReal: "真实世界",
-    rInside: "真实场景在训练范围内",
-    yes: "是",
-    no: "否",
-    untrained: "尚未训练",
-    range: (lo, hi) => `${lo} 到 ${hi}`,
-    vPre: "按「训练」，看看策略能应付什么。",
-    vOut: "策略只见过场景的一种版本，而真实的那一个不是这种版本。",
-    vIn: "模拟器的变化比现实还大，所以策略学到的东西不依赖于它的任何一个版本。",
-    vWiden: "随着策略进步，范围自己放宽了。",
-    aria: (lo, hi, t) =>
-      `六个模拟器场景分布在场景变化 ${lo} 到 ${hi} 之间，一个真实场景固定在 ${REAL}。` +
-      (t ? `训练后的策略能应付 ${t.a} 到 ${t.b}，真实场景${t.inside ? "在" : "不在"}这个范围内。` : "尚未训练。"),
-  },
 };
 
 const W = 740;

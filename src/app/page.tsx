@@ -4,7 +4,7 @@ import { translate } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   description: translate("en", "home.metaDescription"),
-  alternates: { canonical: "/", languages: { en: "/", "zh-Hans": "/zh" } },
+  alternates: { canonical: "/", languages: { en: "/" } },
 };
 
 export default function Home() {

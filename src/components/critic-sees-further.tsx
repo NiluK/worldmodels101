@@ -101,27 +101,6 @@ const TEXT: LocaleText<Text> = {
     aria: (r, on) =>
       `A track of sixty steps from one real state. The first fifteen are imagined; the reward sits at step ${r}. The critic's estimate is ${on ? "on" : "off"}.`,
   },
-  zh: {
-    realState: "一个真实状态",
-    realStateShort: "真实状态",
-    stops: "想象到此为止",
-    after: "之后的一切",
-    reward: "东西离开桌面",
-    bracket: "actor 能加总的部分",
-    guess: "critic 的估计",
-    slider: "奖励的位置",
-    critic: "让 critic 估计其余部分",
-    steps: "想象的步数",
-    inside: "推演之内的奖励",
-    supplied: "critic 提供的奖励",
-    vIn: "奖励就在想象的这一段里，所以 actor 不用帮忙也看得见。",
-    vOut: (n) =>
-      `奖励落在 actor 想象的尽头之外 ${n} 步，所以 actor 没有可以瞄准的东西。`,
-    vCritic:
-      "critic 把第十五步之后的全部折成一个数，交给 actor。actor 就是从这个数学的，而这个数没有一点来自世界。",
-    aria: (r, on) =>
-      `一条从真实状态出发、共六十步的轨道。前十五步是想象出来的；奖励落在第 ${r} 步。critic 的估计目前${on ? "打开" : "关闭"}。`,
-  },
 };
 
 export function CriticSeesFurther() {

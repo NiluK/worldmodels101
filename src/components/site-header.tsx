@@ -4,15 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SignalMark } from "./signal-mark";
 import { ThemeToggle } from "./theme-toggle";
-import { LanguageSwitch } from "./language-switch";
 import { useT, useLocale } from "./locale-provider";
 import { localePath } from "@/lib/i18n";
 import { StarButton } from "./star-cta";
 
 /**
- * Four nav items plus a two-language switch do not fit beside the wordmark on a
- * phone: the switch used to break mid-character. Below `md` everything except
- * the mark collapses into a panel.
+ * Below `md`, navigation and theme controls collapse into a panel.
  */
 export function SiteHeader({ stars }: { stars: number | null }) {
   const t = useT();
@@ -54,7 +51,6 @@ export function SiteHeader({ stars }: { stars: number | null }) {
           <Link href={localePath(locale, "/about")} className="label hover:text-ink transition-colors">
             {t("nav.about")}
           </Link>
-          <LanguageSwitch />
           <ThemeToggle />
           <StarButton locale={locale} stars={stars} placement="header" />
         </nav>
@@ -103,10 +99,6 @@ export function SiteHeader({ stars }: { stars: number | null }) {
             >
               {t("nav.about")}
             </Link>
-            <div className="flex items-center justify-between border-b border-rule py-4">
-              <span className="label !text-ink-faint">{t("nav.language")}</span>
-              <LanguageSwitch onNavigate={close} />
-            </div>
             <div className="flex items-center justify-between py-4">
               <span className="label !text-ink-faint">{t("nav.theme")}</span>
               <ThemeToggle />

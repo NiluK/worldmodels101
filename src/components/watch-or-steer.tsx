@@ -110,38 +110,6 @@ const TEXT: LocaleText<Text> = {
     aria: (mode, n, yours) =>
       `A row of ${n} frames of a walk, left to right, in ${mode} mode. The first two are given; ${n - GIVEN} were generated and ${yours} of those were chosen by you.`,
   },
-  zh: {
-    mode: "下一帧由谁来定",
-    watch: "观看",
-    steer: "操控",
-    next: "下一帧",
-    left: "向左",
-    right: "向右",
-    again: "重新开始",
-    given: "已给出",
-    byModel: ["模型", "选的"],
-    byYou: "你选的",
-    dir: { left: "左", right: "右" },
-    condFrames: "之前的帧",
-    condKey: "按住的键",
-    condNothing: "没有",
-    condNext: "下一帧",
-    rFrames: "已有的帧",
-    rYours: "你选的帧",
-    rExtra: "额外的输入",
-    extraNone: "没有",
-    extraKey: "每一帧都有一个键",
-    ofN: (a, b) => `${a} / ${b}`,
-    watch0: "按「下一帧」。接下来出现什么，你说了不算。",
-    watchMid: "它又选了一次。重新开始，按同一个按钮，你会拿回同一段片子。",
-    watchFull: "八帧，没有一帧是你选的。这就是一段视频。",
-    steer0: "现在键和帧一起送进去。按向左或者向右。",
-    steerMid: (dir) => `你按了向${dir}，它就往${dir}走。同样的开头，因为你提了要求，片子就不一样了。`,
-    steerFull: "前两帧之后的每一帧都是你要的。这才是一个你能待着的地方。",
-    keyHelp: "这段片子。在操控模式下，左右方向键各加一帧。",
-    aria: (mode, n, yours) =>
-      `一行 ${n} 帧的行走画面，从左到右，处于${mode}模式。前两帧是给出的；生成了 ${n - GIVEN} 帧，其中 ${yours} 帧由你选定。`,
-  },
 };
 
 /** one first-person frame: side walls, a far wall, and landmarks that slide as the heading turns */

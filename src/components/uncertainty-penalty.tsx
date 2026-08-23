@@ -81,25 +81,6 @@ const TEXT: LocaleText<{
     aria: (p, a) =>
       `Three scoring curves over the same set of actions: the world's, the model's raw score with its spike, and the model's score after a penalty of ${p} times a made-up uncertainty, drawn as a strip along the floor. The penalised favourite is at action ${a}.`,
   },
-  zh: {
-    penalty: "惩罚",
-    axis: "你能采取的每一个动作",
-    unsure: "模型没把握的地方",
-    world: "真实世界",
-    raw: "模型，原始分",
-    docked: "模型，扣罚之后",
-    favourite: "最中意",
-    inWorld: "真实世界里",
-    v0: "不收费。模型最中意的是那个尖峰：想象中 0.97，真实世界里 0.20。",
-    vSome: "扣了一点，但还不够。尖峰仍是它的最爱。",
-    vMoved: "尖峰因为没把握而被扣了分，最中意的动作回到了真实世界也认可的宽坡上。",
-    vHigh: "现在老实的动作也在被收费，最中意的动作正偏离其中最好的那一个。",
-    rFav: "模型最中意的动作",
-    rModel: "模型里的得分",
-    rWorld: "真实世界里的得分",
-    aria: (p, a) =>
-      `同一组动作上的三条打分曲线：真实世界的、模型带尖峰的原始分、以及扣掉 ${p} 倍虚构不确定度之后的模型分，不确定度画成沿底边的一条浅带。扣罚后最中意的动作在 ${a}。`,
-  },
 };
 
 export function UncertaintyPenalty() {

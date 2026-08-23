@@ -86,25 +86,6 @@ const TEXT: Record<string, Strings> = {
     aria: (branches, len) =>
       `${N_REAL} real states along the bottom. ${branches === 1 ? "One imagined rollout" : `${branches} imagined rollouts`} of ${len} ${len === 1 ? "step" : "steps"} grow upward and fade with each step.`,
   },
-  zh: {
-    real: "真实状态（回放缓冲区）",
-    imagined: "想象的推演",
-    stepN: (n) => `第 ${n} 步`,
-    length: "推演长度",
-    every: "从每个真实状态分支",
-    one: "从一个状态做一条长推演",
-    batch: "这批想象的步数",
-    near: "靠近证据的步数",
-    furthest: "离真实状态最远的一步",
-    steps: (n) => `${n} 步`,
-    v1: "从许多真实状态长出的短分支：想象的步数很多，而且每一步都靠近证据。",
-    v2: "分支开始褪色了。学习者每往外走一步，都在为模型的误差付账。",
-    v3: "这一批里大多数步都远离任何真实状态。数量上去了，可信度下来了。",
-    lone1: "从一个真实状态出发的一条推演：靠近证据，但几乎没有多少想象出来的数据。",
-    lone2: "从一个真实状态出发的一条长推演：同样的长度，步数少得多，而且大多数都远离证据。",
-    aria: (branches, len) =>
-      `底部有 ${N_REAL} 个真实状态。${branches === 1 ? "一条" : `${branches} 条`}长度为 ${len} 步的想象推演向上生长，每走一步就褪色一些。`,
-  },
 };
 
 export function BranchedRollouts() {

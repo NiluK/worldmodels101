@@ -86,28 +86,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (n, pe, he) =>
       `A chart of two error traces against corrections. After ${n} corrections the part a reading can see settles at ${pe} units after each blip, drawn as a sawtooth. The part no reading touches is flat at ${he} units.`,
   },
-  zh: {
-    seen: "你看得见的那一半",
-    unseen: "你看不见的那一半",
-    errSeen: "你看得见的误差",
-    errUnseen: "你看不见的误差",
-    xAxis: "修正次数",
-    yAxis: "偏差有多大",
-    predict: "预测",
-    correct: "修正",
-    wind: "没有告诉滤波器的风",
-    look: "再看一眼",
-    reset: "重置",
-    corrections: "修正次数",
-    units: (n) => `${n} 个单位`,
-    v0: "按「再看一眼」。每按一次就是一次预测加一次读数。",
-    vCalm: "没有风，所以每次读数几乎把误差整个拉回来。这是滤波器手上那套动力学恰好正确的情形。",
-    vEarly: "读数一直在把看得见的那一半往下拉。看不见的那一半一动没动。",
-    vLate: (n, pe, he) =>
-      `已经修正 ${n} 次。看得见的那一半每次都回到 ${pe} 左右，而看不见的那一半仍然停在 ${he}。没有任何读数碰得到它。`,
-    aria: (n, pe, he) =>
-      `一张两条误差曲线随修正次数变化的图。经过 ${n} 次修正后，读数能看见的那一半在每次修正后稳定在 ${pe} 个单位，画成锯齿状。没有任何读数碰得到的那一半平直地停在 ${he} 个单位。`,
-  },
 };
 
 function layout(compact: boolean) {

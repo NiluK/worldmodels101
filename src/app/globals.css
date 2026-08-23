@@ -160,54 +160,6 @@
   --font-mono:    var(--font-mono);
 }
 
-/* ---------- Simplified Chinese ----------
-   The Latin faces have no CJK coverage, so Chinese gets its own pair rather
-   than a fallback that swaps mid-sentence. Chinese also needs looser leading
-   and no hanging punctuation, and the mono label style has to drop its wide
-   tracking, which is unreadable on Han characters. */
-
-:root[data-locale="zh"] {
-  --font-display: var(--font-noto-serif-sc), var(--font-instrument), serif;
-  --font-body:    var(--font-noto-serif-sc), var(--font-newsreader), serif;
-  --font-mono:    var(--font-plex-mono), var(--font-noto-sans-sc), ui-monospace, monospace;
-  --measure: 36rem;
-}
-
-:root[data-locale="zh"] body {
-  font-size: 1.05rem;
-  line-height: 1.9;
-  font-variant-numeric: normal;
-}
-
-:root[data-locale="zh"] .display {
-  letter-spacing: 0.01em;
-  line-height: 1.25;
-}
-
-:root[data-locale="zh"] .label {
-  letter-spacing: 0.06em;
-}
-
-:root[data-locale="zh"] .prose p {
-  hanging-punctuation: none;
-  text-align: justify;
-  text-justify: inter-ideograph;
-}
-
-:root[data-locale="zh"] .prose h2 {
-  line-height: 1.35;
-  letter-spacing: 0;
-}
-
-/* Han characters have no word spaces, so a long unbroken run needs an explicit
-   break opportunity or it overflows its column. */
-:root[data-locale="zh"] .prose,
-:root[data-locale="zh"] .marginnote {
-  word-break: normal;
-  overflow-wrap: anywhere;
-  line-break: strict;
-}
-
 /* ---------- base ---------- */
 
 * { border-color: var(--rule); }

@@ -160,25 +160,6 @@ const TEXT: Record<string, {
       vicreg: "Nothing is pushed apart. The cloud is penalised directly when its spread drops or its axes copy each other.",
     },
   },
-  zh: {
-    methods: { none: "不做处理", contrastive: "对比式（2020）", byol: "BYOL（2020）", vicreg: "VICReg（2021）" },
-    method: "怎样阻止堆成一团",
-    step: "走一步",
-    reset: "重置",
-    spread: "离散度",
-    steps: "已走步数",
-    legend: "实心与空心：同一样东西的两个视图",
-    target: "淡色小点：目标编码器的副本，落在后面",
-    repel: "淡色箭头：被其余每个点推开",
-    ellipse: "椭圆：点云的离散范围",
-    ellipseHot: "离散度太低或两轴互相抄袭：被推回去",
-    verdict: {
-      none: "只把成对的两个视图拉到一起，别的什么都不做：点云堆成一团，而损失完美。",
-      contrastive: "成对的拉到一起，其余的全部推开。每个点都在被推，点云堆不起来。",
-      byol: "没有任何东西被推开。点云追着一份落在后面的自己的副本跑，形状却仍然保住了。",
-      vicreg: "没有任何东西被推开。一旦点云的离散度下降，或者两条轴互相抄袭，点云本身就直接受罚。",
-    },
-  },
 };
 
 export function CollapseLineage() {
@@ -216,9 +197,7 @@ export function CollapseLineage() {
     : method === "vicreg" ? (sim.penalised ? T.ellipseHot : T.ellipse)
     : null;
 
-  const aria = locale === "zh"
-    ? `${T.methods[method]}：已走 ${sim.steps} 步，离散度 ${spreadText}。${T.verdict[method]}`
-    : `${T.methods[method]}: ${sim.steps} steps taken, spread ${spreadText}. ${T.verdict[method]}`;
+  const aria = `${T.methods[method]}: ${sim.steps} steps taken, spread ${spreadText}. ${T.verdict[method]}`;
 
   return (
     <div>

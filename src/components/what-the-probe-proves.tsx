@@ -92,37 +92,6 @@ const TEXT: LocaleText<Strings> = {
     aria: (head, probe, score) =>
       `${head}. A four layer network with its activations, read by ${probe.toLowerCase()}. Accuracy ${score}.`,
   },
-  zh: {
-    trainedHead: "在黑白棋棋步上训练过",
-    controlHead: "从未训练过",
-    controlSub: "同样的形状，随机的权重",
-    controlTag: "对照组",
-    probeName: {
-      line: "一条直线",
-      small: "一个小网络",
-      big: "一个大网络",
-    },
-    probeGlyph: "探针",
-    run: "运行探针",
-    notRun: "尚未运行",
-    chance: "随机水平",
-    trainedCell: "在训练过的网络上",
-    controlCell: "在对照组上",
-    licenceCell: "这一次运行能支持什么结论",
-    licence: {
-      line: "那个事实确实在里面",
-      small: "不好说",
-      big: "什么都支持不了",
-    },
-    verdict: {
-      none: "同一个探针，两个网络，只有其中一个训练过。运行看看。",
-      line: "一条直线能从训练过的网络里读出棋盘，从对照组里什么都读不出。这才叫一个结果。",
-      small: "在训练过的网络上好了一点，而对照组也开始交出一些东西了。",
-      big: "大探针从一个从未训练过的网络里也读出了棋盘，说明这个事实是它自己学会的。这就是探针必须小的原因。",
-    },
-    aria: (head, probe, score) =>
-      `${head}。一个四层网络和它的激活，由${probe}来读。准确率 ${score}。`,
-  },
 };
 
 /** two fixed activation patterns, so the control does not look like a copy */

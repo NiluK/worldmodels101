@@ -6,7 +6,7 @@ import { translate } from "@/lib/i18n";
 export const metadata: Metadata = {
   title: "About",
   description: `${AUTHOR} on why World Models 101 exists, what it assumes, and how to correct it.`,
-  alternates: { canonical: "/about", languages: { en: "/about", "zh-Hans": "/zh/about" } },
+  alternates: { canonical: "/about", languages: { en: "/about" } },
   openGraph: { title: `About · World Models 101`, description: translate("en", "about.lead") },
 };
 

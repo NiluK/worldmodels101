@@ -44,30 +44,6 @@ const TEXT = {
     aria: (t: string, m: string, v: string) =>
       `The prediction loop drawn once: look, guess the next ${t}, compare, adjust. What comes out is ${m}. ${v}`,
   },
-  zh: {
-    look: "看", guess: "猜下一个", compare: "比对", adjust: "调整",
-    unchanged: "循环里别的什么都没变",
-    target: { pixel: "像素", word: "词", state: "紧凑状态" },
-    machine: { pixel: "一台渲染器", word: "一个语言模型", state: "一个动力学模型" },
-    capacity: "容量花在哪里",
-    comesOut: "得到什么",
-    leaves: "树叶", rest: "天空、树干、球",
-    leafNote: "占了大半像素，也最难猜",
-    grammar: "语法", facts: "关于世界的事实",
-    few: "真正要紧的几个数",
-    search: "规划器可以在这里搜索",
-    sentence: "那只猫坐在",
-    now: "现在", next: "下一步",
-    rTarget: "目标", rOut: "得到什么", rWhere: "容量去了哪里",
-    where: { pixel: "树叶", word: "语法和事实", state: "要紧的那几个数" },
-    verdict: {
-      pixel: "树叶难猜，而且占了画面的大半，所以容量都花在那里。这就是树叶问题。",
-      word: "下一个词取决于语法和事实，所以建起来的就是这两样。",
-      state: "一小串数字，以及下一串。规划器可以在这里搜索。",
-    },
-    aria: (t: string, m: string, v: string) =>
-      `预测循环只画一次：看，猜下一个${t}，比对，调整。得到的是${m}。${v}`,
-  },
 } satisfies Partial<Record<Locale, unknown>>;
 
 /* The four boxes, wide and compact share them; only the panel re-flows. */

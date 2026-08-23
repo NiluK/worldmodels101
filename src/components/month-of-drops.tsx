@@ -58,19 +58,6 @@ const TEXT: LocaleText<Text> = {
     aria: (n, pct) =>
       `A calendar of thirty days of a robot arm dropping things. ${pct} per cent of the practice has moved into the model, so ${n} days still run in the world and the later days are empty.`,
   },
-  zh: {
-    slider: "移进模型里的练习",
-    fitted: "模型从这里拟合",
-    daysRunning: "机械臂在跑的天数",
-    trips: "去扶箱子的趟数",
-    wallClock: "总挂钟时间",
-    days: (n) => `${n} 天`,
-    v0: "三十天都在掉东西，还有大约五百趟去把箱子扶回来。",
-    vMid: (n) => `世界里还剩 ${n} 天。其余的练习发生在没有东西会倒下的地方。`,
-    vTop: "世界里一天半，二十五趟去扶箱子。那一天半是模型给不了的，因为模型正是从它拟合出来的。",
-    aria: (n, pct) =>
-      `一张三十天的日历，画的是机械臂在掉东西。有 ${pct}% 的练习已经移进模型里，所以世界里还剩 ${n} 天，后面的日子都空着。`,
-  },
 };
 
 export function MonthOfDrops() {

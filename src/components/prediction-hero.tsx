@@ -69,22 +69,6 @@ const TEXT: LocaleText<Strings> = {
     aria:
       "An animation: a ball bounces along a path drawn in slate blue, while dashed vermilion arcs show where an internal model predicted it would go, and a label counts how far apart the two have grown.",
   },
-  zh: {
-    happened: "实际发生的",
-    imagined: "模型想象的",
-    invite: "点一下，把它撞偏",
-    knocks: [
-      "这一下它没料到",
-      "模型里没有任何东西知道你会伸手",
-      "旧的那些预测照旧往前走",
-      "它现在自信地错着，而且还要错一阵子",
-      "再多的训练数据也覆盖不到这一下",
-      "从这里开始的每一条弧，都是从一个已经错了的状态画出来的",
-      "再撞一次，它也不会学乖",
-    ],
-    aria:
-      "一段动画：一个球沿着石板蓝的轨迹弹跳，朱红色的虚线弧显示内部模型预测它会去哪里，旁边的标签数着两者已经差了多远。",
-  },
 };
 
 function readPalette() {
