@@ -3,7 +3,7 @@ import { join } from "node:path";
 import Link from "next/link";
 import { Byline } from "@/components/byline";
 import { DefinitionMap } from "@/components/definition-map";
-import { FiveMachines } from "@/components/five-machines";
+import { PredictionHero } from "@/components/prediction-hero";
 import { StarCta } from "@/components/star-cta";
 import { CHAPTERS, chapterText } from "@/lib/chapters";
 import { getStars } from "@/lib/github";
@@ -74,7 +74,7 @@ export async function HomeView({ locale }: { locale: Locale }) {
       </section>
 
       <div className="rise mt-6" style={{ animationDelay: "300ms" }}>
-        <FiveMachines />
+        <PredictionHero />
       </div>
 
       {/* ── the disambiguation: the reason this site exists ─────────── */}
