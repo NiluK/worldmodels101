@@ -639,7 +639,7 @@ const QUESTIONS_CH9: Q[] = [
       "It only works in simulation",
     ],
     answer: 1,
-    why: "It looks like the honest answer and it conflates the two things you were trying to tell apart.",
+    why: "It sounds careful, and it conflates the two things you were trying to tell apart.",
   },
   {
     kind: "choice",
@@ -1295,7 +1295,7 @@ const QUESTIONS_CH5: Q[] = [
       "They only apply to recurrent models",
     ],
     answer: 2,
-    why: "The honest summary is that a learned transition model is trustworthy over some horizon, and part of the engineering is knowing how long that is.",
+    why: "A learned transition model is trustworthy over some horizon, and part of the engineering is knowing how long that is.",
   },
 ];
 

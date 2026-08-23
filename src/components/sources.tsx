@@ -147,7 +147,7 @@ const SOURCES_CH6 = [
   { t: "Dyna: an Integrated Architecture for Learning, Planning and Reacting", a: "Sutton, 1991", u: "https://mlanthology.org/icml/1990/sutton1990icml-integrated/", n: "The loop itself, thirty years early: act, fit a model, learn from experience the model made up, repeat." },
   { t: "When to Trust Your Model: Model-Based Policy Optimisation", a: "Janner et al., 2019", u: "https://arxiv.org/abs/1906.08253", n: "Short imagined rollouts branched from real states, which is the other way of stopping a policy from leaning on the model too far out." },
   { t: "Domain Randomization for Transferring Deep Neural Networks", a: "Tobin et al., 2017", u: "https://arxiv.org/abs/1703.06907", n: "The same idea arriving from robotics: make the simulator vary more than reality does, so nothing can depend on any one version of it." },
-  { t: "Solving Rubik's Cube with a Robot Hand", a: "OpenAI et al., 2019", u: "https://arxiv.org/abs/1910.07113", n: "Randomisation pushed hard enough to carry a policy from simulation onto real hardware, and an honest account of what that cost." },
+  { t: "Solving Rubik's Cube with a Robot Hand", a: "OpenAI et al., 2019", u: "https://arxiv.org/abs/1910.07113", n: "Randomisation pushed hard enough to carry a policy from simulation onto real hardware, with an account of what that cost." },
 ];
 
 const SOURCES_CH7 = [
@@ -157,7 +157,7 @@ const SOURCES_CH7 = [
   { t: "V-JEPA 2", a: "Meta AI, 2025", u: "https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/", n: "The video version, pre-trained without actions and then post-trained for control, which is where the argument meets a robot." },
   { t: "Bootstrap Your Own Latent (BYOL)", a: "Grill et al., 2020", u: "https://arxiv.org/abs/2006.07733", n: "The slowly-updating target copy, and the result that made people believe you could avoid collapse without pushing things apart." },
   { t: "VICReg", a: "Bardes, Ponce & LeCun, 2021", u: "https://arxiv.org/abs/2105.04906", n: "The explicit approach: penalise a representation whose components have collapsed or duplicated each other. Figure 7.6's safeguard, done properly." },
-  { t: "A Cookbook of Self-Supervised Learning", a: "Balestriero et al., 2023", u: "https://arxiv.org/abs/2304.12210", n: "The honest survey, including how much of this field is machinery for stopping the trivial solution from winning." },
+  { t: "A Cookbook of Self-Supervised Learning", a: "Balestriero et al., 2023", u: "https://arxiv.org/abs/2304.12210", n: "The survey that says how much of this field is machinery for stopping the trivial solution from winning." },
   { t: "Masked Autoencoders Are Scalable Vision Learners", a: "He et al., 2021", u: "https://arxiv.org/abs/2111.06377", n: "The counter-example worth holding on to: reconstruct the pixels of the masked part, and it works very well anyway." },
   { t: "Learning and Leveraging World Models in Visual Representation Learning", a: "Garrido et al., 2024", u: "https://arxiv.org/abs/2404.08471", n: "What the embedding-prediction objective turns out to have learned, tested rather than asserted." },
 ];

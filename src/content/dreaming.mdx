@@ -17,7 +17,7 @@ yes. The longer answer is about what it costs.
 
 <Figure
   n="6.1"
-  caption={<>Let's start with the arithmetic behind the pitch. The learner needs two million steps of experience from somewhere, and sliding the ratio never changes that number. What it changes is where the steps come from. Slide it up and watch the time spent in the world fall, while the total time barely moves, because an imagined step is priced at a tiny fraction of a real one. The thing to notice is that this ledger prices a real step and an imagined one as the same kind of step. That is the assumption that fails first. The costs are illustrative.</>}
+  caption={<>Let's start with the arithmetic behind the pitch. The learner needs two million steps of experience from somewhere, and sliding the ratio never changes that number. What it changes is where the steps come from. Slide it up and watch the time spent in the world fall, while the total time barely moves, because an imagined step is priced at a tiny fraction of a real one. This ledger prices a real step and an imagined one as the same kind of step, and that assumption is the first one to fail. The costs are illustrative.</>}
 >
   <DreamBudget />
 </Figure>
@@ -61,16 +61,16 @@ I know of to whether learning in imagination generalises.
 
 <Figure
   n="6.3"
-  caption={<>Another one from chapter 1, because it is the robot case in one picture. The curves are shapes rather than measurements. Pick what one step costs, then drag the budget and watch where the shaded region stops. In a simulator the budget reaches past the crossover. On a robot it stops long before that, and the only agent that has learned anything is the one carrying a model. Then switch on the bad model, and keep that switch in mind for the rest of the chapter.</>}
+  caption={<>Another one from chapter 1, because it is the robot case in one picture. The curves are shapes rather than measurements. Pick what one step costs, then drag the budget and watch where the shaded region stops. In a simulator the budget reaches past the crossover. On a robot it stops long before that, and the only agent that has learned anything is the one carrying a model. Then switch on the bad model.</>}
 >
   <ExperienceBill />
 </Figure>
 
 So systems like these get competent on a fraction of the world contact that
 learning directly would need. On a real robot, as you can see, that fraction
-is the difference between possible and not. The month of dropped objects is
-what the dynasty was built to shorten. Now let's look at what the loop is
-doing, because that is where the cost hides.
+decides whether learning is possible at all. The month of dropped objects is
+what the dynasty was built to shorten. Now let's look at what the loop is doing,
+because that is where the cost hides.
 
 ## The loop has to go round twice
 
@@ -79,21 +79,19 @@ keep what happened. Fit a model to it. Train the policy inside that model,
 which costs compute rather than robot contact, and then take the behaviour
 back out.
 
-The behaviour that comes back out collects better experience than the last
-lap's did. That makes the next model better. The second lap is the part I want
-you to watch in the figure below, because it is the part the summaries tend to
-drop.
+The behaviour that comes back out collects better experience than the last lap's
+did. That makes the next model better. The second lap is the part to watch in
+the figure below.
 
 <MarginNote>
-The loop going round again is the part the summaries drop. A model fitted to
-the flailing of an untrained agent is only good where an untrained agent goes.
-It improves because the agent improves, and the agent improves because the
-model did.
+The loop going round again is the part the summaries drop. A model fitted to the
+flailing of an untrained agent is only good where an untrained agent goes. It
+only improves once a better policy goes somewhere new.
 </MarginNote>
 
 <Figure
   n="6.4"
-  caption={<>A small grid world with a target in the far corner. Press Run a lap. The first policy wanders at random, so the model only learns the cells near the start, which are the shaded ones, and a policy trained inside it has no idea where the target is. Press it again. The better policy goes further, the shaded region grows, and after a lap or two the model finally covers the target. Then press Reset and try turning off Improve the policy: the shaded region stops growing, lap after lap. Illustrative, but the shape is the point.</>}
+  caption={<>A small grid world with a target in the far corner. Press Run a lap. The first policy wanders at random, so the model only learns the cells near the start, which are the shaded ones, and a policy trained inside it has no idea where the target is. Press it again. The better policy goes further, the shaded region grows, and after a lap or two the model finally covers the target. Then press Reset and try turning off Improve the policy: the shaded region stops growing, lap after lap. Illustrative throughout.</>}
 >
   <SecondLap />
 </Figure>
@@ -104,21 +102,19 @@ better policy goes to new places and brings back the data the first model was
 missing.
 
 That is why Figure 6.1's ratio cannot be turned up at will. Imagined steps are
-worth having only while the model can supply them honestly, and it can only do
+worth having only while the model can supply them accurately, and it can only do
 that where it has been. A network for a robot's world has to guess about the
-rest, and the guessing is where the next thirty years went.
+rest.
 
 ## Imagined experience is a different currency
 
-A training log counts one real transition and one model-generated transition
-as two rows. A transition is one step of experience: an action and what it led
-to. The learner cannot count them the same. If you take one thing from this
-chapter, take that.
+A training log counts one real transition and one model-generated transition as
+two rows. A transition is one step of experience: an action and what it led to.
+The learner cannot count them the same.
 
-Imagined experience carries the model's blind spots. The discount compounds
-with every step a rollout, a chain of imagined transitions, takes from a real
-state. I call this the exchange rate, because the name makes the right things
-sound expensive.
+Imagined experience carries the model's blind spots. The discount compounds with
+every step a rollout, a chain of imagined transitions, takes from a real state.
+I will call this the exchange rate.
 
 <Figure
   n="6.5"
@@ -133,8 +129,7 @@ a few steps long. Each starts from a real state drawn from the replay buffer,
 the store of real experience kept from acting.
 
 That trades volume for trust. More imagination helps only while each step is
-priced by how far it has travelled from evidence. A system that refuses to
-price it pays later, in the world, at the real rate.
+priced by how far it has travelled from evidence.
 
 <Figure
   n="6.6"
@@ -145,10 +140,10 @@ price it pays later, in the world, at the real rate.
 
 ## The fireball policy
 
-A policy trained inside a model is scored by that model. The model is all it
-can see, so it cannot tell a good action from one that only looks good to its
-examiner. It will find the second kind, because those are the cheapest points
-on offer, and the policy is a thorough student.
+A policy trained inside a model is scored by that model. The model is all it can
+see, so it cannot tell a good action from one that only looks good to its
+examiner. It will find the second kind, because those are the cheapest points on
+offer.
 
 David Ha and Jürgen Schmidhuber met this head-on in 2018, in *World Models*.
 Schmidhuber had argued for learned world models since 1990 and co-invented the
@@ -168,9 +163,8 @@ like.
 </Figure>
 
 Inside the model this was an excellent policy. In the real game it was
-worthless, because the real game had not agreed to stop firing. The fireball
-policy is the student that found the examiner's blind spot, and I'd keep that
-picture in your head for the rest of the chapter.
+worthless, because the game had not agreed to stop firing. The fireball policy
+is the student that found the examiner's blind spot.
 
 <MarginNote>
 The planner version is easier to catch, and I count that in planning's
@@ -218,29 +212,28 @@ Its randomisation widened on its own as the policy improved.
   <RandomisedSimulator />
 </Figure>
 
-It is a strange thing to have to do. You spend the whole budget making the
-model accurate, then blur it so nothing can lean on the accuracy. The blur is
-the method admitting that its examiner can be bribed, and two fields made that
-admission within a year of each other.
+It is a strange thing to have to do. You spend the whole budget making the model
+accurate, then blur it so nothing can lean on the accuracy. Two fields arrived
+at that move within a year of each other.
 
 ## What the dynasty did not buy
 
-So we have the answer to the title, and we have the price. Let me close with
-three things the Dreamer line did not buy, because each one is the exchange
-rate again.
+So the loop works, and we have seen what it costs. Let me close with three
+things the Dreamer line did not buy, because each one comes back to the exchange
+rate.
 
 **It did not remove the need for real experience.** It changed the exchange
-rate, and a rate is not a free pass. Something still has to go out and find
-out what happens. The model can be trusted only where that has been done.
+rate. Something still has to go out and find out what happens, and the model can
+be trusted only where that has been done.
 
-**It did not make the scoring honest.** The policy is graded by the model the
+**It did not fix the scoring.** The policy is graded by the model the
 whole way through. Short rollouts, the temperature dial and the randomised
 simulator all make that grading harder to game, and none of them makes it
 correct.
 
 <Figure
   n="6.10"
-  caption={<>Ha and Schmidhuber's three pieces, borrowed from chapter 1. Flip the switch to run inside the dream and watch the loop close: the dynamics model feeds its own prediction back, and the game is no longer consulted. That sealed loop is everything the policy gets graded against. It is why a score in there is a claim about the world rather than a test of it.</>}
+  caption={<>Ha and Schmidhuber's three pieces, borrowed from chapter 1. Flip the switch to run inside the dream and watch the loop close: the dynamics model feeds its own prediction back, and the game is no longer consulted. That sealed loop is everything the policy gets graded against, which is why a high score in there has not yet been tested against the game.</>}
 >
   <ThreePieces />
 </Figure>
@@ -258,7 +251,7 @@ be glad to hear from you.
 
 <Figure
   n="6.11"
-  caption={<>Eight questions on the loop and what lives inside it. The last three separate the pitch from what the loop delivers, and they are the ones I'd put to anyone fresh from a Dreamer paper.</>}
+  caption={<>Eight questions on the loop and what lives inside it. The last three separate the pitch from what the loop delivers.</>}
 >
   <Quiz chapter={6} />
 </Figure>

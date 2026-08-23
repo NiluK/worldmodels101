@@ -6,8 +6,8 @@ images.
 
 In 2022 he published *A Path Towards Autonomous Machine Intelligence*. It is a
 position paper, meaning a case for how machines should learn rather than a
-result. One charge in it was aimed at the reflex then governing learned
-world models. The reflex was this: when in doubt, predict the next picture.
+result. One charge in it was aimed at the reflex then governing learned world
+models: when in doubt, predict the next picture.
 
 His smaller charge starts with a camera pointed at a road. Ask what the next
 second looks like: a leaf at the edge of the frame will move, and which way is
@@ -27,7 +27,7 @@ not matter. That is the leaf problem, the smaller of the two charges.
   <LeafLedger />
 </Figure>
 
-JEPA is a family of models from Meta that predicts a description of what it
+JEPA is a family of models from Meta. It predicts a description of what it
 cannot see, instead of the pixels. An embedding, in everything that follows, is
 a short list of numbers standing in for a picture.
 
@@ -84,13 +84,12 @@ model has no idea which turn will happen.
   <FutureSampler />
 </Figure>
 
-That kills the blur objection, and anyone still running it is arguing with
-2017. It does not kill the rest of the case, though.
+That kills the blur objection, though not the rest of the case.
 
 Sampling fixes the form of the output. It does not make useless texture cheap,
 make rare futures well estimated, or tell a decision maker which possible
-future matters. Stochastic generation keeps the target. Embedding prediction
-changes it, and as we'll see, that is the real line between the two camps.
+future matters. Stochastic generation keeps the pixel target, and embedding
+prediction changes it.
 
 ## Predict the description instead
 
@@ -100,9 +99,9 @@ stands in for something bigger</Gloss>. Similar things land near each other in
 that list. Encode the part you are predicting into one too.
 
 Then train the model to predict the second description from the first. Nothing
-is ever decoded back into pixels. I-JEPA is the idea at its cleanest: a 2023
-image model from Mahmoud Assran and colleagues in LeCun's group at Meta. Hide
-part of the picture and predict the embedding of the missing piece.
+is ever decoded back into pixels. I-JEPA is the simplest example: a 2023 image
+model from Mahmoud Assran and colleagues in LeCun's group at Meta. Hide part of
+the picture and predict the embedding of the missing piece.
 
 <Figure
   n="7.4"
@@ -112,19 +111,18 @@ part of the picture and predict the embedding of the missing piece.
 </Figure>
 
 V-JEPA 2, from Meta AI in 2025, does the same for video. It is trained first on
-plain video, with no actions, then again on a robot's actions, for control.
-That is where the argument meets a robot.
+plain video, with no actions. Then it is trained again on a robot's actions,
+for control.
 
-This buys two things. The leaf problem goes away, because the description never
+Two things follow. The leaf problem goes away, because the description never
 had to record which way the leaf went. If a detail does not survive the
 encoding, nothing downstream is graded on it.
 
 The ghost shrinks as well, because you are no longer averaging pictures. The
 descriptions of a car turning left and one turning right can share most of
 their entries. The part still open is either kept explicit or dropped as
-irrelevant. I'd add one caution here: a space of descriptions can still hold
-two separate answers, and changing the representation does not get rid of
-uncertainty.
+irrelevant. One caution: a space of descriptions can still hold two separate
+answers, and changing the representation does not get rid of uncertainty.
 
 <Figure
   n="7.5"
@@ -134,7 +132,7 @@ uncertainty.
 </Figure>
 
 <MarginNote>
-This is the JEPA family, and the name is the architecture read aloud. It is
+This is the JEPA family, and the name describes the architecture. It is
 joint embedding because both sides get embedded, and predictive because the
 training signal is one embedding predicting another.
 </MarginNote>
@@ -142,8 +140,8 @@ training signal is one embedding predicting another.
 ## The bill for that
 
 Predicting pixels has one large virtue, and the JEPA side gives it up. The
-target is fixed. The next frame is the next frame, and the model cannot make it
-easier. Predict an embedding and that stops being true.
+target is fixed, and the model cannot make the next frame easier to predict.
+Predict an embedding and that stops being true.
 
 The target now comes from the encoder, the network that turns pictures into
 descriptions, and that network is also being trained. It can get a perfect
@@ -153,12 +151,12 @@ say nothing about anything. That failure is called collapse.
 
 <Figure
   n="7.6"
-  caption={<>A tiny encoder, two numbers in and two out, trained on four pairs by gradient descent. Leave the safeguard off and drag the step forward: you should see the loss and the spread of the representation reach zero together. Now turn the safeguard on and drag again. The loss never gets close to zero, and that is the run you want. The useful run is the one that looks worse.</>}
+  caption={<>A tiny encoder, two numbers in and two out, trained on four pairs by gradient descent. Leave the safeguard off and drag the step forward: you should see the loss and the spread of the representation reach zero together. Now turn the safeguard on and drag again. The loss never gets close to zero, and that is the run you want.</>}
 >
   <Collapse />
 </Figure>
 
-Everything hard about these methods lives in preventing that, and the fixes are
+Most of the difficulty in these methods is preventing that, and the fixes form
 a lineage. In 2020 the received wisdom for learning descriptions without labels
 was contrastive, meaning you learn by comparing pairs. Pull two views of the
 same image together. Push everything else apart, so the descriptions cannot all
@@ -174,7 +172,7 @@ By the standard account it should have collapsed. It did not, and that
 convinced people collapse could be avoided without pushing anything apart.
 
 VICReg, a 2021 method from Adrien Bardes, Jean Ponce and LeCun, went the
-explicit route instead. The name is the recipe read aloud: variance,
+explicit route instead. The name spells out its three terms: variance,
 invariance, covariance. It penalises descriptions whose parts have collapsed or
 copied each other. That is Figure 7.6's safeguard done properly.
 
@@ -187,8 +185,7 @@ copied each other. That is Figure 7.6's safeguard done properly.
 
 Randall Balestriero and colleagues wrote a 2023 survey, *A Cookbook of
 Self-Supervised Learning*. It is frank that much of the field is machinery for
-stopping the trivial solution from winning. None of it is elegant. With the
-model grading its own homework, I doubt it ever will be.
+stopping the trivial solution from winning.
 
 The loss is also no longer a number you can read. A pixel loss of zero means
 the model predicted the frame. An embedding loss of zero might mean it
@@ -201,18 +198,16 @@ understands everything, or nothing at all. The number will not tell you which.
   <TwoZeroLosses />
 </Figure>
 
-So Quentin Garrido and colleagues tested what had been learned. They checked
-what the embeddings could do. Their 2024 paper is *Learning and Leveraging
-World Models in Visual Representation Learning*.
+So Quentin Garrido and colleagues tested what the embeddings could do. Their
+2024 paper is *Learning and Leveraging World Models in Visual Representation
+Learning*.
 
 ## What this does not settle
 
 None of this makes generation a mistake. The version of the argument that says
 it does is the overclaim. Systems that predict pixels are the ones making
-worlds you can walk around in, and they work.
-
-Whatever they waste on leaves, they deliver a picture, and no embedding does
-that. To see the future rather than reason about it, somebody has to draw it.
+worlds you can walk around in, and they work. Whatever they waste on leaves,
+they deliver a picture, and no embedding does that.
 
 The awkward counter-example comes from LeCun's own lab. Kaiming He, best known
 for ResNet, the network design computer vision ran on for years, was at that
@@ -227,14 +222,13 @@ JEPA refuses to do.
   <MaskedRebuild />
 </Figure>
 
-The descriptions it learns are very good anyway, and it came out the year
-before the position paper. I keep that result next to every JEPA claim.
+The descriptions it learns are very good anyway. It came out the year before
+the position paper.
 
-The version of the argument that holds up is narrower than the slogan. The
-narrow version is right, though. Predicting appearances spends most of its
-capacity on things no decision depends on. When the future is open, a
-deterministic predictor is trained towards a picture of something that will
-not happen.
+The version of the argument that holds up is narrower than the slogan, but it
+is right. Predicting appearances spends most of its capacity on things no
+decision depends on. When the future is open, a deterministic predictor is
+trained towards a picture of something that will not happen.
 
 If what you want is a compact state to act on, that is a bad way to get one. If
 what you want is a picture, it is the only way anyone has. Most of the

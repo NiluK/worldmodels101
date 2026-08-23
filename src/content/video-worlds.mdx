@@ -18,14 +18,12 @@ and turn the action input off to see what happens to the three rows.
 Jake Bruce and colleagues at Google DeepMind made that move with Genie in 2024.
 Their paper was called *Genie: Generative Interactive Environments*. Genie was
 trained on footage of 2D platform games, Mario and its descendants, and it
-turned them into worlds you could steer. The part I find surprising is that
-nobody had labelled the keypresses.
+turned them into worlds you could steer. Nobody had labelled the keypresses.
 
 Instead, the model had to explain each change between frames with one of a
-handful of codes. The codes it settled on behaved like a controller, and that
-is what turns a video model into somewhere you can be. It also married two
-families that had grown up apart: world models built for agents (chapters 5
-and 6) and video models built for audiences.
+handful of codes. The codes it settled on behaved like a controller. Genie also
+married two families that had grown up apart: world models built for agents
+(chapters 5 and 6) and video models built for audiences.
 
 <Figure
   n="8.2"
@@ -51,7 +49,7 @@ test, and the figure below is that test as a picture.
 
 <Figure
   n="8.3"
-  caption={<>Every row gets a different command from the same start. Conditioning is the name for giving the model the action as an input, and action fidelity is how far the model obeys it. Drag fidelity towards zero and you should see the paths fold together while the input stays present. That is the steering wheel coming loose.</>}
+  caption={<>Every row gets a different command from the same start. Conditioning is the name for giving the model the action as an input, and action fidelity is how far the model obeys it. Drag fidelity towards zero and you should see the paths fold together while the input stays present.</>}
 >
   <ActionFidelity />
 </Figure>
@@ -61,14 +59,14 @@ That failure is the one I'd expect. A model trained on footage is rewarded for
 frames that look right. If the footage mostly goes straight, going straight is
 a good bet whatever the key says.
 
-Video quality is the best disguise weak control has. If three beautiful
-continuations all go straight, you have been shown video. A planner that asked
-for three counterfactuals, three what-ifs from one start, has been handed one
-of them three times.
+Good video hides weak control. If three beautiful continuations all go
+straight, you have been shown video. A planner that asked for three
+counterfactuals, three what-ifs from one start, has been handed one of them
+three times.
 
 ## From watching to walking in
 
-Scaling bought more than most people expected, including most of the people
+Scaling did more than most people expected, including most of the people
 building it. Let's take the two systems that mark the change.
 
 GameNGen came from Dani Valevski and colleagues at Google Research in 2024.
@@ -84,9 +82,9 @@ nineties.
   <NoiseToFrame />
 </Figure>
 
-It made each frame from the earlier frames and the player's inputs, fast
-enough to play. People shown short clips struggled to tell it from the real
-game, its authors reported. That is where watching ended and playing began.
+It made each frame from the earlier frames and the player's inputs, fast enough
+to play. People shown short clips struggled to tell it from the real game, its
+authors reported.
 
 Genie 3, from Google DeepMind a year later, is where the numbers stopped
 looking like a demo. It is reported to make interactive video at 720p and 24
@@ -116,19 +114,18 @@ at the clip below and watch for exactly that.
 The public interface offers no stored 3D layout of the scene, and no list of
 its objects, that you could inspect. Yet DeepMind says Genie 3 can look back
 over its own path and keep visual information for about a minute. Whatever
-state supports that stays hidden inside the generator. The behaviour shows
-persistence without showing what carries it.
+state supports that stays hidden inside the generator.
 
 In under two years the field went from steering a blurry platformer to walking
-around a photoreal scene that remembered where you had been. What scaling did
-not buy was anything you could open up and read.
+around a photoreal scene that remembered where you had been. Scaling did not
+give you anything you could open up and read.
 
 ## Emergent physics, and where the footage runs out
 
 You will see the claim made about all of them. OpenAI's 2024 report, *Video
 generation models as world simulators*, put emergent physics into common use.
-It was the write-up for Sora, OpenAI's own video generator. Its title did most
-of the work, and the claim it spread bundles an observation with a conclusion.
+It was the write-up for Sora, OpenAI's own video generator. The title is the
+part that spread, and the claim in it bundles an observation with a conclusion.
 
 The observation is real. Train on enough video and the outputs start to respect
 regularities nobody put in. Dropped objects speed up as they fall, water pools
@@ -154,7 +151,7 @@ speeds the footage never showed. Figure 8.7 is the shape of what they found.
 
 <Figure
   n="8.7"
-  caption={<>The dashed line is a model fitted to the true behaviour across one band of speeds. Inside the band it sits within a few per cent, so anyone testing there would credit it with the rule. Now drag the speed outside the band. You should see it carry on straight while the true curve bends away. It has a line through the part of the curve it was shown, and that is all it has.</>}
+  caption={<>The dashed line is a model fitted to the true behaviour across one band of speeds. Inside the band it sits within a few per cent, so anyone testing there would credit it with the rule. Now drag the speed outside the band. You should see it carry on straight while the true curve bends away. It has a line through the part of the curve it was shown.</>}
 >
   <EmergentPhysics />
 </Figure>
@@ -166,10 +163,10 @@ the training scenes it most resembled and copying what happened there. Nobody
 tests outside the band, because that is where the footage runs out. I call that
 the band problem.
 
-So the honest version of the claim is narrower. These systems copy a great many
-physical regularities across the situations they were trained on. Whether that
-is the same as having the rule, no demo you have seen can settle, because every
-one of them was inside the band.
+So the defensible claim is narrower. These systems copy a great many physical
+regularities across the situations they were trained on. Whether that is the
+same as having the rule, no demo you have seen can settle, because every one of
+them was inside the band.
 
 <MarginNote>
 The band problem is not special to video. Any fitted function has it. It feels
@@ -183,9 +180,9 @@ None of that argues against using them. Answering "it has not learned physics"
 with "so it is a toy" is the mirror-image error, and I see it nearly as often.
 
 For training other systems a generated world is useful. It avoids contact with
-the real environment and pays in GPU time instead. It resets at once, and it
-can produce a thousand versions of a scene that would take a week to stage.
-Press the buttons in the figure below a few times and you'll see what I mean.
+the real environment and costs GPU time instead. It resets at once, and it can
+produce a thousand versions of a scene that would take a week to stage. Press
+the buttons in the figure below a few times and you'll see what I mean.
 
 <Figure
   n="8.8"
@@ -210,8 +207,7 @@ sceptics admit and less than the launches imply.
 For being the model an agent plans inside, raw video generators are an awkward
 shape. A planner may need to score a hundred action sequences, and rendering
 each one is expensive. Systems can instead distil a learned latent, a short
-internal code that stands in for the frames, and plan in that. Then the latent
-state does the planning rather than the visible video.
+internal code that stands in for the frames, and plan in that.
 
 <Figure
   n="8.9"
@@ -224,9 +220,9 @@ state does the planning rather than the visible video.
 
 There are three seams where a demo can mislead you.
 
-**Consistency is learned, not enforced.** Nothing stops the room from changing.
-It usually does not. But usually is a statistical property of a trained system,
-and a guarantee is a property of an engine.
+**Consistency is learned, not enforced.** Nothing stops the room from changing,
+and usually it does not. But usually is a statistical property of a trained
+system, and a guarantee is a property of an engine.
 
 <Figure
   n="8.10"
@@ -255,9 +251,9 @@ the chance to the middle in the figure below and you'll see why.
 action fidelity and persistence one at a time. There is no accepted rule for
 combining them into one ranking.
 
-So I will not tell you whether Genie 3 beats GameNGen, and you should distrust
-anyone who does. A claim about improvement belongs to one particular test.
-Click through the measures below and watch the winner change.
+So I will not tell you whether Genie 3 beats GameNGen. A claim about
+improvement belongs to one particular test. Click through the measures below
+and watch the winner change.
 
 <Figure
   n="8.12"

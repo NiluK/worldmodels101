@@ -21,7 +21,7 @@ it measures. Let's start with the job itself.
 
 Now the number. Show the model where things are and ask what happens next.
 Compare its answer to what happened, then do that ten thousand times and read
-off the average. The result will be small and honest.
+off the average. The result will be small, and it measures something real.
 
 It also measures a job the model will never be asked to do. You were going to
 ask it for a hundred steps. From step two it stops being handed the truth and
@@ -68,16 +68,16 @@ vermilion line drifts. A paper that leads with the grey line is describing the
 wrong run.
 
 <MarginNote>
-I'd resist calling the model bad at long horizons, because that misreads it.
-It was trained on a distribution of inputs it will never see again once you
-start rolling it out, and nothing in the training loop noticed.
+Calling the model bad at long horizons misreads it. It was trained on a
+distribution of inputs it will never see again once you start rolling it out,
+and nothing in the training loop noticed.
 </MarginNote>
 
 ## The memory wars, 1997 to 2023
 
 Let's go back to the word know, because the question underneath it is how the
 past gets carried. Since 1997 it has had two answers, which take turns being
-fashionable, and I'll give you both before we compare them.
+fashionable.
 
 **Carry a summary.** Keep one fixed block of numbers. Every time something new
 arrives, fold it in and throw the old block away. The work per step never
@@ -158,13 +158,12 @@ step.
 </Figure>
 
 PlaNet ran the comparison and argued for carrying both, because each one fails
-alone in a different direction. Dreamer is what that argument bought. The same
-group published it a year later as *Dream to Control*, and let an agent learn
-to behave inside the model's imagined rollouts.
+alone in a different direction. Dreamer followed a year later, when the same
+group published *Dream to Control* and let an agent learn to behave inside the
+model's imagined rollouts.
 
 The split state went into it, and into every Dreamer since, up to the *Nature*
-paper of 2025. That is how a 2018 design choice became the spine of a
-seven-year dynasty. It is a state that can both remember and admit doubt.
+paper of 2025.
 
 ## Four truces with the second step
 
@@ -192,9 +191,9 @@ Networks*. The two 2015 papers read as a pair: one fixes the input and the
 other the loss.
 
 **Do not go far.** Keep the rollouts short and start them from real states. It
-is cheap, it works, and it gives up the part of the appeal that was infinite.
-Michael Janner and colleagues made it a method in 2019, under a title that is
-also the question: *When to Trust Your Model*.
+is cheap and it works, and it gives up the long imagined futures that were the
+appeal. Michael Janner and colleagues made it a method in 2019, under a title
+that is also the question: *When to Trust Your Model*.
 
 <Figure
   n="5.8"
@@ -261,9 +260,8 @@ run. The test never asked what separates them. If both have only seen the
 demonstrated path, nothing in their scores says which way they move after a
 small mistake.
 
-Training on perturbed or self-generated states does ask it. The answer is a
-separate skill, and that is the claim I would most want a sceptic to take
-away. Have a go with the figure below.
+Training on perturbed or self-generated states does ask it, and the answer is a
+separate skill. Have a go with the figure below.
 
 <Figure
   n="5.11"
@@ -297,12 +295,12 @@ I think it is the more under-read of the two, perhaps because transformers
 arrived the next year and took the field's attention. The problem moved into
 world models, where every rollout is a free run.
 
-What the two papers share is that recovery has to appear somewhere in the
-training objective, or it does not appear at all.
+What the two papers share is that recovery has to be put into the training
+objective, because the model does not learn it on its own.
 
-Everything in this chapter was paid for in reality. The model was trained on
-recorded experience, checked against it and corrected by it. The next chapter
-asks what happens when an agent learns inside the model instead.
+Everything in this chapter stayed tied to recorded experience: the model was
+trained on it, checked against it and corrected by it. The next chapter asks
+what happens when an agent learns inside the model instead.
 
 Hopefully this one helped. There is a short quiz below if you want to check the
 ideas stuck. If I have got something wrong, or you know a better source than

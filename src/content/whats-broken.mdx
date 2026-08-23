@@ -9,8 +9,7 @@ simulator, the dynamics model, the representation and the implicit model.
 
 <Figure n="9.1" caption={<>The five failures, laid out. Click one to read the question it asks, which community ran into it first, and when somebody first measured it. Then read the dates along the bottom from left to right. The order is the odd part.</>} > <FiveFailures /> </Figure>
 
-Click through the five above before you read on. Knowing which one a system hits
-first is what separates reading a paper from being sold one.
+Click through the five above before you read on, and notice which one each system hits first.
 
 ## Rollouts do not fail all at once
 
@@ -32,27 +31,27 @@ horizon per property: how many steps each one held up for.
   <WhatBreaks />
 </Figure>
 
-In this profile, colour and texture outlast identity and physics, and I'd say
-that is no accident. A per-frame loss pays the model for getting most of the
-pixels about right, and most pixels are surfaces and light. Nothing in it is
-watching whether the chair you walked past is the same chair.
+In this profile, colour and texture outlast identity and physics, and the loss
+explains why. A per-frame loss pays the model for getting most of the pixels
+about right, and most pixels are surfaces and light. Nothing in it is watching
+whether the chair you walked past is the same chair.
 
 The result is what I call the single-frame alibi. You get a rollout a hundred
 steps past the point of being useful, and any one frame of it still looks
-completely fine. Every frame has an alibi, and only the sequence is guilty.
+completely fine. The mistake only shows when you look along the sequence.
 
 ## Three failures that outlived every fix
 
 **Things stop being themselves.** Object permanence is the expectation that a
 thing is still there, and still itself, when you look back. It is the failure
-everyone notices. It is also the one chapter 1's turn-around test was built to
-catch, and could not.
+everyone notices, and the one chapter 1's turn-around test was built to catch
+and could not.
 
 Take a renderer, a model whose output is pictures. It has no object store, so
 identity lives in the predictor's hidden state, the numbers it carries between
 steps. When the chair becomes another chair, it does so a little at a time and
-without an error message. A simulator stores the object explicitly, and pays
-by needing the structure right first.
+without an error message. A simulator stores the object explicitly, but then
+needs the structure right first.
 
 <Figure
   n="9.3"
@@ -63,8 +62,8 @@ by needing the structure right first.
 
 **What if is not really available.** A model can tell you what is likely to
 happen next. What would have happened if you had done something else is a
-different question, and for a decision it is the only one. The model's answer
-is true inside the model rather than about the world.
+different question, and it is the one a decision needs. The model's answer to it
+comes from the model, not from the world.
 
 Bingyi Kang and colleagues measured the gap in 2024, in *How Far is Video
 Generation from World Model*. They tested video generators on physical laws
@@ -85,10 +84,10 @@ impressive, and nobody is rewarded for building it.
   <EmergentPhysics />
 </Figure>
 
-**Long horizons are still the binding constraint.** Read unkindly, every trick
-in model-based control is a way of not needing the model to be right for very
-long. Horizon was the first of the five to be measured. It was measured by the
-people who had to act on the model's word, which is reinforcement learning.
+**Long horizons are still the binding constraint.** Most tricks in model-based
+control are ways of not needing the model to be right for very long. Horizon was
+the first of the five to be measured. It was measured by the people who had to
+act on the model's predictions, in reinforcement learning.
 
 Tingwu Wang and colleagues did it in 2019, in *Benchmarking Model-Based
 Reinforcement Learning*. They ran the methods that learn a model of their
@@ -97,9 +96,9 @@ many steps ahead the model was trusted, decided where each won and lost.
 
 Michael Janner and colleagues answered the same year, under a title that is
 still the question: *When to Trust Your Model*. Their answer was only briefly,
-and from a real state. Short rollouts and replanning every few steps work, and
-they are a confession that the model does not hold up. The horizon over which
-it does still decides what you can build.
+and from a real state. Short rollouts and replanning every few steps work
+because they stop relying on the model before it drifts. The horizon over which
+it holds still decides what you can build.
 
 <Figure
   n="9.5"
@@ -127,34 +126,33 @@ two failures a renderer hits first, tested seven years after horizon.
 
 <Figure
   n="9.6"
-  caption={<>The scores are invented and the systems are not real, but the disagreement is. Click through the four measures and watch the winner change each time. Then read the best overall cell, which is the part I want you to notice. It cannot name one, because there is no accepted way to combine the four into a single ordering.</>}
+  caption={<>The scores are invented and the systems are not real, but the disagreement is. Click through the four measures and watch the winner change each time. Then read the best overall cell. It cannot name one, because there is no accepted way to combine the four into a single ordering.</>}
 >
   <NoRanking />
 </Figure>
 
-Frame quality is measurable, and it is what demos are made of. Whether the
-world holds together over a thousand steps is what an agent needs, and no demo
-is long enough to show it. Action fidelity is the difference between a world
-model and a video, and it is almost never reported. Cost is reported least of
-all.
+Frame quality is measurable, and it is what demos are made of. Whether the world
+holds together over a thousand steps is what an agent needs, and no demo is long
+enough to show it. Action fidelity separates a world model from a video
+generator, and it is almost never reported. Cost is reported least of all.
 
-That order is close to the reverse of how much each matters, and I do not think
-it is by chance. Downstream task success looks like the honest way out. But it
-scores the model and the policy together, and a good policy hides a bad model.
+That order is close to the reverse of how much each matters, because the easy
+measures were taken first. Downstream task success looks like the way round
+this. But it scores the model and the policy together, and a good policy hides a
+bad model.
 
 Progress is real. Genie 3, from Google DeepMind in 2025, is said to stay
 coherent for several minutes. That is reported by the lab that built it, on a
-measure it chose. "Better" is an incomplete sentence until the measure is
-named, and the system contract with it, meaning which of the five machines is
-claimed.
+measure it chose. "Better" means nothing until the measure is named, and the
+system contract with it, meaning which of the five machines is claimed.
 
 ## Match the failure test to the system
 
 The phrase covers five machines, and for most of this history they sat the same
-exam. That is where the confusion came from. A renderer lives or dies by
-persistence and action fidelity, and the single-frame alibi is its native
-failure. A simulator is the easy one to check, because it exports structure
-that another program can test.
+exam. That is where the confusion came from. A renderer depends on persistence
+and action fidelity, and the single-frame alibi is its usual failure. A
+simulator is the easy one to check, because it exports structure that another
+program can test.
 
 <Figure
   n="9.7"
@@ -176,7 +174,7 @@ what that takes in 2022, in *Emergent World Representations*.
 
 A network trained only to predict the next move in Othello (a board game played
 with two-sided discs) turned out, under probes, to hold a picture of the board.
-The probe could have found nothing, and that is what makes it evidence.
+The probe could have found nothing.
 
 <Figure
   n="9.8"
@@ -187,7 +185,7 @@ The probe could have found nothing, and that is what makes it evidence.
 
 Four questions still handle most papers, so let me leave you with them. The
 first is **what does it output?** A picture, a structure, a compact state or an
-embedding. Nothing else follows without it.
+embedding, and the other three questions depend on the answer.
 
 The second is **can you roll it forward under actions nobody took?** If not, it
 will not support a decision, however good it looks.
@@ -207,10 +205,10 @@ told you which.
 </Figure>
 
 Yann LeCun, then Meta's chief AI scientist and a Turing Award winner, wrote the
-fullest statement of the target in 2022. The paper is *A Path Towards
-Autonomous Machine Intelligence*, and it sets out what a world model would have
-to do to deserve the name. Read against the four questions, it is a list of
-what is still missing. Architecture names answer none of the four.
+fullest statement of the target in 2022. The paper is *A Path Towards Autonomous
+Machine Intelligence*, and it sets out what a world model would have to do to
+deserve the name. Read against the four questions, it is a list of what is still
+missing, and naming an architecture answers none of them.
 
 That brings us to the end of the course. The phrase still means five different
 things, and the people using it still rarely say which. What has changed is on
@@ -227,7 +225,7 @@ from you.
 
 <Figure
   n="9.10"
-  caption={<>Eight questions on the honest state of it. If you have read the whole course, the last one should be easy and slightly annoying.</>}
+  caption={<>Eight questions on what is still broken. If you have read the whole course, the last one should be easy and slightly annoying.</>}
 >
   <Quiz chapter={9} />
 </Figure>

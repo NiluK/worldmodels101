@@ -64,8 +64,7 @@ Let's watch it run.
 Nothing in that figure was told the rule. It was told, two hundred and twenty
 times, by how much it had just missed. Each time it nudged its own two numbers
 <Gloss>the *weights*: the adjustable numbers inside a model, and the only thing
-that learning ever changes</Gloss> a little way towards being right, and that
-was enough. Splendid.
+that learning ever changes</Gloss> a little way towards being right, and that was enough. Splendid.
 
 <MarginNote>
 This is all that *self-supervised* means. Supervised, because the model is
@@ -81,9 +80,9 @@ is already a training set.
 
 The argument was still open in 2013, when Yoshua Bengio, Aaron Courville and
 Pascal Vincent wrote *Representation Learning: A Review and New Perspectives*.
-It is a survey, and it reads as a case still being made. A field does not argue
-for long against free data. That convenience, more than any single result, is
-why prediction ate the field.
+It is a survey, and it reads as a case still being made. That the data was free
+settled it, and that convenience, more than any single result, is why prediction
+took over the field.
 
 <Figure
   n="3.4"
@@ -104,7 +103,7 @@ things that can be eaten.
 
 Nobody had given the network a single category. It reached them because a
 word's category is what its next word depends on. The title, *Finding Structure
-in Time*, is honest. The structure was found rather than installed.
+in Time*, is literal: the structure was found rather than installed.
 
 <Figure
   n="3.5"
@@ -147,21 +146,19 @@ switch, the network stored each square as mine or theirs rather than black or
 white, and flipped its view every turn.
 
 The same rule sits under both results, thirty-two years apart. Prediction
-rewards one thing only, and that is making the next moment less surprising.
-Sometimes the cheapest way to be less surprised is to build the very thing
-that is making the data.
+rewards one thing only: making the next moment less surprising. Sometimes the
+cheapest way to be less surprised is to build the very thing that is making the
+data.
 
 <MarginNote>
-Sometimes is the right word. A predictor will settle for any shortcut that
-works on the data it saw. Telling the shortcut from the process it stands in
-for is most of the work.
+A predictor will settle for any shortcut that works on the data it saw. Telling
+the shortcut from the process it stands in for is most of the work.
 </MarginNote>
 
 ## Predict the next what?
 
 The loop says predict the next thing. It never says what counts as a thing, and
-that silence is where the design decision hides. Let's take three choices in
-turn.
+that choice is the design decision. Let's take three choices in turn.
 
 Predict the next pixel and you get a system that is very good at leaves. Leaves
 are hard to predict and they are also most of the pixels, so that is where the
@@ -171,7 +168,7 @@ and chapter 4 is built around it.
 
 <Figure
   n="3.7"
-  caption={<>Same loop, three targets. Pick what goes on the right-hand side of the guess. Start on pixels and watch where the capacity bar goes: to the leaves, which are most of the picture and the hardest part to call. Switch to the next word and the bar moves onto grammar and facts. Switch to a compact state and you get something a planner can search. The bars are illustrative. The point is that nothing else in the loop changed.</>}
+  caption={<>Same loop, three targets. Pick what goes on the right-hand side of the guess. Start on pixels and watch where the capacity bar goes: to the leaves, which are most of the picture and the hardest part to call. Switch to the next word and the bar moves onto grammar and facts. Switch to a compact state and you get something a planner can search. The bars are illustrative. Nothing else in the loop changed.</>}
 >
   <ThreeTargets />
 </Figure>
@@ -187,8 +184,7 @@ translate a little, and nobody had trained it for any of those. OpenAI released
 it in stages, uneasy about what a fluent text machine might be used for.
 
 The model learned those tasks because the next word sometimes depends on them.
-To my mind that is the best evidence we have that the target decides the
-machine.
+That is the clearest evidence we have that the target decides what gets built.
 
 <Figure
   n="3.8"
@@ -203,20 +199,20 @@ planner can use. Compact means a short list of numbers rather than a picture.
 So the same loop gives three different machines, and all that changed is what
 was put on the right-hand side of the guess. *Predict the next thing* is a
 family of methods rather than one. Picking the target is the design decision
-that matters most, and I have little patience for arguments about prediction
-that never say what is being predicted.
+that matters most, so an argument about prediction should say what is being
+predicted.
 
 ## Being right is the same as being brief
 
-There is a second way to look at the whole business. It is four decades older
-than Elman's result, and it turns out to be the same way. Shannon was a
-mathematician at Bell Labs, the research arm of the American telephone company,
-whose business was pushing more calls down the same wire. Suppose you have to
-send a message down a wire and you are charged by the symbol.
+There is a second way to look at this, four decades older than Elman's result,
+and it comes to the same thing. Shannon was a mathematician at Bell Labs, the
+research arm of the American telephone company, whose business was pushing more
+calls down the same wire. Suppose you have to send a message down a wire and
+you are charged by the symbol.
 
 You and the receiver share a predictor. Before each symbol both of you run it
 and get a list of what is likely next, so you need only send enough to pick the
-right one. Confident and correct costs almost nothing. Confident and wrong
+right one. Confident and correct costs almost nothing, and confident and wrong
 costs a lot.
 
 <Figure
@@ -247,7 +243,6 @@ cheap. That put a human being on the bottom row of Figure 3.10.
 So the length of the shortest message you can write measures how well you
 predicted. That makes a better predictor a better compressor. Read backwards,
 whatever compresses your data the hardest has understood the most about it.
-That is not a metaphor, though it is nearly always quoted as one.
 
 Marcus Hutter, a theorist of perfect learners in the abstract, took the reading
 literally. The Hutter Prize is a long-running cash prize for compressing a
@@ -314,7 +309,7 @@ weather, in a figure I've borrowed from chapter 8.
 
 <Figure
   n="3.14"
-  caption={<>Drag the launch speed across the band the model was trained on and it lands close to the truth, so anyone testing it there would say it has the rule. Keep dragging past the band and watch the gap open. The calm days were the band. It never saw a storm.</>}
+  caption={<>Drag the launch speed across the band the model was trained on and it lands close to the truth, so anyone testing it there would say it has the rule. Keep dragging past the band and watch the gap open. The calm days were the band, and it never saw a storm.</>}
 >
   <EmergentPhysics />
 </Figure>
@@ -322,7 +317,7 @@ weather, in a figure I've borrowed from chapter 8.
 Neither limit undoes the argument. Prediction is enough to pull structure out
 of raw experience, and it is the cheapest signal anyone has found. The line
 from Shannon through Elman to Othello-GPT is people proving that with better
-instruments. It is not free, and it does not aim itself.
+instruments.
 
 Everything here has assumed that what is being predicted is small: two numbers
 for a ball, and one word at a time for language. A camera hands you two million

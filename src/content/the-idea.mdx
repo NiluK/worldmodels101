@@ -6,13 +6,13 @@ pass.
 What you do in that second is run the scene forward. That car is there, going
 about that fast, so in two seconds it will be here. If I go now I am clear of
 it, and if I wait I am not in its way either. You commit before anything has
-happened, and you commit on your own forecast of it.
+happened, on your own forecast of it.
 
 Most of the time the forecast is good enough, and the whole thing takes less
 time than it took to read about. The cases where it is not good enough are the
-interesting ones. Learner drivers misjudge the speed of oncoming cars, and the
-price of a wrong forecast here is a collision you do not get to undo. Let's
-make the decision one you can run.
+interesting ones. Learner drivers misjudge the speed of oncoming cars, and a
+wrong forecast here ends in a collision you do not get to undo. Let's make the
+decision one you can run.
 
 <Figure
   n="2.1"
@@ -22,9 +22,9 @@ make the decision one you can run.
 </Figure>
 
 As you can see, nothing about the oncoming car changed between your forecast and
-the answer. What changed was only how good your forecast of it was, and that is
-the whole difference between getting across and getting hit. Past a certain
-speed, acting well depends on what has not happened yet.
+the answer. What changed was only how good your forecast of it was, and that
+decided whether you got across or got hit. Past a certain speed, acting well
+depends on what has not happened yet.
 
 Take what you have, run it forward, and move for what comes next. That is a
 dynamics model. Of everything the phrase *world model* has since been stretched
@@ -32,10 +32,10 @@ to cover, and chapter 1 counted five senses, it is the oldest and the one the
 term was coined for. The coining happened in 1990, and chapter 1 told that
 story.
 
-The model itself does not act. It predicts what would happen. Something else
-reads those predictions and chooses, and that something else has its own name,
-the **policy** <Gloss>the part that chooses the action, by hard thinking or by
-pure reflex</Gloss>. Jürgen Schmidhuber's 1990 version kept the two as separate
+The model itself only predicts what would happen. Something else reads those
+predictions and chooses, and that something else has its own name, the
+**policy** <Gloss>the part that chooses the action, by hard thinking or by pure
+reflex</Gloss>. Jürgen Schmidhuber's 1990 version kept the two as separate
 objects, and the split holds all the way through this chapter.
 
 <Figure
@@ -46,7 +46,7 @@ objects, and the split holds all the way through this chapter.
 </Figure>
 
 So when somebody tells you their system is a world model, ask which half they
-mean. Having the first half buys you a lot, and it also fails in a way nobody
+mean. The first half gets you a great deal, and it also fails in a way nobody
 has engineered away.
 
 ## What the model holds, and what it can drop
@@ -117,15 +117,15 @@ feed the prediction back in, predict again</Gloss>. Its length is the horizon.
 
 <Figure
   n="2.5"
-  caption={<>The same object, asked for a stretch of future instead of one step. Hover the parts. Two things grow, the states you ask for and the actions you hand in, and one does not, which is what you were given to start from. That is all a rollout is.</>}
+  caption={<>The same object, asked for a stretch of future instead of one step. Hover the parts. The states you ask for and the actions you hand in grow with the horizon; the state you were given to start from does not.</>}
 >
   <RolloutEquation />
 </Figure>
 
-That is the test I'd hold every new paper to. Can you run it forward under
-actions nobody took and compare the results? How real the frames look is beside
-the point. Sebastian Thrun's system was passing that test in 1990, and he turns
-up again at the end.
+The question I'd put to every new paper is whether you can run it forward
+under actions nobody took and compare the results. How real the frames look is
+beside the point. Sebastian Thrun's system was passing that test in 1990, and
+he turns up again at the end.
 
 ## Cached answers
 
@@ -139,7 +139,7 @@ same thing, and you can check that below.
 
 <Figure
   n="2.6"
-  caption={<>Below about forty you cannot tell the two apart. Drag the speed up and watch which one notices. What is being compared is one fixed rule against one object that recomputes, and nothing grander than that.</>}
+  caption={<>Below about forty you cannot tell the two apart. Drag the speed up and watch which one notices. What is being compared is one fixed rule against one object that recomputes.</>}
 >
   <BrakingDemo />
 </Figure>
@@ -197,7 +197,7 @@ know what you are facing.
 
 <Figure
   n="2.8"
-  caption={<>Two copies of one small world, from chapter 1. On the left, press Decide: the model imagines twelve futures at every step, which is PlaNet's way and MuZero's. On the right, press Train in imagination once, then Decide: the thinking was done in advance, which is Dreamer's. The thing to watch is the two calls counters, because that is where the thinking happened.</>}
+  caption={<>Two copies of one small world, from chapter 1. On the left, press Decide: the model imagines twelve futures at every step, which is PlaNet's way and MuZero's. On the right, press Train in imagination once, then Decide: the thinking was done in advance, which is Dreamer's. Watch the two calls counters, because that is where the thinking happened.</>}
 >
   <PlanOrLearn />
 </Figure>
@@ -219,12 +219,12 @@ loop, slowed down.
 
 <Figure
   n="2.9"
-  caption={<>The planner writes down runs of actions, plays each one through the same model, and keeps the best. The faint lines are the rejects. Raise the budget and you should see the plan improve, but only for as long as the model ranks the candidates honestly. Figure 2.15 is what happens when it stops.</>}
+  caption={<>The planner writes down runs of actions, plays each one through the same model, and keeps the best. The faint lines are the rejects. Raise the budget and you should see the plan improve, but only for as long as the model ranks the candidates the way the world would. Figure 2.15 is what happens when it stops.</>}
 >
   <Planner />
 </Figure>
 
-With one candidate it is guessing. With two hundred it is shopping, and nothing
+With one candidate it is guessing, with two hundred it is shopping, and nothing
 in the world changed in between. All of it came out of thinking, in the gap
 between seeing and moving, and a model is what makes that trade available.
 
@@ -233,8 +233,8 @@ result in the field. It was never trained to redraw a game frame or lay out a
 chessboard, and it learned only the handful of numbers its search reads. It
 matched AlphaZero at chess, Go and shogi, having been told less.
 
-The lesson is that a model only has to keep whatever the decision turns on. The
-people leading with photorealistic frames have not learned it.
+A model only has to keep whatever the decision turns on. The people leading
+with photorealistic frames have not learned that.
 
 **You can practise where mistakes are cheap.** Sutton's Dyna already did this:
 learn a model from real experience, then learn from what the model makes up.
@@ -257,8 +257,7 @@ one author, one recipe, six years of versions.
 Its third version, DreamerV3, ran that recipe across more than 150 tasks,
 retuned for none of them. It was the first system to dig up a diamond in
 Minecraft with no human play to copy. The paper is *Mastering diverse control
-tasks through world models*, from 2025. If you want one number for the
-imagination branch, 150 is the one.
+tasks through world models*, from 2025.
 
 The tempting summary is *reality is expensive, imagination is free*, and the
 second half of it is wrong. Imagining costs computing time, sometimes a lot of
@@ -318,8 +317,8 @@ then it is nowhere near. Nothing breaks at any step.
 
 A one-step model can be accurate enough to trust while a hundred-step fantasy
 stitched out of that same model is worthless. So there is a limit on how far
-ahead it is worth looking. The bluntest fix, keeping imagined runs short, is as
-blunt as it is because of that.
+ahead it is worth looking, and that is why the bluntest fix is simply to keep
+imagined runs short.
 
 In 2019 Tingwu Wang and colleagues ran the main model-based methods side by
 side, in *Benchmarking Model-Based Reinforcement Learning*. They named the
@@ -329,7 +328,7 @@ has drifted.
 
 <Figure
   n="2.14"
-  caption={<>Two things happen at every step. The model adds two per cent of its own error, and whatever was already wrong gets stretched by the dynamics it is pushed through. Pull the amplification down to 1.00 and the second effect switches off: the error just adds, and the bars go straight. Leave it above 1 and they bend. Both numbers are illustrative. The shape is not.</>}
+  caption={<>Two things happen at every step. The model adds two per cent of its own error, and whatever was already wrong gets stretched by the dynamics it is pushed through. Pull the amplification down to 1.00 and the second effect switches off: the error just adds, and the bars go straight. Leave it above 1 and they bend. Both numbers are illustrative; the shape is not.</>}
 >
   <CompoundingRollout />
 </Figure>
@@ -357,16 +356,17 @@ in your favour.
 
 The field calls this **model exploitation**. The better the planner gets at
 beating the model, the more it drifts toward the places the model was never
-taught. That is where its mistakes live.
+taught, which is where its mistakes are.
 
 So a model can be wrong by almost nothing on average and still be a dangerous
 thing to plan inside. Average error asks how the model does on the cases you
 measured. Control asks what happens once something starts hunting, on purpose,
-for the highest score it can find. That is a different test.
+for the highest score it can find.
 
 The best plan in the model and the best plan in the world are only the same plan
-if the model is good *where the search goes looking*. Every fix that follows is an attempt to make that last clause true. Let me show you the
-mismatch as a shape first.
+if the model is good *where the search goes looking*. Every fix that follows is
+an attempt to make that last clause true. Let me show you the mismatch as a
+shape first.
 
 <Figure
   n="2.16"
@@ -384,10 +384,10 @@ where the thirty years start. So here is the history I promised, kept short.
 
 The coining happened in 1990, and it happened more than once, which is usually a
 sign that an idea was due. Schmidhuber, then in Munich and later the co-inventor
-of the LSTM (for years the standard network for speech and text), wrote a
-technical report, *Making the World Differentiable*, whose full title runs to
-twenty words. One network predicted what a second network's chosen actions would
-lead to. He called the first one a world model.
+of the LSTM (long the standard network for speech and text), wrote a technical
+report, *Making the World Differentiable*, whose full title runs to twenty
+words. One network predicted what a second network's chosen actions would lead
+to. He called the first one a world model.
 
 That year Sebastian Thrun, with Knut Möller and Alexander Linden, published
 *Planning with an Adaptive World Model*. Thrun is better known for the Stanford
@@ -406,7 +406,7 @@ phrase was on the paper's front, twenty-eight years before the label stuck.
 Sutton was working the same seam. He co-wrote, with Andrew Barto, the textbook
 that reinforcement learning is still taught from (learning by trial, error and
 reward), and his Dyna agent split the job the same way. He also wrote down, in
-the Dyna paper, the sentence I think the whole problem lives in.
+the Dyna paper, the sentence that states the problem.
 
 <Quote
   who="Sutton"
@@ -426,7 +426,7 @@ are standing in is another question, and nothing inside the model can answer it.
 Then not much, for a long time. Neural networks went out of fashion and came
 back in the 2010s, and reinforcement learning came back model-free: DeepMind's
 Atari agents learned from raw pixels by trial and error, and paid for it in
-enormous amounts of play. The case for a model was the case for paying less.
+enormous amounts of play. A model was the way to pay less.
 
 <Figure
   n="2.18"
@@ -452,7 +452,6 @@ Tianhe Yu and colleagues, built the pessimism in.
 same data, different starting points, so they disagree about anything the data
 never settled</Gloss>. Carry their disagreement through the plan, as PETS did in
 2018 in *Deep RL in a Handful of Trials using Probabilistic Dynamics Models*.
-That title is the whole 2018 case for a model.
 
 Where the models disagree, the plan has wandered somewhere nothing supports. But
 disagreement is a hint and not a verdict. Models trained on the same gaps can
@@ -469,13 +468,12 @@ confidence is not much better.
 When one says it is 70 percent sure, it is right about 70 percent of the time
 only if somebody went and checked. Ali Malik and colleagues did, in 2019, in
 *Calibrated Model-Based Deep Reinforcement Learning*. They found it was often
-out, and found that correcting it made the planning better. That is the warning
-under every uncertainty method.
+out, and found that correcting it made the planning better.
 
 **Do not dream far.** The simplest answer, and Janner's, is to start every
 imagined run from somewhere the world produced and keep it short. You lose the
 freedom to run as far as you like. You gain a limit on how long an error has to
-grow before real data cuts in, and that trade is worth taking every time.
+grow before real data cuts in.
 
 Planning on a short clock does the same job. Plan a little, act a little, look
 again, plan again <Gloss>the usual name for this is model-predictive control; it
@@ -513,19 +511,19 @@ wherever the model is unsure. You can see below what that does to the shortcut.
 </Figure>
 
 All three say the same thing, and so did Dyna before them. *Do not let the
-planner collect full marks for going somewhere the model has not earned the
-right to be confident about.*
+planner collect full marks for going somewhere the model has no grounds to be
+confident about.*
 
 None of it makes the problem go away, whatever the abstract says. The best of
 these systems now hold up across a startling range of tasks: DreamerV3 across
 more than 150, TD-MPC2 across 104. But they are careful ways of using a model
 that is wrong. Nobody should read them as proof of one that is right.
 
-Accuracy on its own tells you little. What matters is accurate where, for which
-actions, how far out, against how hard a search, and what the system should do
-when it does not know. And all of this assumed you already had a state to run
-forward: a position, a speed, some short list of numbers holding whatever the
-future turns on. Nobody hands you one, though; you get pixels.
+Accuracy on its own tells you little. You need to know accurate where, for
+which actions, how far out, against how hard a search, and what the system
+should do when it does not know. And all of this assumed you already had a
+state to run forward: a position, a speed, some short list of numbers holding
+whatever the future turns on. Nobody hands you one, though; you get pixels.
 
 Hopefully this chapter helped. There is a short quiz below if you want to check
 the ideas stuck. If I have got something wrong, or you know a better source than
