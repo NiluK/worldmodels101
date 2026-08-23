@@ -1,10 +1,11 @@
-We want to start at a junction, because we think it is the most ordinary world
+I want to start at a junction, because I think it is the most ordinary world
 model there is. You are waiting to pull out. You look right and there is a car
 coming. Somewhere in the next second you decide: go now, or wait for it to
 pass.
 
 What you do in that second is run the scene forward. That car is there, going
-about that fast, so in two seconds it will be here. If I go now I am clear of it, and if I wait I am not in its way either. You commit before anything has
+about that fast, so in two seconds it will be here. If I go now I am clear of
+it, and if I wait I am not in its way either. You commit before anything has
 happened, and you commit on your own forecast of it.
 
 Most of the time the forecast is good enough, and the whole thing takes less
@@ -58,7 +59,7 @@ looks like this.
 
 <Figure
   n="2.3"
-  caption={<>The object everything else rests on. Hover any symbol, or any phrase under it, and both light up. The hat says <em>estimated</em>, and we'd keep an eye on it, because every failure later in the chapter is that hat coming due.</>}
+  caption={<>The object everything else rests on. Hover any symbol, or any phrase under it, and both light up. The hat says <em>estimated</em>, and I'd keep an eye on it, because every failure later in the chapter is that hat coming due.</>}
 >
   <LearnedDynamics />
 </Figure>
@@ -82,7 +83,7 @@ rules alone. MuZero was not even given the rules.
 The paper, from 2020, is *Mastering Atari, Go, chess and shogi by planning with
 a learned model*. Its model never rebuilds the scene at all. It produces no
 picture, only three number-like things: how good this is, how good it will get,
-and what to try. You met this one in chapter 1, and we want you to look at it
+and what to try. You met this one in chapter 1, and I want you to look at it
 again with the hat in mind.
 
 <Figure
@@ -100,7 +101,7 @@ Scalable, Robust World Models for Continuous Control*.
 
 So a model does not have to look like the world. It only has to keep enough of
 what the world *does*. The hat over the symbols in Figure 2.3 is the price of
-learning that instead of being handed it, as Kalman's engineers were. We're going
+learning that instead of being handed it, as Kalman's engineers were. I'm going
 to call the moment that price gets collected the hat coming due.
 
 <MarginNote>
@@ -121,14 +122,14 @@ feed the prediction back in, predict again</Gloss>. Its length is the horizon.
   <RolloutEquation />
 </Figure>
 
-That is the test we'd hold every new paper to. Can you run it forward under
+That is the test I'd hold every new paper to. Can you run it forward under
 actions nobody took and compare the results? How real the frames look is beside
 the point. Sebastian Thrun's system was passing that test in 1990, and he turns
 up again at the end.
 
 ## Cached answers
 
-Let's put two cars in front of two matching walls. The first brakes when the
+Let me put two cars in front of two matching walls. The first brakes when the
 wall is nearer than some fixed distance. Somebody tuned that distance once, at
 the speeds they expected, and shipped it.
 
@@ -148,7 +149,7 @@ The rule has a built-in guess about how long stopping takes, and nothing inside
 it knows it is guessing. The model car moves its decision because its stopping
 point moved, and it can see that it moved.
 
-We should be fair to the other side here. A real policy with no model behind it
+I should be fair to the other side here. A real policy with no model behind it
 is nothing like a fixed rule. It can be a big network that remembers what it has
 already seen <Gloss>a recurrent network, which passes something forward from
 each step to the next</Gloss>. It changes what it does based on what it sees.
@@ -227,7 +228,7 @@ With one candidate it is guessing. With two hundred it is shopping, and nothing
 in the world changed in between. All of it came out of thinking, in the gap
 between seeing and moving, and a model is what makes that trade available.
 
-MuZero is how far the idea goes, and we think it is still the most under-read
+MuZero is how far the idea goes, and I think it is still the most under-read
 result in the field. It was never trained to redraw a game frame or lay out a
 chessboard, and it learned only the handful of numbers its search reads. It
 matched AlphaZero at chess, Go and shogi, having been told less.
@@ -272,7 +273,8 @@ that bill in computing time instead.
   <DreamBudget />
 </Figure>
 
-**You can ask what if.** What if I brake now, what if I turn instead, what if I push it from the other side. Comparing those without running them is why it
+**You can ask what if.** What if I brake now, what if I turn instead, what if I
+push it from the other side. Comparing those without running them is why it
 matters that the model is told which action you mean. It moves the question from
 *what probably happens next* to *what happens if I do this*.
 
@@ -333,7 +335,7 @@ has drifted.
 </Figure>
 
 **Search goes hunting for the errors.** This one is stranger, and it is the one
-we'd most like you to play with. Say the learned map is wrong in one place: it
+I'd most like you to play with. Say the learned map is wrong in one place: it
 thinks there is a gap in a wall that is solid.
 
 Try plans at random and you will almost never go near it, and a weak search
@@ -363,7 +365,7 @@ measured. Control asks what happens once something starts hunting, on purpose,
 for the highest score it can find. That is a different test.
 
 The best plan in the model and the best plan in the world are only the same plan
-if the model is good *where the search goes looking*. Every fix that follows is an attempt to make that last clause true. Let's look at the
+if the model is good *where the search goes looking*. Every fix that follows is an attempt to make that last clause true. Let me show you the
 mismatch as a shape first.
 
 <Figure
@@ -375,10 +377,10 @@ mismatch as a shape first.
 
 ## Thirty years of not trusting the dream
 
-Nobody has fixed this, and we do not think anybody is close. What thirty years of
+Nobody has fixed this, and I do not think anybody is close. What thirty years of
 model-based control has built instead is a family of ways to limit how far
 imagination gets trusted. To see them as one family, it helps to go back to
-where the thirty years start. So here is the history we promised, kept short.
+where the thirty years start. So here is the history I promised, kept short.
 
 The coining happened in 1990, and it happened more than once, which is usually a
 sign that an idea was due. Schmidhuber, then in Munich and later the co-inventor
@@ -396,7 +398,7 @@ phrase was on the paper's front, twenty-eight years before the label stuck.
 
 <Figure
   n="2.17"
-  caption={<>The three systems from 1990 and 1991, drawn as loops, and you may remember them from chapter 1. Click a card to read what its model does and what uses it. Then turn on the shared shape: the world and the arrows fade, and the same two boxes light up on every card. Those two boxes are the split we opened with.</>}
+  caption={<>The three systems from 1990 and 1991, drawn as loops, and you may remember them from chapter 1. Click a card to read what its model does and what uses it. Then turn on the shared shape: the world and the arrows fade, and the same two boxes light up on every card. Those two boxes are the split I opened with.</>}
 >
   <ThreePapers1990 />
 </Figure>
@@ -404,7 +406,7 @@ phrase was on the paper's front, twenty-eight years before the label stuck.
 Sutton was working the same seam. He co-wrote, with Andrew Barto, the textbook
 that reinforcement learning is still taught from (learning by trial, error and
 reward), and his Dyna agent split the job the same way. He also wrote down, in
-the Dyna paper, the sentence we think the whole problem lives in.
+the Dyna paper, the sentence I think the whole problem lives in.
 
 <Quote
   who="Sutton"
@@ -526,8 +528,8 @@ forward: a position, a speed, some short list of numbers holding whatever the
 future turns on. Nobody hands you one, though; you get pixels.
 
 Hopefully this chapter helped. There is a short quiz below if you want to check
-the ideas stuck. If we have got something wrong, or you know a better source than
-the ones we used, the About page has a corrections section, and we would be glad
+the ideas stuck. If I have got something wrong, or you know a better source than
+the ones I used, the About page has a corrections section, and I would be glad
 to hear from you.
 
 ## Try it
@@ -543,7 +545,7 @@ to hear from you.
 
 <Figure
   n="2.23"
-  caption={<>We've ordered these for someone building on this rather than for historical completeness.</>}
+  caption={<>I've ordered these for someone building on this rather than for historical completeness.</>}
 >
   <SourceList chapter={2} />
 </Figure>

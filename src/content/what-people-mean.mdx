@@ -17,11 +17,11 @@ geometry, meaning 3-D shapes and where they sit, into Blender, the 3-D
 modelling program. One is a paper about predicting embeddings, lists of numbers
 that stand in for pictures, and it never shows you a video at all.
 
-We should say the phrase confused us for a long time too. The explanations
+I should say the phrase confused me for a long time too. The explanations
 online, while helpful, tended to pick one of the five machines and explain it
-as if it were the whole story. What we wanted was one page that laid all five
+as if it were the whole story. What I wanted was one page that laid all five
 out side by side and said how they came to share a name. This chapter is that
-page, and if you are confused like we were, hopefully it helps.
+page, and if you are confused like I was, hopefully it helps.
 
 The good news is that the mess has a history, and the history is a lot tidier
 than the tabs. Between about 2018 and 2024, four traditions arrived at the same two
@@ -101,7 +101,7 @@ self-driving cars. It is also the case that keeps the map honest.
 
 <Figure
   n="1.5"
-  caption={<>We'd read this as a comparison of promises rather than a pass/fail test. Marble hands you geometry that another program can open, so you can check it yourself. Genie 3's coherence is reported by the lab that built it, and you cannot check that. The difference is what each one promises, and how much of it you can check.</>}
+  caption={<>I'd read this as a comparison of promises rather than a pass/fail test. Marble hands you geometry that another program can open, so you can check it yourself. Genie 3's coherence is reported by the lab that built it, and you cannot check that. The difference is what each one promises, and how much of it you can check.</>}
 >
   <VideoPair
     left={{
@@ -176,7 +176,7 @@ with that number: it compares two different contracts rather than ranking them.
 Anyone quoting it as a ranking has not read the contracts.
 
 Notice that the second stage takes actions, rolls forward and gets searched
-over. That is the Dynamics Model's contract, reached from the other side. We
+over. That is the Dynamics Model's contract, reached from the other side. I
 call it migration: a system starts in the category it was trained for and grows
 the machinery of another on top. The categories describe a training target
 rather than a fixed identity.
@@ -219,7 +219,7 @@ Later it moved into reinforcement learning <Gloss>training an agent by letting
 it act, watching what happens, and rewarding what worked</Gloss>, where a world
 model is a learned transition function, a rule for what comes next that the
 agent picks up from experience. A state and an action go in, and the next state
-comes out. When we say state, we mean a description of how things stand at one
+comes out. When I say state, I mean a description of how things stand at one
 moment. Written down, it looks like this.
 
 <Figure
@@ -236,16 +236,16 @@ readings. If you feed it a radar's blips on a plane, it keeps a running best
 guess of where the plane is and how fast it is going.
 
 Within a decade it was flying in Apollo's guidance computer. It is still the
-maths inside a GPS receiver. We'd say that is one half of what a world model
+maths inside a GPS receiver. I'd say that is one half of what a world model
 does. There is a hidden state you never see directly, and the job is to
 estimate it from what you can see.
 Under the hood it keeps two stories about where the plane is, one from physics
-and one from the radar, and blends them into a guess sharper than either. We
+and one from the radar, and blends them into a guess sharper than either. I
 take that blend apart in chapter 5; here the shape is what matters.
 
 <Figure
   n="1.10"
-  caption={<>A plane flies along a smooth path, and a radar reports its position every couple of seconds with noise on top. A Kalman filter keeps a running guess of where the plane is and how fast it is going. Scrub the time or press play, and watch the band around the estimate tighten as the blips arrive. Turn the radar noise up, and the estimate still sits closer to the plane than the blips do. Drop the blips for a stretch and it coasts on its own dynamics while the band opens. The gain readout is how far it leaned toward the radar at each step, a number chapter 5 takes apart. The greyed-out control is the point we want you to notice: the filter can propagate a turn you hand it, but nothing here learns the dynamics or weighs one turn against another. Distances are illustrative.</>}
+  caption={<>A plane flies along a smooth path, and a radar reports its position every couple of seconds with noise on top. A Kalman filter keeps a running guess of where the plane is and how fast it is going. Scrub the time or press play, and watch the band around the estimate tighten as the blips arrive. Turn the radar noise up, and the estimate still sits closer to the plane than the blips do. Drop the blips for a stretch and it coasts on its own dynamics while the band opens. The gain readout is how far it leaned toward the radar at each step, a number chapter 5 takes apart. The greyed-out control is the point I want you to notice: the filter can propagate a turn you hand it, but nothing here learns the dynamics or weighs one turn against another. Distances are illustrative.</>}
 >
   <KalmanTracker />
 </Figure>
@@ -255,7 +255,7 @@ control input, a turn you have decided on, and it will propagate it, so it can
 tell you where that turn would take the plane. But the rules for how the state
 moves are written in by the engineer rather than learned, and nothing in it
 compares two turns to pick one. It is an estimator, not a planner, and its
-dynamics are supplied rather than learned. That is why we call it an ancestor
+dynamics are supplied rather than learned. That is why I call it an ancestor
 rather than a member.
 
 The other half took thirty years and a different field. By 1990 neural
@@ -320,7 +320,7 @@ had the momentum, and the two-part design of 1990 looked like a relic.
 </Figure>
 
 David Ha and Jürgen Schmidhuber's *World Models* (2018) is the paper that made
-the label popular. We read it as a reply to that momentum. Ha was then at Google
+the label popular. I read it as a reply to that momentum. Ha was then at Google
 Brain. The paper showed the 1990 design working on a car-racing game and a
 level of the video game Doom, in three pieces.
 
@@ -416,7 +416,7 @@ alike. By then each of them had been using the word for years.
 One test ought to sort all five out, and it takes about four seconds. Turn
 around and walk away, then turn back: is it the same room? Something that holds
 a world inside it keeps the furniture where you left it, and something that is
-only drawing pictures cannot. We call it the turn-around test.
+only drawing pictures cannot. I call it the turn-around test.
 
 <Figure
   n="1.18"
@@ -444,7 +444,7 @@ real, and why the turn-around test was never going to catch it.
 
 <MarginNote>
 DeepMind reports this of Genie 3: scenes holding together over several minutes,
-and details coming back when you return to them. We'd take it as their report
+and details coming back when you return to them. I'd take it as their report
 rather than something anyone outside the lab can check.
 </MarginNote>
 
@@ -488,7 +488,7 @@ cupboard is open. All of it is real and none of it is visible.
 Working out the rest from the part you can see is called **partial
 observability**.
 
-None of this is new, and the date is the part we like best. A Cambridge
+None of this is new, and the date is the part I like best. A Cambridge
 psychologist, Kenneth Craik, described the fix in 1943, in a book called *The
 Nature of Explanation*.
 
@@ -626,15 +626,15 @@ question to ask is which of the five it is, and whether the person posting it
 could tell you.
 
 Hopefully this chapter helped. There is a short quiz below if you want to check
-the ideas stuck. If we have got something wrong, or you know a better source
-than the ones we used, the About page has a corrections section. We would be glad
+the ideas stuck. If I have got something wrong, or you know a better source
+than the ones I used, the About page has a corrections section. I would be glad
 to hear from you.
 
 ## Try it
 
 <Figure
   n="1.27"
-  caption={<>Thirteen questions across the whole chapter. They ask you to place systems we never named, using the ideas the figures were built to teach. One of them is a trap, and it is the kind of mistake we'd rather you made here than in a meeting.</>}
+  caption={<>Thirteen questions across the whole chapter. They ask you to place systems I never named, using the ideas the figures were built to teach. One of them is a trap, and it is the kind of mistake I'd rather you made here than in a meeting.</>}
 >
   <Quiz />
 </Figure>
@@ -643,7 +643,7 @@ to hear from you.
 
 <Figure
   n="1.28"
-  caption={<>We've ordered these for someone building on this rather than for historical completeness, and preferred first-party material throughout.</>}
+  caption={<>I've ordered these for someone building on this rather than for historical completeness, and preferred first-party material throughout.</>}
 >
   <SourceList />
 </Figure>
