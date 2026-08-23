@@ -86,7 +86,7 @@ const TEXT: Record<Locale, Strings> = {
       none: "Five failures, five communities. Read the dates from left to right.",
       persistence: "Measured seven years after horizon, and these are the two a renderer hits first.",
       action: "Measured seven years after horizon, and these are the two a renderer hits first.",
-      horizon: "Measured first, by the people who had to act on the model's word.",
+      horizon: "Measured first, by the people who had to act on the model's predictions.",
       target: "Nothing in this chapter's sources measures it.",
       verification: "Checked with a probe that could have drawn nothing, which is what makes it a test.",
     },
