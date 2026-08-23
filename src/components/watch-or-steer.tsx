@@ -373,10 +373,10 @@ export function WatchOrSteer() {
                 type="button"
                 aria-pressed={mode === m}
                 onClick={() => setModeTo(m)}
-                className={`border px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.1em] transition-colors ${
+                className={`label h-9 border px-3 transition-colors ${
                   mode === m
-                    ? "border-imagine bg-imagine text-paper"
-                    : "border-rule-strong bg-paper text-ink hover:border-ink"
+                    ? "border-imagine bg-imagine !text-paper"
+                    : "border-rule-strong bg-paper !text-ink hover:border-ink"
                 }`}
               >
                 {m === "watch" ? T.watch : T.steer}
@@ -391,7 +391,7 @@ export function WatchOrSteer() {
               type="button"
               onClick={nextFrame}
               disabled={full}
-              className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
+              className="h-9 border border-rule-strong bg-paper px-4 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
             >
               <span className="label whitespace-nowrap !text-ink">{T.next}</span>
             </button>
@@ -401,7 +401,7 @@ export function WatchOrSteer() {
                 type="button"
                 onClick={() => advance(-1, "you")}
                 disabled={full}
-                className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
+                className="h-9 border border-rule-strong bg-paper px-4 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
               >
                 <span className="label whitespace-nowrap !text-ink">{T.left}</span>
               </button>
@@ -409,7 +409,7 @@ export function WatchOrSteer() {
                 type="button"
                 onClick={() => advance(1, "you")}
                 disabled={full}
-                className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
+                className="h-9 border border-rule-strong bg-paper px-4 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
               >
                 <span className="label whitespace-nowrap !text-ink">{T.right}</span>
               </button>
@@ -419,7 +419,7 @@ export function WatchOrSteer() {
             type="button"
             onClick={() => setSteps([])}
             disabled={steps.length === 0}
-            className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
+            className="h-9 border border-rule-strong bg-paper px-4 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
           >
             <span className="label whitespace-nowrap !text-ink">{T.again}</span>
           </button>

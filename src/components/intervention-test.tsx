@@ -515,10 +515,10 @@ export function InterventionTest() {
     state === "idle" ? T.observedIdle : state === "read" ? T.observedRead : T.observedChanged;
 
   const btn = (active: boolean) =>
-    `border px-3.5 py-1.5 text-[0.82rem] transition-colors ${
+    `label h-9 border px-4 transition-colors ${
       active
-        ? "border-imagine bg-imagine text-paper"
-        : "border-rule-strong bg-paper text-ink hover:border-ink"
+        ? "border-imagine bg-imagine !text-paper"
+        : "border-rule-strong bg-paper !text-ink hover:border-ink"
     }`;
 
   const status = (lane: "A" | "B") => {
@@ -597,7 +597,7 @@ export function InterventionTest() {
         </div>
         <button
           type="button"
-          className="border border-rule-strong bg-paper px-3.5 py-1.5 text-[0.82rem] text-ink transition-colors hover:border-ink"
+          className="label h-9 border border-rule-strong bg-paper px-4 !text-ink transition-colors hover:border-ink"
           onClick={() => go("idle")}
         >
           {T.again}

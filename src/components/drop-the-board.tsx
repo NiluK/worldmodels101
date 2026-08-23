@@ -424,7 +424,7 @@ export function DropTheBoard() {
               className={`label h-9 border px-3 transition-colors ${
                 off
                   ? "border-rule-strong bg-paper !text-ink-muted hover:border-ink"
-                  : "border-imagine bg-imagine !text-paper"
+                  : "border-imagine bg-paper !text-imagine"
               }`}
             >
               {T.short[c.id]}

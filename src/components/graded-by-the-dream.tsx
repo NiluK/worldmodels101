@@ -144,7 +144,7 @@ export function GradedByTheDream() {
       <div ref={ref} className="px-5 pt-6 md:px-8">
         <div
           ref={scroller}
-          className="mx-auto h-[24rem] max-w-[34rem] overflow-y-auto border border-rule bg-paper"
+          className="mx-auto max-h-[24rem] max-w-[34rem] overflow-y-auto border border-rule bg-paper"
         >
           {marks.length === 0 ? (
             <p className="label px-4 py-5 !text-ink-faint">{T.empty}</p>
@@ -196,21 +196,21 @@ export function GradedByTheDream() {
         <button
           type="button"
           onClick={() => add("model")}
-          className="label border border-imagine bg-imagine px-3 py-1.5 !text-paper hover:border-ink"
+          className="label h-9 border border-imagine bg-imagine px-4 !text-paper transition-colors"
         >
           {T.train}
         </button>
         <button
           type="button"
           onClick={() => add("world")}
-          className="label border border-rule-strong bg-paper px-3 py-1.5 !text-ink hover:border-ink"
+          className="label h-9 border border-rule-strong bg-paper px-4 !text-ink transition-colors hover:border-ink"
         >
           {T.check}
         </button>
         <button
           type="button"
           onClick={() => setMarks([])}
-          className="label self-start underline underline-offset-4 hover:!text-ink sm:ml-auto"
+          className="label h-9 self-start border border-rule-strong bg-paper px-4 !text-ink transition-colors hover:border-ink sm:ml-auto"
         >
           {T.clear}
         </button>

@@ -115,14 +115,14 @@ const TEXT: LocaleText<Strings> = {
 
 /** bar geometry: bars narrow as the tally fills, then wrap onto another row */
 function layout(compact: boolean, dreamN: number, juncN: number) {
-  const fs = compact ? 17 : 11;
+  const fs = compact ? 17 : 14;
   const W = compact ? 560 : 900;
   const L = compact ? 14 : 18;
   const R = compact ? 14 : 18;
   const rowW = W - L - R;
   const maxSlot = compact ? 24 : 22;
   const minSlot = compact ? 12 : 11;
-  const barMax = compact ? 62 : 56;
+  const barMax = compact ? 62 : 60;
   const rowGap = 10;
 
   const slotFor = (n: number) =>
@@ -137,8 +137,8 @@ function layout(compact: boolean, dreamN: number, juncN: number) {
   const refH = fs + 12 + barMax * 0.55;
   const dream = plan(dreamN);
   const junction = plan(juncN);
-  const dreamY = refH + 18;
-  const junctionY = dreamY + dream.height + 20;
+  const dreamY = refH + 14;
+  const junctionY = dreamY + dream.height + 14;
   const H = junctionY + junction.height + 8;
 
   return { fs, W, L, rowW, barMax, rowGap, refH, dream, junction, dreamY, junctionY, H };
@@ -295,7 +295,7 @@ export function SameGapAgain() {
                 type="button"
                 onClick={() => add(b.k)}
                 disabled={n >= CAP}
-                className="border border-rule-strong bg-paper px-3 py-1.5 font-mono text-[0.7rem] text-ink transition-colors hover:border-ink disabled:opacity-40"
+                className="label h-9 border border-rule-strong bg-paper px-3 !text-ink transition-colors hover:border-ink disabled:cursor-default disabled:opacity-40"
               >
                 {b.label}
               </button>
@@ -304,7 +304,7 @@ export function SameGapAgain() {
               type="button"
               onClick={reset}
               disabled={dreamN === 0 && juncN === 0}
-              className="border border-rule-strong bg-paper px-3 py-1.5 font-mono text-[0.7rem] text-ink transition-colors hover:border-ink disabled:opacity-40"
+              className="label h-9 border border-rule-strong bg-paper px-3 !text-ink transition-colors hover:border-ink disabled:cursor-default disabled:opacity-40"
             >
               {s.again}
             </button>

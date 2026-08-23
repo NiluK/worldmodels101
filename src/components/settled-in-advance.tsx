@@ -35,14 +35,14 @@ function outcome(i: number, s: Setting) {
 }
 
 function layout(compact: boolean) {
-  const fs = compact ? 17 : 10.5;
+  const fs = compact ? 17 : 13;
   const W = compact ? 560 : 900;
-  const H = compact ? 288 : 142;
+  const H = compact ? 252 : 112;
   const x0 = compact ? 46 : 44;
   const per = compact ? 10 : N;
   const dx = ((compact ? 514 : 856) - x0 - 14) / (per - 1);
-  const lane = compact ? 92 : 82;
-  const lane2 = 228;
+  const lane = compact ? 84 : 68;
+  const lane2 = 200;
   return { fs, W, H, x0, dx, per, lane, lane2 };
 }
 

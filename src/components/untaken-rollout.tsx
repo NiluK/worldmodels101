@@ -57,17 +57,17 @@ function rollout(plan: Action[], h: number): State[] {
 function layout(compact: boolean) {
   const fs = compact ? 17 : 10.5;
   const W = compact ? 560 : 900;
-  const H = compact ? 332 : 272;
+  const H = compact ? 300 : 224;
   const x0 = compact ? 40 : 60;
   const x1 = W - (compact ? 30 : 40);
-  const road = compact ? 240 : 200;
+  const road = compact ? 208 : 168;
   const box = {
     x: compact ? 170 : 340,
     w: compact ? 220 : 220,
-    y: compact ? 48 : 40,
-    h: compact ? 58 : 52,
+    y: compact ? 44 : 34,
+    h: compact ? 54 : 50,
   };
-  const ghost = compact ? 178 : 142;
+  const ghost = compact ? 132 : 120;
   return { fs, W, H, x0, x1, road, box, ghost };
 }
 
@@ -423,7 +423,7 @@ export function UntakenRollout() {
         data-print-hide
         className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-rule px-5 py-4 md:px-8"
       >
-        <div className="grid basis-full grid-cols-4 gap-2 sm:grid-cols-8">
+        <div className="grid basis-full grid-cols-4 gap-2 md:grid-cols-8">
           {plan.map((a, i) => {
             const live = i < h;
             return (
@@ -434,7 +434,7 @@ export function UntakenRollout() {
                 onClick={() => cycle(i, 1)}
                 onKeyDown={onKey(i)}
                 aria-label={live ? T.step(i + 1, T.actions[a]) : T.beyond(i + 1)}
-                className={`label h-9 border px-1 transition-colors ${
+                className={`label h-9 whitespace-nowrap border px-1 transition-colors ${
                   live
                     ? "border-rule-strong bg-paper !text-ink hover:border-ink"
                     : "border-dashed border-rule bg-paper !text-ink-faint"

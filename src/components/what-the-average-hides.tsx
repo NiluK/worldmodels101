@@ -336,7 +336,7 @@ export function WhatTheAverageHides() {
                 type="button"
                 aria-pressed={on}
                 onClick={() => setMode(m)}
-                className={`border px-3 py-1.5 transition-colors ${
+                className={`h-9 border px-3 transition-colors ${
                   on
                     ? "border-imagine bg-imagine text-paper"
                     : "border-rule-strong bg-paper text-ink hover:border-ink"
@@ -375,7 +375,7 @@ export function WhatTheAverageHides() {
                 }}
                 aria-pressed={on}
                 onClick={() => setSel(on ? null : p)}
-                className={`border px-3 py-1.5 transition-colors ${
+                className={`h-9 border px-3 transition-colors ${
                   on
                     ? "border-imagine bg-imagine text-paper"
                     : "border-rule-strong bg-paper text-ink hover:border-ink"

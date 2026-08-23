@@ -217,7 +217,7 @@ export function TwentyDreams() {
         <button
           type="button"
           onClick={() => setRound((n) => n + 1)}
-          className="label border border-rule-strong bg-paper px-3 py-1.5 !text-ink hover:border-ink"
+          className="label h-9 border border-rule-strong bg-paper px-4 !text-ink transition-colors hover:border-ink"
         >
           {T.again}
         </button>

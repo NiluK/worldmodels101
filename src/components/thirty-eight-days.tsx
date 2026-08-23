@@ -260,10 +260,10 @@ export function ThirtyEightDays() {
                 type="button"
                 aria-pressed={i === place}
                 onClick={() => setPlace(i)}
-                className={`border px-3 py-1.5 font-mono text-[0.7rem] transition-colors ${
+                className={`label h-9 border px-3 transition-colors ${
                   i === place
-                    ? "border-imagine bg-imagine text-paper"
-                    : "border-rule-strong bg-paper text-ink hover:border-ink"
+                    ? "border-imagine bg-imagine !text-paper"
+                    : "border-rule-strong bg-paper !text-ink hover:border-ink"
                 }`}
               >
                 {p}

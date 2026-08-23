@@ -340,10 +340,10 @@ export function SeenOrDropped() {
   const signed = `${steer > 0 ? "+" : ""}${steer.toFixed(1)}`;
 
   const btn = (active: boolean) =>
-    `border px-3.5 py-1.5 text-[0.82rem] transition-colors ${
+    `label h-9 border px-4 transition-colors ${
       active
-        ? "border-imagine bg-imagine text-paper"
-        : "border-rule-strong bg-paper text-ink hover:border-ink"
+        ? "border-imagine bg-imagine !text-paper"
+        : "border-rule-strong bg-paper !text-ink hover:border-ink"
     }`;
 
   const BW = 320;
@@ -447,7 +447,7 @@ export function SeenOrDropped() {
         </div>
         <button
           type="button"
-          className="border border-rule-strong bg-paper px-3.5 py-1.5 text-[0.82rem] text-ink transition-colors hover:border-ink"
+          className="label h-9 border border-rule-strong bg-paper px-4 !text-ink transition-colors hover:border-ink"
           onClick={() => setChange("none")}
         >
           {T.putBack}

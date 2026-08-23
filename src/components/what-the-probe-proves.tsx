@@ -323,7 +323,7 @@ export function WhatTheProbeProves() {
                   setProbe(p);
                   setRan(false);
                 }}
-                className={`border px-3 py-1.5 transition-colors ${
+                className={`h-9 border px-3 transition-colors ${
                   on
                     ? "border-imagine bg-imagine text-paper"
                     : "border-rule-strong bg-paper text-ink hover:border-ink"
@@ -340,7 +340,7 @@ export function WhatTheProbeProves() {
         <button
           type="button"
           onClick={() => setRan(true)}
-          className="border border-rule-strong bg-paper px-3 py-1.5 text-ink transition-colors hover:border-ink"
+          className="h-9 border border-rule-strong bg-paper px-3 text-ink transition-colors hover:border-ink"
         >
           <span className="label !text-[0.62rem] !text-ink">{s.run}</span>
         </button>

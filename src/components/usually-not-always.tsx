@@ -336,10 +336,10 @@ export function UsuallyNotAlways() {
                 type="button"
                 aria-pressed={hold === h}
                 onClick={() => flip(h)}
-                className={`border px-3 py-1.5 font-mono text-[0.7rem] tracking-[0.06em] transition-colors ${
+                className={`label h-9 border px-3 transition-colors ${
                   hold === h
-                    ? "border-imagine bg-imagine text-paper"
-                    : "border-rule-strong bg-paper text-ink hover:border-ink"
+                    ? "border-imagine bg-imagine !text-paper"
+                    : "border-rule-strong bg-paper !text-ink hover:border-ink"
                 }`}
               >
                 {h === "learned" ? T.learned : T.engine}
@@ -353,7 +353,7 @@ export function UsuallyNotAlways() {
             type="button"
             onClick={goOne}
             disabled={runs >= MAX_RUNS}
-            className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
+            className="h-9 border border-rule-strong bg-paper px-4 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
           >
             <span className="label whitespace-nowrap !text-ink">{T.goOne}</span>
           </button>
@@ -361,7 +361,7 @@ export function UsuallyNotAlways() {
             type="button"
             onClick={goMany}
             disabled={runs >= MAX_RUNS}
-            className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
+            className="h-9 border border-rule-strong bg-paper px-4 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
           >
             <span className="label whitespace-nowrap !text-ink">{T.goMany}</span>
           </button>
@@ -369,7 +369,7 @@ export function UsuallyNotAlways() {
             type="button"
             onClick={clear}
             disabled={runs === 0}
-            className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
+            className="h-9 border border-rule-strong bg-paper px-4 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
           >
             <span className="label whitespace-nowrap !text-ink">{T.reset}</span>
           </button>

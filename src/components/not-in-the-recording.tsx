@@ -202,10 +202,10 @@ export function NotInTheRecording() {
     kind === "recorded" ? T.sRecording : kind === "borrowed" ? T.sBorrowed(supporters.length) : T.sNowhere;
 
   const btn = (active: boolean) =>
-    `border px-3.5 py-1.5 text-[0.82rem] transition-colors ${
+    `label h-9 border px-4 transition-colors ${
       active
-        ? "border-imagine bg-imagine text-paper"
-        : "border-rule-strong bg-paper text-ink hover:border-ink"
+        ? "border-imagine bg-imagine !text-paper"
+        : "border-rule-strong bg-paper !text-ink hover:border-ink"
     }`;
 
   const missingLabelLeft = i + 1 > N / 2;

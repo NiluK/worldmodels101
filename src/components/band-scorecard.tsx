@@ -316,10 +316,10 @@ export function BandScorecard() {
                 type="button"
                 aria-pressed={bench === b}
                 onClick={() => flip(b)}
-                className={`border px-3 py-1.5 font-mono text-[0.7rem] tracking-[0.06em] transition-colors ${
+                className={`label h-9 border px-3 transition-colors ${
                   bench === b
-                    ? "border-imagine bg-imagine text-paper"
-                    : "border-rule-strong bg-paper text-ink hover:border-ink"
+                    ? "border-imagine bg-imagine !text-paper"
+                    : "border-rule-strong bg-paper !text-ink hover:border-ink"
                 }`}
               >
                 {b === "inside" ? T.benchInside : T.benchBeyond}
@@ -332,7 +332,7 @@ export function BandScorecard() {
           type="button"
           onClick={() => setScored(reduced ? n : 1)}
           disabled={scored > 0}
-          className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
+          className="h-9 border border-rule-strong bg-paper px-4 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong"
         >
           <span className="label whitespace-nowrap !text-ink">{T.score}</span>
         </button>
