@@ -17,7 +17,14 @@ import { useT } from "./locale-provider";
  * away or by Escape without script anyway, and those are the two things people
  * try first.
  */
-export function LanguageSwitch({ className = "" }: { className?: string }) {
+export function LanguageSwitch({
+  className = "",
+  onNavigate,
+}: {
+  className?: string;
+  /** Called when a language is picked, so a menu containing this can close itself. */
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname() ?? "/";
   const current = localeFromPath(pathname);
   const bare = barePath(pathname);
@@ -42,7 +49,7 @@ export function LanguageSwitch({ className = "" }: { className?: string }) {
   }, [open]);
 
   return (
-    <div ref={box} className={`relative ${className}`}>
+    <div ref={box} className={`relative inline-flex items-center ${className}`}>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -51,9 +58,12 @@ export function LanguageSwitch({ className = "" }: { className?: string }) {
         aria-label={t("nav.language")}
         className="label inline-flex items-center gap-2 transition-colors hover:text-ink"
       >
-        <span aria-hidden="true" className="text-[0.9em] leading-none">
-          {"\u{1F310}"}
-        </span>
+        <svg viewBox="0 0 20 20" width="15" height="15" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="7.4" stroke="currentColor" strokeWidth="1.3" />
+          <ellipse cx="10" cy="10" rx="3.1" ry="7.4" stroke="currentColor" strokeWidth="1.3" />
+          <line x1="2.9" y1="7.4" x2="17.1" y2="7.4" stroke="currentColor" strokeWidth="1.3" />
+          <line x1="2.9" y1="12.6" x2="17.1" y2="12.6" stroke="currentColor" strokeWidth="1.3" />
+        </svg>
         <span className="!text-ink">{LOCALE_META[current].label}</span>
         <span aria-hidden="true" className="text-[0.6em] leading-none">
           {open ? "▲" : "▼"}
@@ -63,7 +73,7 @@ export function LanguageSwitch({ className = "" }: { className?: string }) {
       {open && (
         <ul
           role="menu"
-          className="absolute right-0 z-50 mt-3 min-w-[11rem] border border-ink bg-paper py-1 shadow-[0_10px_30px_rgba(0,0,0,0.12)]"
+          className="absolute right-0 top-full z-50 mt-3 min-w-[11rem] border border-ink bg-paper py-1 shadow-[0_10px_30px_rgba(0,0,0,0.12)]"
         >
           {LOCALES.map((l) => {
             const active = l === current;
@@ -72,7 +82,10 @@ export function LanguageSwitch({ className = "" }: { className?: string }) {
                 <Link
                   role="menuitem"
                   href={localePath(l, bare)}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    onNavigate?.();
+                  }}
                   hrefLang={LOCALE_META[l].htmlLang}
                   lang={LOCALE_META[l].htmlLang}
                   aria-current={active ? "true" : undefined}

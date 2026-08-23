@@ -83,14 +83,13 @@ rules alone. MuZero was not even given the rules.
 The paper, from 2020, is *Mastering Atari, Go, chess and shogi by planning with
 a learned model*. Its model never rebuilds the scene at all. It produces no
 picture, only three number-like things: how good this is, how good it will get,
-and what to try. You met this one in chapter 1, and I want you to look at it
-again with the hat in mind.
+and what to try. Every one of those three wears a hat.
 
 <Figure
   n="2.4"
-  caption={<>MuZero's model again, from chapter 1. Leave the switch on three numbers and press Search a few times: every node asks for reward, value and policy, and the board on the right is never drawn. Flip the switch and watch each node pay for a picture the search then reads nothing from. The values are illustrative.</>}
+  caption={<>One position, and four things a model could carry. Press to drop the picture of the next board, then drop the stones, and watch the move it recommends stay where it was. Drop either of the two numbers instead and there is nothing left to recommend with. Both survivors wear the hat. The position and the scores are illustrative.</>}
 >
-  <ThreeNumbers />
+  <DropTheBoard />
 </Figure>
 
 The newest systems take the third step. They run with no decoder <Gloss>the
@@ -117,9 +116,9 @@ feed the prediction back in, predict again</Gloss>. Its length is the horizon.
 
 <Figure
   n="2.5"
-  caption={<>The same object, asked for a stretch of future instead of one step. Hover the parts. The states you ask for and the actions you hand in grow with the horizon; the state you were given to start from does not.</>}
+  caption={<>A run of actions nobody has taken. Click a step to change what you do there, drag the horizon to set how long the run is, and press Run: the model answers the first step, then reads its own answer back in for the second. Press Keep to pin a run and write another one beside it. Nothing in here has happened. The numbers are illustrative.</>}
 >
-  <RolloutEquation />
+  <UntakenRollout />
 </Figure>
 
 The question I'd put to every new paper is whether you can run it forward
@@ -197,9 +196,9 @@ know what you are facing.
 
 <Figure
   n="2.8"
-  caption={<>Two copies of one small world, from chapter 1. On the left, press Decide: the model imagines twelve futures at every step, which is PlaNet's way and MuZero's. On the right, press Train in imagination once, then Decide: the thinking was done in advance, which is Dreamer's. Watch the two calls counters, because that is where the thinking happened.</>}
+  caption={<>Twenty situations down one road, and one control: how much of the answer was settled before the road was seen. Press Drive to step through, and watch which decisions come back at once and which stop to work something out. Settle the lot and two of the twenty get an answer that was prepared for a different question. The counts are illustrative.</>}
 >
-  <PlanOrLearn />
+  <SettledInAdvance />
 </Figure>
 
 ## What it buys you
@@ -212,16 +211,16 @@ A **planner** <Gloss>the part that tries actions out before committing to
 one</Gloss> writes down a run of actions and plays it through the model. It
 scores how that turned out, throws it away and writes another.
 
-PlaNet does this while driving, in its own compressed description of the scene,
-starting from raw pixels. The *World Models* paper of the same year got the
+PlaNet does this on simulated control tasks, walking and balancing, in its own
+compressed description of the scene and starting from raw pixels. The *World Models* paper of the same year got the
 attention, but PlaNet is what made planning from pixels respectable. This is the
 loop, slowed down.
 
 <Figure
   n="2.9"
-  caption={<>The planner writes down runs of actions, plays each one through the same model, and keeps the best. The faint lines are the rejects. Raise the budget and you should see the plan improve, but only for as long as the model ranks the candidates the way the world would. Figure 2.15 is what happens when it stops.</>}
+  caption={<>Press Try one and the planner writes a run of actions, plays it through the model, scores it and bins it. Press Try twenty to do that in bulk. Then press Commit, and the best run so far gives up its first action to the world while the rest of it goes in the bin as well. Watch the two step counters, because only one of them cost anything. Illustrative.</>}
 >
-  <Planner />
+  <ThrownAwayPlans />
 </Figure>
 
 With one candidate it is guessing, with two hundred it is shopping, and nothing
@@ -244,9 +243,9 @@ real game, where it held up.
 
 <Figure
   n="2.10"
-  caption={<>Ha and Schmidhuber's three pieces, which you stepped through in chapter 1. Flip the switch to run inside the dream: the dynamics model feeds its own prediction back and the game is no longer consulted. That is where the controller was trained before it was moved back into the real game.</>}
+  caption={<>Practising the same right turn, twice over. Leave the switch on the dream and press Try: the identical gap comes round at once, as often as you like. Switch to the junction and press Try again, and now you wait for a car, the gap is never the one you wanted, and the clock runs. Watch how many attempts landed on the gap you were trying to learn. Illustrative.</>}
 >
-  <ThreePieces />
+  <SameGapAgain />
 </Figure>
 
 Dreamer, a year later, put the trick at the centre. Imagine long runs, learn the
@@ -286,9 +285,9 @@ is confidently wrong. That is the hat coming due for the first time.
 
 <Figure
   n="2.12"
-  caption={<>One start and three futures, chosen by which key you hold. Turn the action input off and watch the three rows fold into one. Without an action there is only what probably happens next, and no longer what happens if you do this.</>}
+  caption={<>Three what ifs from one start, each answered by the model. Press one to take it, and the world answers that one and no other. The two you did not take fade to a mark saying nobody will ever find out, and Reset hands you a new situation rather than the same one back. Illustrative.</>}
 >
-  <ActionConditioned />
+  <OnlyOneGetsTaken />
 </Figure>
 
 ## Where it goes wrong
@@ -322,7 +321,7 @@ imagined runs short.
 
 In 2019 Tingwu Wang and colleagues ran the main model-based methods side by
 side, in *Benchmarking Model-Based Reinforcement Learning*. They named the
-limit, the planning horizon dilemma, and measured it. Look too short and the
+limit the planning horizon dilemma, and measured it. Look too short and the
 planner cannot see the goal. Look too long and it is steering by a model that
 has drifted.
 
@@ -398,9 +397,9 @@ phrase was on the paper's front, twenty-eight years before the label stuck.
 
 <Figure
   n="2.17"
-  caption={<>The three systems from 1990 and 1991, drawn as loops, and you may remember them from chapter 1. Click a card to read what its model does and what uses it. Then turn on the shared shape: the world and the arrows fade, and the same two boxes light up on every card. Those two boxes are the split I opened with.</>}
+  caption={<>Three papers, one phrase, three jobs for it. Click a card to read what that paper's model was actually used for: pushing a gradient through it, searching inside it, or making experience to learn from. Then press Who does this now and each card picks up the system in this chapter that does the same job.</>}
 >
-  <ThreePapers1990 />
+  <OneNameThreeJobs />
 </Figure>
 
 Sutton was working the same seam. He co-wrote, with Andrew Barto, the textbook
@@ -430,9 +429,9 @@ enormous amounts of play. A model was the way to pay less.
 
 <Figure
   n="2.18"
-  caption={<>The case for paying less, drawn. The curves are shapes rather than measurements. Pick what one step costs, then drag the budget and watch where the shaded region stops. In a simulator the budget reaches past the crossover and the slow climber wins. On a robot it stops long before that, and the only agent that has learned anything is the one carrying a model.</>}
+  caption={<>The bill, in days. DeepMind's Atari agents played about fifty million frames of each game, which is roughly thirty eight days of play, against the two hours the human tester got. Pick where that play has to happen and read the clock. Then switch the model on and watch the real part of the bar shrink while an imagined part grows. The two published figures are real; the conversions are illustrative.</>}
 >
-  <ExperienceBill />
+  <ThirtyEightDays />
 </Figure>
 
 In 2018 Ha and Schmidhuber wrote the paper that made the label fashionable. Its
@@ -465,7 +464,7 @@ confidence is not much better.
   <EnsembleDisagreement />
 </Figure>
 
-When one says it is 70 percent sure, it is right about 70 percent of the time
+When one says it is 70 per cent sure, it is right about 70 per cent of the time
 only if somebody went and checked. Ali Malik and colleagues did, in 2019, in
 *Calibrated Model-Based Deep Reinforcement Learning*. They found it was often
 out, and found that correcting it made the planning better.

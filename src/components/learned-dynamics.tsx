@@ -133,7 +133,7 @@ export function LearnedDynamics() {
         {...enter(6)}
         className="mx-auto mt-10 max-w-[48ch] text-center text-[1.05rem] leading-relaxed text-ink-muted"
       >
-        {t("dyn.read.0")}
+        <span className="whitespace-pre">{t("dyn.read.0")}</span>
         {(["now", "act", "next", "worth"] as Id[]).map((id, i) => (
           <span key={id}>
             <button
@@ -151,7 +151,7 @@ export function LearnedDynamics() {
             >
               {t(`dyn.${id}`)}
             </button>
-            {t(`dyn.read.${i + 1}`)}
+            <span className="whitespace-pre">{t(`dyn.read.${i + 1}`)}</span>
           </span>
         ))}
       </motion.p>

@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import Link from "next/link";
 import { Byline } from "@/components/byline";
 import { DefinitionMap } from "@/components/definition-map";
@@ -25,6 +27,11 @@ function runtime(locale: Locale, mins: number) {
 
 export async function HomeView({ locale }: { locale: Locale }) {
   const stars = await getStars();
+  // Offered only where one has been generated: the book is rendered per locale
+  // and a language without its own is not served the English one by mistake.
+  const bookName =
+    locale === "en" ? "world-models-101.pdf" : `world-models-101-${locale}.pdf`;
+  const hasBook = existsSync(join(process.cwd(), "public", "pdf", bookName));
   const t = (k: string, v?: Record<string, string | number>) => translate(locale, k, v);
   const path = (p: string) => localePath(locale, p);
 
@@ -64,6 +71,14 @@ export async function HomeView({ locale }: { locale: Locale }) {
           <p className="label">
             {t("site.meta", { n: CHAPTERS.length, time: runtime(locale, TOTAL_MINUTES) })}
           </p>
+          {hasBook && (
+            <a
+              href={`/pdf/${bookName}`}
+              className="label !text-imagine underline decoration-imagine/40 underline-offset-4 transition-colors hover:decoration-imagine"
+            >
+              {t("site.book")}
+            </a>
+          )}
           <Byline locale={locale} />
         </div>
       </section>

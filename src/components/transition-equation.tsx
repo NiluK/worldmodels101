@@ -140,7 +140,7 @@ export function TransitionEquation() {
             >
               {t(`eq.${id}`)}
             </button>
-            {i === 0 ? t("eq.given") : i === 1 ? t("eq.and") : ""}
+            <span className="whitespace-pre">{i === 0 ? t("eq.given") : i === 1 ? t("eq.and") : ""}</span>
           </span>
         ))}
       </motion.p>

@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Instrument_Serif,
-  Newsreader,
-  IBM_Plex_Mono,
-  Noto_Serif_SC,
-  Noto_Sans_SC,
-  Noto_Serif_Devanagari,
-  Noto_Serif_Tamil,
-} from "next/font/google";
+import { Instrument_Serif, Newsreader, IBM_Plex_Mono, Noto_Serif_SC, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -48,22 +40,6 @@ const notoSansSC = Noto_Sans_SC({
   display: "swap",
 });
 
-/* Devanagari and Tamil have no glyphs in the Latin serifs either, and the
-   system fallbacks on Windows are poor enough to change how the page reads. */
-const notoSerifDevanagari = Noto_Serif_Devanagari({
-  variable: "--font-noto-serif-devanagari",
-  subsets: ["devanagari", "latin"],
-  weight: ["400", "600"],
-  display: "swap",
-});
-
-const notoSerifTamil = Noto_Serif_Tamil({
-  variable: "--font-noto-serif-tamil",
-  subsets: ["tamil", "latin"],
-  weight: ["400", "600"],
-  display: "swap",
-});
-
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
@@ -99,7 +75,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang={LOCALE_META[locale].htmlLang}
       data-locale={locale}
-      className={`${instrument.variable} ${newsreader.variable} ${plexMono.variable} ${notoSerifSC.variable} ${notoSansSC.variable} ${notoSerifDevanagari.variable} ${notoSerifTamil.variable} h-full`}
+      className={`${instrument.variable} ${newsreader.variable} ${plexMono.variable} ${notoSerifSC.variable} ${notoSansSC.variable} h-full`}
       suppressHydrationWarning
     >
       <body className="relative min-h-full flex flex-col pb-20 md:pb-0 print:pb-0">

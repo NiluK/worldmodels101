@@ -1,7 +1,7 @@
 import { en } from "./dict/en";
 import { zh } from "./dict/zh";
 
-export const LOCALES = ["en", "es", "fr", "de", "pt", "hi", "ta", "zh"] as const;
+export const LOCALES = ["en", "zh"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 
@@ -10,12 +10,6 @@ export const PREFIXED_LOCALES = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
 
 export const LOCALE_META: Record<Locale, { label: string; htmlLang: string; href: string }> = {
   en: { label: "English", htmlLang: "en", href: "/" },
-  es: { label: "Español", htmlLang: "es", href: "/es" },
-  fr: { label: "Français", htmlLang: "fr", href: "/fr" },
-  de: { label: "Deutsch", htmlLang: "de", href: "/de" },
-  pt: { label: "Português", htmlLang: "pt", href: "/pt" },
-  hi: { label: "हिन्दी", htmlLang: "hi", href: "/hi" },
-  ta: { label: "தமிழ்", htmlLang: "ta", href: "/ta" },
   zh: { label: "简体中文", htmlLang: "zh-Hans", href: "/zh" },
 };
 
@@ -35,7 +29,7 @@ export function localeFromPath(pathname: string): Locale {
   return isLocale(first) && first !== DEFAULT_LOCALE ? first : DEFAULT_LOCALE;
 }
 
-/** Strip the locale prefix, so /fr/chapters/x and /chapters/x both give /chapters/x. */
+/** Strip the locale prefix, so /zh/chapters/x and /chapters/x both give /chapters/x. */
 export function barePath(pathname: string) {
   const locale = localeFromPath(pathname);
   if (locale === DEFAULT_LOCALE) return pathname || "/";

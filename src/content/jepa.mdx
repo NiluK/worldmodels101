@@ -79,7 +79,7 @@ model has no idea which turn will happen.
 
 <Figure
   n="7.3"
-  caption={<>Switch from the mean to samples of the same two futures, and the in-between frame disappears. Press draw a few times. The uncertainty survives as variation across draws. What the model still does not say is which draw the world will choose, so a planner has to value risk across the whole spread.</>}
+  caption={<>Switch from the mean to samples of the same two futures, and the in-between frame disappears. Press Draw a few times. The uncertainty survives as variation across draws. What the model still does not say is which draw the world will choose, so a planner has to value risk across the whole spread.</>}
 >
   <FutureSampler />
 </Figure>
@@ -101,13 +101,14 @@ that list. Encode the part you are predicting into one too.
 Then train the model to predict the second description from the first. Nothing
 is ever decoded back into pixels. I-JEPA is the simplest example: a 2023 image
 model from Mahmoud Assran and colleagues in LeCun's group at Meta. Hide part of
-the picture and predict the embedding of the missing piece.
+the picture and predict the embedding of the missing piece. What changes with
+the target is what counts as a bad prediction.
 
 <Figure
   n="7.4"
-  caption={<>You may remember this one from chapter 1. Choose what the network is asked to predict for the hidden block, then press Predict. With pixels as the target, a decoder has to turn the prediction back into a picture, and the best it can do for a block it cannot see is a blur. With a summary as the target, nothing is turned back into pixels. Look at the bottom row, which is what survives training: the encoder in both cases, and only one of them ever built a decoder.</>}
+  caption={<>Two road frames, and one change between them. Pick a change and drag it up, then read the two scales. Move every leaf, or shift the whole frame sideways, and the pixel scale charges a fortune for something no decision turns on. Move the car ahead into your lane and a few hundred pixels change what you would do, and the pixel scale barely notices. Both scales are illustrative.</>}
 >
-  <PredictTheSummary />
+  <WhatCountsAsWrong />
 </Figure>
 
 V-JEPA 2, from Meta AI in 2025, does the same for video. It is trained first on
@@ -200,7 +201,10 @@ understands everything, or nothing at all. The number will not tell you which.
 
 So Quentin Garrido and colleagues tested what the embeddings could do. Their
 2024 paper is *Learning and Leveraging World Models in Visual Representation
-Learning*.
+Learning*. They found that the strength of the predictor decides what the
+encoder keeps. Give the predictor an easy job and the encoder throws away
+whatever the transformation changed. Make it work, and the encoder keeps
+enough to undo the change, which is more than the loss ever asked for.
 
 ## What this does not settle
 

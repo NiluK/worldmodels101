@@ -6,13 +6,13 @@ that.
 Take a model that predicts the next frame. Now tell it, along with the frames,
 which key is being held. From the same opening it can give you one
 continuation for left and another for right. Have a go with the figure below,
-and turn the action input off to see what happens to the three rows.
+and watch who picks each frame.
 
 <Figure
   n="8.1"
-  caption={<>One model, one start, three futures. The first two frames are given and the rest are made up. Turn the action input off and you should see the three rows fold into one. Without the input the model has a single future to offer, whichever one it finds most likely.</>}
+  caption={<>Two ways of getting the next frame. Leave it on watch and press Next frame: the model picks, and starting again gives you the same clip back. Switch to steer and the arrow you press goes in alongside the frames, so the frame you get is the one you asked for. Watch the tally underneath for who chose each frame. The clip is illustrative.</>}
 >
-  <ActionConditioned />
+  <WatchOrSteer />
 </Figure>
 
 Jake Bruce and colleagues at Google DeepMind made that move with Genie in 2024.
@@ -147,13 +147,14 @@ the outputs look right on the footage it was trained on.
 Bingyi Kang and colleagues ran one in 2024, in a paper called *How Far is Video
 Generation from World Model: A Physical Law Perspective*. They trained video
 models on simple simulated scenes of balls moving and colliding, then asked for
-speeds the footage never showed. Figure 8.7 is the shape of what they found.
+speeds the footage never showed. Figure 8.7 runs that test twice: once on
+speeds the footage covered, and once on speeds past them.
 
 <Figure
   n="8.7"
-  caption={<>The dashed line is a model fitted to the true behaviour across one band of speeds. Inside the band it sits within a few per cent, so anyone testing there would credit it with the rule. Now drag the speed outside the band. You should see it carry on straight while the true curve bends away. It has a line through the part of the curve it was shown.</>}
+  caption={<>Here is that test as a scorecard. Each tile is one scene, ordered by speed, and the shaded ones are the speeds the footage covered. Press Score it, then switch the bench to scenes from past where the footage ends and score it again. Same model, same procedure, and the only thing that changed is where the scenes came from. The speeds and the errors are illustrative.</>}
 >
-  <EmergentPhysics />
+  <BandScorecard />
 </Figure>
 
 Everything inside the band fits with having learned physics. It fits just as
@@ -226,9 +227,9 @@ system, and a guarantee is a property of an engine.
 
 <Figure
   n="8.10"
-  caption={<>Learned consistency, watched over a long run. Drag out to a thousand steps and read off which properties are still holding. Nothing here was enforced, so nothing has to stay, and the ones that go first are the ones a planner leans on. The ordering is one plausible failure profile rather than a measurement.</>}
+  caption={<>One room, one door, and a walk away and back every time you press. Press Again a few times and the door comes back where it was, which is what usually looks like. Keep pressing and one run comes back with the door somewhere else. Then flip the switch to an engine holding the scene and there is nothing left to fail. The rate is illustrative.</>}
 >
-  <WhatBreaks />
+  <UsuallyNotAlways />
 </Figure>
 
 **The interesting moments are the vague ones.** A model trained on pixels is
@@ -237,14 +238,14 @@ We saw in chapter 7 what that average looks like: a picture of something that
 cannot happen.
 
 The future is most open when something is about to happen. So the
-steering-wheel test is hardest to pass exactly where passing it matters. Drag
-the chance to the middle in the figure below and you'll see why.
+steering-wheel test is hardest to pass exactly where passing it matters. Step
+along the clip in the figure below and you'll see why.
 
 <Figure
   n="8.11"
-  caption={<>Two futures from one start, and the best pixel prediction in the middle. Drag the chance to either end and the best answer settles on one of them. Leave it near the middle, which is what an open moment looks like, and the best prediction becomes a blur of both. That blur is what a pixel model is pushed towards at exactly the moments you would want to steer.</>}
+  caption={<>One clip with a junction in it, and the steering-wheel test run at every moment along the way. Step through the moments and read the two bars: how far apart the two commands should have come out, and how far apart they did. In the corridor it obeys, and nothing was at stake. At the junction the two commands come out on top of each other. The moments and the numbers are illustrative.</>}
 >
-  <PixelBlur />
+  <OpenMoments />
 </Figure>
 
 **The scores do not compose.** Benchmarks measure visual quality, geometry,

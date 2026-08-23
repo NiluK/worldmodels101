@@ -26,12 +26,12 @@ horizon per property: how many steps each one held up for.
 
 <Figure
   n="9.2"
-  caption={<>This is a thought experiment rather than a benchmark result. The ordering is one plausible failure profile, picked to show what an average hides, and another model might lose physics before identity. Drag the horizon out and watch which properties are still standing. "Still looks good" and "still supports the task" are different claims, and the slider pulls them apart.</>}
+  caption={<>Two models with the same average error over a thousand steps. Leave the report on one number and there is nothing to choose between them. Switch it to one horizon per property and read the two rulers: the same average was hiding two different machines. Click a property to see how far apart they are on it. The profiles are illustrative.</>}
 >
-  <WhatBreaks />
+  <WhatTheAverageHides />
 </Figure>
 
-In this profile, colour and texture outlast identity and physics, and the loss
+In both profiles, colour and texture outlast identity and physics, and the loss
 explains why. A per-frame loss pays the model for getting most of the pixels
 about right, and most pixels are surfaces and light. Nothing in it is watching
 whether the chair you walked past is the same chair.
@@ -79,9 +79,9 @@ impressive, and nobody is rewarded for building it.
 
 <Figure
   n="9.4"
-  caption={<>This is Kang's finding as a picture, and you'll have seen it in chapter 8 if you came that way. The dashed line is a model fitted to the true behaviour across one band of speeds. Inside the band it sits within a few per cent, so anyone testing there would credit it with the law. Drag the speed outside the band and it carries on straight while the true curve bends away. Notice that nothing in the dashed line tells you which side of the band you are on.</>}
+  caption={<>Three questions put to the same generator: a speed the footage had, one just past it, and one nothing like it. Step through them and watch the answer card. It arrives every time, drawn the same way, with the same confidence, and only the slate outcome beside it says when it was wrong. Then switch on the flag a useful system would raise and see which questions it catches. The speeds and the outcomes are illustrative.</>}
 >
-  <EmergentPhysics />
+  <AlwaysAnswers />
 </Figure>
 
 **Long horizons are still the binding constraint.** Most tricks in model-based
@@ -126,9 +126,9 @@ two failures a renderer hits first, tested seven years after horizon.
 
 <Figure
   n="9.6"
-  caption={<>The scores are invented and the systems are not real, but the disagreement is. Click through the four measures and watch the winner change each time. Then read the best overall cell. It cannot name one, because there is no accepted way to combine the four into a single ordering.</>}
+  caption={<>The four measures, ordered twice. On the left, how often they get reported; on the right, how much an agent needs them. Press a measure to draw its line across. Nearly every line crosses, and that is the whole of what I mean by the wrong order. The orderings are my judgement rather than a survey.</>}
 >
-  <NoRanking />
+  <MeasuredInReverse />
 </Figure>
 
 Frame quality is measurable, and it is what demos are made of. Whether the world
@@ -178,9 +178,9 @@ The probe could have found nothing.
 
 <Figure
   n="9.8"
-  caption={<>Li's probe, the same figure as chapter 1, and here it is doing the job of a test. Othello-GPT only ever saw move tokens like the strip on the left. Press Read the board and the probe draws an 8 by 8 board out of the network's activations. Then flip a square in that inner board and watch the list of next legal moves change. That second press is the verification. The probe can read a board out, and the model plays from that same board. A probe that drew nothing would have been a result too.</>}
+  caption={<>The same probe run against two networks: the one trained on Othello moves, and one of the same shape that never trained. Press Run the probe and compare the two bars against the chance line. Then let the probe be a big network instead of a straight line, run it again, and it reads a board out of the untrained one too. That is why the probe has to be small. The accuracies are illustrative.</>}
 >
-  <ProbeBoard />
+  <WhatTheProbeProves />
 </Figure>
 
 Four questions still handle most papers, so let me leave you with them. The

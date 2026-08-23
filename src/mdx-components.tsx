@@ -94,11 +94,46 @@ import { UncertaintyPenalty } from "@/components/uncertainty-penalty";
 import { WhoLabelledIt } from "@/components/who-labelled-it";
 import { WordClusters } from "@/components/word-clusters";
 import { GapDecision } from "@/components/gap-decision";
+import { InterventionTest } from "@/components/intervention-test";
+import { NotInTheRecording } from "@/components/not-in-the-recording";
+import { SeenOrDropped } from "@/components/seen-or-dropped";
+import { WhatCountsAsWrong } from "@/components/what-counts-as-wrong";
+import { DropTheBoard } from "@/components/drop-the-board";
+import { UntakenRollout } from "@/components/untaken-rollout";
+import { SettledInAdvance } from "@/components/settled-in-advance";
+import { ThrownAwayPlans } from "@/components/thrown-away-plans";
+import { WhatTheAverageHides } from "@/components/what-the-average-hides";
+import { AlwaysAnswers } from "@/components/always-answers";
+import { MeasuredInReverse } from "@/components/measured-in-reverse";
+import { WhatTheProbeProves } from "@/components/what-the-probe-proves";
+import { MonthOfDrops } from "@/components/month-of-drops";
+import { CriticSeesFurther } from "@/components/critic-sees-further";
+import { DiamondChain } from "@/components/diamond-chain";
+import { VolumeOrTrust } from "@/components/volume-or-trust";
+import { TwentyDreams } from "@/components/twenty-dreams";
+import { GradedByTheDream } from "@/components/graded-by-the-dream";
+import { OneStepByHand } from "@/components/one-step-by-hand";
+import { BestSingleGuess } from "@/components/best-single-guess";
+import { WhereTrustRunsOut } from "@/components/where-trust-runs-out";
+import { WhatTheBlipFixes } from "@/components/what-the-blip-fixes";
+import { SameGapAgain } from "@/components/same-gap-again";
+import { OnlyOneGetsTaken } from "@/components/only-one-gets-taken";
+import { OneNameThreeJobs } from "@/components/one-name-three-jobs";
+import { ThirtyEightDays } from "@/components/thirty-eight-days";
+
+import { WatchOrSteer } from "@/components/watch-or-steer";
+import { BandScorecard } from "@/components/band-scorecard";
+import { UsuallyNotAlways } from "@/components/usually-not-always";
+import { OpenMoments } from "@/components/open-moments";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     Figure,
     MarginNote,
+    WatchOrSteer,
+    BandScorecard,
+    UsuallyNotAlways,
+    OpenMoments,
     BrakingDemo,
     DefinitionMap,
     VideoFigure,
@@ -181,6 +216,22 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     WhoLabelledIt,
     WordClusters,
     GapDecision,
+    InterventionTest,
+    NotInTheRecording,
+    SeenOrDropped,
+    WhatCountsAsWrong,
+    DropTheBoard,
+    UntakenRollout,
+    SettledInAdvance,
+    ThrownAwayPlans,
+    WhatTheAverageHides,
+    AlwaysAnswers,
+    MeasuredInReverse,
+    WhatTheProbeProves,
+    OneStepByHand,
+    BestSingleGuess,
+    WhereTrustRunsOut,
+    WhatTheBlipFixes,
     HorizonSlider,
     RolloutEquation,
     Quiz,
@@ -195,6 +246,16 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     FutureSampler,
     ActionFidelity,
     FailureMatrix,
+    MonthOfDrops,
+    CriticSeesFurther,
+    DiamondChain,
+    VolumeOrTrust,
+    TwentyDreams,
+    GradedByTheDream,
+    SameGapAgain,
+    OnlyOneGetsTaken,
+    OneNameThreeJobs,
+    ThirtyEightDays,
     ...components,
   };
 }

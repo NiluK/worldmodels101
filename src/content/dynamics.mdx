@@ -14,9 +14,9 @@ it measures. Let's start with the job itself.
 
 <Figure
   n="5.1"
-  caption={<>This is the one job, written down. The <em>s</em> on the right is what you know, the <em>a</em> is what you did, and the <em>s</em> on the left is what you know next. Hover a symbol and its plain-English reading lights up. Keep your eye on the left-hand <em>s</em>, because everything else comes from feeding it back in as the next right-hand <em>s</em>.</>}
+  caption={<>This is the one job, and for a moment you are the model. You are handed the state and the action, so drag your answer to where the ball will be after one step and press Check. Do that a few times and watch the average miss build up underneath, because that average is the number a dynamics paper leads with. Every one of those steps starts from the truth, which is the part to remember. The units are illustrative.</>}
 >
-  <TransitionEquation />
+  <OneStepByHand />
 </Figure>
 
 Now the number. Show the model where things are and ask what happens next.
@@ -136,8 +136,8 @@ not know the future. That is why twenty-six years of rivalry have no winner.
 
 The systems that work share one trick. It arrived in 2018 with PlaNet, from
 Danijar Hafner and colleagues, in *Learning Latent Dynamics for Planning from
-Pixels*. It learned a model from raw pixels and planned inside it instead of in
-the pixels.
+Pixels*. PlaNet learned a model from raw pixels and planned inside it instead
+of in the pixels.
 
 The trick is to carry two things forward rather than one. One part is
 deterministic: computed the same way every time, it holds whatever reliably
@@ -152,9 +152,9 @@ step.
 
 <Figure
   n="5.6"
-  caption={<>The split, on a ball. Drag time forward and let the ball go behind the wall. With the switch on deterministic only, the model hands back one dot, moved on at the known speed, and it is wrong for the whole stretch where the ball is stopped. Switch the stochastic part on and it carries a spread as well, which widens the longer the ball is hidden and collapses when it comes out. The first part remembers, and the second admits doubt.</>}
+  caption={<>The ball went behind the wall, and it either stopped at the kerb or rolled straight on. Drag the single answer along the ground and watch the two readouts pull apart: the smallest typical miss sits between the two clumps, in a spot where the ball never actually is. Then switch to handing back the spread and see what the second half of the state buys. Twenty worlds, illustrative.</>}
 >
-  <BallBehindWall />
+  <BestSingleGuess />
 </Figure>
 
 PlaNet ran the comparison and argued for carrying both, because each one fails
@@ -197,9 +197,9 @@ that is also the question: *When to Trust Your Model*.
 
 <Figure
   n="5.8"
-  caption={<>Two dots start from the same real state, and one of them is running dynamics that are a few per cent off. Drag the horizon to 5 or so and they are still together, which is the stretch Janner's method is willing to trust. Keep dragging and watch the gap open. Nothing breaks at any single step, which is why this truce is a number you measure rather than a rule.</>}
+  caption={<>How far you can go is a number you measure, so measure it here. Drag how wrong you are willing to be, and read off how many steps you get before the model's error crosses that line. Then swap in a model ten times better and watch the horizon move by a handful of steps rather than by a factor of ten. The error curve is illustrative.</>}
 >
-  <HorizonSlider />
+  <WhereTrustRunsOut />
 </Figure>
 
 **Look again.** Predict a few steps, act on one, take a fresh observation and
@@ -239,14 +239,15 @@ reading.
 Then it repeats: predict, correct, predict, correct. Every new blip, however
 wrong on its own, tightens what the filter knows. The estimate hugs the truth
 even though every reading it ever got was off, and it does that one tick at a
-time without ever waiting for the future. That is the look-again truce in its
-original form, and it only works because fresh readings keep arriving.
+time without ever waiting for the future. That is the look-again truce in
+its original form. It only works because fresh readings keep arriving, and even
+then it only pulls back the part of the state a reading can see.
 
 <Figure
   n="5.10"
-  caption={<>The same blend, run for a whole flight. Press play and watch the band around the estimate tighten as the blips arrive, even with the radar noise turned up. Then drop the blips for a stretch: the filter coasts on physics alone and the band opens, because nothing is correcting it. That opening band is a free run, which is the second-step problem again. Distances are illustrative.</>}
+  caption={<>The same blend, repeated, with the two halves of the state kept apart. Press Look again and watch the sawtooth: every prediction pushes both errors up, and every blip pulls the measured half straight back down. Now add a wind the filter was never told about and keep pressing. The measured half still comes back, and the half you cannot see settles on a floor it never leaves. Distances are illustrative.</>}
 >
-  <KalmanTracker />
+  <WhatTheBlipFixes />
 </Figure>
 
 None of these is a fix, and a paper that sells one as a fix is overclaiming.

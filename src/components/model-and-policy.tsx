@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 import { pickText } from "@/lib/locale-text";
@@ -85,6 +85,7 @@ const TEXT = {
 } as const;
 
 export function ModelAndPolicy() {
+  const uid = useId();
   const locale = useLocale();
   const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(560);
@@ -259,18 +260,19 @@ export function ModelAndPolicy() {
             </button>
           ))}
         </div>
-        <label className="ml-auto flex cursor-pointer items-center gap-3">
-          <span className="label">{modelOn ? T.on : T.off}</span>
+        <span className="ml-auto flex cursor-pointer items-center gap-3">
+          <span className="label" id={`${uid}-model`}>{modelOn ? T.on : T.off}</span>
           <button
             type="button"
             role="switch"
             aria-checked={modelOn}
+            aria-labelledby={`${uid}-model`}
             onClick={toggle}
             className={`relative h-6 w-11 border transition-colors ${modelOn ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"}`}
           >
             <span className={`absolute top-[3px] h-4 w-4 transition-all ${modelOn ? "left-[25px] bg-paper" : "left-[3px] bg-rule-strong"}`} />
           </button>
-        </label>
+        </span>
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">{v}</p>
       </div>
 

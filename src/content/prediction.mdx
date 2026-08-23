@@ -129,21 +129,22 @@ board was in there, which on its own is a curiosity.
 
 The intervention is what made it a finding. Change that internal board, and the
 moves the network goes on to make change with it. So the board is there because
-the network is using it. Let's do both steps ourselves.
+the network is using it. The two steps are worth keeping apart, because only
+the second one settles anything.
 
 <Figure
   n="3.6"
-  caption={<>Press Read the board first. A probe draws an eight-by-eight board out of the network's activations, and nobody put one in. Now press Flip a square in the inner board and watch the list of next legal moves change. That is the intervention. Then switch on Ask as mine/theirs, which is the 2023 reframing I'm about to describe, and the probe label changes from a small network to a straight line.</>}
+  caption={<>Two stories about the same network, and they differ by one wire. Press Read the board and both survive, because both say a board can be read out. Now press Change one square and watch the next legal moves: in one story they change with it, and in the other there is nothing downstream to change. The move lists are illustrative.</>}
 >
-  <ProbeBoard />
+  <InterventionTest />
 </Figure>
 
 Neel Nanda and colleagues studied the same network again in 2023, in
 *Othello-GPT has a linear emergent world representation*. Li's probe had been a
 small network of its own, because a straight line had failed. Nanda showed a
-straight line works once you ask the right question. As you saw with the
-switch, the network stored each square as mine or theirs rather than black or
-white, and flipped its view every turn.
+straight line works once you ask the right question. The network stored each
+square as mine or theirs rather than black or white, and flipped its view every
+turn.
 
 The same rule sits under both results, thirty-two years apart. Prediction
 rewards one thing only: making the next moment less surprising. Sometimes the
@@ -294,9 +295,9 @@ carries a board and was still only ever asked which moves were legal.
 
 <Figure
   n="3.13"
-  caption={<>Hold a key and you get a different future for each one. That is a model answering what happens if, and it is the question a decision needs. Now turn the action input off and watch the three rows fold into one. That is a model answering what happens next, and it is all a pure predictor has to offer.</>}
+  caption={<>Drag along the recording and pick a moment. Press What comes next and the answer is the very next cell, already there. Press What if I nudge it and, unless somebody happened to nudge at that moment, there is no cell to read: the answer has to be borrowed from other moments where the ball was in about the same place and somebody did, and sometimes there are none. The recording is illustrative.</>}
 >
-  <ActionConditioned />
+  <NotInTheRecording />
 </Figure>
 
 **Being unsurprised is not the same as being right.** A predictor that has only
@@ -305,7 +306,7 @@ about what it would do in a storm.
 
 Low error on what you happened to record is a weaker claim than it sounds, and
 it is the claim most headline numbers make. Let's see it with a ball instead of
-weather, in a figure I've borrowed from chapter 8.
+weather.
 
 <Figure
   n="3.14"

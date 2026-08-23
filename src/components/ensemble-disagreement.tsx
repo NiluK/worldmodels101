@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
 import { PlayButton } from "./play-button";
@@ -82,6 +82,7 @@ const TEXT = {
 } as const;
 
 export function EnsembleDisagreement() {
+  const uid = useId();
   const locale = useLocale();
   const T = TEXT[locale as keyof typeof TEXT] ?? TEXT.en;
   const { ref, compact } = useCompact();
@@ -191,12 +192,13 @@ export function EnsembleDisagreement() {
         </label>
         <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
 
-        <label className="flex cursor-pointer items-center gap-3">
-          <span className="label">{T.blind}</span>
+        <span className="flex cursor-pointer items-center gap-3">
+          <span className="label" id={`${uid}-blind`}>{T.blind}</span>
           <button
             type="button"
             role="switch"
             aria-checked={blind}
+            aria-labelledby={`${uid}-blind`}
             onClick={() => {
               sweep.stop();
               setBlind((b) => !b);
@@ -211,7 +213,7 @@ export function EnsembleDisagreement() {
               }`}
             />
           </button>
-        </label>
+        </span>
 
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
       </div>

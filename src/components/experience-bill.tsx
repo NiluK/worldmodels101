@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 import { pickText, type LocaleText } from "@/lib/locale-text";
@@ -199,6 +199,7 @@ function duration(sec: number, s: Strings) {
 }
 
 export function ExperienceBill() {
+  const uid = useId();
   const still = useReducedMotion();
   const locale = useLocale();
   const s = pickText(TEXT, locale);
@@ -358,11 +359,12 @@ export function ExperienceBill() {
             />
             <span className="label min-w-[11rem] whitespace-nowrap !normal-case !tracking-normal !text-ink">{bill}</span>
           </label>
-          <label className="flex cursor-pointer items-center gap-3">
-            <span className="label">{s.badModel}</span>
+          <span className="flex cursor-pointer items-center gap-3">
+            <span className="label" id={`${uid}-bad`}>{s.badModel}</span>
             <button
               role="switch"
               aria-checked={showBad}
+              aria-labelledby={`${uid}-bad`}
               onClick={() => setShowBad((v) => !v)}
               className={`relative h-6 w-11 border transition-colors ${
                 showBad ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
@@ -374,7 +376,7 @@ export function ExperienceBill() {
                 }`}
               />
             </button>
-          </label>
+          </span>
         </div>
 
         <motion.p

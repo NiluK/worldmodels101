@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 import { pickText, type LocaleText } from "@/lib/locale-text";
@@ -513,12 +513,14 @@ function Modules({
 function Switch({
   on, onToggle, label, disabled,
 }: { on: boolean; onToggle: () => void; label: string; disabled?: boolean }) {
+  const uid = useId();
   return (
-    <label className={`flex items-center gap-3 ${disabled ? "opacity-40" : "cursor-pointer"}`}>
-      <span className="label">{label}</span>
+    <span className={`flex items-center gap-3 ${disabled ? "opacity-40" : "cursor-pointer"}`}>
+      <span className="label" id={`${uid}-sw`}>{label}</span>
       <button
         role="switch"
         aria-checked={on}
+        aria-labelledby={`${uid}-sw`}
         disabled={disabled}
         onClick={onToggle}
         className={`relative h-6 w-11 border transition-colors disabled:cursor-not-allowed ${
@@ -531,7 +533,7 @@ function Switch({
           }`}
         />
       </button>
-    </label>
+    </span>
   );
 }
 

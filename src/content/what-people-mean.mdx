@@ -270,8 +270,7 @@ compares two turns to pick one.
 
 The other half took thirty years and a different field. By 1990 neural
 networks, programs that learn from examples rather than from rules someone
-typed in, were back in fashion. Three groups reached for the same design in the
-same year, so let's take them one at a time.
+typed in, were back in fashion. Three groups reached for the same design within a year of each other, so let's take them one at a time.
 
 Jürgen Schmidhuber, then a young researcher in Munich, built a system in two
 parts. His 1990 technical report had a title only he could love: *Making the World
@@ -332,11 +331,11 @@ had the momentum, and the two-part design of 1990 looked like a relic.
 David Ha and Jürgen Schmidhuber's *World Models* (2018) is the paper that made
 the label popular. I read it as a reply to that momentum. Ha was then at Google
 Brain. The paper showed the 1990 design working on a car-racing game and a
-level of the video game Doom, in three pieces.
+level of the video game DOOM, in three pieces.
 
 The first is an encoder <Gloss>a network that squeezes a video frame down to a
 short list of numbers</Gloss>, thirty-two numbers here. The second is a
-dynamics model, which predicted where those numbers go next. The third is a
+dynamics model, which predicts where those numbers go next. The third is a
 small controller, the piece that picks actions.
 
 The controller was trained almost entirely inside the model's own imagined
@@ -504,7 +503,7 @@ long before there was anything to build it out of.
 
 <Quote
   who="Kenneth Craik"
-  context="on internal models, forty years before anyone trained one"
+  context="on internal models, nearly fifty years before anyone trained one"
   where="The Nature of Explanation, 1943"
 >
   If the organism carries a &lsquo;small-scale model&rsquo; of external reality
@@ -527,7 +526,7 @@ Craik's small-scale model should hold.
 
 ## What they were all fighting over
 
-One object sits underneath all five definitions. World Labs derive their own
+One object sits underneath all five definitions. World Labs derives their own
 taxonomy from the same object, and Sutton's Dyna was running round it back in
 1990.
 
@@ -613,7 +612,7 @@ opposite sides.
 
 <Figure
   n="1.26"
-  caption={<>Both dots start in the same place under the same rules, except that one is running dynamics that are a few percent off. Drag to about 8 and you'll see they are still together. Keep going, and notice that nothing breaks at any single step, but the gap keeps piling up.</>}
+  caption={<>Both dots start in the same place under the same rules, except that one is running dynamics that are a few per cent off. Drag to about 8 and you'll see they are still together. Keep going, and notice that nothing breaks at any single step, but the gap keeps piling up.</>}
 >
   <HorizonSlider />
 </Figure>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
 
@@ -142,6 +142,7 @@ function walk(lap: number, improve: boolean, covered: Set<number>): number[] {
 const polyline = (cells: number[]) => cells.map((i) => `${cx(i)},${cy(i)}`).join(" ");
 
 export function SecondLap() {
+  const uid = useId();
   const locale = useLocale();
   const T = TEXT[locale as keyof typeof TEXT] ?? TEXT.en;
   const still = useReducedMotion();
@@ -269,13 +270,13 @@ export function SecondLap() {
             {T.reset}
           </button>
         </div>
-        <label className="flex cursor-pointer items-center gap-3">
-          <span className="label">{T.improve}</span>
-          <button type="button" role="switch" aria-checked={improve} onClick={() => setImprove(!improve)}
+        <span className="flex cursor-pointer items-center gap-3">
+          <span className="label" id={`${uid}-improve`}>{T.improve}</span>
+          <button type="button" role="switch" aria-labelledby={`${uid}-improve`} aria-checked={improve} onClick={() => setImprove(!improve)}
             className={`relative h-6 w-11 border transition-colors ${improve ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"}`}>
             <span className={`absolute top-[3px] h-4 w-4 transition-all ${improve ? "left-[25px] bg-paper" : "left-[3px] bg-rule-strong"}`} />
           </button>
-        </label>
+        </span>
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">{verdict}</p>
       </div>
 

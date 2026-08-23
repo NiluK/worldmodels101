@@ -1,4 +1,4 @@
-A robot arm learning to pick something up will drop it a few hundred thousand
+A robot arm learning to pick something up will drop it a couple of million
 times first. Every drop costs something real: wall-clock seconds, and wear on
 the joints. Someone nearby has to reset the scene when the arm knocks the bin
 over. At one attempt a second, that is a month of doing nothing else.
@@ -17,15 +17,15 @@ yes. The longer answer is about what it costs.
 
 <Figure
   n="6.1"
-  caption={<>Let's start with the arithmetic behind the pitch. The learner needs two million steps of experience from somewhere, and sliding the ratio never changes that number. What it changes is where the steps come from. Slide it up and watch the time spent in the world fall, while the total time barely moves, because an imagined step is priced at a tiny fraction of a real one. This ledger prices a real step and an imagined one as the same kind of step, and that assumption is the first one to fail. The costs are illustrative.</>}
+  caption={<>The month from the first paragraph, drawn as thirty days of the arm dropping things. Slide the practice into the model and watch the days empty from the end backwards. Two things do not move: the day and a half at the start, because the model has to be fitted to something, and the fact that somebody makes every one of those trips to the bin. Nothing in here prices what an imagined step is worth, which is the next question. The costs are illustrative.</>}
 >
-  <DreamBudget />
+  <MonthOfDrops />
 </Figure>
 
-At twenty imagined steps for every real one, you should see the ledger turn
-about a month into about a day and a half. That has been the sales pitch from
-Dyna to Dreamer, and the saving is real. It holds only while an imagined step
-stays useful enough to count.
+Push most of the practice inside and you should see the month come down to
+about a day and a half. That has been the sales pitch from Dyna to Dreamer, and
+the saving is real. It holds only while an imagined step stays useful enough to
+count.
 
 ## The short answer is yes, and Dreamer is the evidence
 
@@ -38,9 +38,9 @@ model is not</Gloss> instead.
 
 <Figure
   n="6.2"
-  caption={<>This is the same figure as in chapter 1, and it is the difference between PlaNet and Dreamer. On the left, press Decide: the model imagines twelve futures, keeps the best, and the dot takes one step, so every decision costs seventy-two model calls. On the right, press Train in imagination once and then Decide. The behaviour was learned in advance, inside the model, so each step costs the model nothing. Watch the two total-calls counters rather than the dots.</>}
+  caption={<>The actor learns from one imagined rollout, and the rollout stops long before the arm gets the object off the table. Drag the reward further out and watch it leave the imagined stretch, so there is nothing left for the actor to add up. Then switch the critic on: it hands the actor one number standing for everything after the last imagined step. That number is a guess, and no part of it came from the world. The lengths are illustrative.</>}
 >
-  <PlanOrLearn />
+  <CriticSeesFurther />
 </Figure>
 
 *Dream to Control*, the 2019 paper, learned its behaviour from long imagined
@@ -61,16 +61,16 @@ I know of to whether learning in imagination generalises.
 
 <Figure
   n="6.3"
-  caption={<>Another one from chapter 1, because it is the robot case in one picture. The curves are shapes rather than measurements. Pick what one step costs, then drag the budget and watch where the shaded region stops. In a simulator the budget reaches past the crossover. On a robot it stops long before that, and the only agent that has learned anything is the one carrying a model. Then switch on the bad model.</>}
+  caption={<>The diamond is twelve steps in order, and DreamerV3 got there without being shown how. Drag the chance of getting one link right, then press Try a run and watch where the chain breaks. Nine times in ten per link still fails about seven runs in ten, which is why finishing the chain is worth more as evidence than any single task. The per link odds are illustrative; the twelve links are the game's.</>}
 >
-  <ExperienceBill />
+  <DiamondChain />
 </Figure>
 
 So systems like these get competent on a fraction of the world contact that
-learning directly would need. On a real robot, as you can see, that fraction
-decides whether learning is possible at all. The month of dropped objects is
-what the dynasty was built to shorten. Now let's look at what the loop is doing,
-because that is where the cost hides.
+learning directly would need. On a real robot that fraction decides whether
+learning is possible at all. The month of dropped objects is what the dynasty
+was built to shorten. Now let's look at what the loop is doing, because that is
+where the cost hides.
 
 ## The loop has to go round twice
 
@@ -101,10 +101,9 @@ the floor and nothing about the target. The second lap fixes that, because the
 better policy goes to new places and brings back the data the first model was
 missing.
 
-That is why Figure 6.1's ratio cannot be turned up at will. Imagined steps are
-worth having only while the model can supply them accurately, and it can only do
-that where it has been. A network for a robot's world has to guess about the
-rest.
+That is why Figure 6.1 keeps a day and a half locked. Imagined steps are worth
+having only while the model can supply them accurately, and it can only do that
+where it has been. A network for a robot's world has to guess about the rest.
 
 ## Imagined experience is a different currency
 
@@ -133,9 +132,9 @@ priced by how far it has travelled from evidence.
 
 <Figure
   n="6.6"
-  caption={<>The dark dots along the bottom are real states from the replay buffer, and the vermilion branches growing out of them are imagined rollouts. Drag the rollout length. At one or two steps every imagined state sits close to evidence. Drag it out to twenty and watch the branches fade as they travel, because the model's error compounds along each one. MBPO keeps the branches short and starts a fresh one from every real state instead. The fading is illustrative.</>}
+  caption={<>One hundred real states from the replay buffer, and one choice about how far to imagine from each. Drag the rollout length and watch the dot travel down the curve: the batch gets bigger, and the share of it sitting near evidence gets smaller. MBPO works in the corner at the top left, a step or two out from every real state. Watch the third cell as you go, because that is the only one that counts. The trust figures are illustrative; the trade is the paper's.</>}
 >
-  <BranchedRollouts />
+  <VolumeOrTrust />
 </Figure>
 
 ## The fireball policy
@@ -186,9 +185,9 @@ way is not worth building on.
 
 <Figure
   n="6.8"
-  caption={<>Slide the temperature. Start at the left and you should see the dream score high and the world score low, which is the fireball policy again. Slide right and the gap closes, and then both scores collapse. The curves copy the reported shape rather than any one system. The finding is Ha and Schmidhuber's: the agent scored far better inside its dream than in the game, and more uncertainty closed the gap. Read the useful setting as a hump rather than a direction.</>}
+  caption={<>Twenty runs of the same trick, the one where sitting in the corner stops the fireballs. Slide the temperature and press Roll again. At the left the trick pays every time, so a policy can be built on it. In the middle it pays now and then, which is not enough. At the right nothing is reliable, including the game, so there is no task left to learn. Illustrative throughout, though the finding is Ha and Schmidhuber's.</>}
 >
-  <DreamTemperature />
+  <TwentyDreams />
 </Figure>
 
 Both ends of that dial fail, as you can see. A confident dream gets exploited,
@@ -233,9 +232,9 @@ correct.
 
 <Figure
   n="6.10"
-  caption={<>Ha and Schmidhuber's three pieces, borrowed from chapter 1. Flip the switch to run inside the dream and watch the loop close: the dynamics model feeds its own prediction back, and the game is no longer consulted. That sealed loop is everything the policy gets graded against, which is why a high score in there has not yet been tested against the game.</>}
+  caption={<>A mark sheet for the policy. Press Train another round and a mark appears, written by the model, costing nothing. Press Check in the world and one slate mark appears instead, costing two thousand real steps and coming in lower. See how long the vermilion column gets before anything checks it. The marks are illustrative.</>}
 >
-  <ThreePieces />
+  <GradedByTheDream />
 </Figure>
 
 **It did not make the transfer free.** A policy that works in the dream is an

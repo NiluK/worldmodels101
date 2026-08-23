@@ -103,9 +103,9 @@ export function SiteHeader({ stars }: { stars: number | null }) {
             >
               {t("nav.about")}
             </Link>
-            <div onClick={close} className="flex items-center justify-between border-b border-rule py-4">
+            <div className="flex items-center justify-between border-b border-rule py-4">
               <span className="label !text-ink-faint">{t("nav.language")}</span>
-              <LanguageSwitch />
+              <LanguageSwitch onNavigate={close} />
             </div>
             <div className="flex items-center justify-between py-4">
               <span className="label !text-ink-faint">{t("nav.theme")}</span>

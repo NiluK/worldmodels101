@@ -99,7 +99,7 @@ export function Collapse() {
     <div>
       <div ref={ref} className="px-4 pt-6 md:px-8">
         <svg viewBox={`0 0 ${W} ${H}`} className="block w-full" role="img"
-          aria-label={t("cl.aria", { g: guard ? "on" : "off" })}>
+          aria-label={t("cl.aria", { g: t(guard ? "state.on" : "state.off") })}>
           <line x1={PAD.l} y1={py(0, 1)} x2={W - PAD.r} y2={py(0, 1)} stroke="var(--rule)" strokeWidth="1" />
           <path d={line(run, (x) => x.loss, 0.035)} fill="none" stroke="var(--imagine)" strokeWidth="2.2" />
           <path d={line(run, (x) => x.spread, 1.2)} fill="none" stroke="var(--actual)" strokeWidth="2.2"

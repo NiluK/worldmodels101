@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 import { pickText, type LocaleText } from "@/lib/locale-text";
@@ -163,6 +163,7 @@ function layout(compact: boolean) {
 }
 
 export function ProbeBoard() {
+  const uid = useId();
   const locale = useLocale();
   const T = pickText(TEXT, locale);
   const still = useReducedMotion();
@@ -299,13 +300,13 @@ export function ProbeBoard() {
             </button>
           ),
         )}
-        <label className="flex items-center gap-3">
-          <span className="label">{T.askMine}</span>
-          <button type="button" role="switch" aria-checked={mine} onClick={() => setMine((v) => !v)}
+        <span className="flex items-center gap-3">
+          <span className="label" id={`${uid}-mine`}>{T.askMine}</span>
+          <button type="button" role="switch" aria-labelledby={`${uid}-mine`} aria-checked={mine} onClick={() => setMine((v) => !v)}
             className={`relative h-6 w-11 border transition-colors ${mine ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"}`}>
             <span className={`absolute top-[3px] h-4 w-4 transition-all ${mine ? "left-[25px] bg-paper" : "left-[3px] bg-rule-strong"}`} />
           </button>
-        </label>
+        </span>
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">{verdict}</p>
       </div>
 

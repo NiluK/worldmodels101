@@ -286,6 +286,7 @@ export function KalmanTracker() {
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.65 : 1;
   const noteId = useId();
+  const uid = useId();
 
   const [sigma, setSigma] = useState(25);
   const [shadow, setShadow] = useState(false);
@@ -486,11 +487,12 @@ export function KalmanTracker() {
           <span className="label tnum w-16 whitespace-nowrap text-right !text-ink">{fill(s.units, { n: fmtM(sigma) })}</span>
         </label>
 
-        <label className="flex cursor-pointer items-center gap-3">
-          <span className="label">{s.dropBlips}</span>
+        <span className="flex cursor-pointer items-center gap-3">
+          <span className="label" id={`${uid}-drop`}>{s.dropBlips}</span>
           <button
             role="switch"
             aria-checked={shadow}
+            aria-labelledby={`${uid}-drop`}
             onClick={() => setShadow((v) => !v)}
             className={`relative h-6 w-11 border transition-colors ${
               shadow ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
@@ -502,7 +504,7 @@ export function KalmanTracker() {
               }`}
             />
           </button>
-        </label>
+        </span>
       </div>
 
       <div data-print-hide className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
