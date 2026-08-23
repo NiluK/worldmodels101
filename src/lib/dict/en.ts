@@ -5,6 +5,32 @@ export const en: Dict = {
   "punct.stop": ".",
   "state.on": "on",
   "state.off": "off",
+  "about.title": "About",
+  "about.lead":
+    "Nilushanan Kulasingham is a software engineer and founder who has spent a decade building interactive entertainment products. In 2014 he founded Paravine, an esports news and statistics platform that grew to 800,000 monthly readers and was acquired by CBS Interactive as the foundation of its esports vertical, onGamers. He later founded and led Nucanon, an AI gaming company whose tools generated canon-consistent story, lore and worlds for game studios, backed by Antler, Skalata, Futureverse and Jason Calacanis and acquired by the Indian gaming platform Zupee.",
+  "about.before":
+    "In between he launched SBS News's first live blog platform, helped rebuild the Qantas Rewards Store, led the frontend at Gamurs, the publisher of Dot Esports, and rebuilt Futureverse's core blockchain in Rust.",
+  "about.whyTitle": "Why this exists",
+  "about.why":
+    "The phrase world model confused him for a long time. The explanations online tended to pick one of the five machines it can mean and explain that as if it were the whole story, so this is the page he wanted: the five laid out side by side, then how each one works and where it came from. It is free and stays free, and every figure in it can be pressed.",
+  "about.assumes":
+    "It assumes you are comfortable with a gradient, a probability distribution and matrix multiplication, and that you have trained a neural network at least once. It assumes no reinforcement learning; the RL you need arrives where it is needed and no earlier.",
+  "about.correctionsTitle": "Corrections",
+  "about.corrections":
+    "Parts of this are certainly wrong, because the field moves faster than the writing. If you find an error, whether a misattributed idea, a broken derivation or a demo that lies about what the underlying method does, the correction is welcome and will be credited.",
+  "about.correctionsLink": "Open an issue",
+  "about.correctionsAfter": "and it gets read.",
+  "about.elsewhereTitle": "Elsewhere",
+  "about.readingTitle": "Where the ideas come from",
+  "about.reading.craik":
+    "Where the small-scale model framing comes from. Short, and still the clearest statement of the premise.",
+  "about.reading.dyna":
+    "Learning from real experience and imagined experience in the same loop.",
+  "about.reading.ha":
+    "The paper that gave the field its name in its current sense. Encoder, dynamics, controller.",
+  "about.reading.lecun":
+    "The position paper behind JEPA and the argument against predicting pixels.",
+  "about.signoff": "Written and built by {author}.",
   "nav.chapters": "Chapters",
   "nav.about": "About",
   "nav.dark": "Dark",

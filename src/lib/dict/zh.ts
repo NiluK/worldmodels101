@@ -5,6 +5,32 @@ export const zh: Dict = {
   "punct.stop": "。",
   "state.on": "开",
   "state.off": "关",
+  "about.title": "关于",
+  "about.lead":
+    "Nilushanan Kulasingham 是一名软件工程师和创业者，做互动娱乐产品做了十年。2014 年他创办了 Paravine，一个电竞新闻与数据平台，月读者数长到八十万，后来被 CBS Interactive 收购，成了它电竞频道 onGamers 的基础。之后他创办并带领 Nucanon，一家 AI 游戏公司，做的工具能为游戏工作室生成前后自洽的剧情、设定和世界观，投资方包括 Antler、Skalata、Futureverse 和 Jason Calacanis，最后被印度游戏平台 Zupee 收购。",
+  "about.before":
+    "这中间，他做出了 SBS News 的第一个直播博客平台，参与重建了澳航积分商城，在 Dot Esports 的母公司 Gamurs 带前端，还用 Rust 重写了 Futureverse 的核心区块链。",
+  "about.whyTitle": "为什么会有这份读物",
+  "about.why":
+    "「世界模型」这个说法困扰了他很久。网上的解释往往挑出它可能指的五种机器中的一种，然后当成故事的全部去讲。所以他想要的是这样一页东西：把五种并排摆开，再讲每一种怎么工作、从哪里来。它是免费的，而且会一直免费，里面每一张图都可以动手按。",
+  "about.assumes":
+    "这份读物假设你对梯度、概率分布和矩阵乘法不陌生，也至少训练过一次神经网络。它不假设你懂强化学习；需要用到的那部分，会在用到的地方才出现，不会更早。",
+  "about.correctionsTitle": "更正",
+  "about.corrections":
+    "这里面肯定有写错的地方，因为这个领域跑得比文字快。如果你发现了错误，不管是把想法归错了人、推导有问题，还是某个演示夸大了底层方法真正做到的事，都欢迎指出来，我会署名致谢。",
+  "about.correctionsLink": "提一个 issue",
+  "about.correctionsAfter": "，我会看。",
+  "about.elsewhereTitle": "其他地方",
+  "about.readingTitle": "这些想法从哪里来",
+  "about.reading.craik":
+    "「小尺度模型」这个说法的出处。篇幅很短，而且到今天仍然是把这个前提说得最清楚的一篇。",
+  "about.reading.dyna":
+    "在同一个循环里，既从真实经验学，也从想象出来的经验学。",
+  "about.reading.ha":
+    "让这个词有了现在这个含义的那篇论文。编码器、动力学、控制器。",
+  "about.reading.lecun":
+    "JEPA 背后的立场论文，也是反对预测像素的那套论证。",
+  "about.signoff": "由 {author} 撰写和搭建。",
   "nav.chapters": "章节",
   "nav.about": "关于",
   "nav.dark": "深色",
