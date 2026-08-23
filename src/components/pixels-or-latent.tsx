@@ -134,7 +134,6 @@ function CodeTile({ x, y, step, opacity = 1 }: { x: number; y: number; step: num
 }
 
 export function PixelsOrLatent() {
-  const uid = useId();
   const [n, setN] = useState(10);
   const [showChosen, setShowChosen] = useState(true);
   const sweep = useSweep({ value: n, min: 1, max: MAX_SEQ, step: 1, setValue: setN });
@@ -316,13 +315,12 @@ export function PixelsOrLatent() {
         </label>
         <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
 
-        <span className="flex cursor-pointer items-center gap-3">
-          <span className="label" id={`${uid}-show`}>{T.show}</span>
+        <label className="flex cursor-pointer items-center gap-3">
+          <span className="label">{T.show}</span>
           <button
             type="button"
             role="switch"
             aria-checked={showChosen}
-            aria-labelledby={`${uid}-show`}
             onClick={() => setShowChosen((v) => !v)}
             className={`relative h-6 w-11 border transition-colors ${
               showChosen ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
@@ -334,7 +332,7 @@ export function PixelsOrLatent() {
               }`}
             />
           </button>
-        </span>
+        </label>
 
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">
           {verdict}

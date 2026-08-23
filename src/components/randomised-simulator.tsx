@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useId, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 import { pickText, type LocaleText } from "@/lib/locale-text";
@@ -162,7 +162,6 @@ function Scene({ x, v, stroke }: { x: number; v: number; stroke: string }) {
 }
 
 export function RandomisedSimulator() {
-  const uid = useId();
   const locale = useLocale();
   const T = pickText(TEXT, locale);
   const still = useReducedMotion();
@@ -288,13 +287,12 @@ export function RandomisedSimulator() {
           {T.train}
         </button>
 
-        <span className="flex cursor-pointer items-center gap-3">
-          <span className="label" id={`${uid}-widen`}>{T.widen}</span>
+        <label className="flex cursor-pointer items-center gap-3">
+          <span className="label">{T.widen}</span>
           <button
             type="button"
             role="switch"
             aria-checked={widen}
-            aria-labelledby={`${uid}-widen`}
             onClick={toggleWiden}
             className={`relative h-6 w-11 border transition-colors ${
               widen ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
@@ -306,7 +304,7 @@ export function RandomisedSimulator() {
               }`}
             />
           </button>
-        </span>
+        </label>
 
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">
           {verdict}

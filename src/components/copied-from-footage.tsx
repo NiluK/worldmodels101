@@ -203,7 +203,7 @@ export function CopiedFromFootage() {
       </div>
 
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
-        <span className="flex cursor-pointer items-center gap-3">
+        <label className="flex cursor-pointer items-center gap-3">
           <span className="label whitespace-nowrap">{T.footage}</span>
           <button
             type="button"
@@ -222,7 +222,7 @@ export function CopiedFromFootage() {
             />
           </button>
           <span className="label !text-ink">{footage === "steady" ? T.steady : T.real}</span>
-        </span>
+        </label>
         <div className="flex gap-2">
           <button type="button" onClick={go} disabled={filled > 0}
             className="border border-rule-strong bg-paper px-4 py-1.5 transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-rule-strong">

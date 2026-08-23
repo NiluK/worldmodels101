@@ -546,7 +546,7 @@ export function ThreePieces() {
         >
           {s.step}
         </button>
-        <span className="flex cursor-pointer items-center gap-3">
+        <label className="flex cursor-pointer items-center gap-3">
           <span className="label">{s.where}</span>
           <button
             role="switch"
@@ -566,7 +566,7 @@ export function ThreePieces() {
           <span className={`label !normal-case !tracking-normal !text-[0.8rem] ${dreaming ? "!text-imagine" : "!text-ink"}`}>
             {dreaming ? s.dream : s.real}
           </span>
-        </span>
+        </label>
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem] sm:basis-auto sm:flex-1">
           {dreaming ? s.dreamLine : s.realLine}
         </p>

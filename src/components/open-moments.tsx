@@ -321,7 +321,7 @@ export function OpenMoments() {
         data-print-hide
         className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule px-5 py-4 md:px-8"
       >
-        <span className="flex cursor-pointer items-center gap-3">
+        <label className="flex cursor-pointer items-center gap-3">
           <span className="label whitespace-nowrap">{T.ghosts}</span>
           <button
             type="button"
@@ -340,7 +340,7 @@ export function OpenMoments() {
             />
           </button>
           <span className="label !text-ink">{ghosts ? T.on : T.off}</span>
-        </span>
+        </label>
 
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">
           {atJunction ? T.vJunction : T.vCorridor}

@@ -287,7 +287,7 @@ export function WhoLabelledIt() {
         </label>
 
 
-        <span className="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-2">
+        <label className="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-2">
           <span className="label whitespace-nowrap">{T.whichSide}</span>
           <span className="flex items-center gap-3">
             <span className={`label whitespace-nowrap ${person ? "!text-ink" : ""}`}>{T.sideName.person}</span>
@@ -309,7 +309,7 @@ export function WhoLabelledIt() {
             </button>
             <span className={`label whitespace-nowrap ${person ? "" : "!text-ink"}`}>{T.sideName.recording}</span>
           </span>
-        </span>
+        </label>
 
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">
           {T.verdict[side]}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 import { pickText, type LocaleText } from "@/lib/locale-text";
@@ -157,7 +157,6 @@ function Arrow({ x, y, dx, colour }: { x: number; y: number; dx: number; colour:
 }
 
 export function AlwaysAnswers() {
-  const uid = useId();
   const locale = useLocale();
   const s = pickText(TEXT, locale);
   const { ref, compact } = useCompact(620);
@@ -328,13 +327,12 @@ export function AlwaysAnswers() {
           })}
         </div>
 
-        <span className="flex cursor-pointer items-center gap-3">
-          <span className="label" id={`${uid}-flag`}>{s.flag}</span>
+        <label className="flex cursor-pointer items-center gap-3">
+          <span className="label">{s.flag}</span>
           <button
             type="button"
             role="switch"
             aria-checked={flag}
-            aria-labelledby={`${uid}-flag`}
             onClick={() => setFlag((v) => !v)}
             className={`relative h-6 w-11 border transition-colors ${
               flag ? "border-imagine bg-imagine" : "border-rule-strong bg-paper"
@@ -346,7 +344,7 @@ export function AlwaysAnswers() {
               }`}
             />
           </button>
-        </span>
+        </label>
 
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]" aria-live="polite">
           {s.verdict[q]}

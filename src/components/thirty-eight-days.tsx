@@ -273,7 +273,7 @@ export function ThirtyEightDays() {
           <span className="label !normal-case !tracking-normal">{s.notes[place]}</span>
         </div>
 
-        <span className="flex cursor-pointer items-center gap-3">
+        <label className="flex cursor-pointer items-center gap-3">
           <span className="label">{s.carry}</span>
           <button
             type="button"
@@ -291,7 +291,7 @@ export function ThirtyEightDays() {
               }`}
             />
           </button>
-        </span>
+        </label>
 
         <motion.p
           key={verdict}

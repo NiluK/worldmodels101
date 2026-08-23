@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
@@ -133,7 +133,6 @@ export function CriticSeesFurther() {
 
   const [r, setR] = useState(40);
   const [critic, setCritic] = useState(false);
-  const switchId = useId();
 
   const G = compact ? NARROW : WIDE;
   const px = (step: number) => G.x0 + (step / LAST) * (G.x1 - G.x0);
@@ -316,17 +315,12 @@ export function CriticSeesFurther() {
           <span className="label tnum w-10 text-right !text-ink">{r}</span>
         </label>
 
-        {/* not a <label>: a label forwards its click to the button it wraps,
-            so the switch would toggle twice and never change */}
-        <span className="flex items-center gap-3">
-          <span className="label" id={switchId}>
-            {T.critic}
-          </span>
+        <label className="flex cursor-pointer items-center gap-3">
+          <span className="label">{T.critic}</span>
           <button
             type="button"
             role="switch"
             aria-checked={critic}
-            aria-labelledby={switchId}
             onClick={() => setCritic((v) => !v)}
             className={`relative h-6 w-11 border transition-colors ${
               critic
@@ -340,7 +334,7 @@ export function CriticSeesFurther() {
               }`}
             />
           </button>
-        </span>
+        </label>
 
         <p
           className="label basis-full !normal-case !tracking-normal !text-[0.8rem]"

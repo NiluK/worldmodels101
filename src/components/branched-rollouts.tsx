@@ -216,7 +216,7 @@ export function BranchedRollouts() {
         </label>
         <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
 
-        <span className="flex cursor-pointer items-center gap-3">
+        <label className="flex cursor-pointer items-center gap-3">
           <span className="label">{every ? T.every : T.one}</span>
           <button
             type="button"
@@ -237,7 +237,7 @@ export function BranchedRollouts() {
               }`}
             />
           </button>
-        </span>
+        </label>
 
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">{verdict}</p>
       </div>
