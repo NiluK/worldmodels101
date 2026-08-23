@@ -117,7 +117,7 @@ const en: Dict = {
   "af.fidelity": "Action fidelity",
   "af.input": "Action input",
   "af.input.yes": "present in every row",
-  "af.separation": "Left–right separation",
+  "af.separation": "Left-right separation",
   "af.verdict": "Control test",
   "af.v.ignored": "The model mostly ignores the command.",
   "af.v.weak": "The command changes the video, but weakly.",

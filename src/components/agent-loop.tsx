@@ -59,7 +59,7 @@ export function AgentLoop() {
     <div>
       <div ref={ref} className="px-4 pt-6 md:px-8">
         <svg viewBox="0 0 908 216" className="block w-full" role="img"
-          aria-label="The agent–environment loop: world, observation, belief, imagination, action, and back to the world.">
+          aria-label="The agent-environment loop: world, observation, belief, imagination, action, and back to the world.">
           <defs>
             <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
               <path d="M0,0 L7,3 L0,6" fill="none" stroke="var(--ink-muted)" strokeWidth="1.3" />
