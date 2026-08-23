@@ -18,7 +18,7 @@ and turn the action input off to see what happens to the three rows.
 Jake Bruce and colleagues at Google DeepMind made that move with Genie in 2024.
 Their paper was called *Genie: Generative Interactive Environments*. Genie was
 trained on footage of 2D platform games, Mario and its descendants, and it
-turned them into worlds you could steer. The part I find surprising is that
+turned them into worlds you could steer. The part we find surprising is that
 nobody had labelled the keypresses.
 
 Instead, the model had to explain each change between frames with one of a
@@ -46,7 +46,7 @@ underneath. Think of a steering wheel that turns without being connected to
 anything.
 
 So control has to be measured. Hold the start fixed, vary only the command, and
-check whether the futures split apart as asked. I call it the steering-wheel
+check whether the futures split apart as asked. We call it the steering-wheel
 test, and the figure below is that test as a picture.
 
 <Figure
@@ -57,7 +57,7 @@ test, and the figure below is that test as a picture.
 </Figure>
 
 As you can see, the input can be there the whole time and mean very little.
-That failure is the one I'd expect. A model trained on footage is rewarded for
+That failure is the one we'd expect. A model trained on footage is rewarded for
 frames that look right. If the footage mostly goes straight, going straight is
 a good bet whatever the key says.
 
@@ -94,7 +94,7 @@ frames a second.
 
 <MarginNote>
 Those numbers are DeepMind's report of its own system. Nobody outside the lab
-has repeated them. I'd say that is normal here rather than a slight.
+has repeated them. We'd say that is normal here rather than a slight.
 </MarginNote>
 
 It is said to hold a scene together for several minutes and to take
@@ -104,7 +104,7 @@ at the clip below and watch for exactly that.
 
 <Figure
   n="8.5"
-  caption={<>DeepMind's own clip of Genie 3. Watch for the moments the camera turns away and comes back, and ask yourself what you were shown. The scene is roughly as it was, and nothing in the interface lets you open up whatever held it there. Everything in the clip is the lab's report, including the numbers I quoted above.</>}
+  caption={<>DeepMind's own clip of Genie 3. Watch for the moments the camera turns away and comes back, and ask yourself what you were shown. The scene is roughly as it was, and nothing in the interface lets you open up whatever held it there. Everything in the clip is the lab's report, including the numbers we quoted above.</>}
 >
   <VideoFigure
     id="PDKhUknuQDg"
@@ -163,7 +163,7 @@ Everything inside the band fits with having learned physics. It fits just as
 well with having learned the answers to the questions it was asked, and Kang's
 group concluded their models were doing the second: matching each new scene to
 the training scenes it most resembled and copying what happened there. Nobody
-tests outside the band, because that is where the footage runs out. I call that
+tests outside the band, because that is where the footage runs out. We call that
 the band problem.
 
 So the honest version of the claim is narrower. These systems copy a great many
@@ -180,12 +180,12 @@ convinces people in a way a wrong number never could.
 ## What they are for
 
 None of that argues against using them. Answering "it has not learned physics"
-with "so it is a toy" is the mirror-image error, and I see it nearly as often.
+with "so it is a toy" is the mirror-image error, and we see it nearly as often.
 
 For training other systems a generated world is useful. It avoids contact with
 the real environment and pays in GPU time instead. It resets at once, and it
 can produce a thousand versions of a scene that would take a week to stage.
-Press the buttons in the figure below a few times and you'll see what I mean.
+Press the buttons in the figure below a few times and you'll see what we mean.
 
 <Figure
   n="8.8"
@@ -200,11 +200,11 @@ Model Platform for Physical AI*. It makes physically-aware video as training
 data for robots and vehicles, where real data is dearest.
 
 NVIDIA sells Cosmos beside its explicit, hand-built simulators as one platform,
-and has not declared either the replacement for the other. I'd take that as a
+and has not declared either the replacement for the other. We'd take that as a
 hint about where things stand.
 
 For being a world you can move around in, they are already good. No other
-approach lets you walk into the picture. I think that is worth more than the
+approach lets you walk into the picture. We think that is worth more than the
 sceptics admit and less than the launches imply.
 
 For being the model an agent plans inside, raw video generators are an awkward
@@ -255,7 +255,7 @@ the chance to the middle in the figure below and you'll see why.
 action fidelity and persistence one at a time. There is no accepted rule for
 combining them into one ranking.
 
-So I will not tell you whether Genie 3 beats GameNGen, and you should distrust
+So we will not tell you whether Genie 3 beats GameNGen, and you should distrust
 anyone who does. A claim about improvement belongs to one particular test.
 Click through the measures below and watch the winner change.
 
@@ -266,15 +266,15 @@ Click through the measures below and watch the winner change.
   <NoRanking />
 </Figure>
 
-So, are video models world simulators? My answer is that they are somewhere you
+So, are video models world simulators? Our answer is that they are somewhere you
 can be, and that is new and real. Whether one obeys you, and whether it holds
 the rules rather than the footage, are two separate measurements, and the demo
 you saw did not make either of them. Ask for the steering-wheel test, and ask
 what was outside the band.
 
 Hopefully this chapter helped. There is a short quiz below if you want to check
-the ideas stuck. If I have got something wrong, or you know a better source
-than the ones I used, the About page has a corrections section and I would be
+the ideas stuck. If we have got something wrong, or you know a better source
+than the ones we used, the About page has a corrections section and we would be
 glad to hear from you.
 
 ## Try it
@@ -290,7 +290,7 @@ glad to hear from you.
 
 <Figure
   n="8.14"
-  caption={<>I've ordered these for someone building on this rather than for historical completeness. Kang and the OpenAI report sit together as claim and measurement.</>}
+  caption={<>We've ordered these for someone building on this rather than for historical completeness. Kang and the OpenAI report sit together as claim and measurement.</>}
 >
   <SourceList chapter={8} />
 </Figure>

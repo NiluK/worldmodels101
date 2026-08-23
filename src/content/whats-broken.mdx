@@ -1,4 +1,4 @@
-Every system in this course ends on something that does not work yet. I think
+Every system in this course ends on something that does not work yet. We think
 the failures belong together, because the confusion around the phrase was built
 out of them. Five kept turning up: persistence, action, horizon, target and
 verification. Each was found by a different community, and each was measured
@@ -32,12 +32,12 @@ horizon per property: how many steps each one held up for.
   <WhatBreaks />
 </Figure>
 
-In this profile, colour and texture outlast identity and physics, and I'd say
+In this profile, colour and texture outlast identity and physics, and we'd say
 that is no accident. A per-frame loss pays the model for getting most of the
 pixels about right, and most pixels are surfaces and light. Nothing in it is
 watching whether the chair you walked past is the same chair.
 
-The result is what I call the single-frame alibi. You get a rollout a hundred
+The result is what we call the single-frame alibi. You get a rollout a hundred
 steps past the point of being useful, and any one frame of it still looks
 completely fine. Every frame has an alibi, and only the sequence is guilty.
 
@@ -73,7 +73,7 @@ Outside, they broke them, and nothing in the output said which case you were
 in.
 
 <MarginNote>
-I think this one gets under-rated because the model always answers. A system
+we think this one gets under-rated because the model always answers. A system
 that said "I have never seen anything like that" would be more useful and less
 impressive, and nobody is rewarded for building it.
 </MarginNote>
@@ -110,7 +110,7 @@ it does still decides what you can build.
 
 ## The league table nobody can publish
 
-Measurement arrived in the wrong order, and I want to walk you through why.
+Measurement arrived in the wrong order, and we want to walk you through why.
 Reinforcement learning measured horizon first, because an agent that trusts a
 bad model loses, and the loss shows up in the score. The video people came next
 and measured what they could, which was the frame.
@@ -127,7 +127,7 @@ two failures a renderer hits first, tested seven years after horizon.
 
 <Figure
   n="9.6"
-  caption={<>The scores are invented and the systems are not real, but the disagreement is. Click through the four measures and watch the winner change each time. Then read the best overall cell, which is the part I want you to notice. It cannot name one, because there is no accepted way to combine the four into a single ordering.</>}
+  caption={<>The scores are invented and the systems are not real, but the disagreement is. Click through the four measures and watch the winner change each time. Then read the best overall cell, which is the part we want you to notice. It cannot name one, because there is no accepted way to combine the four into a single ordering.</>}
 >
   <NoRanking />
 </Figure>
@@ -138,7 +138,7 @@ is long enough to show it. Action fidelity is the difference between a world
 model and a video, and it is almost never reported. Cost is reported least of
 all.
 
-That order is close to the reverse of how much each matters, and I do not think
+That order is close to the reverse of how much each matters, and we do not think
 it is by chance. Downstream task success looks like the honest way out. But it
 scores the model and the policy together, and a good policy hides a bad model.
 
@@ -158,7 +158,7 @@ that another program can test.
 
 <Figure
   n="9.7"
-  caption={<>Five system contracts crossed with the five failure questions. The levels are editorial judgements, mine, rather than benchmark scores. Select a row to see the question that most often binds that kind of system, and read the renderer and simulator rows against the paragraph above. The next three paragraphs walk the other three rows. A single "world model quality" axis would flatten all five.</>}
+  caption={<>Five system contracts crossed with the five failure questions. The levels are editorial judgements, ours, rather than benchmark scores. Select a row to see the question that most often binds that kind of system, and read the renderer and simulator rows against the paragraph above. The next three paragraphs walk the other three rows. A single "world model quality" axis would flatten all five.</>}
 >
   <FailureMatrix />
 </Figure>
@@ -166,7 +166,7 @@ that another program can test.
 A compact dynamics model predicts a small state rather than pixels. It depends
 on rollout horizon, and on whether planning search can exploit it. A
 representation, an embedding learned for something else to use, can look stable
-while throwing away the variable the task needed. I call that the target
+while throwing away the variable the task needed. We call that the target
 problem: predicting the wrong thing well.
 
 An implicit model is a claim that a model formed inside a network trained for
@@ -185,7 +185,7 @@ The probe could have found nothing, and that is what makes it evidence.
   <ProbeBoard />
 </Figure>
 
-Four questions still handle most papers, so let me leave you with them. The
+Four questions still handle most papers, so we'll leave you with them. The
 first is **what does it output?** A picture, a structure, a compact state or an
 embedding. Nothing else follows without it.
 
@@ -218,9 +218,9 @@ your side: you can now tell which of the five is being offered, what it would
 take for the claim to be true, and what to ask when somebody is not saying.
 
 Thank you for reading this far. Hopefully these nine chapters helped, and there
-is a short quiz below if you want to check the ideas stuck. If I have got
+is a short quiz below if you want to check the ideas stuck. If we have got
 something wrong anywhere in the course, or you know a better source than the
-ones I used, the About page has a corrections section. I would be glad to hear
+ones we used, the About page has a corrections section. We would be glad to hear
 from you.
 
 ## Try it
@@ -236,7 +236,7 @@ from you.
 
 <Figure
   n="9.11"
-  caption={<>I've ordered these for someone building on this rather than for historical completeness, benchmarks first and LeCun last.</>}
+  caption={<>We've ordered these for someone building on this rather than for historical completeness, benchmarks first and LeCun last.</>}
 >
   <SourceList chapter={9} />
 </Figure>
