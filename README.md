@@ -25,21 +25,21 @@ a Simplified Chinese edition, and a printable PDF.
 
 \* Cosmos straddles Renderer and Simulator. That ambiguity is the point. Before
 asking whether something is a world model, ask what it predicts and what you can
-do with the prediction.
+do with the why-prediction-is-learning.
 
 ## The course
 
 | | Chapter | The thing you can poke |
 |---:|---|---|
-| 01 | [What Is a World Model?](https://worldmodels101.com/chapters/what-people-mean) | A map of five definitions and the question that separates them |
-| 02 | [How Do World Models Work?](https://worldmodels101.com/chapters/the-idea) | A planner that gets worse as it searches harder inside a flawed model |
-| 03 | [Why Is Prediction the Same as Learning?](https://worldmodels101.com/chapters/prediction) | Possible futures collapsing as new evidence arrives |
-| 04 | [What Is Latent Space?](https://worldmodels101.com/chapters/latents) | A two-number space that decodes into a room |
-| 05 | [What Is a Dynamics Model?](https://worldmodels101.com/chapters/dynamics) | One model run with corrections, then left to consume its own output |
-| 06 | [Can an AI Learn Inside Its Own World Model?](https://worldmodels101.com/chapters/dreaming) | The point where cheaper imagined experience becomes worse experience |
-| 07 | [What Is JEPA, and Why Not Predict Pixels?](https://worldmodels101.com/chapters/jepa) | Two possible futures and the impossible blur that scores above both |
-| 08 | [Are Video Models World Simulators?](https://worldmodels101.com/chapters/video-worlds) | One starting frame and three futures selected by an action |
-| 09 | [What Is Still Broken in World Models?](https://worldmodels101.com/chapters/whats-broken) | A thousand-step rollout showing which properties fail first |
+| 01 | [What Is a World Model?](https://worldmodels101.com/chapters/what-is-a-world-model) | A map of five definitions and the question that separates them |
+| 02 | [How Do World Models Work?](https://worldmodels101.com/chapters/how-do-world-models-work) | A planner that gets worse as it searches harder inside a flawed model |
+| 03 | [Why Is Prediction the Same as Learning?](https://worldmodels101.com/chapters/why-prediction-is-learning) | Possible futures collapsing as new evidence arrives |
+| 04 | [What Is Latent Space?](https://worldmodels101.com/chapters/what-is-latent-space) | A two-number space that decodes into a room |
+| 05 | [What Is a Dynamics Model?](https://worldmodels101.com/chapters/what-is-a-dynamics-model) | One model run with corrections, then left to consume its own output |
+| 06 | [Can an AI Learn Inside Its Own World Model?](https://worldmodels101.com/chapters/can-ai-learn-inside-a-world-model) | The point where cheaper imagined experience becomes worse experience |
+| 07 | [What Is JEPA, and Why Not Predict Pixels?](https://worldmodels101.com/chapters/what-is-jepa) | Two possible futures and the impossible blur that scores above both |
+| 08 | [Are Video Models World Simulators?](https://worldmodels101.com/chapters/are-video-models-world-simulators) | One starting frame and three futures selected by an action |
+| 09 | [What Is Still Broken in World Models?](https://worldmodels101.com/chapters/what-is-still-broken) | A thousand-step rollout showing which properties fail first |
 
 The chapters are ordered for learning rather than history. Each one states which
 definition of world model is in use, cites the underlying papers, and ends with
@@ -67,7 +67,7 @@ static questions with an answer key, and unrevealed sections remain visible.
 
 ```bash
 pnpm dev                         # in another shell
-pnpm pdf what-people-mean 1
+pnpm pdf what-is-a-world-model 1
 ```
 
 The command writes to `public/pdf/`. A chapter page links its PDF automatically

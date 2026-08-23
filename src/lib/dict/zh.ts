@@ -21,11 +21,8 @@ export const zh: Dict = {
   "site.deck":
     "自 2018 年起，「世界模型」这个词至少指过五种不同的机器，而说的人很少告诉你是哪一种。这份读物先把这五种分开，再讲每一种怎么工作、从哪里来。",
   "site.begin": "从第 01 章开始",
-  "site.meta": "共 {n} 章 · {time} · 无需注册",
   "site.book": "全书 PDF",
   "home.h1": "World Models",
-  "home.runtimeHm": "{h} 小时 {m} 分钟",
-  "home.runtimeM": "{m} 分钟",
   "home.chapterCount": "共 {n} 章",
   "home.premise.p1":
     "问四家实验室什么是世界模型，你会得到四台互不相容的机器，每一台都有自己的来历。Google DeepMind 的 Genie 生成你可以用方向键操控的视频。World Labs 的 Marble 造出机器人可以在里面训练的三维几何。Danijar Hafner 团队的 Dreamer 学出一个小型仿真器，并在上面做规划。Meta 的 V-JEPA 预测嵌入向量，然后把预测扔掉。",
@@ -48,7 +45,6 @@ export const zh: Dict = {
   "home.mapNote": "如果你不确定自己读到的是哪一种，从这里开始。",
   "home.premise": "前提",
   "home.audience": "写给谁看",
-  "chapter.read": "阅读约 {n} 分钟 · 可交互",
   "chapter.pdf": "PDF",
   "chapter.printNote": "本章的图都是可交互的。请到 {url} 在线按一按、拖一拖。",
   "chapter.prev": "← 上一章",
@@ -58,7 +54,6 @@ export const zh: Dict = {
   "chapter.untranslated": "这一章还没有{lang}版本，下面的正文是英文原文。",
   "chapter.soon": "即将推出",
   "chapter.drafting": "撰写中",
-  "chapter.min": "{n} 分钟",
   "chapter.readArrow": "阅读 →",
 
   "map.ordered": "按预测对象排序",

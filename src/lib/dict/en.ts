@@ -21,11 +21,8 @@ export const en: Dict = {
   "site.deck":
     "Since 2018, \u201cworld model\u201d has meant at least five different machines, and the people saying it rarely tell you which. This primer pulls the five apart, then shows how each one works and where it came from.",
   "site.begin": "Begin Chapter 01",
-  "site.meta": "{n} chapters · {time} · no signup",
   "site.book": "Whole book (PDF)",
   "home.h1": "World Models",
-  "home.runtimeHm": "{h}h {m}m",
-  "home.runtimeM": "{m}m",
   "home.chapterCount": "{n} chapters",
   "home.premise.p1":
     "Ask four labs what a world model is and you get four different machines that do not fit together. Each has its own history. Genie, from Google DeepMind, generates video you steer with the arrow keys. Marble, from World Labs, builds 3D geometry a robot can be trained inside. Dreamer, from Danijar Hafner's group, learns a small simulator and plans against it. V-JEPA, from Meta, predicts embeddings and throws the prediction away.",
@@ -52,7 +49,6 @@ export const en: Dict = {
   "home.mapNote": "If you are not sure which kind you have been reading about, start here.",
   "home.premise": "The premise",
   "home.audience": "Who this is for",
-  "chapter.read": "{n} min read · interactive",
   "chapter.pdf": "PDF",
   "chapter.printNote": "The figures in this chapter are interactive. Press and drag them online at {url}.",
   "chapter.prev": "← Previous",
@@ -63,7 +59,6 @@ export const en: Dict = {
     "This chapter is not in {lang} yet, so the text below is the English original.",
   "chapter.soon": "Soon",
   "chapter.drafting": "Drafting",
-  "chapter.min": "{n} min",
   "chapter.readArrow": "Read →",
 
   "map.ordered": "Ordered by what they predict",

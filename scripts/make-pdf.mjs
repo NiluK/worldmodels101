@@ -8,8 +8,8 @@
  * the reader never scrolled past prints blank.
  *
  *   pnpm dev                 # in another shell
- *   pnpm pdf what-people-mean 1
- *   pnpm pdf the-idea 2 zh
+ *   pnpm pdf what-is-a-world-model 1
+ *   pnpm pdf how-do-world-models-work 2 zh
  *
  * The locale argument matters twice: it picks the /zh route, and it picks the
  * filename chapter-view.tsx looks for when it decides whether to show the
@@ -20,7 +20,7 @@ import { mkdirSync } from "node:fs";
 import path from "node:path";
 import os from "node:os";
 
-const [slug = "what-people-mean", n = "1", locale = "en"] = process.argv.slice(2);
+const [slug = "what-is-a-world-model", n = "1", locale = "en"] = process.argv.slice(2);
 const port = process.env.PORT ?? "4311";
 const browse = path.join(os.homedir(), ".claude/skills/gstack/browse/dist/browse");
 const out = path.join(

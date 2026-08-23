@@ -32,7 +32,17 @@ export async function generateMetadata(
         ]),
       ),
     },
-    openGraph: { title: `${c.title} · World Models 101`, description: c.blurb },
+    openGraph: {
+      title: `${c.title} · World Models 101`,
+      description: c.blurb,
+      images: [{ url: `/og/${slug}.png`, width: 1200, height: 630, alt: c.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: c.title,
+      description: c.blurb,
+      images: [`/og/${slug}.png`],
+    },
   };
 }
 

@@ -5,7 +5,7 @@ import { Byline } from "@/components/byline";
 import { DefinitionMap } from "@/components/definition-map";
 import { PredictionHero } from "@/components/prediction-hero";
 import { StarCta } from "@/components/star-cta";
-import { CHAPTERS, TOTAL_MINUTES, chapterText } from "@/lib/chapters";
+import { CHAPTERS, chapterText } from "@/lib/chapters";
 import { getStars } from "@/lib/github";
 import { localePath, translate, type Locale } from "@/lib/i18n";
 
@@ -18,13 +18,6 @@ import { localePath, translate, type Locale } from "@/lib/i18n";
  * dictionary away from a complete home page rather than a new file to keep in
  * step.
  */
-function runtime(locale: Locale, mins: number) {
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  const t = (k: string, v?: Record<string, string | number>) => translate(locale, k, v);
-  return h ? t("home.runtimeHm", { h, m }) : t("home.runtimeM", { m });
-}
-
 export async function HomeView({ locale }: { locale: Locale }) {
   const stars = await getStars();
   // Offered only where one has been generated: the book is rendered per locale
@@ -68,9 +61,6 @@ export async function HomeView({ locale }: { locale: Locale }) {
             <span className="label !text-paper">{t("site.begin")}</span>
             <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
           </Link>
-          <p className="label">
-            {t("site.meta", { n: CHAPTERS.length, time: runtime(locale, TOTAL_MINUTES) })}
-          </p>
           {hasBook && (
             <a
               href={`/pdf/${bookName}`}
@@ -149,7 +139,6 @@ export async function HomeView({ locale }: { locale: Locale }) {
                 </div>
 
                 <div className="col-start-2 mt-5 flex items-center gap-4 md:col-start-3 md:mt-1 md:justify-end">
-                  <span className="label">{t("chapter.min", { n: c.minutes })}</span>
                   <span className={`label ${live ? "!text-imagine" : ""}`}>
                     {live
                       ? t("chapter.readArrow")

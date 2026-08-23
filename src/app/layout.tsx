@@ -63,8 +63,24 @@ export const metadata: Metadata = {
     url: "https://worldmodels101.com",
     siteName: "World Models 101",
     type: "website",
+    locale: "en",
+    images: [
+      /**
+       * The GIF cycles the five senses of the phrase, which is the whole
+       * argument of the site in one card. Discord and Slack animate it;
+       * everywhere else shows frame one, so frame one is a finished card on
+       * its own. The PNG follows for anything that will not take a GIF.
+       */
+      { url: "/og/home.gif", width: 1200, height: 630, alt: "World Models 101" },
+      { url: "/og/home.png", width: 1200, height: 630, alt: "World Models 101" },
+    ],
   },
-  twitter: { card: "summary_large_image", title: "World Models 101", description },
+  twitter: {
+    card: "summary_large_image",
+    title: "World Models 101",
+    description,
+    images: ["/og/home.png"],
+  },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

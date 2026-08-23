@@ -5,27 +5,27 @@ type Loader = () => Promise<{ default: ComponentType }>;
 
 /** Explicit registry per locale — keeps chapter imports statically analysable. */
 const EN: Record<string, Loader> = {
-  "what-people-mean": () => import("./what-people-mean.mdx"),
-  "the-idea": () => import("./the-idea.mdx"),
-  prediction: () => import("./prediction.mdx"),
-  latents: () => import("./latents.mdx"),
-  dynamics: () => import("./dynamics.mdx"),
-  dreaming: () => import("./dreaming.mdx"),
-  jepa: () => import("./jepa.mdx"),
-  "video-worlds": () => import("./video-worlds.mdx"),
-  "whats-broken": () => import("./whats-broken.mdx"),
+  "what-is-a-world-model": () => import("./what-is-a-world-model.mdx"),
+  "how-do-world-models-work": () => import("./how-do-world-models-work.mdx"),
+  "why-prediction-is-learning": () => import("./why-prediction-is-learning.mdx"),
+  "what-is-latent-space": () => import("./what-is-latent-space.mdx"),
+  "what-is-a-dynamics-model": () => import("./what-is-a-dynamics-model.mdx"),
+  "can-ai-learn-inside-a-world-model": () => import("./can-ai-learn-inside-a-world-model.mdx"),
+  "what-is-jepa": () => import("./what-is-jepa.mdx"),
+  "are-video-models-world-simulators": () => import("./are-video-models-world-simulators.mdx"),
+  "what-is-still-broken": () => import("./what-is-still-broken.mdx"),
 };
 
 const ZH: Record<string, Loader> = {
-  "what-people-mean": () => import("./zh/what-people-mean.mdx"),
-  "the-idea": () => import("./zh/the-idea.mdx"),
-  prediction: () => import("./zh/prediction.mdx"),
-  latents: () => import("./zh/latents.mdx"),
-  dynamics: () => import("./zh/dynamics.mdx"),
-  dreaming: () => import("./zh/dreaming.mdx"),
-  jepa: () => import("./zh/jepa.mdx"),
-  "video-worlds": () => import("./zh/video-worlds.mdx"),
-  "whats-broken": () => import("./zh/whats-broken.mdx"),
+  "what-is-a-world-model": () => import("./zh/what-is-a-world-model.mdx"),
+  "how-do-world-models-work": () => import("./zh/how-do-world-models-work.mdx"),
+  "why-prediction-is-learning": () => import("./zh/why-prediction-is-learning.mdx"),
+  "what-is-latent-space": () => import("./zh/what-is-latent-space.mdx"),
+  "what-is-a-dynamics-model": () => import("./zh/what-is-a-dynamics-model.mdx"),
+  "can-ai-learn-inside-a-world-model": () => import("./zh/can-ai-learn-inside-a-world-model.mdx"),
+  "what-is-jepa": () => import("./zh/what-is-jepa.mdx"),
+  "are-video-models-world-simulators": () => import("./zh/are-video-models-world-simulators.mdx"),
+  "what-is-still-broken": () => import("./zh/what-is-still-broken.mdx"),
 };
 
 /**

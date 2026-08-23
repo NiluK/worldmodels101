@@ -53,7 +53,6 @@ export async function ChapterView({ locale, slug }: { locale: Locale; slug: stri
               </h1>
               <Byline locale={locale} className="mt-5 block" />
               <p className="label mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-                <span>{t("chapter.read", { n: chapter.minutes })}</span>
                 {hasPdf && (
                   <a
                     href={pdf}
