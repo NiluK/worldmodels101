@@ -8,6 +8,8 @@ import { LocaleProvider } from "@/components/locale-provider";
 import { localeFromPath, LOCALE_META } from "@/lib/i18n";
 import { getStars } from "@/lib/github";
 import { StarButton } from "@/components/star-cta";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const instrument = Instrument_Serif({
   variable: "--font-instrument",
@@ -107,6 +109,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <StarButton locale={locale} stars={stars} placement="mobile" />
           </div>
         </LocaleProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
