@@ -253,7 +253,7 @@ export function TrustHorizon() {
         <button
           type="button"
           onClick={run}
-          className={`label h-10 border px-4 transition-colors ${
+          className={`label h-10 border px-5 transition-colors ${
             done ? "border-rule-strong bg-paper !text-ink hover:border-ink" : "border-imagine bg-imagine !text-paper"
           }`}
         >

@@ -208,7 +208,7 @@ export function ProfessorForcing() {
           type="button"
           onClick={train}
           disabled={done}
-          className="label h-10 border border-imagine bg-imagine px-4 !text-paper transition-colors hover:border-ink disabled:cursor-default disabled:opacity-60"
+          className="label h-10 border border-imagine bg-imagine px-5 !text-paper transition-colors hover:border-ink disabled:cursor-default disabled:opacity-60"
         >
           {T.train}
         </button>

@@ -488,7 +488,7 @@ export function OneStepByHand() {
         <button
           type="button"
           onClick={advance}
-          className={`label h-10 border px-4 transition-colors ${
+          className={`label h-10 border px-5 transition-colors ${
             checked
               ? "border-rule-strong bg-paper !text-ink hover:border-ink"
               : "border-imagine bg-imagine !text-paper"

@@ -311,7 +311,7 @@ export function PlanOrLearn() {
               type="button"
               onClick={train}
               disabled={trained}
-              className={`border px-4 py-1.5 transition-colors disabled:cursor-not-allowed ${
+              className={`border px-5 py-2 transition-colors disabled:cursor-not-allowed ${
                 training ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink disabled:opacity-40"
               }`}
             >

@@ -92,7 +92,7 @@ export function ActionConditioned() {
                 type="button"
                 onClick={() => setOn(v)}
                 aria-pressed={active}
-                className={`label border px-3 py-1.5 transition-colors ${
+                className={`label border px-5 py-2 transition-colors ${
                   active
                     ? "border-imagine bg-imagine !text-paper"
                     : "border-rule-strong bg-paper !text-ink hover:border-ink"

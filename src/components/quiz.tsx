@@ -327,7 +327,7 @@ function QuizInteractive({ chapter }: { chapter: number }) {
                   onClick={() => choose(n)}
                   disabled={revealed}
                   aria-pressed={isPick}
-                  className={`flex items-baseline gap-3 px-4 py-3 text-left transition-colors ${
+                  className={`flex items-baseline gap-3 px-5 py-3 text-left transition-colors ${
                     mark === "correct"
                       ? "bg-actual-soft"
                       : mark === "wrong"

@@ -161,7 +161,7 @@ export function OneNameThreeJobs() {
             type="button"
             aria-pressed={showNow}
             onClick={() => setShowNow((v) => !v)}
-            className={`label h-9 border px-3 transition-colors ${
+            className={`label h-9 border px-5 transition-colors ${
               showNow
                 ? "border-imagine bg-imagine !text-paper"
                 : "border-rule-strong bg-paper !text-ink hover:border-ink"

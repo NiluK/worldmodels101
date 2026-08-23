@@ -277,7 +277,7 @@ export function StowawayLedger() {
           type="button"
           onClick={allOpen ? closeHold : openHold}
           aria-pressed={allOpen}
-          className={`border px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.1em] transition-colors ${
+          className={`border px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] transition-colors ${
             allOpen ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
           }`}
         >

@@ -223,7 +223,7 @@ export function ScheduledSamplingDial() {
             <button
               onClick={pressRun}
               disabled={run?.live ?? false}
-              className={`border px-3 py-1.5 font-mono text-[0.7rem] transition-colors ${
+              className={`border px-5 py-2 font-mono text-[0.7rem] transition-colors ${
                 run?.live ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
               }`}
             >

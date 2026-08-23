@@ -313,7 +313,7 @@ export function AlwaysAnswers() {
                 type="button"
                 aria-pressed={on}
                 onClick={() => setQ(i as Q)}
-                className={`h-9 border px-3 transition-colors ${
+                className={`h-9 border px-5 transition-colors ${
                   on
                     ? "border-imagine bg-imagine text-paper"
                     : "border-rule-strong bg-paper text-ink hover:border-ink"

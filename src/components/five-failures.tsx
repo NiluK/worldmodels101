@@ -206,7 +206,7 @@ export function FiveFailures() {
               aria-pressed={on}
               onClick={() => setSel(id)}
               onFocus={() => setSel(id)}
-              className={`block w-full border px-3 py-3 text-left transition-colors ${
+              className={`block w-full border px-5 py-3 text-left transition-colors ${
                 !compact && i === ORDER.length - 1 ? "col-span-2 md:col-span-1" : ""
               } ${on ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"}`}
             >

@@ -314,7 +314,7 @@ export function CompressionProgress() {
           <button
             type="button"
             onClick={watch}
-            className="label border border-imagine bg-imagine px-3 py-1.5 !text-paper transition-colors"
+            className="label border border-imagine bg-imagine px-5 py-2 !text-paper transition-colors"
           >
             {step === 0 ? s.watch : s.watchAgain}
           </button>

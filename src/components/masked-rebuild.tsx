@@ -343,13 +343,13 @@ export function MaskedRebuild() {
           </span>
         </label>
         <button type="button" onClick={rebuild}
-          className={`label h-9 border px-4 transition-colors ${
+          className={`label h-9 border px-5 transition-colors ${
             rebuilt ? "border-imagine bg-imagine !text-paper" : "border-rule-strong bg-paper !text-ink hover:border-ink"
           }`}>
           {s.rebuild}
         </button>
         <button type="button" onClick={() => {setTested(true); }} disabled={!rebuilt}
-          className={`label h-9 border px-4 transition-colors ${
+          className={`label h-9 border px-5 transition-colors ${
             tested
               ? "border-imagine bg-imagine !text-paper"
               : rebuilt

@@ -264,7 +264,7 @@ export function SettledInAdvance() {
                   type="button"
                   aria-pressed={setting === s}
                   onClick={() => choose(s)}
-                  className={`label h-9 w-full border px-3 transition-colors ${
+                  className={`label h-9 w-full border px-5 transition-colors ${
                     setting === s
                       ? "border-imagine bg-imagine !text-paper"
                       : "border-rule-strong bg-paper !text-ink hover:border-ink"

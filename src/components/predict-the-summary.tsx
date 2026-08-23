@@ -299,7 +299,7 @@ export function PredictTheSummary() {
           <div role="group" aria-label={s.target} className="flex">
             {(["pixels", "summary"] as const).map((m) => (
               <button key={m} type="button" aria-pressed={mode === m} onClick={() => switchTo(m)}
-                className={`label h-9 border px-3 transition-colors ${
+                className={`label h-9 border px-5 transition-colors ${
                   mode === m ? "border-imagine bg-imagine !text-paper" : "-ml-px border-rule-strong bg-paper !text-ink hover:border-ink"
                 }`}>
                 {m === "pixels" ? s.pixels : s.summary}

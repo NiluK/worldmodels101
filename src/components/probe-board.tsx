@@ -292,7 +292,7 @@ export function ProbeBoard() {
         {([[read, toggleRead, read ? T.clear : T.read], [flipped, toggleFlip, flipped ? T.flipBack : T.flip]] as const).map(
           ([active, onClick, text]) => (
             <button key={text} type="button" onClick={onClick} aria-pressed={active}
-              className={`border px-4 py-1.5 transition-colors ${
+              className={`border px-5 py-2 transition-colors ${
                 active ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
               }`}>
               <span className={`label ${active ? "!text-paper" : ""}`}>{text}</span>

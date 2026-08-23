@@ -301,7 +301,7 @@ export function FireballPolicy() {
           <button
             type="button"
             onClick={train}
-            className={`label border px-3 py-1.5 transition-colors ${
+            className={`label border px-5 py-2 transition-colors ${
               trained ? "border-imagine bg-imagine !text-paper" : "border-rule-strong bg-paper !text-ink hover:border-ink"
             }`}
           >

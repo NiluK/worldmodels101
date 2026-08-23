@@ -257,13 +257,13 @@ export function TwoZeroLosses() {
 
       <div data-print-hide className="flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-rule px-5 py-4 md:px-8">
         <button type="button" onClick={revealPixel} aria-pressed={pixelOpen}
-          className={`border px-4 py-1.5 transition-colors ${
+          className={`border px-5 py-2 transition-colors ${
             pixelOpen ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
           }`}>
           <span className={`label whitespace-nowrap ${pixelOpen ? "!text-paper" : ""}`}>{T.btnPixel}</span>
         </button>
         <button type="button" onClick={revealEmbed} aria-pressed={embedOpen}
-          className={`border px-4 py-1.5 transition-colors ${
+          className={`border px-5 py-2 transition-colors ${
             embedOpen ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
           }`}>
           <span className={`label whitespace-nowrap ${embedOpen ? "!text-paper" : ""}`}>{T.btnEmbed}</span>
@@ -271,7 +271,7 @@ export function TwoZeroLosses() {
         {embedOpen && (
           <span className="flex items-center gap-3">
             <button type="button" onClick={probe} aria-pressed={probed}
-              className={`border px-4 py-1.5 transition-colors ${
+              className={`border px-5 py-2 transition-colors ${
                 probed ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
               }`}>
               <span className={`label whitespace-nowrap ${probed ? "!text-paper" : ""}`}>{T.btnProbe}</span>

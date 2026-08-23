@@ -336,7 +336,7 @@ export function UsuallyNotAlways() {
                 type="button"
                 aria-pressed={hold === h}
                 onClick={() => flip(h)}
-                className={`label h-9 border px-3 transition-colors ${
+                className={`label h-9 border px-5 transition-colors ${
                   hold === h
                     ? "border-imagine bg-imagine !text-paper"
                     : "border-rule-strong bg-paper !text-ink hover:border-ink"

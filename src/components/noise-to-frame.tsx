@@ -241,7 +241,7 @@ export function NoiseToFrame() {
 
       <div data-print-hide className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
         <button type="button" onClick={cleanUp}
-          className="label h-10 border border-imagine bg-imagine px-4 !text-paper transition-colors hover:opacity-90">
+          className="label h-10 border border-imagine bg-imagine px-5 !text-paper transition-colors hover:opacity-90">
           {t.cleanUp}
         </button>
         <button type="button" onClick={stepOnce} disabled={done}

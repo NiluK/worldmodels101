@@ -215,7 +215,7 @@ export function OnlyOneGetsTaken() {
                     setTaken(null);
                     setAdvanced(true);
                   }}
-                  className="label h-9 border border-imagine bg-imagine px-4 !text-paper transition-colors"
+                  className="label h-9 border border-imagine bg-imagine px-5 !text-paper transition-colors"
                 >
                   {s.next}
                 </button>

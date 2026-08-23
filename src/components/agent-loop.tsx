@@ -139,7 +139,7 @@ export function AgentLoop() {
             onPointerLeave={() => setHot(null)}
             onBlur={() => setHot(null)}
             onClick={() => setHot(hot === id ? null : id)}
-            className={`border px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.1em] transition-colors ${
+            className={`border px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] transition-colors ${
               hot === id
                 ? "border-imagine bg-imagine text-paper"
                 : "border-rule-strong text-ink-muted hover:border-ink hover:text-ink"

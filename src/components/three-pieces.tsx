@@ -517,7 +517,7 @@ export function ThreePieces() {
                 key={b.id}
                 onClick={() => setSelected(b.id)}
                 aria-pressed={selected === b.id}
-                className={`border px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] transition-colors ${
+                className={`border px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] transition-colors ${
                   selected === b.id
                     ? "border-imagine bg-imagine text-paper"
                     : "border-rule-strong bg-paper text-ink hover:border-ink"
@@ -542,7 +542,7 @@ export function ThreePieces() {
       <div data-print-hide className="flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
         <button
           onClick={step}
-          className="border border-rule-strong bg-paper px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink transition-colors hover:border-ink active:border-imagine active:bg-imagine active:text-paper"
+          className="border border-rule-strong bg-paper px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink transition-colors hover:border-ink active:border-imagine active:bg-imagine active:text-paper"
         >
           {s.step}
         </button>
@@ -586,7 +586,7 @@ export function ThreePieces() {
                   setChoice(b.id);
                   setSelected(b.id);
                 }}
-                className={`border px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] transition-colors ${
+                className={`border px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] transition-colors ${
                   choice === b.id
                     ? "border-imagine bg-imagine text-paper"
                     : "border-rule-strong bg-paper text-ink hover:border-ink"

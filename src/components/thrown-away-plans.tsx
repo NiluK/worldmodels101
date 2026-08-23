@@ -390,7 +390,7 @@ export function ThrownAwayPlans() {
         <button
           type="button"
           onClick={() => tryRuns(1)}
-          className="label h-9 border border-imagine bg-imagine px-4 !text-paper transition-colors"
+          className="label h-9 border border-imagine bg-imagine px-5 !text-paper transition-colors"
         >
           {T.tryOne}
         </button>

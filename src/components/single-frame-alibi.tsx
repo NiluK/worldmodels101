@@ -277,7 +277,7 @@ export function SingleFrameAlibi() {
                 type="button"
                 aria-pressed={hidden === v}
                 onClick={() => { sweep.stop(); setHidden(v as boolean); }}
-                className={`label whitespace-nowrap border px-3 py-1.5 transition-colors ${
+                className={`label whitespace-nowrap border px-5 py-2 transition-colors ${
                   hidden === v
                     ? "border-imagine bg-imagine !text-paper"
                     : "border-rule-strong bg-paper !text-ink hover:border-ink"

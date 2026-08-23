@@ -473,7 +473,7 @@ export function GapDecision() {
                   type="button"
                   onClick={() => onWho(w)}
                   aria-pressed={active}
-                  className={`label border px-3 py-1.5 transition-colors ${
+                  className={`label border px-5 py-2 transition-colors ${
                     active
                       ? "border-imagine bg-imagine !text-paper"
                       : "border-rule-strong bg-paper !text-ink hover:border-ink"
@@ -491,7 +491,7 @@ export function GapDecision() {
             type="button"
             onClick={go}
             disabled={stage === "playing"}
-            className="label border border-ink bg-ink px-5 py-1.5 !text-paper transition-colors hover:border-imagine hover:bg-imagine disabled:cursor-default disabled:opacity-60"
+            className="label border border-ink bg-ink px-5 py-2 !text-paper transition-colors hover:border-imagine hover:bg-imagine disabled:cursor-default disabled:opacity-60"
           >
             {T.go}
           </button>

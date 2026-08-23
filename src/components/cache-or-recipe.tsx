@@ -160,7 +160,7 @@ export function CacheOrRecipe() {
                   onClick={() => ask(v)}
                   aria-pressed={active}
                   aria-label={T.speedButton(v, isSeen)}
-                  className={`tnum flex items-center gap-2 border px-3 py-1 font-mono text-[0.8rem] transition-colors ${
+                  className={`tnum flex items-center gap-2 border px-5 py-1 font-mono text-[0.8rem] transition-colors ${
                     active
                       ? "border-imagine bg-imagine text-paper"
                       : "border-rule-strong bg-paper text-ink hover:border-ink"

@@ -254,7 +254,7 @@ export function ThreeNumbers() {
           <div className="flex flex-wrap gap-y-2">
             {(["three", "board"] as const).map((m) => (
               <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)}
-                className={`whitespace-nowrap border px-3 py-1 font-mono text-[0.72rem] uppercase tracking-[0.12em] ${
+                className={`whitespace-nowrap border px-5 py-1 font-mono text-[0.72rem] uppercase tracking-[0.12em] ${
                   mode === m ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
                 }`}>
                 {m === "three" ? t.three : t.board}

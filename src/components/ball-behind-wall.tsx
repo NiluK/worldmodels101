@@ -196,7 +196,7 @@ export function BallBehindWall() {
               type="button"
               aria-pressed={stochastic === on}
               onClick={() => { sweep.stop(); setStochastic(on); }}
-              className={`label border px-3 py-1.5 transition-colors ${
+              className={`label border px-5 py-2 transition-colors ${
                 stochastic === on ? "border-imagine bg-imagine !text-paper" : "border-rule-strong bg-paper !text-ink hover:border-ink"
               }`}
             >

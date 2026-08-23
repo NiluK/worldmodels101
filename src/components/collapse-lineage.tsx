@@ -341,7 +341,7 @@ export function CollapseLineage() {
                 type="button"
                 onClick={() => pick(m)}
                 aria-pressed={m === method}
-                className={`border px-3 py-1.5 transition-colors ${
+                className={`border px-5 py-2 transition-colors ${
                   m === method
                     ? "border-imagine bg-imagine text-paper"
                     : "border-rule-strong bg-paper text-ink hover:border-ink"

@@ -298,7 +298,7 @@ export function MemoriseOrRule() {
           type="button"
           onClick={() => setRevealed((r) => !r)}
           aria-pressed={revealed}
-          className={`border px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.1em] transition-colors ${
+          className={`border px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] transition-colors ${
             revealed ? "border-imagine bg-imagine text-paper" : "border-rule-strong bg-paper text-ink hover:border-ink"
           }`}
         >

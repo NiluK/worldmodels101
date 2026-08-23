@@ -337,7 +337,7 @@ export function WhatTheBlipFixes() {
               type="button"
               onClick={() => setTicks((n) => Math.min(MAX_TICKS, n + 1))}
               disabled={done}
-              className={`label h-10 border px-4 transition-colors ${
+              className={`label h-10 border px-5 transition-colors ${
                 done
                   ? "border-rule-strong bg-paper !text-ink opacity-60"
                   : "border-imagine bg-imagine !text-paper"

@@ -196,7 +196,7 @@ export function GradedByTheDream() {
         <button
           type="button"
           onClick={() => add("model")}
-          className="label h-9 border border-imagine bg-imagine px-4 !text-paper transition-colors"
+          className="label h-9 border border-imagine bg-imagine px-5 !text-paper transition-colors"
         >
           {T.train}
         </button>

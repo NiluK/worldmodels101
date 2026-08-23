@@ -373,7 +373,7 @@ export function WatchOrSteer() {
                 type="button"
                 aria-pressed={mode === m}
                 onClick={() => setModeTo(m)}
-                className={`label h-9 border px-3 transition-colors ${
+                className={`label h-9 border px-5 transition-colors ${
                   mode === m
                     ? "border-imagine bg-imagine !text-paper"
                     : "border-rule-strong bg-paper !text-ink hover:border-ink"

@@ -363,7 +363,7 @@ export function WhereTrustRunsOut() {
                 type="button"
                 aria-pressed={model === m.key}
                 onClick={() => setModel(m.key)}
-                className={`label h-9 border px-3 transition-colors ${
+                className={`label h-9 border px-5 transition-colors ${
                   model === m.key
                     ? "border-imagine bg-imagine !text-paper"
                     : "border-rule-strong bg-paper !text-ink-muted hover:border-ink hover:!text-ink"
