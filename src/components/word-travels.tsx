@@ -302,7 +302,7 @@ const UI: Record<string, {
     verdict: [
       "One tradition uses the phrase, and it means a learned transition function.",
       "Three papers in two years settle the reinforcement learning reading.",
-      "One reading, settled. Nobody else has reached for the word yet.",
+      "One reading, settled. Nobody else has reached for the term yet.",
       "Three readings now, not yet in conflict.",
       "Four, and the outputs have started to look alike.",
       "Four traditions, one phrase. From outside the term looks confused.",

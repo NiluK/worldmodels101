@@ -46,7 +46,7 @@ const ERAS_EN_NOTES = [
   "An encoder squeezes each frame to a short list of numbers, a recurrent dynamics model predicts where those numbers go next, and a small controller is trained almost entirely inside the model's own rollouts.",
   "The dynamics move fully into latent space and are learned straight from pixels. Planning happens there too, and Dreamer trains behaviour across long imagined trajectories rather than single steps.",
   "The prediction target moves off the pixels. Predict a summary of the next frame instead of the frame, and the decoder stops being necessary, which is exactly why the forecast can be thrown away and the features kept.",
-  "The decoder becomes the product. Scale it far enough and the output is no longer a predicted frame but an environment you can steer. That is where the word arrived at its newest and loudest meaning.",
+  "The decoder becomes the product. Scale it far enough and the output is no longer a predicted frame but an environment you can steer. That is where the term arrived at its newest and loudest meaning.",
 ];
 
 /** Era copy per locale. Labels are dictionary keys so the diagram stays in step. */
@@ -127,7 +127,7 @@ const ERAS: Era[] = [
     on: ["obs", "enc", "lat", "dyn", "dec", "pred"],
     labels: { dec: "arch.decoder", pred: "arch.aWorld" },
     focus: ["dec", "pred"],
-    note: "The decoder becomes the product. Scale it far enough and the output is no longer a predicted frame but an environment you can steer. That is where the word arrived at its newest and loudest meaning.",
+    note: "The decoder becomes the product. Scale it far enough and the output is no longer a predicted frame but an environment you can steer. That is where the term arrived at its newest and loudest meaning.",
   },
 ];
 
