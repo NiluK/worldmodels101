@@ -198,15 +198,27 @@ Representations* that the board was there inside it anyway.
 </Figure>
 
 A probe <Gloss>a small classifier trained to read one specific fact out of a
-network's activations</Gloss> could read it out. When they changed that inner
-board by hand, the model's next moves changed too.
+network's activations</Gloss> could read it out, and when they changed that
+inner board by hand, the model's next moves changed too. Neel Nanda and
+colleagues (2023) followed up in *Othello-GPT has a linear emergent world
+representation*: the board was there plainly enough for the simplest probe to
+read, once you asked for "mine" and "theirs" instead of black and white.
 
-Neel Nanda and colleagues (2023) followed up, in a paper called *Othello-GPT
-has a linear emergent world representation*: the board was there in a form
-plain enough for the simplest probe to read, once you asked for "mine" and
-"theirs" instead of black and white. Nobody handed the model a function called
-`world_model`. The phrase here is a claim about what grew inside another
-system, so it is a finding rather than an interface.
+Wes Gurnee and Max Tegmark widened the claim in 2023 with *Language Models
+Represent Space and Time*. Probes on a large language model recovered
+something close to latitude and longitude for places, and dates for events.
+Nobody handed either model a function called `world_model`. This is where the
+argument over the term gets loudest, because a claim like that is a finding
+about what grew inside another system rather than an interface you can run.
+
+<MarginNote>
+Jim Fan of NVIDIA pushed back on the space and time paper at the time: a probe
+that recovers coordinates is doing classification, and you cannot make an
+intervention against it or close a decision loop around it. The Othello work is
+the stronger case, because flipping a square in the recovered board changed
+what the model played next. The question to ask of any of these results is
+which of the two you are being shown.
+</MarginNote>
 
 ## One equation, sixty years
 

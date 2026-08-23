@@ -16,6 +16,7 @@ const SOURCES_CH1 = [
   { t: "Cosmos", a: "NVIDIA", u: "https://www.nvidia.com/en-us/ai/cosmos/", n: "A boundary case: predictive video worlds beside explicit simulation." },
   { t: "Emergent World Representations", a: "Li et al., 2022", u: "https://arxiv.org/abs/2210.13382", n: "Board state found and causally manipulated inside Othello-GPT." },
   { t: "Othello-GPT has a linear emergent world representation", a: "Nanda et al., 2023", u: "https://arxiv.org/abs/2309.00941", n: "The follow-up that sharpened the finding." },
+  { t: "Language Models Represent Space and Time", a: "Gurnee & Tegmark, 2023", u: "https://arxiv.org/abs/2310.02207", n: "Probes recovering place and date from a language model, and the paper the argument over this sense of the term formed around." },
 ];
 
 const SOURCES_CH2 = [
@@ -76,6 +77,8 @@ const NOTES_ZH: Record<string, string> = {
   "https://www.nvidia.com/en-us/ai/cosmos/": "一个边界案例：预测式视频世界与显式仿真并置。",
   "https://arxiv.org/abs/2210.13382": "在 Othello-GPT 内部找到棋盘状态，并且能对它做因果干预。",
   "https://arxiv.org/abs/2309.00941": "把这个发现进一步锐化的后续工作。",
+  "https://arxiv.org/abs/2310.02207":
+    "探针从一个大语言模型里读出了地点和日期，关于这一层意思的争论就是围绕这篇论文形成的。",
   "https://arxiv.org/abs/2010.02193": "同一个循环，做到了它开始打败那些直接从环境里学的智能体的规模。",
   "https://arxiv.org/abs/1703.06907": "同一个想法从机器人学那边过来：让模拟器的变化比现实还大，于是没有任何东西能依赖它的某一个版本。",
   "https://arxiv.org/abs/1910.07113": "把随机化推到足以把策略从模拟搬到真实硬件上，以及对这件事代价的一份诚实交代。",
