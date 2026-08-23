@@ -26,7 +26,7 @@ const RESULTS = [
   },
   {
     definition: "simulator",
-    what: "A 3-D environment you can load straight into Blender.",
+    what: "A 3D environment you can load straight into Blender.",
     href: "https://www.worldlabs.ai/blog/marble-world-model",
     cite: "Marble · World Labs",
   },

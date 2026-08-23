@@ -93,7 +93,7 @@ export default async function Home() {
               Ask four labs what a world model is and you get four different
               machines that do not fit together. Each has its own history.
               Genie, from Google DeepMind, generates video you steer with the
-              arrow keys. Marble, from World Labs, builds 3-D geometry a robot
+              arrow keys. Marble, from World Labs, builds 3D geometry a robot
               can be trained inside. Dreamer, from Danijar Hafner&rsquo;s
               group, learns a small simulator and plans against it. V-JEPA,
               from Meta, predicts embeddings and throws the prediction away.

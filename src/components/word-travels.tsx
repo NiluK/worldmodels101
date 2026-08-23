@@ -128,7 +128,7 @@ const MS_TEXT: Record<string, Record<string, MsText>> = {
     },
     cosmos: {
       name: "Cosmos", short: "Cosmos", who: "NVIDIA, January 2025",
-      what: "Open-sourced, physically-aware video built as training data for robots and self-driving cars. The 3-D simulator, Omniverse, is a different product.",
+      what: "Open-sourced, physically-aware video built as training data for robots and self-driving cars. The 3D simulator, Omniverse, is a different product.",
       meant: "Video with physics in it. NVIDIA calls the video part generative video.",
       hands: "Pixels.",
     },
@@ -152,7 +152,7 @@ const MS_TEXT: Record<string, Record<string, MsText>> = {
     },
     marble: {
       name: "Marble", short: "Marble", who: "World Labs, November 2025",
-      what: "Takes text, an image or a rough 3-D layout and hands back Gaussian splats for the look and triangle meshes for the structure, collider meshes included.",
+      what: "Takes text, an image or a rough 3D layout and hands back Gaussian splats for the look and triangle meshes for the structure, collider meshes included.",
       meant: "Structure you can query: a world another program can open.",
       hands: "Geometry.",
     },
