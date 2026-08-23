@@ -6,6 +6,7 @@ import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
 import { useSweep } from "./use-sweep";
 import { PlayButton } from "./play-button";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Two bills for the same planning job.
@@ -138,7 +139,7 @@ export function PixelsOrLatent() {
   const sweep = useSweep({ value: n, min: 1, max: MAX_SEQ, step: 1, setValue: setN });
   const still = useReducedMotion();
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(600);
   const k = compact ? 1.65 : 1;
   const clipId = useId();

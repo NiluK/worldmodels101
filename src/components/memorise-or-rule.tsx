@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useId, useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Memorising against finding the rule.
@@ -155,7 +156,7 @@ export function MemoriseOrRule() {
   const clipId = useId();
   const { ref, compact } = useCompact(560);
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const k = compact ? 1.65 : 1;
   const [n, setN] = useState(24);
   const [revealed, setRevealed] = useState(false);

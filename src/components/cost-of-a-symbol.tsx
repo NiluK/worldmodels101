@@ -4,6 +4,7 @@ import { useReducedMotion } from "motion/react";
 import { useId, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Shannon's price list, made draggable.
@@ -136,7 +137,7 @@ export function CostOfASymbol() {
   const [i, setI] = useState(HALF);
   const sliderId = useId();
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
   const L = layout(compact);

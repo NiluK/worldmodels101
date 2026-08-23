@@ -1,21 +1,42 @@
-export const LOCALES = ["en", "zh"] as const;
+export const LOCALES = ["en", "es", "fr", "de", "pt", "hi", "ta", "zh"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 
+/** Every locale except the default, which lives at the root. */
+export const PREFIXED_LOCALES = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
+
 export const LOCALE_META: Record<Locale, { label: string; htmlLang: string; href: string }> = {
   en: { label: "English", htmlLang: "en", href: "/" },
+  es: { label: "Español", htmlLang: "es", href: "/es" },
+  fr: { label: "Français", htmlLang: "fr", href: "/fr" },
+  de: { label: "Deutsch", htmlLang: "de", href: "/de" },
+  pt: { label: "Português", htmlLang: "pt", href: "/pt" },
+  hi: { label: "हिन्दी", htmlLang: "hi", href: "/hi" },
+  ta: { label: "தமிழ்", htmlLang: "ta", href: "/ta" },
   zh: { label: "简体中文", htmlLang: "zh-Hans", href: "/zh" },
 };
+
+export function isLocale(value: string): value is Locale {
+  return (LOCALES as readonly string[]).includes(value);
+}
 
 /** Prefix a path for a locale. English stays at the root so live URLs do not move. */
 export function localePath(locale: Locale, path = "/") {
   const clean = path.startsWith("/") ? path : `/${path}`;
-  if (locale === "en") return clean;
-  return clean === "/" ? "/zh" : `/zh${clean}`;
+  if (locale === DEFAULT_LOCALE) return clean;
+  return clean === "/" ? `/${locale}` : `/${locale}${clean}`;
 }
 
 export function localeFromPath(pathname: string): Locale {
-  return pathname === "/zh" || pathname.startsWith("/zh/") ? "zh" : "en";
+  const first = pathname.split("/")[1] ?? "";
+  return isLocale(first) && first !== DEFAULT_LOCALE ? first : DEFAULT_LOCALE;
+}
+
+/** Strip the locale prefix, so /fr/chapters/x and /chapters/x both give /chapters/x. */
+export function barePath(pathname: string) {
+  const locale = localeFromPath(pathname);
+  if (locale === DEFAULT_LOCALE) return pathname || "/";
+  return pathname.replace(new RegExp(`^/${locale}`), "") || "/";
 }
 
 /**
@@ -50,7 +71,7 @@ const en: Dict = {
 
   "site.tagline": "A free interactive primer",
   "site.deck":
-    "The phrase means at least five different things, and the people using it rarely say which. Start with the map, then the machinery.",
+    "Since 2018, \u201cworld model\u201d has meant at least five different machines, and the people saying it rarely tell you which. This primer pulls the five apart, then shows how each one works and where it came from.",
   "site.begin": "Begin Chapter 01",
   "site.meta": "{n} chapters · {time} · no signup",
   "home.contents": "Contents",
@@ -582,7 +603,7 @@ const zh: Dict = {
 
   "site.tagline": "免费的交互式入门读物",
   "site.deck":
-    "人们用「世界模型」指至少五种不同的东西。这份读物先把它们分开，再讲每一种是怎么工作的。",
+    "自 2018 年起，「世界模型」这个词至少指过五种不同的机器，而说的人很少告诉你是哪一种。这份读物先把这五种分开，再讲每一种怎么工作、从哪里来。",
   "site.begin": "从第 01 章开始",
   "site.meta": "共 {n} 章 · {time} · 无需注册",
   "home.contents": "目录",
@@ -1101,10 +1122,15 @@ const zh: Dict = {
   "foot.source": "源码",
 };
 
-const DICTS: Record<Locale, Dict> = { en, zh };
+/**
+ * Locales are added to LOCALES before their dictionary is complete, so this is
+ * partial on purpose: translate() falls back to English key by key, which lets
+ * a half-translated language ship without holes in the chrome.
+ */
+const DICTS: Partial<Record<Locale, Dict>> = { en, zh };
 
 export function translate(locale: Locale, key: string, vars?: Record<string, string | number>) {
-  const raw = DICTS[locale][key] ?? DICTS.en[key] ?? key;
+  const raw = DICTS[locale]?.[key] ?? en[key] ?? key;
   if (!vars) return raw;
   return Object.entries(vars).reduce(
     (s, [k, v]) => s.replaceAll(`{${k}}`, String(v)),

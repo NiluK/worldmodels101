@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Latent actions, in miniature.
@@ -172,7 +173,7 @@ function Pair({ c, b, kind }: { c: number; b: number[]; kind: Kind }) {
 
 export function LatentActions() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.65 : 1;

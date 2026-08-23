@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useSweep } from "./use-sweep";
 import { PlayButton } from "./play-button";
-import type { Locale } from "@/lib/i18n";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * The single-frame alibi, made visible.
@@ -65,8 +65,7 @@ function chairAt(step: number): Chair {
 const SAME_THRESHOLD = 8;
 const sameChair = (a: Chair, b: Chair) => Math.abs(a.backH - b.backH) < SAME_THRESHOLD;
 
-const TEXT: Record<
-  Locale,
+const TEXT: LocaleText<
   {
     horizon: string;
     where: string;
@@ -208,7 +207,7 @@ function ChairFrame({ chair, step, label, compact }: { chair: Chair; step: numbe
 
 export function SingleFrameAlibi() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(560);
   const [horizon, setHorizon] = useState(MAX_STEP);
   const [hidden, setHidden] = useState(true);

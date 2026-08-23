@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * MuZero's model answers with three numbers, never with a board.
@@ -126,7 +127,7 @@ export function ThreeNumbers() {
   const [mode, setMode] = useState<"three" | "board">("three");
   const [step, setStep] = useState(0);
   const locale = useLocale();
-  const t = TEXT[locale] ?? TEXT.en;
+  const t = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.65 : 1;

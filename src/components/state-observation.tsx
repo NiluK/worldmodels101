@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * State against observation.
@@ -93,7 +94,7 @@ function ballOf(step: number) {
 
 export function StateObservation() {
   const locale = useLocale();
-  const s = TEXT[locale] ?? TEXT.en;
+  const s = pickText(TEXT, locale);
   const still = useReducedMotion();
   /** stack the table under the drawing below 720px; enlarge SVG type below 480px */
   const { ref, compact: stack } = useCompact(720);

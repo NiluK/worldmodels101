@@ -6,6 +6,7 @@ import {
 } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * A toy Renderer.
@@ -250,7 +251,7 @@ type Snap = {
 export function GeneratedLandscape({ mode = "test" }: { mode?: "hero" | "test" }) {
   const hero = mode === "hero";
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref: rootRef, compact } = useCompact(640);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);

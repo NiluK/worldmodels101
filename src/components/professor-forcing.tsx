@@ -4,7 +4,7 @@ import { motion, useReducedMotion, type Transition } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Professor Forcing, drawn as two trails of hidden states and a judge.
@@ -22,7 +22,7 @@ type Text = {
   v0: string; v1: string; v2: string; aria: string;
 };
 
-const TEXT: Record<Locale, Text> = {
+const TEXT: LocaleText<Text> = {
   en: {
     forced: "teacher-forced run",
     free: "free run",
@@ -84,7 +84,7 @@ export function ProfessorForcing() {
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.65 : 1;
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const [rounds, setRounds] = useState(0);
   const [judging, setJudging] = useState(false);
   const timer = useRef<number | null>(null);

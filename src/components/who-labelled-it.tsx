@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Who labelled it.
@@ -41,7 +41,7 @@ type Strings = {
   aria: (side: string, n: string) => string;
 };
 
-const TEXT: Record<Locale, Strings> = {
+const TEXT: LocaleText<Strings> = {
   en: {
     person: "Labelled by a person",
     recording: "Labelled by the recording",
@@ -233,7 +233,7 @@ export function WhoLabelledIt() {
   const [level, setLevel] = useState(3);
   const [side, setSide] = useState<Side>("person");
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(560);
 
   const amount = T.amounts[level - 1];

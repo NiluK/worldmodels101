@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Four questions, put to three made-up launch posts.
@@ -205,7 +206,7 @@ const NONE_PRESSED: Record<Q, boolean> = { output: false, actions: false, horizo
 
 export function FourQuestions() {
   const locale = useLocale();
-  const t = TEXT[locale] ?? TEXT.en;
+  const t = pickText(TEXT, locale);
   const { ref, compact } = useCompact(600);
   const [postIdx, setPostIdx] = useState(0);
   const [pressed, setPressed] = useState<Record<Q, boolean>>(NONE_PRESSED);

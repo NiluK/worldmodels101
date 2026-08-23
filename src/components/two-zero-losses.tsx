@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Two training runs, both ending at a loss of zero.
@@ -28,7 +28,7 @@ type Text = {
   ariaPixel: string; ariaEmbed: string; ariaHidden: string; ariaProbed: string;
 };
 
-const TEXT: Record<Locale, Text> = {
+const TEXT: LocaleText<Text> = {
   en: {
     pixel: "pixel loss",
     embed: "embedding loss",
@@ -139,7 +139,7 @@ export function TwoZeroLosses() {
   const { ref, compact } = useCompact(640);
   const k = compact ? 1.65 : 1;
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
 
   const [pixelOpen, setPixelOpen] = useState(false);
   const [embedOpen, setEmbedOpen] = useState(false);

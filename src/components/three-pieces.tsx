@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 
@@ -147,7 +147,7 @@ type Strings = {
   aria: (p: { mode: string; real: number; dream: number; piece: string }) => string;
 };
 
-const TEXT: Record<Locale, Strings> = {
+const TEXT: LocaleText<Strings> = {
   en: {
     game: "Real game",
     enc: ["Encoder"],
@@ -282,7 +282,7 @@ const SEQ: Record<"real" | "dream", Stage[]> = {
 
 export function ThreePieces() {
   const locale = useLocale();
-  const s = TEXT[locale] ?? TEXT.en;
+  const s = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(520);
   const k = compact ? 1.65 : 1;

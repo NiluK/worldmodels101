@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useId, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Teacher forcing, drawn as the arrows that feed each step.
@@ -24,7 +24,7 @@ type Text = {
   ariaTrain: string; ariaUse: string; ariaStepped: string;
 };
 
-const TEXT: Record<Locale, Text> = {
+const TEXT: LocaleText<Text> = {
   en: {
     truthRow: "recorded truth",
     modelRow: ["the model's", "output"],
@@ -94,7 +94,7 @@ export function TeacherForcingLoop() {
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.65 : 1;
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const uid = useId();
   const [inUse, setInUse] = useState(false);
   const [t, setT] = useState(0);

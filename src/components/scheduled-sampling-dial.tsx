@@ -4,7 +4,7 @@ import { useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Scheduled sampling, as a dial.
@@ -28,7 +28,7 @@ const N = 10;
 
 type Run = { round: number; live: boolean };
 
-const TEXT: Record<Locale, {
+const TEXT: LocaleText<{
   inputs: string; outputs: string; fromTruth: string; fromModel: string; truthLine: string;
   share: string; run: string; next: string; reset: string;
   round: (n: number, of: number) => string;
@@ -106,7 +106,7 @@ function layout(compact: boolean) {
 
 export function ScheduledSamplingDial() {
   const locale = useLocale();
-  const s = TEXT[locale] ?? TEXT.en;
+  const s = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(600);
   const L = layout(compact);

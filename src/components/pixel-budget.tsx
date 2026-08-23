@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * The same squeeze as Figure 4.2, with the rigging taken off.
@@ -89,7 +90,7 @@ const TEXT = {
 
 export function PixelBudget() {
   const locale = useLocale();
-  const s = TEXT[locale] ?? TEXT.en;
+  const s = pickText(TEXT, locale);
   const { ref, compact } = useCompact(520);
   const hatch = useId();
   const [k, setK] = useState(0);

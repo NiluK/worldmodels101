@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * The leaf problem, as a ledger.
@@ -232,7 +233,7 @@ const round5 = (x: number) => Math.round(x / 5) * 5;
 
 export function LeafLedger() {
   const locale = useLocale();
-  const T = TEXT[locale];
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(720);
   const [tick, setTick] = useState(1);

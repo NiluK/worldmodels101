@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Room, ROOM_W, ROOM_H } from "./latent-room";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Two situations that lead to different outcomes, landing on one point.
@@ -32,7 +32,7 @@ type Text = {
   ariaNone: string; ariaSame: string; ariaApart: string; ariaOne: string;
 };
 
-const TEXT: Record<Locale, Text> = {
+const TEXT: LocaleText<Text> = {
   en: {
     sceneA: "corridor A", sceneB: "corridor B", pad: "where it lands",
     redraw: "redraw", redrawFine: "redraw: fine",
@@ -101,7 +101,7 @@ function Corridor({ scene, arrow }: { scene: Scene; arrow: boolean }) {
 
 export function SamePointTwoFutures() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(640);
   const still = useReducedMotion();
   const [pressed, setPressed] = useState<Scene | null>(null);

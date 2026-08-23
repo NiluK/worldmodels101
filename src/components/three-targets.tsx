@@ -3,6 +3,7 @@
 import { useReducedMotion } from "motion/react";
 import { useState } from "react";
 import type { Locale } from "@/lib/i18n";
+import { pickText } from "@/lib/locale-text";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 
@@ -67,7 +68,7 @@ const TEXT = {
     aria: (t: string, m: string, v: string) =>
       `预测循环只画一次：看，猜下一个${t}，比对，调整。得到的是${m}。${v}`,
   },
-} satisfies Record<Locale, unknown>;
+} satisfies Partial<Record<Locale, unknown>>;
 
 /* The four boxes, wide and compact share them; only the panel re-flows. */
 const W = 900;
@@ -88,7 +89,7 @@ function cellFill(r: number, c: number) {
 }
 
 export function ThreeTargets() {
-  const T = TEXT[useLocale()];
+  const T = pickText(TEXT, useLocale());
   const still = useReducedMotion();
   const { ref, compact } = useCompact(620);
   const k = compact ? 1.65 : 1;

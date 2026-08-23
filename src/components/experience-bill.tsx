@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * The bill for experience.
@@ -100,7 +100,7 @@ type Strings = {
   aria: (bill: string, steps: string, mf: string, mb: string, verdict: string) => string;
 };
 
-const TEXT: Record<Locale, Strings> = {
+const TEXT: LocaleText<Strings> = {
   en: {
     cost: "what one step costs",
     stops: [
@@ -201,7 +201,7 @@ function duration(sec: number, s: Strings) {
 export function ExperienceBill() {
   const still = useReducedMotion();
   const locale = useLocale();
-  const s = TEXT[locale] ?? TEXT.en;
+  const s = pickText(TEXT, locale);
   const { ref, compact } = useCompact(560);
 
   const [cost, setCost] = useState(2);

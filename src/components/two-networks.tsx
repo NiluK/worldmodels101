@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * The 1990 shape, made concrete.
@@ -306,7 +306,7 @@ type Text = {
   aria: (you: string, goal: string, lap: number) => string;
 };
 
-const TEXT: Record<Locale, Text> = {
+const TEXT: LocaleText<Text> = {
   en: {
     modePredict: "Predict before you act",
     modeEstimate: "Estimate only",
@@ -540,7 +540,7 @@ const PATCH_LABEL_AT: Record<Patch, Cell> = { ice: [7, 4], drift: [3, 4], lift: 
 
 export function TwoNetworks() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(620);
   const k = compact ? 1.65 : 1;
 

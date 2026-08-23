@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Two stories about where the plane is, and the one that replaces them.
@@ -77,7 +78,7 @@ const INITIAL = { step: 0, origin: 0, mp: 38, mr: 62, sp: 8, sr: 8 };
 
 export function TwoStories() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
   // A narrower viewBox when compact, so the curves and type keep their size.

@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Domain randomisation, on one axis.
@@ -42,7 +42,7 @@ type Strings = {
   aria: (lo: number, hi: number, trained: { a: number; b: number; inside: boolean } | null) => string;
 };
 
-const TEXT: Record<Locale, Strings> = {
+const TEXT: LocaleText<Strings> = {
   en: {
     sim: "simulator",
     real: "real world",
@@ -163,7 +163,7 @@ function Scene({ x, v, stroke }: { x: number; v: number; stroke: string }) {
 
 export function RandomisedSimulator() {
   const locale = useLocale();
-  const T = TEXT[locale];
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(520);
   const k = compact ? 1.65 : 1;

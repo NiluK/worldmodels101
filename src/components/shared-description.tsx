@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * The same junction as PixelBlur, described rather than drawn.
@@ -57,7 +57,7 @@ type Strings = {
   aria: (desc: boolean, drop: boolean) => string;
 };
 
-const TEXT: Record<Locale, Strings> = {
+const TEXT: LocaleText<Strings> = {
   en: {
     left: "turns left",
     right: "turns right",
@@ -227,7 +227,7 @@ function Switch({ on, onToggle, label }: { on: boolean; onToggle: () => void; la
 
 export function SharedDescription() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   /**
    * Three tiers. Wide: the three panels in a row, as PixelBlur. Mid: the two

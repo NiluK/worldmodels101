@@ -4,6 +4,7 @@ import { useId, useRef, useState } from "react";
 import { Room, ROOM_W, ROOM_H } from "./latent-room";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Higgins's test, with the beta dial added.
@@ -75,7 +76,7 @@ const angleFor = (p: number) => (Math.PI / 4) * (1 - p / MAX_P) ** 2;
 
 export function NameableAxes() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref } = useCompact(520);
   const blurId = useId();
   const padRef = useRef<HTMLDivElement>(null);

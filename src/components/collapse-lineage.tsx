@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Three shapes of fix for the pile-up, run on one small cloud of descriptions.
@@ -182,7 +183,7 @@ const TEXT: Record<string, {
 
 export function CollapseLineage() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(520);
   const k = compact ? 1.65 : 1;

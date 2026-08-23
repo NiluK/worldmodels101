@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Pessimism as a charge on the model's score.
@@ -57,7 +57,7 @@ const argmaxOf = (f: (a: number) => number) => {
 /** the strip along the floor, closed back along the axis so it can be filled */
 const STRIP_PATH = `${curve(unsure, (v) => PY(0) - v * STRIP)} L ${PX(1).toFixed(1)} ${PY(0)} L ${PX(0).toFixed(1)} ${PY(0)} Z`;
 
-const TEXT: Record<Locale, {
+const TEXT: LocaleText<{
   penalty: string; axis: string; unsure: string; world: string; raw: string; docked: string;
   favourite: string; inWorld: string; v0: string; vSome: string; vMoved: string; vHigh: string;
   rFav: string; rModel: string; rWorld: string; aria: (p: string, a: string) => string;
@@ -104,7 +104,7 @@ const TEXT: Record<Locale, {
 
 export function UncertaintyPenalty() {
   const locale = useLocale();
-  const s = TEXT[locale] ?? TEXT.en;
+  const s = pickText(TEXT, locale);
   const { ref, compact } = useCompact();
   const fs = compact ? 17 : 10;
   const [p, setP] = useState(0);

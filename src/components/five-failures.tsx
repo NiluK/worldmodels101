@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * The five failures, laid out before the chapter starts.
@@ -46,7 +46,7 @@ type Strings = {
   ariaNone: string;
 };
 
-const TEXT: Record<Locale, Strings> = {
+const TEXT: LocaleText<Strings> = {
   en: {
     name: {
       persistence: "Persistence",
@@ -149,7 +149,7 @@ const TEXT: Record<Locale, Strings> = {
 
 export function FiveFailures() {
   const locale = useLocale();
-  const s = TEXT[locale] ?? TEXT.en;
+  const s = pickText(TEXT, locale);
   const [sel, setSel] = useState<Id | null>(null);
   const { ref, compact } = useCompact(560);
 

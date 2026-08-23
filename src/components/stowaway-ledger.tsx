@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * The stowaways, written up as a ledger.
@@ -148,7 +149,7 @@ export function StowawayLedger() {
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const [open, setOpen] = useState<boolean[]>(() => Array(ROWS).fill(false));
   const timers = useRef<number[]>([]);
 

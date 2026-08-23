@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Where the computation happens.
@@ -194,7 +195,7 @@ function World({
 
 export function PlanOrLearn() {
   const locale = useLocale();
-  const s = TEXT[locale] ?? TEXT.en;
+  const s = pickText(TEXT, locale);
   const still = useReducedMotion();
   // stacked: the two panels no longer fit side by side. tiny: one panel is so
   // narrow that the SVG type has to be enlarged to stay legible.

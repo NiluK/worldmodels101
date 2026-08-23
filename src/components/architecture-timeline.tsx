@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useT, useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * One architecture, assembled across sixty years.
@@ -152,7 +153,7 @@ export function ArchitectureTimeline() {
   const t = useT();
   const locale = useLocale();
   const era = ERAS[i];
-  const eraText = ERA_TEXT[locale]?.[era.when] ?? ERA_TEXT.en[era.when];
+  const eraText = pickText(ERA_TEXT, locale)?.[era.when] ?? ERA_TEXT.en[era.when];
   const on = (id: NodeId) => era.on.includes(id);
   const hot = (id: NodeId) => era.focus.includes(id);
 
@@ -239,7 +240,7 @@ export function ArchitectureTimeline() {
           >
             <span className={`label tnum block ${idx === i ? "!text-imagine" : ""}`}>{e.when}</span>
             <span className={`mt-1 block font-mono text-[0.7rem] leading-snug ${idx === i ? "text-ink" : "text-ink-muted"}`}>
-              {(ERA_TEXT[locale] ?? ERA_TEXT.en)[e.when]?.who ?? e.who}
+              {(pickText(ERA_TEXT, locale))[e.when]?.who ?? e.who}
             </span>
           </button>
         ))}

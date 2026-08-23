@@ -6,6 +6,7 @@ import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 import { PlayButton } from "./play-button";
 import { useSweep } from "./use-sweep";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * Short branches from many real states, or one long branch from one.
@@ -111,7 +112,7 @@ export function BranchedRollouts() {
   const [every, setEvery] = useState(true);
   const sweep = useSweep({ value: len, min: 1, max: MAX_LEN, step: 1, setValue: setLen });
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.65 : 1;

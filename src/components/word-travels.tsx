@@ -5,6 +5,7 @@ import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
 import { useSweep } from "./use-sweep";
 import { PlayButton } from "./play-button";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * How one phrase was reached from four directions.
@@ -381,8 +382,8 @@ function geometry(compact: boolean) {
 
 export function WordTravels() {
   const locale = useLocale();
-  const ui = UI[locale] ?? UI.en;
-  const text = MS_TEXT[locale] ?? MS_TEXT.en;
+  const ui = pickText(UI, locale);
+  const text = pickText(MS_TEXT, locale);
   const { ref, compact } = useCompact(620);
   const k = compact ? 1.65 : 1;
   const g = useMemo(() => geometry(compact), [compact]);

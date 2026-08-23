@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * The two halves, drawn apart.
@@ -85,7 +86,7 @@ const TEXT = {
 
 export function ModelAndPolicy() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.65 : 1;
 

@@ -4,6 +4,7 @@ import { useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
+import { pickText } from "@/lib/locale-text";
 
 /**
  * The junction. Chapter 2's opening figure.
@@ -243,7 +244,7 @@ function Car({ x, y, a, fill }: { x: number; y: number; a: number; fill: string 
 
 export function GapDecision() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(560);
   const k = compact ? 1.45 : 1;
   const { W, SIDE_L, SIDE_R, YOU_X, JX, SCALE } = compact ? GEO_COMPACT : GEO_WIDE;

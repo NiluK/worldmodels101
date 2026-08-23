@@ -4,7 +4,7 @@ import { useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Three papers from 1990 and 1991, drawn as three small loops.
@@ -113,7 +113,7 @@ type Text = {
   aria: (who: string, user: string) => string;
 };
 
-const TEXT: Record<Locale, Text> = {
+const TEXT: LocaleText<Text> = {
   en: {
     who: {
       schmidhuber: "Jürgen Schmidhuber",
@@ -227,7 +227,7 @@ function Schematic({ card, T, shared, big, k }: { card: Card; T: Text; shared: b
 
 export function ThreePapers1990() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const { ref, compact } = useCompact(720);
   const still = useReducedMotion();
   const [picked, setPicked] = useState<Card["id"] | null>(null);

@@ -4,7 +4,7 @@ import { useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { useCompact } from "./use-compact";
 import { useLocale } from "./locale-provider";
-import type { Locale } from "@/lib/i18n";
+import { pickText, type LocaleText } from "@/lib/locale-text";
 
 /**
  * Othello-GPT and the probe.
@@ -28,7 +28,7 @@ type Text = {
   blank: string; wasRead: string; oneFlipped: string; probeBW: string; probeMT: string; aria: string;
 };
 
-const TEXT: Record<Locale, Text> = {
+const TEXT: LocaleText<Text> = {
   en: {
     moves: "moves so far",
     legal: "next legal moves, white",
@@ -164,7 +164,7 @@ function layout(compact: boolean) {
 
 export function ProbeBoard() {
   const locale = useLocale();
-  const T = TEXT[locale] ?? TEXT.en;
+  const T = pickText(TEXT, locale);
   const still = useReducedMotion();
   const { ref, compact } = useCompact(560);
   const [read, setRead] = useState(false);
