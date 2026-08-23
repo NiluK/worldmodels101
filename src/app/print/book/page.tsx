@@ -41,20 +41,31 @@ export default function Book() {
         <h2 className="display text-[clamp(2rem,6vw,3.5rem)] leading-[0.95]">About the author</h2>
         <div className="prose mt-10">
           <p>
-            {AUTHOR} wrote and built World Models 101: the text, the figures
-            and the site that runs them.
+            {AUTHOR} is a software engineer and founder who has spent a decade
+            building interactive entertainment products. In 2014 he founded
+            Paravine, an esports news and statistics platform that grew to
+            800,000 monthly readers and was acquired by CBS Interactive as the
+            foundation of its esports vertical, onGamers. He later founded and
+            led Nucanon, an AI gaming company whose tools generated
+            canon-consistent story, lore and worlds for game studios, backed by
+            Antler, Skalata, Futureverse and Jason Calacanis and acquired by the
+            Indian gaming platform Zupee.
           </p>
           <p>
-            The book is free and stays free. The interactive version lives at
-            worldmodels101.com, where every figure in these pages can be
-            pressed and dragged. The source, including every figure, is at
-            github.com/{REPO}, under CC BY-SA 4.0: reuse it, with credit, and
-            share what you make under the same terms.
+            In between he launched SBS News&apos;s first live blog platform;
+            helped rebuild the Qantas Rewards Store; led the frontend at
+            Gamurs, the publisher of Dot Esports; and rebuilt Futureverse&apos;s
+            core blockchain in Rust.
           </p>
           <p>
-            Parts of this are certainly wrong, because the field moves faster
-            than the writing. Corrections are welcome and credited; the About
-            page on the site says how to send one.
+            World Models 101 is his attempt to lay the field out plainly, in
+            the order he wishes he had met it. The book is free and stays free.
+            The interactive version lives at worldmodels101.com, where every
+            figure in these pages can be pressed and dragged. The source,
+            including every figure, is at github.com/{REPO}, under CC BY-SA
+            4.0: reuse it, with credit, and share what you make under the same
+            terms. Corrections are welcome and credited; the About page on the
+            site says how to send one.
           </p>
           <p className="font-mono text-[0.85rem] text-ink-muted">
             {AUTHOR_URL}
