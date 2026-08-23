@@ -4,6 +4,8 @@ import { useId, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { useLocale } from "./locale-provider";
 import { useCompact } from "./use-compact";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * Two bills for the same planning job.
@@ -133,6 +135,7 @@ function CodeTile({ x, y, step, opacity = 1 }: { x: number; y: number; step: num
 export function PixelsOrLatent() {
   const [n, setN] = useState(10);
   const [showChosen, setShowChosen] = useState(true);
+  const sweep = useSweep({ value: n, min: 1, max: MAX_SEQ, step: 1, setValue: setN });
   const still = useReducedMotion();
   const locale = useLocale();
   const T = TEXT[locale] ?? TEXT.en;
@@ -304,11 +307,12 @@ export function PixelsOrLatent() {
             min={1}
             max={MAX_SEQ}
             value={n}
-            onChange={(e) => setN(Number(e.target.value))}
+            onChange={(e) => { sweep.stop(); setN(Number(e.target.value)); }}
             className="h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]"
           />
           <span className="label tnum w-10 text-right !text-ink">{n}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
 
         <label className="flex cursor-pointer items-center gap-3">
           <span className="label">{T.show}</span>

@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useT } from "./locale-provider";
+import { useSweep } from "./use-sweep";
+import { PlayButton } from "./play-button";
 
 /**
  * What "searchable" actually means.
@@ -55,6 +57,7 @@ const path = (pts: [number, number][]) =>
 export function Planner() {
   const t = useT();
   const [n, setN] = useState(1);
+  const sweep = useSweep({ value: n, min: 1, max: 240, step: 1, setValue: setN });
 
   const { candidates, best } = useMemo(() => {
     const c: Traj[] = [];
@@ -105,10 +108,11 @@ export function Planner() {
       <div data-print-hide className="mt-2 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-rule px-5 py-4 md:px-8">
         <label className="flex min-w-[18rem] flex-1 items-center gap-3">
           <span className="label whitespace-nowrap">{t("plan.tried")}</span>
-          <input type="range" min={1} max={240} value={n} onChange={(e) => setN(Number(e.target.value))}
+          <input type="range" min={1} max={240} value={n} onChange={(e) => { sweep.stop(); setN(Number(e.target.value)); }}
             className="h-1 flex-1 cursor-pointer appearance-none rounded-none bg-rule-strong accent-[var(--imagine)]" />
           <span className="label tnum w-12 text-right !text-ink">{n}</span>
         </label>
+        <PlayButton playing={sweep.playing} onClick={sweep.toggle} />
         <p className="label basis-full !normal-case !tracking-normal !text-[0.8rem]">
           {reached ? t("plan.found") : best?.hit ? t("plan.allHit") : t("plan.closest")}
         </p>
