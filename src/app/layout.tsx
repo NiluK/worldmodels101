@@ -8,6 +8,8 @@ import { getStars } from "@/lib/github";
 import { StarButton } from "@/components/star-cta";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { AUTHOR, AUTHOR_URL } from "@/lib/author";
+import { SITE_URL } from "@/lib/seo";
 
 const instrument = Instrument_Serif({
   variable: "--font-instrument",
@@ -35,16 +37,31 @@ const description =
   "A free, interactive primer on world models: how machines learn to imagine what happens next. From next-state prediction and latent dynamics to Dreamer, JEPA, and video world simulators.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://worldmodels101.com"),
+  metadataBase: new URL(SITE_URL),
+  applicationName: "World Models 101",
   title: {
     default: "World Models 101",
     template: "%s · World Models 101",
   },
   description,
+  authors: [{ name: AUTHOR, url: AUTHOR_URL }],
+  creator: AUTHOR,
+  publisher: AUTHOR,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "World Models 101",
     description,
-    url: "https://worldmodels101.com",
+    url: SITE_URL,
     siteName: "World Models 101",
     type: "website",
     locale: "en",
